@@ -14,17 +14,17 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            // KurikulumSeeder::class,
+            KurikulumSeeder::class,
             SekolahSeeder::class,
-            // PtkSeeder::class,
-            // PesertaDidikSeeder::class,
-            // RombonganBelajarSeeder::class,
-            // AnggotaRombelSeeder::class,
-            // RegistrasiPesertaDidikSeeder::class,
-            // PrasaranaSeeder::class,
-            // SaranaSeeder::class,
-            // MataPelajaranSeeder::class,
-            // RombelMapelSeeder::class,
+            PtkSeeder::class,
+            PesertaDidikSeeder::class,
+            RombonganBelajarSeeder::class,
+            AnggotaRombelSeeder::class,
+            RegistrasiPesertaDidikSeeder::class,
+            PrasaranaSeeder::class,
+            SaranaSeeder::class,
+            MataPelajaranSeeder::class,
+            RombelMapelSeeder::class,
         ]);
     }
 }
