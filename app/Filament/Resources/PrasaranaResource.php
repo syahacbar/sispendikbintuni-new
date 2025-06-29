@@ -2,16 +2,17 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PrasaranaResource\Pages;
-use App\Filament\Resources\PrasaranaResource\RelationManagers;
-use App\Models\Prasarana;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Forms\Form;
+use App\Models\Prasarana;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Select;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\PrasaranaResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\PrasaranaResource\RelationManagers;
 
 class PrasaranaResource extends Resource
 {
@@ -26,7 +27,11 @@ class PrasaranaResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('sekolah_id')
+                Select::make('sekolah_id')
+                    ->label('Sekolah')
+                    ->relationship('sekolah', 'nama')
+                    ->searchable()
+                    ->preload()
                     ->required(),
                 Forms\Components\TextInput::make('jenis_prasarana')
                     ->required()

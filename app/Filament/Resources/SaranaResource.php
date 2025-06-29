@@ -2,16 +2,17 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\SaranaResource\Pages;
-use App\Filament\Resources\SaranaResource\RelationManagers;
-use App\Models\Sarana;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Sarana;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Select;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\SaranaResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\SaranaResource\RelationManagers;
 
 class SaranaResource extends Resource
 {
@@ -26,7 +27,11 @@ class SaranaResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('sekolah_id')
+                Select::make('sekolah_id')
+                    ->label('Sekolah')
+                    ->relationship('sekolah', 'nama')
+                    ->searchable()
+                    ->preload()
                     ->required(),
                 Forms\Components\TextInput::make('jenis_sarana')
                     ->required()
@@ -41,9 +46,7 @@ class SaranaResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')
-                    ->label('ID'),
-                Tables\Columns\TextColumn::make('sekolah_id'),
+                Tables\Columns\TextColumn::make('sekolah.nama'),
                 Tables\Columns\TextColumn::make('jenis_sarana')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('jumlah')

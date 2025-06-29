@@ -2,18 +2,19 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\RombonganBelajarResource\Pages;
-use App\Filament\Resources\RombonganBelajarResource\RelationManagers;
-use App\Models\RombonganBelajar;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Sekolah;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use App\Models\RombonganBelajar;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Models\Sekolah;
-use Filament\Forms\Components\Select;
+use App\Filament\Resources\RombonganBelajarResource\Pages;
+use App\Filament\Resources\RombonganBelajarResource\RelationManagers;
 
 class RombonganBelajarResource extends Resource
 {
@@ -40,35 +41,28 @@ class RombonganBelajarResource extends Resource
                     ->searchable()
                     ->preload()
                     ->required(),
-                // Forms\Components\TextInput::make('wali_ptk_id')
-                //     ->required(),
-                Forms\Components\TextInput::make('nama_rombel')
+                TextInput::make('nama_rombel')
                     ->required()
                     ->maxLength(50),
-                Forms\Components\TextInput::make('tingkat_kelas')
+                TextInput::make('tingkat_kelas')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('semester')
+                TextInput::make('semester')
                     ->required()
                     ->maxLength(6),
-                // Forms\Components\TextInput::make('kurikulum_id')
-                //     ->required(),
-
                 Select::make('kurikulum_id')
                     ->label('Kurikulum')
                     ->relationship('kurikulum', 'nama')
                     ->searchable()
                     ->preload()
                     ->required(),
-            ]);
+            ])->columns(3);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                // Tables\Columns\TextColumn::make('id')
-                //     ->label('ID'),
                 Tables\Columns\TextColumn::make('sekolah.nama'),
                 Tables\Columns\TextColumn::make('wali.nama'),
                 Tables\Columns\TextColumn::make('nama_rombel')
