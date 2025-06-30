@@ -20,7 +20,7 @@ class KurikulumResource extends Resource
 {
     protected static ?string $model = Kurikulum::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-arrow-trending-up';
     protected static ?string $navigationLabel = 'Kurikulum';
     protected static ?string $pluralModelLabel = 'Kurikulum';
     protected static ?string $navigationGroup = 'Data Manajemen';

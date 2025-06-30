@@ -2,26 +2,21 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
 use Filament\Tables;
-use App\Models\Sarana;
+use App\Models\Kalender;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Select;
-use Illuminate\Database\Eloquent\Builder;
-use App\Filament\Resources\SaranaResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\SaranaResource\RelationManagers;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\DatePicker;
+use App\Filament\Resources\KalenderResource\Pages;
 
-class SaranaResource extends Resource
+class KalenderResource extends Resource
 {
-    protected static ?string $model = Sarana::class;
+    protected static ?string $model = Kalender::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-computer-desktop';
-    protected static ?string $navigationLabel = 'Sarana';
-    protected static ?string $pluralModelLabel = 'Sarana';
-    protected static ?string $navigationGroup = 'Data Sarpras';
+    protected static ?string $navigationIcon = 'heroicon-o-calendar';
 
     public static function form(Form $form): Form
     {
@@ -33,12 +28,17 @@ class SaranaResource extends Resource
                     ->searchable()
                     ->preload()
                     ->required(),
-                Forms\Components\TextInput::make('jenis_sarana')
+                TextInput::make('nama')
                     ->required()
-                    ->maxLength(100),
-                Forms\Components\TextInput::make('jumlah')
-                    ->required()
-                    ->numeric(),
+                    ->maxLength(255),
+                DatePicker::make('tanggal_mulai')
+                    ->default(now()) // Hari ini
+                    ->required(),
+
+                DatePicker::make('tanggal_akhir')
+                    ->default(now()->addDay()), // Besok
+                TextInput::make('deskripsi')
+                    ->maxLength(255),
             ]);
     }
 
@@ -46,12 +46,16 @@ class SaranaResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('sekolah.nama'),
-                Tables\Columns\TextColumn::make('jenis_sarana')
+                Tables\Columns\TextColumn::make('nama')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('jumlah')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('tanggal_mulai')
+                    ->dateTime()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('tanggal_akhir')
+                    ->dateTime()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('deskripsi')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -65,9 +69,7 @@ class SaranaResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -86,9 +88,9 @@ class SaranaResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSaranas::route('/'),
-            'create' => Pages\CreateSarana::route('/create'),
-            'edit' => Pages\EditSarana::route('/{record}/edit'),
+            'index' => Pages\ListKalenders::route('/'),
+            'create' => Pages\CreateKalender::route('/create'),
+            'edit' => Pages\EditKalender::route('/{record}/edit'),
         ];
     }
 }

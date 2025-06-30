@@ -17,7 +17,7 @@ class RegistrasiPesertaDidikResource extends Resource
 {
     protected static ?string $model = RegistrasiPesertaDidik::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-check';
     protected static ?string $navigationLabel = 'Registrasi Peserta Didik';
     protected static ?string $navigationGroup = 'Data Manajemen';
 

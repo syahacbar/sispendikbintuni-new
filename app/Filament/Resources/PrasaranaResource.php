@@ -18,7 +18,7 @@ class PrasaranaResource extends Resource
 {
     protected static ?string $model = Prasarana::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-building-office';
     protected static ?string $navigationLabel = 'Prasarana';
     protected static ?string $pluralModelLabel = 'Prasarana';
     protected static ?string $navigationGroup = 'Data Sarpras';

@@ -20,7 +20,7 @@ class RombonganBelajarResource extends Resource
 {
     protected static ?string $model = RombonganBelajar::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-video-camera-slash';
     protected static ?string $navigationLabel = 'Rombongan Belajar';
     protected static ?string $pluralModelLabel = 'Rombongan Belajar';
     protected static ?string $navigationGroup = 'Data Manajemen';

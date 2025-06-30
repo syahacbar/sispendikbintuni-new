@@ -17,6 +17,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin;
 
 class PaneladminPanelProvider extends PanelProvider
 {
@@ -33,6 +34,9 @@ class PaneladminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::hex('#0093dd'),
             ])
+            ->sidebarCollapsibleOnDesktop()
+            ->sidebarWidth('15rem')
+            // ->viteTheme('resources/css/app.css')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
@@ -68,6 +72,7 @@ class PaneladminPanelProvider extends PanelProvider
                         nav.fi-sidebar-nav,
                         header.fi-sidebar-header {
                             background-color: #32404d;
+                            height: 4rem;
                         }
 
                         .fi-sidebar-nav-groups li.fi-sidebar-item a:hover {
@@ -115,6 +120,49 @@ class PaneladminPanelProvider extends PanelProvider
 
                         .fi-ta-text {
                             padding: 0.45rem !important;
+                        }
+
+                        .fi-sidebar-nav::-webkit-scrollbar {
+                            display: none;
+                        }
+
+                        .fi-sidebar-nav {
+                            -ms-overflow-style: none;
+                            scrollbar-width: none;
+                        }
+
+                        .fi-sidebar-nav-groups {
+                           gap: 5px !important;
+                        }
+
+                        .fi-sidebar-nav {
+                            padding-left: 1rem;
+                            padding-right: 1rem;
+                        }
+
+                        .fi-sidebar-group-label {
+                            color: lightblue;
+                        }
+
+                        main.fi-main {
+                            padding-left: 1.5rem;
+                            padding-right: 1.5rem;
+                        }
+
+                        .fi-ta-table thead tr {
+                            background-color: #32404d;
+                        }
+                        .fi-ta-table thead tr span {
+                            color: #fff;
+                        }
+
+                        .fi-ta-actions span {
+                            display: none;
+                        }
+
+                       .fi-ta-actions svg {
+                            width: 1.3rem;
+                            height: 1.3rem
                         }
                     </style>
                 HTML;
