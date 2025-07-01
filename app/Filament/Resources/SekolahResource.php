@@ -20,7 +20,17 @@ class SekolahResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-building-library';
     protected static ?string $navigationLabel = 'Sekolah';
     protected static ?string $pluralModelLabel = 'Sekolah';
-    protected static ?string $navigationGroup = 'Data Manajemen';
+    protected static ?string $navigationGroup = 'Data Pendidikan';
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return static::getModel()::count() > 5 ? 'warning' : 'success';
+    }
 
     public static function form(Form $form): Form
     {

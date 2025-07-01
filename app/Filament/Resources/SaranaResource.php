@@ -21,7 +21,18 @@ class SaranaResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-computer-desktop';
     protected static ?string $navigationLabel = 'Sarana';
     protected static ?string $pluralModelLabel = 'Sarana';
-    protected static ?string $navigationGroup = 'Data Sarpras';
+    protected static ?string $navigationGroup = 'Data Pendidikan';
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return static::getModel()::count() > 5 ? 'warning' : 'success';
+    }
+
 
     public static function form(Form $form): Form
     {

@@ -20,7 +20,18 @@ class UserResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-users';
     protected static ?string $navigationLabel = 'Users';
     protected static ?string $pluralModelLabel = 'Users';
-    protected static ?string $navigationGroup = 'Pengelola Web';
+    protected static ?string $navigationGroup = 'Manajemen Pengguna';
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return static::getModel()::count() > 5 ? 'warning' : 'success';
+    }
+
 
     public static function form(Form $form): Form
     {

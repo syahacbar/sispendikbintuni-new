@@ -83,7 +83,7 @@ class PaneladminPanelProvider extends PanelProvider
                             background-color: #374a5b !important;
                         }
 
-                        .fi-sidebar-nav-groups li.fi-sidebar-item a span {
+                        .fi-sidebar-nav-groups li.fi-sidebar-item span.fi-sidebar-item-label {
                             color: #fff !important;
                             font-weight: normal;
                         }
