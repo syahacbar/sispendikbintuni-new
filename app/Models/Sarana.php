@@ -10,12 +10,13 @@ class Sarana extends Model
     use HasUuids;
 
     protected $table = 'tbl_saranas';
-    protected $fillable = ['sekolah_id', 'nama_barang', 'jumlah', 'kondisi_baik', 'kondisi_rusak', 'merk', 'tahun_pengadaan', 'kode_ruang'];
+    protected $fillable = ['sekolah_id', 'jenis_sarana', 'jumlah'];
 
     public function sekolah()
     {
         return $this->belongsTo(Sekolah::class);
     }
+
     public function prasarana()
     {
         return $this->belongsTo(Prasarana::class, 'kode_ruang', 'kode_ruang');
