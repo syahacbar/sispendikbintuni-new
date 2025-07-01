@@ -56,11 +56,11 @@
                         @foreach ($sekolah as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                {{-- <td>
-                            <a class="text-decoration-none"
-                                href="{{ route('frontend.sekolah.show', ['slug' => $item->slug]) }}">
-                                {{ $item->nama }} </a>
-                        </td> --}}
+                                <td>
+                                    <a class="text-decoration-none"
+                                        href="{{ route('frontend.sekolah.show', ['slug' => $item->slug]) }}">
+                                        {{ $item->nama }} </a>
+                                </td>
                                 <td>{{ $item->npsn }}</td>
                                 <td>{{ $item->status_sekolah == 1 ? 'Negeri' : 'Swasta' }}</td>
                                 <td>{{ $item->jenjang }}</td>

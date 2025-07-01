@@ -150,7 +150,7 @@ class PaneladminPanelProvider extends PanelProvider
                         }
 
                         .fi-ta-table thead tr {
-                            background-color: #32404d;
+                            background-color: #0093dd;
                         }
                         .fi-ta-table thead tr span {
                             color: #fff;
@@ -163,6 +163,14 @@ class PaneladminPanelProvider extends PanelProvider
                        .fi-ta-actions svg {
                             width: 1.3rem;
                             height: 1.3rem
+                        }
+                        
+                        .fi-dropdown-list span {
+                            display: inline;
+                        }
+
+                        .fi-topbar button svg.fi-icon-btn-icon {
+                            color: #fff;
                         }
                     </style>
                 HTML;

@@ -15,10 +15,21 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('npsn', 10)->unique();
             $table->string('nama', 100);
-            $table->text('alamat');
+            $table->string('jenjang', 50);
+            $table->text('alamat_jalan')->nullable();
+            $table->string('desa_kelurahan', 100)->nullable();
+            $table->string('kode_pos', 10)->nullable();
+            $table->string('kecamatan', 100)->nullable();
+            $table->string('kabupaten', 100)->nullable();
+            $table->string('provinsi', 100)->nullable();
             $table->string('kode_wilayah', 10)->nullable();
             $table->enum('status_sekolah', ['Negeri', 'Swasta']);
-            $table->char('akreditasi', 1);
+            $table->char('akreditasi', 1)->nullable();
+            $table->string('email', 100)->nullable();
+            $table->string('telepon', 20)->nullable();
+            $table->string('sk_pendirian', 100)->nullable();
+            $table->date('tanggal_sk_pendirian')->nullable();
+            $table->string('slug')->unique();
             $table->timestamps();
         });
     }

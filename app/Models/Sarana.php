@@ -16,6 +16,7 @@ class Sarana extends Model
     {
         return $this->belongsTo(Sekolah::class);
     }
+
     public function prasarana()
     {
         return $this->belongsTo(Prasarana::class, 'kode_ruang', 'kode_ruang');

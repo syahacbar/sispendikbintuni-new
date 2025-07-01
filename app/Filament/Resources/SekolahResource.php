@@ -2,16 +2,16 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\SekolahResource\Pages;
-use App\Filament\Resources\SekolahResource\RelationManagers;
-use App\Models\Sekolah;
-use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Sekolah;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\DatePicker;
+use App\Filament\Resources\SekolahResource\Pages;
+use Illuminate\Support\Str;
 
 class SekolahResource extends Resource
 {
@@ -26,51 +26,163 @@ class SekolahResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('npsn')
+                TextInput::make('npsn')
                     ->required()
                     ->maxLength(10),
-                Forms\Components\TextInput::make('nama')
+
+                TextInput::make('nama')
                     ->required()
                     ->maxLength(100),
-                Forms\Components\Textarea::make('alamat')
+
+                TextInput::make('jenjang')
                     ->required()
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('kode_wilayah')
+                    ->maxLength(50),
+
+                TextInput::make('alamat_jalan')
+                    ->label('Alamat')
+                    ->nullable(),
+
+                TextInput::make('desa_kelurahan')
+                    ->label('Desa/Kelurahan')
+                    ->nullable(),
+
+                TextInput::make('kode_pos')
+                    ->nullable()
                     ->maxLength(10),
-                Forms\Components\TextInput::make('status_sekolah')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('akreditasi')
-                    ->required()
+
+                TextInput::make('kecamatan')
+                    ->nullable()
+                    ->maxLength(100),
+
+                TextInput::make('kabupaten')
+                    ->nullable()
+                    ->maxLength(100),
+
+                TextInput::make('provinsi')
+                    ->nullable()
+                    ->maxLength(100),
+
+                TextInput::make('kode_wilayah')
+                    ->nullable()
+                    ->maxLength(10),
+
+                Select::make('status_sekolah')
+                    ->options([
+                        'Negeri' => 'Negeri',
+                        'Swasta' => 'Swasta',
+                    ])
+                    ->required(),
+
+                TextInput::make('akreditasi')
+                    ->nullable()
                     ->maxLength(1),
-            ]);
+
+                TextInput::make('email')
+                    ->email()
+                    ->nullable()
+                    ->maxLength(100),
+
+                TextInput::make('telepon')
+                    ->nullable()
+                    ->maxLength(20),
+
+                TextInput::make('sk_pendirian')
+                    ->nullable()
+                    ->maxLength(100),
+
+                DatePicker::make('tanggal_sk_pendirian')
+                    ->nullable(),
+
+            ])->columns(3);
     }
+
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                // Tables\Columns\TextColumn::make('id')
-                //     ->label('ID'),
                 Tables\Columns\TextColumn::make('npsn')
                     ->label('NPSN')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('nama')
                     ->label('Nama Sekolah')
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('jenjang')
+                    ->label('Jenjang')
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('alamat_jalan')
+                    ->label('Alamat')
+                    ->searchable()
+                    ->limit(50),
+
+                Tables\Columns\TextColumn::make('desa_kelurahan')
+                    ->label('Desa/Kelurahan')
                     ->searchable(),
+
+                Tables\Columns\TextColumn::make('kode_pos')
+                    ->label('Kode Pos'),
+
+                Tables\Columns\TextColumn::make('kecamatan')
+                    ->label('Kecamatan')
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('kabupaten')
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->label('Kabupaten')
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('provinsi')
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->label('Provinsi')
+                    ->searchable(),
+
                 Tables\Columns\TextColumn::make('kode_wilayah')
-                    ->label('Kode Wilayah')
-                    ->searchable(),
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->label('Kode Wilayah'),
+
                 Tables\Columns\TextColumn::make('status_sekolah')
                     ->label('Status Sekolah')
-                    ->searchable(),
+                    ->badge()
+                    ->colors([
+                        'primary' => 'Negeri',
+                        'warning' => 'Swasta',
+                    ])
+                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('akreditasi')
-                    ->label('Akreditasi')
-                    ->searchable(),
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->label('Akreditasi'),
+
+                Tables\Columns\TextColumn::make('email')
+                    ->label('Email')
+                    ->limit(30),
+
+                Tables\Columns\TextColumn::make('telepon')
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->label('Telepon'),
+
+                Tables\Columns\TextColumn::make('sk_pendirian')
+                    ->label('SK Pendirian')
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->limit(25),
+
+                Tables\Columns\TextColumn::make('tanggal_sk_pendirian')
+                    ->label('Tanggal SK')
+                    ->date()
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
@@ -90,6 +202,7 @@ class SekolahResource extends Resource
                 ]),
             ]);
     }
+
 
     public static function getRelations(): array
     {

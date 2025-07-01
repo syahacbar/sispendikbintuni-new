@@ -10,6 +10,7 @@
         "filament/filament": "3.3",
         "laravel/framework": "^11.0",
         "laravel/tinker": "^2.9",
+        "maatwebsite/excel": "^3.1",
         "vermaysha/laravel-wilayah-indonesia": "^2.2"
     },
     "require-dev": {
