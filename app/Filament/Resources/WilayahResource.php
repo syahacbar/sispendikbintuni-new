@@ -22,8 +22,19 @@ class WilayahResource extends Resource
     protected static ?string $navigationLabel = 'Wilayah';
     protected static ?string $modelLabel = 'Wilayah';
     protected static ?string $pluralModelLabel = 'Wilayah';
-    protected static ?string $navigationGroup = 'Master Data';
+    protected static ?string $navigationGroup = 'Data Referensi';
     protected static ?string $slug = 'data-wilayah';
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return static::getModel()::count() > 5 ? 'warning' : 'success';
+    }
+
 
     public static function form(Form $form): Form
     {
