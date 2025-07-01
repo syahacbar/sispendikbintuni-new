@@ -12,7 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tbl_wilayahs', function (Blueprint $table) {
-            $table->uuid('id')->primary();
             $table->string('kode');
             $table->string('nama');
             $table->timestamps();
