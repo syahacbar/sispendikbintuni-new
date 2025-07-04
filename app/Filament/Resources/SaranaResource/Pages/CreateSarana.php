@@ -9,4 +9,9 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateSarana extends CreateRecord
 {
     protected static string $resource = SaranaResource::class;
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

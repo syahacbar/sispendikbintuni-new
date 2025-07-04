@@ -3546,10 +3546,21 @@ fieldset:disabled .btn {
 }
 .dropdown-item.active,
 .dropdown-item:active {
-    color: var(--bs-dropdown-link-active-color);
+    color: #0093dd;
     text-decoration: none;
-    background-color: var(--bs-dropdown-link-active-bg);
+    background-color: none;
 }
+
+/* .navbar-nav .dropdown-menu li a.dropdown-item:hover {
+    color: #0093dd !important;
+    text-decoration: none;
+    background-color: none;
+} */
+
+.navbar-nav .dropdown-menu a.dropdown-item.active {
+    color: #0093dd !important;
+}
+
 .dropdown-item.disabled,
 .dropdown-item:disabled {
     color: var(--bs-dropdown-link-disabled-color);
@@ -4616,7 +4627,7 @@ fieldset:disabled .btn {
     display: block;
     padding: var(--bs-pagination-padding-y) var(--bs-pagination-padding-x);
     font-size: var(--bs-pagination-font-size);
-    color: var(--bs-pagination-color);
+    color: #0093dd;
     text-decoration: none;
     background-color: var(--bs-pagination-bg);
     border: var(--bs-pagination-border-width) solid
@@ -4645,10 +4656,11 @@ fieldset:disabled .btn {
 .active > .page-link,
 .page-link.active {
     z-index: 3;
-    color: var(--bs-pagination-active-color);
-    background-color: var(--bs-pagination-active-bg);
-    border-color: var(--bs-pagination-active-border-color);
+    color: #fff !important;
+    text-decoration: none;
+    background-color: #0093dd;
 }
+
 .disabled > .page-link,
 .page-link.disabled {
     color: var(--bs-pagination-disabled-color);

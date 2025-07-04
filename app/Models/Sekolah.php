@@ -13,6 +13,8 @@ class Sekolah extends Model
     use HasFactory;
 
     protected $table = 'tbl_sekolahs';
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     protected $fillable = [
         'npsn',
@@ -60,13 +62,17 @@ class Sekolah extends Model
         return $this->hasMany(Sarana::class);
     }
 
+    public function user()
+    {
+        return $this->hasOne(User::class, 'sekolah_id');
+    }
+
     protected static function booted()
     {
         static::saving(function ($sekolah) {
             if (empty($sekolah->slug) && $sekolah->nama && $sekolah->npsn) {
                 $slug = Str::slug($sekolah->nama . '-' . $sekolah->npsn);
 
-                // Opsional: pastikan slug unik
                 $original = $slug;
                 $counter = 1;
                 while (Sekolah::where('slug', $slug)->where('id', '!=', $sekolah->id)->exists()) {

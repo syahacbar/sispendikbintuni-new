@@ -8,6 +8,7 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
 use App\Filament\Resources\KalenderResource\Pages;
@@ -19,18 +20,7 @@ class KalenderResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-calendar';
     protected static ?string $navigationLabel = 'Kegiatan';
     protected static ?string $pluralModelLabel = 'Kegiatan';
-    // protected static ?string $navigationGroup = 'Data Manajemen';
-
-    public static function getNavigationBadge(): ?string
-    {
-        return static::getModel()::count();
-    }
-
-    public static function getNavigationBadgeColor(): string|array|null
-    {
-        return static::getModel()::count() > 5 ? 'warning' : 'success';
-    }
-
+    protected static ?string $navigationGroup = 'Data Pendidikan';
 
     public static function form(Form $form): Form
     {
@@ -46,11 +36,20 @@ class KalenderResource extends Resource
                     ->required()
                     ->maxLength(255),
                 DatePicker::make('tanggal_mulai')
-                    ->default(now()) // Hari ini
+                    ->default(now())
+                    ->native(false)
+                    ->seconds(false)
+                    ->displayFormat('d/m/Y')
+                    ->default(now())
                     ->required(),
 
                 DatePicker::make('tanggal_akhir')
-                    ->default(now()->addDay()), // Besok
+                    ->native(false)
+                    ->seconds(false)
+                    ->displayFormat('d/m/Y')
+                    ->default(now())
+                    ->required()
+                    ->default(now()->addDay()),
                 TextInput::make('deskripsi')
                     ->maxLength(255),
             ]);
@@ -60,21 +59,21 @@ class KalenderResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('nama')
+                TextColumn::make('nama')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('tanggal_mulai')
-                    ->dateTime()
+                TextColumn::make('tanggal_mulai')
+                    ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('tanggal_akhir')
-                    ->dateTime()
+                TextColumn::make('tanggal_akhir')
+                    ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('deskripsi')
+                TextColumn::make('deskripsi')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -83,7 +82,9 @@ class KalenderResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nuptk', 20);
             $table->string('nik', 20);
             $table->enum('jenis_kelamin', ['L', 'P']);
+            $table->enum('status', ['PNS', 'Honorer', 'GTY']);
             $table->date('tgl_lahir');
             $table->timestamps();
         });

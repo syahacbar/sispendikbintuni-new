@@ -24,16 +24,30 @@
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('kalender*') ? 'active' : '' }}" href="/kalender">Kalender</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ Request::is('informasi*') ? 'active' : '' }}" href="/informasi">Informasi</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle {{ Request::is('informasi*') ? 'active' : '' }}" href="#"
+                        id="navbarDropdownInformasi" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Informasi
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownInformasi">
+                        <li><a class="dropdown-item {{ Request::is('informasi/berita') ? 'active' : '' }}"
+                                href="/informasi/berita">Berita</a></li>
+                        <li><a class="dropdown-item {{ Request::is('informasi/pengumuman') ? 'active' : '' }}"
+                                href="/informasi/pengumuman">Pengumuman</a></li>
+                        <li><a class="dropdown-item {{ Request::is('informasi/kegiatan') ? 'active' : '' }}"
+                                href="/informasi/kegiatan">Kegiatan</a></li>
+                    </ul>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('pengaduan*') ? 'active' : '' }}" href="/pengaduan">Pengaduan</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link btn btn-primary btn-sm btnLogin {{ Request::is('login*') ? 'active' : '' }}"
-                        href="/paneladmin/login">Login</a>
-                </li>
+                @guest
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary btn-sm btnLogin {{ Request::is('login*') ? 'active' : '' }}"
+                            href="/paneladmin/login">Login</a>
+                    </li>
+                @endguest
             </ul>
         </div>
     </div>

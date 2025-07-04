@@ -14,11 +14,27 @@ return new class extends Migration
         Schema::create('tbl_saranas', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('sekolah_id');
-            $table->string('jenis_sarana', 100);
-            $table->integer('jumlah');
+            $table->integer('r_kelas')->nullable();
+            $table->integer('r_perpus')->nullable();
+            $table->integer('r_lab')->nullable();
+            $table->integer('r_praktik')->nullable();
+            $table->integer('r_pimpinan')->nullable();
+            $table->integer('r_guru')->nullable();
+            $table->integer('r_ibadah')->nullable();
+            $table->integer('r_uks')->nullable();
+            $table->integer('r_toilet')->nullable();
+            $table->integer('r_gudang')->nullable();
+            $table->integer('r_sirkulasi')->nullable();
+            $table->integer('tempat_bermain')->nullable();
+            $table->integer('r_tu')->nullable();
+            $table->integer('r_konseling')->nullable();
+            $table->integer('r_osis')->nullable();
+            $table->integer('r_bangunan')->nullable();
+
             $table->timestamps();
 
-            $table->foreign('sekolah_id')->references('id')->on('tbl_sekolahs');
+            // Foreign keys
+            $table->foreign('sekolah_id')->references('id')->on('tbl_sekolahs')->onDelete('cascade');
         });
     }
 

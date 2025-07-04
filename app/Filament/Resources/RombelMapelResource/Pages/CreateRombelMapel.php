@@ -9,4 +9,10 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateRombelMapel extends CreateRecord
 {
     protected static string $resource = RombelMapelResource::class;
+
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

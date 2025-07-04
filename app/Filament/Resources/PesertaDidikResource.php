@@ -2,16 +2,20 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PesertaDidikResource\Pages;
-use App\Filament\Resources\PesertaDidikResource\RelationManagers;
-use App\Models\PesertaDidik;
-use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Wilayah;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Models\PesertaDidik;
+use Filament\Facades\Filament;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Fieldset;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\DatePicker;
+use App\Filament\Resources\PesertaDidikResource\Pages;
 
 class PesertaDidikResource extends Resource
 {
@@ -22,37 +26,114 @@ class PesertaDidikResource extends Resource
     protected static ?string $pluralModelLabel = 'Peserta Didik';
     protected static ?string $navigationGroup = 'Data Pendidikan';
 
-    public static function getNavigationBadge(): ?string
-    {
-        return static::getModel()::count();
-    }
-
-    public static function getNavigationBadgeColor(): string|array|null
-    {
-        return static::getModel()::count() > 5 ? 'warning' : 'success';
-    }
-
-
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('sekolah_id')
-                    ->required(),
-                Forms\Components\TextInput::make('nama')
-                    ->required()
-                    ->maxLength(100),
-                Forms\Components\TextInput::make('nisn')
-                    ->required()
-                    ->maxLength(10),
-                Forms\Components\TextInput::make('nik')
-                    ->required()
-                    ->maxLength(20),
-                Forms\Components\TextInput::make('jenis_kelamin')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\DatePicker::make('tgl_lahir')
-                    ->required(),
+                Fieldset::make('Identitas Peserta Didik')
+                    ->schema([
+                        Select::make('sekolah_id')
+                            ->label('Sekolah')
+                            ->relationship('sekolah', 'nama')
+                            ->searchable()
+                            ->default(fn() => Filament::auth()->user()->sekolah_id)
+                            ->disabled(fn() => Filament::auth()->user()->hasRole('admin_sekolah'))
+                            ->dehydrated(fn() => true)
+                            ->required(),
+                        TextInput::make('nama')
+                            ->label('Nama Lengkap')
+                            ->required()
+                            ->maxLength(100),
+                        TextInput::make('nisn')
+                            ->label('NISN')
+                            ->required()
+                            ->maxLength(10),
+                        TextInput::make('nik')
+                            ->label('NIK')
+                            ->required()
+                            ->maxLength(20),
+                        Radio::make('jenis_kelamin')
+                            ->label('Jenis Kelamin')
+
+                            ->options([
+                                'L' => 'Laki-laki',
+                                'P' => 'Perempuan',
+                            ])
+                            ->inline()
+                            ->required(),
+                    ])->columns(3),
+                Fieldset::make('Tempat, Tanggal Lahir')
+                    ->schema([
+                        Select::make('provinsi')
+                            ->label('Provinsi')
+                            ->options(
+                                Wilayah::whereRaw("CHAR_LENGTH(REPLACE(kode, '.', '')) = 2")
+                                    ->pluck('nama', 'kode')
+                            )
+                            ->reactive()
+                            ->required(),
+
+                        Select::make('kabupaten')
+                            ->label('Kabupaten/Kota')
+                            ->options(
+                                fn(callable $get) =>
+                                $get('provinsi')
+                                    ? Wilayah::where('kode', 'like', $get('provinsi') . '.%')
+                                    ->whereRaw("CHAR_LENGTH(REPLACE(kode, '.', '')) = 4")
+                                    ->pluck('nama', 'kode')
+                                    : []
+                            )
+                            ->reactive()
+                            ->required()
+                            ->disabled(fn(callable $get) => !$get('provinsi')),
+
+                        Select::make('kecamatan')
+                            ->label('Kecamatan')
+                            ->options(
+                                fn(callable $get) =>
+                                $get('kabupaten')
+                                    ? Wilayah::where('kode', 'like', $get('kabupaten') . '.%')
+                                    ->whereRaw("CHAR_LENGTH(REPLACE(kode, '.', '')) = 6")
+                                    ->pluck('nama', 'kode')
+                                    : []
+                            )
+                            ->reactive()
+                            ->required()
+                            ->disabled(fn(callable $get) => !$get('kabupaten')),
+
+                        Select::make('desa_kelurahan')
+                            ->label('Desa/Kelurahan')
+                            ->options(
+                                fn(callable $get) =>
+                                $get('kecamatan')
+                                    ? Wilayah::where('kode', 'like', $get('kecamatan') . '.%')
+                                    ->whereRaw("CHAR_LENGTH(REPLACE(kode, '.', '')) = 10")
+                                    ->pluck('nama', 'kode')
+                                    : []
+                            )
+                            ->reactive()
+                            ->required()
+                            ->afterStateUpdated(function (callable $get, callable $set) {
+                                $desaKode = $get('desa_kelurahan');
+                                if ($desaKode) {
+                                    $set('kode_wilayah', $desaKode);
+                                }
+                            })
+                            ->disabled(fn(callable $get) => !$get('kecamatan')),
+
+                        TextInput::make('alamat_jalan')
+                            ->label('Tempat Lahir')
+                            ->nullable(),
+                        DatePicker::make('tgl_lahir')
+                            ->label('Tanggal Lahir')
+                            ->required()
+                            ->default(true)
+                            ->native(false)
+                            ->seconds(false)
+                            ->displayFormat('d/m/Y')
+                            ->default(now())
+                            ->required(),
+                    ])->columns(3)
             ]);
     }
 
@@ -60,25 +141,27 @@ class PesertaDidikResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')
-                    ->label('ID'),
-                Tables\Columns\TextColumn::make('sekolah_id'),
-                Tables\Columns\TextColumn::make('nama')
+                TextColumn::make('sekolah.nama')
+                    ->label('Sekolah')
+                    ->sortable()
+                    ->searchable()
+                    ->visible(fn() => !auth()->user()->hasRole('admin_sekolah')),
+                TextColumn::make('nama')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('nisn')
+                TextColumn::make('nisn')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('nik')
+                TextColumn::make('nik')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('jenis_kelamin')
+                TextColumn::make('jenis_kelamin')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('tgl_lahir')
+                TextColumn::make('tgl_lahir')
                     ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

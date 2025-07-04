@@ -22,17 +22,6 @@ class MataPelajaranResource extends Resource
     protected static ?string $pluralModelLabel = 'Mata Pelajaran';
     protected static ?string $navigationGroup = 'Data Pendidikan';
 
-    public static function getNavigationBadge(): ?string
-    {
-        return static::getModel()::count();
-    }
-
-    public static function getNavigationBadgeColor(): string|array|null
-    {
-        return static::getModel()::count() > 5 ? 'warning' : 'success';
-    }
-
-
     public static function form(Form $form): Form
     {
         return $form
@@ -49,8 +38,6 @@ class MataPelajaranResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')
-                    ->label('ID'),
                 Tables\Columns\TextColumn::make('nama_mapel')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('kurikulum_id'),

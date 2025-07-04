@@ -24,17 +24,6 @@ class RegistrasiPesertaDidikResource extends Resource
     protected static ?string $modelLabel = 'Registrasi Peserta Didik';
     protected static ?string $pluralModelLabel = 'Registrasi Peserta Didik';
 
-    public static function getNavigationBadge(): ?string
-    {
-        return static::getModel()::count();
-    }
-
-    public static function getNavigationBadgeColor(): string|array|null
-    {
-        return static::getModel()::count() > 5 ? 'warning' : 'success';
-    }
-
-
     public static function form(Form $form): Form
     {
         return $form

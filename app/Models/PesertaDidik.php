@@ -16,6 +16,7 @@ class PesertaDidik extends Model
     {
         return $this->belongsTo(Sekolah::class);
     }
+
     public function anggotaRombels()
     {
         return $this->hasMany(AnggotaRombel::class);

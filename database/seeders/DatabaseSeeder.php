@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             KurikulumSeeder::class,
+            SekolahSeeder::class,
             PtkSeeder::class,
             PesertaDidikSeeder::class,
             RombonganBelajarSeeder::class,
@@ -26,7 +27,8 @@ class DatabaseSeeder extends Seeder
             RombelMapelSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
-            PermissionSeeder::class
+            PermissionSeeder::class,
+            InformasiSeeder::class,
         ]);
     }
 }

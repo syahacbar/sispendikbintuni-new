@@ -9,4 +9,9 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateAnggotaRombel extends CreateRecord
 {
     protected static string $resource = AnggotaRombelResource::class;
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

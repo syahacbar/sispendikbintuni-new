@@ -7,9 +7,11 @@ use Filament\Tables;
 use App\Models\Sekolah;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Facades\Filament;
 use App\Models\RombonganBelajar;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -25,17 +27,6 @@ class RombonganBelajarResource extends Resource
     protected static ?string $pluralModelLabel = 'Rombongan Belajar';
     protected static ?string $navigationGroup = 'Data Pendidikan';
 
-    public static function getNavigationBadge(): ?string
-    {
-        return static::getModel()::count();
-    }
-
-    public static function getNavigationBadgeColor(): string|array|null
-    {
-        return static::getModel()::count() > 5 ? 'warning' : 'success';
-    }
-
-
     public static function form(Form $form): Form
     {
         return $form
@@ -44,7 +35,9 @@ class RombonganBelajarResource extends Resource
                     ->label('Sekolah')
                     ->relationship('sekolah', 'nama')
                     ->searchable()
-                    ->preload()
+                    ->default(fn() => Filament::auth()->user()->sekolah_id)
+                    ->disabled(fn() => Filament::auth()->user()->hasRole('admin_sekolah'))
+                    ->dehydrated(fn() => true)
                     ->required(),
                 Select::make('wali_ptk_id')
                     ->label('Wali Kelas')
@@ -74,21 +67,25 @@ class RombonganBelajarResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('sekolah.nama'),
-                Tables\Columns\TextColumn::make('wali.nama'),
-                Tables\Columns\TextColumn::make('nama_rombel')
+                TextColumn::make('sekolah.nama')
+                    ->label('Sekolah')
+                    ->sortable()
+                    ->searchable()
+                    ->visible(fn() => !auth()->user()->hasRole('admin_sekolah')),
+                TextColumn::make('wali.nama'),
+                TextColumn::make('nama_rombel')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('tingkat_kelas')
+                TextColumn::make('tingkat_kelas')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('semester')
+                TextColumn::make('semester')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('kurikulum.nama'),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('kurikulum.nama'),
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

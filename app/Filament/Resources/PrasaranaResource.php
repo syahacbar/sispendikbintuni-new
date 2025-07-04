@@ -7,8 +7,10 @@ use Filament\Tables;
 use Filament\Forms\Form;
 use App\Models\Prasarana;
 use Filament\Tables\Table;
+use Filament\Facades\Filament;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\PrasaranaResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -23,16 +25,6 @@ class PrasaranaResource extends Resource
     protected static ?string $pluralModelLabel = 'Prasarana';
     protected static ?string $navigationGroup = 'Data Pendidikan';
 
-    public static function getNavigationBadge(): ?string
-    {
-        return static::getModel()::count();
-    }
-
-    public static function getNavigationBadgeColor(): string|array|null
-    {
-        return static::getModel()::count() > 5 ? 'warning' : 'success';
-    }
-
 
     public static function form(Form $form): Form
     {
@@ -42,7 +34,9 @@ class PrasaranaResource extends Resource
                     ->label('Sekolah')
                     ->relationship('sekolah', 'nama')
                     ->searchable()
-                    ->preload()
+                    ->default(fn() => Filament::auth()->user()->sekolah_id)
+                    ->disabled(fn() => Filament::auth()->user()->hasRole('admin_sekolah'))
+                    ->dehydrated(fn() => true)
                     ->required(),
                 Forms\Components\TextInput::make('jenis_prasarana')
                     ->required()
@@ -57,9 +51,11 @@ class PrasaranaResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')
-                    ->label('ID'),
-                Tables\Columns\TextColumn::make('sekolah_id'),
+                TextColumn::make('sekolah.nama')
+                    ->label('Sekolah')
+                    ->sortable()
+                    ->searchable()
+                    ->visible(fn() => !auth()->user()->hasRole('admin_sekolah')),
                 Tables\Columns\TextColumn::make('jenis_prasarana')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('jumlah')

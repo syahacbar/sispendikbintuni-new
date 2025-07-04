@@ -4,14 +4,19 @@ namespace App\Filament\Resources;
 
 use Filament\Tables;
 use App\Models\Sekolah;
+use App\Models\Wilayah;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 use Filament\Resources\Resource;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Hash;
 use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
+use Filament\Notifications\Notification;
 use App\Filament\Resources\SekolahResource\Pages;
-use Illuminate\Support\Str;
 
 class SekolahResource extends Resource
 {
@@ -22,88 +27,128 @@ class SekolahResource extends Resource
     protected static ?string $pluralModelLabel = 'Sekolah';
     protected static ?string $navigationGroup = 'Data Pendidikan';
 
-    public static function getNavigationBadge(): ?string
-    {
-        return static::getModel()::count();
-    }
-
-    public static function getNavigationBadgeColor(): string|array|null
-    {
-        return static::getModel()::count() > 5 ? 'warning' : 'success';
-    }
-
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                TextInput::make('npsn')
-                    ->required()
-                    ->maxLength(10),
+        return $form->schema([
+            TextInput::make('npsn')
+                ->required()
+                ->maxLength(10),
 
-                TextInput::make('nama')
-                    ->required()
-                    ->maxLength(100),
+            TextInput::make('nama')
+                ->required()
+                ->maxLength(100),
 
-                TextInput::make('jenjang')
-                    ->required()
-                    ->maxLength(50),
+            TextInput::make('jenjang')
+                ->required()
+                ->maxLength(50),
 
-                TextInput::make('alamat_jalan')
-                    ->label('Alamat')
-                    ->nullable(),
+            // Wilayah Bertingkat
+            Select::make('provinsi')
+                ->label('Provinsi')
+                ->options(
+                    \App\Models\Wilayah::whereRaw("CHAR_LENGTH(REPLACE(kode, '.', '')) = 2")
+                        ->pluck('nama', 'kode')
+                )
+                ->reactive()
+                ->required(),
 
-                TextInput::make('desa_kelurahan')
-                    ->label('Desa/Kelurahan')
-                    ->nullable(),
+            Select::make('kabupaten')
+                ->label('Kabupaten/Kota')
+                ->options(
+                    fn(callable $get) =>
+                    $get('provinsi')
+                        ? \App\Models\Wilayah::where('kode', 'like', $get('provinsi') . '.%')
+                        ->whereRaw("CHAR_LENGTH(REPLACE(kode, '.', '')) = 4")
+                        ->pluck('nama', 'kode')
+                        : []
+                )
+                ->reactive()
+                ->required()
+                ->disabled(fn(callable $get) => !$get('provinsi')),
 
-                TextInput::make('kode_pos')
-                    ->nullable()
-                    ->maxLength(10),
+            Select::make('kecamatan')
+                ->label('Kecamatan')
+                ->options(
+                    fn(callable $get) =>
+                    $get('kabupaten')
+                        ? \App\Models\Wilayah::where('kode', 'like', $get('kabupaten') . '.%')
+                        ->whereRaw("CHAR_LENGTH(REPLACE(kode, '.', '')) = 6")
+                        ->pluck('nama', 'kode')
+                        : []
+                )
+                ->reactive()
+                ->required()
+                ->disabled(fn(callable $get) => !$get('kabupaten')),
 
-                TextInput::make('kecamatan')
-                    ->nullable()
-                    ->maxLength(100),
+            Select::make('desa_kelurahan')
+                ->label('Desa/Kelurahan')
+                ->options(
+                    fn(callable $get) =>
+                    $get('kecamatan')
+                        ? \App\Models\Wilayah::where('kode', 'like', $get('kecamatan') . '.%')
+                        ->whereRaw("CHAR_LENGTH(REPLACE(kode, '.', '')) = 10")
+                        ->pluck('nama', 'kode')
+                        : []
+                )
+                ->reactive()
+                ->required()
+                ->afterStateUpdated(function (callable $get, callable $set) {
+                    // Isi otomatis kode wilayah saat desa dipilih
+                    $desaKode = $get('desa_kelurahan');
+                    if ($desaKode) {
+                        $set('kode_wilayah', $desaKode);
+                    }
+                })
+                ->disabled(fn(callable $get) => !$get('kecamatan')),
 
-                TextInput::make('kabupaten')
-                    ->nullable()
-                    ->maxLength(100),
+            TextInput::make('kode_wilayah')
+                ->label('Kode Wilayah (Otomatis)')
+                ->disabled()
+                ->dehydrated()
+                ->required(),
 
-                TextInput::make('provinsi')
-                    ->nullable()
-                    ->maxLength(100),
+            TextInput::make('alamat_jalan')
+                ->label('Alamat Jalan')
+                ->nullable(),
 
-                TextInput::make('kode_wilayah')
-                    ->nullable()
-                    ->maxLength(10),
+            TextInput::make('kode_pos')
+                ->nullable()
+                ->maxLength(10),
 
-                Select::make('status_sekolah')
-                    ->options([
-                        'Negeri' => 'Negeri',
-                        'Swasta' => 'Swasta',
-                    ])
-                    ->required(),
+            Select::make('status_sekolah')
+                ->options([
+                    'Negeri' => 'Negeri',
+                    'Swasta' => 'Swasta',
+                ])
+                ->required(),
 
-                TextInput::make('akreditasi')
-                    ->nullable()
-                    ->maxLength(1),
+            TextInput::make('akreditasi')
+                ->nullable()
+                ->maxLength(1),
 
-                TextInput::make('email')
-                    ->email()
-                    ->nullable()
-                    ->maxLength(100),
+            TextInput::make('email')
+                ->email()
+                ->nullable()
+                ->maxLength(100),
 
-                TextInput::make('telepon')
-                    ->nullable()
-                    ->maxLength(20),
+            TextInput::make('telepon')
+                ->nullable()
+                ->maxLength(20),
 
-                TextInput::make('sk_pendirian')
-                    ->nullable()
-                    ->maxLength(100),
+            TextInput::make('sk_pendirian')
+                ->nullable()
+                ->maxLength(100),
 
-                DatePicker::make('tanggal_sk_pendirian')
-                    ->nullable(),
+            DatePicker::make('tanggal_sk_pendirian')
+                ->nullable()
+                ->default(true)
+                ->native(false)
+                ->seconds(false)
+                ->displayFormat('d/m/Y')
+                ->default(now())
+                ->required(),
 
-            ])->columns(3);
+        ])->columns(3);
     }
 
 
@@ -111,52 +156,52 @@ class SekolahResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('npsn')
+                TextColumn::make('npsn')
                     ->label('NPSN')
                     ->searchable()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('nama')
+                TextColumn::make('nama')
                     ->label('Nama Sekolah')
                     ->searchable()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('jenjang')
+                TextColumn::make('jenjang')
                     ->label('Jenjang')
                     ->searchable()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('alamat_jalan')
+                TextColumn::make('alamat_jalan')
                     ->label('Alamat')
                     ->searchable()
                     ->limit(50),
 
-                Tables\Columns\TextColumn::make('desa_kelurahan')
+                TextColumn::make('desa_kelurahan')
                     ->label('Desa/Kelurahan')
                     ->searchable(),
 
-                Tables\Columns\TextColumn::make('kode_pos')
+                TextColumn::make('kode_pos')
                     ->label('Kode Pos'),
 
-                Tables\Columns\TextColumn::make('kecamatan')
+                TextColumn::make('kecamatan')
                     ->label('Kecamatan')
                     ->searchable(),
 
-                Tables\Columns\TextColumn::make('kabupaten')
+                TextColumn::make('kabupaten')
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->label('Kabupaten')
                     ->searchable(),
 
-                Tables\Columns\TextColumn::make('provinsi')
+                TextColumn::make('provinsi')
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->label('Provinsi')
                     ->searchable(),
 
-                Tables\Columns\TextColumn::make('kode_wilayah')
+                TextColumn::make('kode_wilayah')
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->label('Kode Wilayah'),
 
-                Tables\Columns\TextColumn::make('status_sekolah')
+                TextColumn::make('status_sekolah')
                     ->label('Status Sekolah')
                     ->badge()
                     ->colors([
@@ -164,36 +209,44 @@ class SekolahResource extends Resource
                         'warning' => 'Swasta',
                     ])
                     ->sortable(),
-
-                Tables\Columns\TextColumn::make('akreditasi')
+                TextColumn::make('user.email')
+                    ->label('Akun Sekolah')
+                    ->formatStateUsing(fn($state) => $state ?? 'Belum ada')
+                    ->badge()
+                    ->colors([
+                        'success' => fn($state) => $state !== null,
+                        'danger' => fn($state) => $state === null,
+                    ])
+                    ->sortable(),
+                TextColumn::make('akreditasi')
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->label('Akreditasi'),
 
-                Tables\Columns\TextColumn::make('email')
+                TextColumn::make('email')
                     ->label('Email')
                     ->limit(30),
 
-                Tables\Columns\TextColumn::make('telepon')
+                TextColumn::make('telepon')
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->label('Telepon'),
 
-                Tables\Columns\TextColumn::make('sk_pendirian')
+                TextColumn::make('sk_pendirian')
                     ->label('SK Pendirian')
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->limit(25),
 
-                Tables\Columns\TextColumn::make('tanggal_sk_pendirian')
+                TextColumn::make('tanggal_sk_pendirian')
                     ->label('Tanggal SK')
                     ->date()
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -205,6 +258,42 @@ class SekolahResource extends Resource
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Tables\Actions\Action::make('generateAkun')
+                    ->label('Generate Akun')
+                    ->icon('heroicon-o-user-plus')
+                    ->color('success')
+                    ->visible(fn($record) => $record->user === null && $record->email !== null)
+                    ->requiresConfirmation()
+                    ->action(function ($record) {
+                        if (\App\Models\User::where('email', $record->email)->exists()) {
+                            \Filament\Notifications\Notification::make()
+                                ->title('Email sudah digunakan')
+                                ->danger()
+                                ->send();
+                            return;
+                        }
+
+                        $password = Str::random(8); // atau bisa pakai default seperti 'password123'
+
+                        $user = \App\Models\User::create([
+                            'name' => $record->nama,
+                            'email' => $record->email,
+                            'password' => Hash::make($password),
+                            'sekolah_id' => $record->id,
+                        ]);
+
+                        $user->assignRole('admin_sekolah');
+
+                        // Simpan password di log file (jika perlu debug sementara)
+                        Log::info("Akun sekolah {$record->nama} dibuat. Email: {$record->email}, Password: {$password}");
+
+                        Notification::make()
+                            ->title("Akun berhasil dibuat!")
+                            ->body("Email: {$record->email} | Password: {$password}")
+                            ->success()
+                            ->send();
+                    }),
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

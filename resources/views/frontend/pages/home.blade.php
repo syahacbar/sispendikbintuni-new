@@ -20,16 +20,10 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-5 text-center mb-4 mb-lg-0 d-flex justify-content-center " data-aos="fade-right">
-                    <img src="https://konten.usu.ac.id/storage/satker/0/icons/kakak-pendidikan.webp?w=360&amp;q=75"
-                        alt="Wisudawati UTI" class="img-fluid quote-img" style="max-height: 450px; object-fit: cover;">
+                    <img src="{{ asset('themes/frontend/kadis.jpeg') }}" alt="Kepala Dinasi Kab. Teluk Bintuni"
+                        class="img-fluid quote-img" style="max-height: 450px; object-fit: cover;">
                 </div>
-                <div class="col-lg-7" data-aos="fade-left">
-                    <div class="d-flex align-items-center mb-2">
-                        <div class="display-6 text-success me-2">“</div>
-                        <div class="badge bg-success d-flex align-items-center px-3 py-2">
-                            <i class="fas fa-seedling me-2"></i> Pendidikan
-                        </div>
-                    </div>
+                <div class="col-lg-7 mt-4" data-aos="fade-left">
                     <h5 class="fw-bold text-teal mb-4">
                         Pendidikan adalah salah satu kunci terpenting bagi bangsa dan
                         negara untuk bertahan dalam persaingan global dan merupakan bidang
@@ -47,7 +41,6 @@
                         untuk mendukung karier dan keahlian profesional Anda pada masa
                         depan.
                     </p>
-                    <div class="text-end display-6 text-success">”</div>
                 </div>
             </div>
         </div>
@@ -85,97 +78,43 @@
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="sekolahNegeri-tab" data-bs-toggle="tab"
                                         data-bs-target="#sekolahNegeri-tab-pane" type="button" role="tab"
-                                        aria-controls="sekolahNegeri-tab-pane" aria-selected="false">Swasta</button>
+                                        aria-controls="sekolahNegeri-tab-pane" aria-selected="false">Negeri</button>
                                 </li>
                             </ul>
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane fade show active" id="allSekolah-tab-pane" role="tabpanel"
                                     aria-labelledby="allSekolah-tab" tabindex="0">
                                     <div class="row text-center py-2 mb-3">
-                                        <div class="col">
-                                            <div class="text-muted small">PAUD</div>
-                                            <div class="fw-bold text-success">113</div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="text-muted small">SD</div>
-                                            <div class="fw-bold text-danger">138</div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="text-muted small">SMP</div>
-                                            <div class="fw-bold text-primary">59</div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="text-muted small">SMA</div>
-                                            <div class="fw-bold text-secondary">18</div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="text-muted small">SMK</div>
-                                            <div class="fw-bold text-dark">24</div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="text-muted small">PKBM</div>
-                                            <div class="fw-bold text-info">21</div>
-                                        </div>
+                                        @foreach ($statistik['semua'] as $jenjang => $jumlah)
+                                            <div class="col">
+                                                <div class="text-muted small">{{ $jenjang }}</div>
+                                                <div class="fw-bold text-success">{{ $jumlah }}</div>
+                                            </div>
+                                        @endforeach
                                     </div>
                                     <canvas id="semuaSekolahChart"></canvas>
                                 </div>
                                 <div class="tab-pane fade" id="sekolahSwasta-tab-pane" role="tabpanel"
                                     aria-labelledby="sekolahSwasta-tab" tabindex="0">
                                     <div class="row text-center py-2 mb-3">
-                                        <div class="col">
-                                            <div class="text-muted small">PAUD</div>
-                                            <div class="fw-bold text-success">10</div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="text-muted small">SD</div>
-                                            <div class="fw-bold text-danger">12</div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="text-muted small">SMP</div>
-                                            <div class="fw-bold text-primary">10</div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="text-muted small">SMA</div>
-                                            <div class="fw-bold text-secondary">18</div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="text-muted small">SMK</div>
-                                            <div class="fw-bold text-dark">24</div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="text-muted small">PKBM</div>
-                                            <div class="fw-bold text-info">21</div>
-                                        </div>
+                                        @foreach ($statistik['Swasta'] as $jenjang => $jumlah)
+                                            <div class="col">
+                                                <div class="text-muted small">{{ $jenjang }}</div>
+                                                <div class="fw-bold text-success">{{ $jumlah }}</div>
+                                            </div>
+                                        @endforeach
                                     </div>
                                     <canvas id="sekolahSwastaChart"></canvas>
                                 </div>
                                 <div class="tab-pane fade" id="sekolahNegeri-tab-pane" role="tabpanel"
                                     aria-labelledby="sekolahNegeri-tab" tabindex="0">
                                     <div class="row text-center py-2 mb-3">
-                                        <div class="col">
-                                            <div class="text-muted small">PAUD</div>
-                                            <div class="fw-bold text-success">10</div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="text-muted small">SD</div>
-                                            <div class="fw-bold text-danger">12</div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="text-muted small">SMP</div>
-                                            <div class="fw-bold text-primary">10</div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="text-muted small">SMA</div>
-                                            <div class="fw-bold text-secondary">18</div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="text-muted small">SMK</div>
-                                            <div class="fw-bold text-dark">24</div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="text-muted small">PKBM</div>
-                                            <div class="fw-bold text-info">21</div>
-                                        </div>
+                                        @foreach ($statistik['Negeri'] as $jenjang => $jumlah)
+                                            <div class="col">
+                                                <div class="text-muted small">{{ $jenjang }}</div>
+                                                <div class="fw-bold text-success">{{ $jumlah }}</div>
+                                            </div>
+                                        @endforeach
                                     </div>
                                     <canvas id="sekolahNegeriChart"></canvas>
                                 </div>
@@ -303,7 +242,7 @@
         <div class="row">
             <div class="col-md-6 mb-4">
                 <div class="card text-bg-white">
-                    <img src="{{ asset('frontend/dummy.png') }}" class="card-img" alt="...">
+                    <img src="{{ asset('themes/frontend/dummy.png') }}" class="card-img" alt="...">
                     <div class="card-img-overlay">
                         <span class="badge mb-2">
                             <p class="card-title text-white m-0"><i class="fas fa-newspaper"></i> Liputan
@@ -317,7 +256,7 @@
             </div>
             <div class="col-md-3 mb-4">
                 <div class="card">
-                    <img src="{{ asset('frontend/dummy.png') }}" class="card-img-top" alt="Liputan 2" />
+                    <img src="{{ asset('themes/frontend/dummy.png') }}" class="card-img-top" alt="Liputan 2" />
                     <div class="card-body">
                         <p class="card-text">Lorem ipsum dolor sit amet,
                             consectetur
@@ -330,7 +269,7 @@
             </div>
             <div class="col-md-3 mb-4">
                 <div class="card">
-                    <img src="{{ asset('frontend/dummy.png') }}" class="card-img-top" alt="Liputan 2" />
+                    <img src="{{ asset('themes/frontend/dummy.png') }}" class="card-img-top" alt="Liputan 2" />
                     <div class="card-body">
                         <p class="card-text">Lorem ipsum dolor sit amet,
                             consectetur
@@ -813,6 +752,97 @@
                 scales: {
                     y: {
                         beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const chartSemuaData = @json(array_values($statistik['semua']));
+        const chartSwastaData = @json(array_values($statistik['Swasta']));
+        const chartNegeriData = @json(array_values($statistik['Negeri']));
+
+        const labelsJenjang = ['PAUD', 'SD', 'SMP', 'SMA', 'SMK', 'PKBM'];
+
+        // Semua Sekolah
+        new Chart(document.getElementById('semuaSekolahChart'), {
+            type: 'bar',
+            data: {
+                labels: labelsJenjang,
+                datasets: [{
+                    label: 'Jumlah Sekolah',
+                    data: chartSemuaData,
+                    backgroundColor: ['#28a745', '#dc3545', '#007bff', '#6c757d', '#343a40', '#17a2b8']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        precision: 0
+                    }
+                }
+            }
+        });
+
+        // Sekolah Swasta
+        new Chart(document.getElementById('sekolahSwastaChart'), {
+            type: 'bar',
+            data: {
+                labels: labelsJenjang,
+                datasets: [{
+                    label: 'Jumlah Sekolah Swasta',
+                    data: chartSwastaData,
+                    backgroundColor: ['#28a745', '#dc3545', '#007bff', '#6c757d', '#343a40', '#17a2b8']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        precision: 0
+                    }
+                }
+            }
+        });
+
+        // Sekolah Negeri
+        new Chart(document.getElementById('sekolahNegeriChart'), {
+            type: 'bar',
+            data: {
+                labels: labelsJenjang,
+                datasets: [{
+                    label: 'Jumlah Sekolah Negeri',
+                    data: chartNegeriData,
+                    backgroundColor: ['#28a745', '#dc3545', '#007bff', '#6c757d', '#343a40', '#17a2b8']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        precision: 0
                     }
                 }
             }

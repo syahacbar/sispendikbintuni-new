@@ -22,9 +22,9 @@ class PtkSeeder extends Seeder
             return;
         }
 
-        // Nama depan dan belakang untuk kombinasi acak
         $namaDepan = ['Ahmad', 'Budi', 'Candra', 'Dewi', 'Eka', 'Fitri', 'Gilang', 'Hari', 'Indah', 'Joko', 'Kiki', 'Linda', 'Mega', 'Nina', 'Oki', 'Putri', 'Qori', 'Rudi', 'Sari', 'Tomi'];
         $namaBelakang = ['Saputra', 'Wahyuni', 'Santoso', 'Lestari', 'Pratama', 'Rahmawati', 'Anggraini', 'Purnama', 'Hidayat', 'Siregar'];
+        $statusList = ['PNS', 'Honorer', 'GTY'];
 
         $data = [];
 
@@ -32,17 +32,16 @@ class PtkSeeder extends Seeder
             $isFemale = rand(0, 1) === 1;
             $jenisKelamin = $isFemale ? 'P' : 'L';
 
-            $nama = ($isFemale ? $this->femalePrefix() : $this->malePrefix()) . ' ' .
-                $namaDepan[array_rand($namaDepan)] . ' ' .
-                $namaBelakang[array_rand($namaBelakang)];
+            $nama = $namaDepan[array_rand($namaDepan)] . ' ' . $namaBelakang[array_rand($namaBelakang)];
 
             $data[] = [
                 'id' => (string) Str::uuid(),
                 'sekolah_id' => $sekolahIds->random(),
                 'nama' => $nama,
-                'nuptk' => 'NUPTK' . str_pad($i, 6, '0', STR_PAD_LEFT),
-                'nik' => '3276' . str_pad($i, 12, '0', STR_PAD_LEFT),
+                'nuptk' => 'NUPTK' . str_pad($i, 6, '0', STR_PAD_LEFT), // max 20 char
+                'nik' => str_pad((string)rand(1000000000000000, 9999999999999999), 16, '0', STR_PAD_LEFT), // max 20 char
                 'jenis_kelamin' => $jenisKelamin,
+                'status' => $statusList[array_rand($statusList)],
                 'tgl_lahir' => Carbon::now()->subYears(rand(25, 60))->subDays(rand(0, 365))->format('Y-m-d'),
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -51,15 +50,5 @@ class PtkSeeder extends Seeder
 
         DB::table('tbl_ptks')->insert($data);
         $this->command->info('100 data PTK berhasil di-seed.');
-    }
-
-    private function malePrefix(): string
-    {
-        return collect(['Bapak', 'Tn.', 'Sdr.'])->random();
-    }
-
-    private function femalePrefix(): string
-    {
-        return collect(['Ibu', 'Ny.', 'Sdri.'])->random();
     }
 }
