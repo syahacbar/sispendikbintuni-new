@@ -26,6 +26,13 @@ class KelompokMapelResource extends Resource
     protected static ?string $navigationGroup = 'Data Referensi';
     protected static ?string $slug = 'data-kelompok-mapel';
 
+
+    public static function getNavigationSort(): ?int
+    {
+        return 3;
+    }
+
+
     public static function form(Form $form): Form
     {
         return $form

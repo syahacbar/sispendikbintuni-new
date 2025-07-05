@@ -26,6 +26,12 @@ class SaranaResource extends Resource
     protected static ?string $pluralModelLabel = 'Sarana';
     protected static ?string $navigationGroup = 'Data Pendidikan';
 
+
+    public static function getNavigationSort(): ?int
+    {
+        return 8;
+    }
+
     public static function form(Form $form): Form
     {
         return $form

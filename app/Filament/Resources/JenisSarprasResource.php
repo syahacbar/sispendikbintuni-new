@@ -26,6 +26,12 @@ class JenisSarprasResource extends Resource
     protected static ?string $pluralModelLabel = 'Jenis Sarpras';
     protected static ?string $navigationGroup = 'Data Referensi';
     protected static ?string $slug = 'data-jenis-sarpras';
+
+    public static function getNavigationSort(): ?int
+    {
+        return 2;
+    }
+
     public static function form(Form $form): Form
     {
         return $form

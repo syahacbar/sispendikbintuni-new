@@ -26,6 +26,16 @@ class PengaduanResource extends Resource
     protected static ?string $model = Pengaduan::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationLabel = 'Pengaduan';
+    protected static ?string $pluralModelLabel = 'Pengaduan';
+    protected static ?string $navigationGroup = 'Manajemen Konten Web';
+
+
+    public static function getNavigationSort(): ?int
+    {
+        return 1;
+    }
+
 
     public static function form(Form $form): Form
     {

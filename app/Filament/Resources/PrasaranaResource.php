@@ -27,6 +27,11 @@ class PrasaranaResource extends Resource
     protected static ?string $navigationGroup = 'Data Pendidikan';
 
 
+    public static function getNavigationSort(): ?int
+    {
+        return 7;
+    }
+
     public static function getEloquentQuery(): Builder
     {
         $query = parent::getEloquentQuery();

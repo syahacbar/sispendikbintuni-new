@@ -23,6 +23,13 @@ class WilayahResource extends Resource
     protected static ?string $navigationGroup = 'Data Referensi';
     protected static ?string $slug = 'data-wilayah';
 
+
+    public static function getNavigationSort(): ?int
+    {
+        return 1;
+    }
+
+
     public static function form(Form $form): Form
     {
         return $form->schema([
@@ -83,13 +90,6 @@ class WilayahResource extends Resource
             // Input Nama Kelurahan Baru
             TextInput::make('nama')
                 ->label('Nama Kelurahan')
-                ->required(),
-
-            // Field Kode Wilayah (Otomatis)
-            TextInput::make('kode')
-                ->label('Kode Wilayah (Otomatis)')
-                ->disabled()
-                ->dehydrated() // agar ikut disimpan ke DB
                 ->required(),
         ]);
     }

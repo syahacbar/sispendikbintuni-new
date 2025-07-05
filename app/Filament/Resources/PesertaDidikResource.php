@@ -26,6 +26,13 @@ class PesertaDidikResource extends Resource
     protected static ?string $pluralModelLabel = 'Peserta Didik';
     protected static ?string $navigationGroup = 'Data Pendidikan';
 
+
+
+    public static function getNavigationSort(): ?int
+    {
+        return 4;
+    }
+
     public static function form(Form $form): Form
     {
         return $form

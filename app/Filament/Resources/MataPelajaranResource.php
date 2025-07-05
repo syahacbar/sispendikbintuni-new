@@ -25,6 +25,12 @@ class MataPelajaranResource extends Resource
     protected static ?string $pluralModelLabel = 'Mata Pelajaran';
     protected static ?string $navigationGroup = 'Data Pendidikan';
 
+    public static function getNavigationSort(): ?int
+    {
+        return 6;
+    }
+
+
     public static function getEloquentQuery(): Builder
     {
         $query = parent::getEloquentQuery();

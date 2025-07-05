@@ -28,6 +28,12 @@ class PTKResource extends Resource
     protected static ?string $navigationGroup = 'Data Pendidikan';
 
 
+    public static function getNavigationSort(): ?int
+    {
+        return 3;
+    }
+
+
     public static function getEloquentQuery(): Builder
     {
         $user = Filament::auth()->user();

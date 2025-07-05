@@ -10,9 +10,10 @@ return new class extends Migration {
         Schema::create('tbl_pengaduans', function (Blueprint $table) {
             $table->uuid('id');
             $table->string('nomor_laporan')->nullable()->unique();
-            $table->string('nama');
+            $table->string('nama_pelapor');
+            $table->string('judul_laporan');
             $table->string('email');
-            $table->string('telepon');
+            $table->string('no_hp');
             $table->string('kategori');
             $table->string('dok_lampiran')->nullable();
             $table->text('isi');

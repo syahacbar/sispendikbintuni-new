@@ -25,6 +25,12 @@ class KurikulumResource extends Resource
     protected static ?string $pluralModelLabel = 'Kurikulum';
     protected static ?string $navigationGroup = 'Data Pendidikan';
 
+
+    public static function getNavigationSort(): ?int
+    {
+        return 2;
+    }
+
     public static function form(Form $form): Form
     {
         return $form

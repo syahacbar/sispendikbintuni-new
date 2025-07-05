@@ -11,9 +11,10 @@ class Pengaduan extends Model
     protected $table = 'tbl_pengaduans';
     protected $fillable = [
         'nomor_laporan',
-        'nama',
+        'judul_laporan',
+        'nama_pelapor',
         'email',
-        'telepon',
+        'no_hp',
         'kategori',
         'dok_lampiran',
         'isi',

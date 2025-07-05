@@ -18,9 +18,15 @@ class KalenderResource extends Resource
     protected static ?string $model = Kalender::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-calendar';
-    protected static ?string $navigationLabel = 'Kegiatan';
-    protected static ?string $pluralModelLabel = 'Kegiatan';
-    protected static ?string $navigationGroup = 'Data Pendidikan';
+    protected static ?string $navigationLabel = 'Kalender';
+    protected static ?string $pluralModelLabel = 'Kalender';
+    protected static ?string $navigationGroup = 'Manajemen Konten Web';
+
+    public static function getNavigationSort(): ?int
+    {
+        return 3;
+    }
+
 
     public static function form(Form $form): Form
     {

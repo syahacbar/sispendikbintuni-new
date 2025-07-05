@@ -60,8 +60,14 @@
                     </div>
                     <div class="col-md-4">
                         <div class="mb-3">
-                            <label for="nama" class="form-label">Nama Lengkap</label>
-                            <input type="text" class="form-control" id="nama" name="nama" required>
+                            <label for="judul_laporan" class="form-label">Judul Aduan</label>
+                            <input type="text" class="form-control" id="judul_laporan" name="judul_laporan" required>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="nama_pelapor" class="form-label">Nama Pelapor</label>
+                            <input type="text" class="form-control" id="nama_pelapor" name="nama_pelapor" required>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -72,8 +78,8 @@
                     </div>
                     <div class="col-md-4">
                         <div class="mb-3">
-                            <label for="telepon" class="form-label">Nomor HP/WA</label>
-                            <input type="text" class="form-control" id="telepon" name="telepon" required>
+                            <label for="no_hp" class="form-label">Nomor HP/WA</label>
+                            <input type="text" class="form-control" id="no_hp" name="no_hp" required>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -117,7 +123,7 @@
             const form = document.querySelector('form');
             const submitBtn = document.getElementById('submit-btn');
             const resetBtn = document.getElementById('reset-btn');
-            const requiredFields = ['nama', 'email', 'telepon', 'kategori'];
+            const requiredFields = ['nama_pelapor', 'judul_laporan', 'email', 'no_hp', 'kategori'];
 
             const checkForm = () => {
                 const editor = tinymce.get('isi');

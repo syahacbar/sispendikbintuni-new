@@ -24,7 +24,13 @@ class InformasiResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-megaphone';
     protected static ?string $navigationLabel = 'Informasi';
     protected static ?string $pluralModelLabel = 'Informasi';
-    protected static ?string $navigationGroup = 'Managemen Konten Web';
+    protected static ?string $navigationGroup = 'Manajemen Konten Web';
+
+    public static function getNavigationSort(): ?int
+    {
+        return 2;
+    }
+
 
     public static function getEloquentQuery(): Builder
     {

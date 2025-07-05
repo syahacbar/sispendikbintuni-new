@@ -25,7 +25,6 @@ return new class extends Migration
             $table->string('kecamatan', 100)->nullable();
             $table->string('kabupaten', 100)->nullable();
             $table->string('provinsi', 100)->nullable();
-            $table->string('kode_wilayah', 10)->nullable();
             $table->timestamps();
 
             $table->foreign('sekolah_id')->references('id')->on('tbl_sekolahs')->onDelete('cascade');

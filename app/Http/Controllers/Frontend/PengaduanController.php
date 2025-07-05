@@ -11,9 +11,10 @@ class PengaduanController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nama' => 'required|string|max:255',
+            'judul_laporan' => 'required|string|max:255',
+            'nama_pelapor' => 'required|string|max:100',
             'email' => 'required|email',
-            'telepon' => 'required|string|max:20',
+            'no_hp' => 'required|string|max:20',
             'kategori' => 'required|string',
             'isi' => 'required|string',
             'dok_lampiran' => 'nullable|file|mimes:jpg,jpeg,png,pdf,docx|max:2048',

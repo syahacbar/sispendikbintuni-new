@@ -28,6 +28,12 @@ class RombonganBelajarResource extends Resource
     protected static ?string $pluralModelLabel = 'Rombongan Belajar';
     protected static ?string $navigationGroup = 'Data Pendidikan';
 
+
+    public static function getNavigationSort(): ?int
+    {
+        return 5;
+    }
+
     public static function form(Form $form): Form
     {
         return $form
