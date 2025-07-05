@@ -34,7 +34,6 @@ class LatestPengaduan extends BaseWidget
         return [
             TextColumn::make('nomor_laporan')->label('Nomor Laporan'),
             TextColumn::make('nama_pelapor')->label('Nama Pelapor'),
-            TextColumn::make('judul_laporan')->label('Judul Laporan'),
             TextColumn::make('email')->label('Email Pelapor'),
             TextColumn::make('no_hp')->label('No WA Pelapor'),
             TextColumn::make('kategori')->label('Kategori Laporan'),

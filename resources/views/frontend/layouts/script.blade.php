@@ -17,38 +17,23 @@
         $('#dataSekolah').DataTable({
             responsive: true,
             dom: 'Bfrtip',
-            target: 0,
-            buttons: [{
-                extend: 'colvis',
-                text: '☰ Column Control',
-                collectionLayout: 'fixed two-column',
-                columns: ':gt(0)'
-            }]
+            ordering: false
         });
+
         $('#dataPTK').DataTable({
             responsive: true,
             dom: 'Bfrtip',
-            target: 0,
-            buttons: [{
-                extend: 'colvis',
-                text: '☰ Column Control',
-                collectionLayout: 'fixed two-column',
-                columns: ':gt(0)'
-            }]
+            ordering: false
         });
+
         $('#dataSiswa').DataTable({
             responsive: true,
             dom: 'Bfrtip',
-            target: 0,
-            buttons: [{
-                extend: 'colvis',
-                text: '☰ Column Control',
-                collectionLayout: 'fixed two-column',
-                columns: ':gt(0)'
-            }]
+            ordering: false
         });
     });
 </script>
+
 
 <script>
     var map = L.map('map').setView([-2.2, 133.55], 9);

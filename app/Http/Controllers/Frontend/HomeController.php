@@ -58,17 +58,63 @@ class HomeController extends Controller
             ->groupBy('jumlah')
             ->pluck('total', 'jumlah');
 
+
+        // Akreditasi
+        $akreditasiLabels = ['A', 'B', 'C', 'Belum Terakreditasi'];
+        $akreditasiCounts = Sekolah::selectRaw('akreditasi, count(*) as total')
+            ->groupBy('akreditasi')
+            ->pluck('total', 'akreditasi');
+        $akreditasiData = [];
+        foreach ($akreditasiLabels as $label) {
+            $akreditasiData[] = $akreditasiCounts[$label] ?? 0;
+        }
+
+        // Status PTK
+        $statusPTKLabels = ['PNS', 'Honorer', 'GTY'];
+        $statusPTKCounts = Ptk::selectRaw('status, count(*) as total')
+            ->groupBy('status')
+            ->pluck('total', 'status');
+        $statusPTKData = [];
+        foreach ($statusPTKLabels as $label) {
+            $statusPTKData[] = $statusPTKCounts[$label] ?? 0;
+        }
+
+        // Kondisi Sarpras
+        $sarprasLabels = ['Baik', 'Rusak Ringan', 'Rusak Sedang', 'Rusak Berat'];
+        $sarprasCounts = Prasarana::selectRaw('kondisi, count(*) as total')
+            ->groupBy('kondisi')
+            ->pluck('total', 'kondisi');
+        $sarprasData = [];
+        foreach ($sarprasLabels as $label) {
+            $sarprasData[] = $sarprasCounts[$label] ?? 0;
+        }
+
+        // Kualifikasi Guru
+        $kualifikasiLabels = ['D3', 'S1', 'S2', 'S3'];
+        $kualifikasiCounts = Ptk::selectRaw('kualifikasi, count(*) as total')
+            ->groupBy('kualifikasi')
+            ->pluck('total', 'kualifikasi');
+        $kualifikasiData = [];
+        foreach ($kualifikasiLabels as $label) {
+            $kualifikasiData[] = $kualifikasiCounts[$label] ?? 0;
+        }
+
         return view('frontend.pages.home', compact(
             'statistik',
             'peserta_didik',
             'guru',
-            'akreditasi',
-            'status_ptk',
-            'kondisi_sarpras',
             'jumlah_peserta_didik',
             'jumlah_guru',
             'total_peserta_didik',
             'total_guru',
+            'akreditasiLabels',
+            'akreditasiData',
+            'statusPTKLabels',
+            'statusPTKData',
+            'sarprasLabels',
+            'sarprasData',
+            'kualifikasiLabels',
+            'kualifikasiData',
         ));
     }
 }

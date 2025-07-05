@@ -3,16 +3,19 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Ptk;
-use App\Models\Tag;
 use App\Models\User;
 use App\Models\Sekolah;
 use App\Models\Pengaduan;
 use App\Models\PesertaDidik;
 use Filament\Widgets\StatsOverviewWidget\Card;
-use Filament\Widgets\StatsOverviewWidget as BaseWidget;
+use Filament\Widgets\StatsOverviewWidget;
 
-class DashboardStats extends BaseWidget
+class DashboardStats extends StatsOverviewWidget
 {
+    protected int | string | array $columnSpan = [
+        'md' => 3,
+    ];
+
     protected function getCards(): array
     {
         return [

@@ -22,7 +22,6 @@ class SekolahImport implements ToModel, WithHeadingRow
             'kecamatan' => $row['kecamatan'],
             'kabupaten' => $row['kabupaten'],
             'provinsi' => $row['provinsi'],
-            'kode_wilayah' => $row['kode_wilayah'],
             'status_sekolah' => $row['status_sekolah'],
             'akreditasi' => $row['akreditasi'],
             'email' => $row['email'],
