@@ -7,12 +7,15 @@ use Filament\Tables;
 use Filament\Forms\Form;
 use App\Models\Prasarana;
 use Filament\Tables\Table;
+use App\Models\JenisSarpras;
+use Filament\Facades\Filament;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\BadgeColumn;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\PrasaranaResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\PrasaranaResource\RelationManagers;
 
 class PrasaranaResource extends Resource
 {
@@ -23,16 +26,22 @@ class PrasaranaResource extends Resource
     protected static ?string $pluralModelLabel = 'Prasarana';
     protected static ?string $navigationGroup = 'Data Pendidikan';
 
-    public static function getNavigationBadge(): ?string
+
+    public static function getNavigationSort(): ?int
     {
-        return static::getModel()::count();
+        return 7;
     }
 
-    public static function getNavigationBadgeColor(): string|array|null
+    public static function getEloquentQuery(): Builder
     {
-        return static::getModel()::count() > 5 ? 'warning' : 'success';
-    }
+        $query = parent::getEloquentQuery();
 
+        if (Filament::auth()->user()->hasRole('admin_sekolah')) {
+            $query->where('sekolah_id', Filament::auth()->user()->sekolah_id);
+        }
+
+        return $query;
+    }
 
     public static function form(Form $form): Form
     {
@@ -43,36 +52,64 @@ class PrasaranaResource extends Resource
                     ->relationship('sekolah', 'nama')
                     ->searchable()
                     ->preload()
+                    ->default(fn() => Filament::auth()->user()->sekolah_id)
+                    ->disabled(fn() => Filament::auth()->user()->hasRole('admin_sekolah'))
+                    ->dehydrated(fn() => true)
                     ->required(),
-                Forms\Components\TextInput::make('jenis_prasarana')
-                    ->required()
-                    ->maxLength(100),
-                Forms\Components\TextInput::make('jumlah')
+                Select::make('jenis_prasarana_id')
+                    ->label('Jenis Prasarana')
+                    ->options(function () {
+                        $user = Filament::auth()->user();
+                        $sudahDipakai = Prasarana::where('sekolah_id', $user->sekolah_id)
+                            ->pluck('jenis_prasarana_id')
+                            ->toArray();
+
+                        return JenisSarpras::whereNotIn('id', $sudahDipakai)
+                            ->pluck('nama', 'id');
+                    })
+                    ->searchable()
+                    ->preload()
+                    ->required(),
+                TextInput::make('jumlah')
                     ->required()
                     ->numeric(),
-            ]);
+                Select::make('kondisi')
+                    ->options([
+                        'Bagus' => 'Bagus',
+                        'Rusak' => 'Rusak',
+                    ])
+                    ->required(),
+            ])->columns(4);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')
-                    ->label('ID'),
-                Tables\Columns\TextColumn::make('sekolah_id'),
-                Tables\Columns\TextColumn::make('jenis_prasarana')
+                TextColumn::make('sekolah.nama')
+                    ->label('Sekolah')
+                    ->sortable()
+                    ->searchable()
+                    ->visible(fn() => !auth()->user()->hasRole('admin_sekolah')),
+                TextColumn::make('jenis_prasarana.nama')
+                    ->label('Jenis Prasarana')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('jumlah')
+                TextColumn::make('jumlah')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
+                BadgeColumn::make('kondisi')
+                    ->label('Kondisi')
+                    ->colors([
+                        'success' => 'Bagus',
+                        'danger' => 'Rusak',
+                    ])
+                    ->sortable(),
+                TextColumn::make('created_at')
                     ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                    ->sortable(),
+                TextColumn::make('updated_at')
                     ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->sortable(),
             ])
             ->filters([
                 //

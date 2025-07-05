@@ -3,7 +3,7 @@
         <div class="row align-items-start mb-4">
             <div class="col-md-4">
                 <div class="mb-3">
-                    <img class="w-5 mr-3" src="{{ asset('frontend/logo.png') }}" alt="Logo Kab Bintuni">
+                    <img class="w-5 mr-3" src="{{ asset('themes/frontend/logo.png') }}" alt="Logo Kab Bintuni">
                     <strong>Sispendik Kabupaten Teluk Bintuni</strong>
                 </div>
                 <p class="small mb-1">

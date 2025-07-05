@@ -2,16 +2,21 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PTKResource\Pages;
-use App\Filament\Resources\PTKResource\RelationManagers;
 use App\Models\PTK;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Facades\Filament;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\DatePicker;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\PTKResource\Pages;
 
 class PTKResource extends Resource
 {
@@ -22,67 +27,124 @@ class PTKResource extends Resource
     protected static ?string $pluralModelLabel = 'PTK';
     protected static ?string $navigationGroup = 'Data Pendidikan';
 
-    public static function getNavigationBadge(): ?string
+
+    public static function getNavigationSort(): ?int
     {
-        return static::getModel()::count();
+        return 3;
     }
 
-    public static function getNavigationBadgeColor(): string|array|null
-    {
-        return static::getModel()::count() > 5 ? 'warning' : 'success';
-    }
 
+    public static function getEloquentQuery(): Builder
+    {
+        $user = Filament::auth()->user();
+
+        if ($user->hasRole('admin_sekolah')) {
+            return parent::getEloquentQuery()->where('sekolah_id', $user->sekolah_id);
+        }
+
+        return parent::getEloquentQuery();
+    }
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('sekolah_id')
-                    ->required(),
-                Forms\Components\TextInput::make('nama')
-                    ->required()
-                    ->maxLength(100),
-                Forms\Components\TextInput::make('nuptk')
-                    ->required()
-                    ->maxLength(20),
-                Forms\Components\TextInput::make('nik')
-                    ->required()
-                    ->maxLength(20),
-                Forms\Components\TextInput::make('jenis_kelamin')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\DatePicker::make('tgl_lahir')
-                    ->required(),
-            ]);
+        return $form->schema([
+            Select::make('sekolah_id')
+                ->label('Sekolah')
+                ->relationship('sekolah', 'nama')
+                ->searchable()
+                ->preload()
+                ->default(fn() => Filament::auth()->user()->sekolah_id)
+                ->disabled(fn() => Filament::auth()->user()->hasRole('admin_sekolah'))
+                ->dehydrated(fn() => true)
+                ->required(),
+            TextInput::make('nama')
+                ->required()
+                ->label('Nama Lengkap')
+                ->maxLength(100),
+
+            TextInput::make('nuptk')
+                ->label('NUPTK')
+                ->required()
+                ->maxLength(20),
+
+            TextInput::make('nik')
+                ->label('NIK')
+                ->required()
+                ->maxLength(20),
+
+            Radio::make('jenis_kelamin')
+                ->label('Jenis Kelamin')
+
+                ->options([
+                    'L' => 'Laki-laki',
+                    'P' => 'Perempuan',
+                ])
+                ->inline()
+                ->required(),
+
+            DatePicker::make('tgl_lahir')
+                ->label('Tanggal Lahir')
+                ->nullable()
+                ->default(true)
+                ->native(false)
+                ->seconds(false)
+                ->displayFormat('d/m/Y')
+                ->default(now())
+                ->required(),
+            Select::make('status')
+                ->options([
+                    'GTY' => 'GTY',
+                    'Honorer' => 'Honorer',
+                    'PNS' => 'PNS',
+                ])
+                ->required(),
+            Select::make('jenjang')
+                ->label('Jenjang')
+                ->options([
+                    'TK' => 'TK',
+                    'KB' => 'KB',
+                    'TPA' => 'TPA',
+                    'SPS' => 'SPS',
+                    'PKBM' => 'PKBM',
+                    'SKB' => 'SKB',
+                    'SD' => 'SD',
+                    'SMP' => 'SMP',
+                    'SMK' => 'SMK',
+                    'SMA' => 'SMA',
+                    'SLB' => 'SLB',
+                ])
+                ->required(),
+        ])->columns(3);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                // Tables\Columns\TextColumn::make('id')
-                //     ->label('ID'),
-                // Tables\Columns\TextColumn::make('sekolah_id'),
-                Tables\Columns\TextColumn::make('sekolah.nama')
+                TextColumn::make('sekolah.nama')
                     ->label('Sekolah')
                     ->sortable()
+                    ->searchable()
+                    ->visible(fn() => !auth()->user()->hasRole('admin_sekolah')),
+                TextColumn::make('nama')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('nama')
+                TextColumn::make('nuptk')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('nuptk')
+                TextColumn::make('nik')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('nik')
+                TextColumn::make('jenis_kelamin')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('jenis_kelamin')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('tgl_lahir')
+                TextColumn::make('tgl_lahir')
                     ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('jenjang')
+                    ->label('Jenjang')
+                    ->sortable(),
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

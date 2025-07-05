@@ -14,11 +14,14 @@ return new class extends Migration
         Schema::create('tbl_prasaranas', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('sekolah_id');
-            $table->string('jenis_prasarana', 100);
+            $table->uuid('jenis_prasarana_id');
             $table->integer('jumlah');
+            $table->enum('kondisi', ['Bagus', 'Rusak']);
             $table->timestamps();
 
-            $table->foreign('sekolah_id')->references('id')->on('tbl_sekolahs');
+            // Foreign keys
+            $table->foreign('sekolah_id')->references('id')->on('tbl_sekolahs')->onDelete('cascade');
+            $table->foreign('jenis_prasarana_id')->references('id')->on('tbl_jenis_sarpras')->onDelete('cascade');
         });
     }
 

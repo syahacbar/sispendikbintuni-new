@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tbl_kelurahans', function (Blueprint $table) {
+        Schema::create('tbl_jenis_sarpras', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('kecamatan_id')->constrained('tbl_kecamatans')->cascadeOnDelete();
-            $table->string('nama');
+            $table->string('nama', 255);
             $table->timestamps();
         });
     }
@@ -24,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tbl_kelurahans');
+        Schema::dropIfExists('tbl_jenis_sarpras');
     }
 };

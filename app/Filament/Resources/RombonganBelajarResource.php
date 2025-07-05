@@ -2,14 +2,17 @@
 
 namespace App\Filament\Resources;
 
+use App\Models\Ptk;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Sekolah;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Facades\Filament;
 use App\Models\RombonganBelajar;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -25,16 +28,11 @@ class RombonganBelajarResource extends Resource
     protected static ?string $pluralModelLabel = 'Rombongan Belajar';
     protected static ?string $navigationGroup = 'Data Pendidikan';
 
-    public static function getNavigationBadge(): ?string
-    {
-        return static::getModel()::count();
-    }
 
-    public static function getNavigationBadgeColor(): string|array|null
+    public static function getNavigationSort(): ?int
     {
-        return static::getModel()::count() > 5 ? 'warning' : 'success';
+        return 5;
     }
-
 
     public static function form(Form $form): Form
     {
@@ -44,17 +42,32 @@ class RombonganBelajarResource extends Resource
                     ->label('Sekolah')
                     ->relationship('sekolah', 'nama')
                     ->searchable()
-                    ->preload()
-                    ->required(),
-                Select::make('wali_ptk_id')
-                    ->label('Wali Kelas')
-                    ->relationship('wali', 'nama')
-                    ->searchable()
-                    ->preload()
-                    ->required(),
+                    ->default(fn() => Filament::auth()->user()->sekolah_id)
+                    ->disabled(fn() => Filament::auth()->user()->hasRole('admin_sekolah'))
+                    ->dehydrated(true)
+                    ->required()
+                    ->reactive(),
+
                 TextInput::make('nama_rombel')
                     ->required()
                     ->maxLength(50),
+
+                Select::make('wali_ptk_id')
+                    ->label('Wali Kelas')
+                    ->options(function (callable $get) {
+                        $sekolahId = $get('sekolah_id') ?? Filament::auth()->user()->sekolah_id;
+
+                        if (!$sekolahId) {
+                            return [];
+                        }
+
+                        return Ptk::where('sekolah_id', $sekolahId)->pluck('nama', 'id');
+                    })
+                    ->searchable()
+                    ->preload()
+                    ->required()
+                    ->reactive(),
+
                 TextInput::make('tingkat_kelas')
                     ->required()
                     ->numeric(),
@@ -74,21 +87,25 @@ class RombonganBelajarResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('sekolah.nama'),
-                Tables\Columns\TextColumn::make('wali.nama'),
-                Tables\Columns\TextColumn::make('nama_rombel')
+                TextColumn::make('sekolah.nama')
+                    ->label('Sekolah')
+                    ->sortable()
+                    ->searchable()
+                    ->visible(fn() => !auth()->user()->hasRole('admin_sekolah')),
+                TextColumn::make('wali.nama'),
+                TextColumn::make('nama_rombel')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('tingkat_kelas')
+                TextColumn::make('tingkat_kelas')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('semester')
+                TextColumn::make('semester')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('kurikulum.nama'),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('kurikulum.nama'),
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

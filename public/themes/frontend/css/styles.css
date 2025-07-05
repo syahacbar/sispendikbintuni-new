@@ -29,7 +29,8 @@ body {
     display: block;
 }
 
-.main-navbar .nav-link {
+.main-navbar .nav-link,
+li.nav-item.dropdown ul li a {
     color: #000 !important;
     font-weight: 500;
     font-size: 0.9rem;
@@ -853,7 +854,7 @@ body {
 }
 .card-title {
     font-weight: 600;
-    font-size: 0.875rem;
+    /* font-size: 0.875rem; */
     color: #111827;
     margin-bottom: 0.25rem;
     line-height: 1.2;

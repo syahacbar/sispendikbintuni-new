@@ -28,7 +28,6 @@ class PaneladminPanelProvider extends PanelProvider
             ->default()
             ->id('paneladmin')
             ->path('paneladmin')
-            // ->brandLogo(fn() => asset('assets/logo-bintuni.png'))
             ->brandName('Sispendik Bintuni')
             ->login()
             ->font('Segoe UI')
@@ -37,12 +36,8 @@ class PaneladminPanelProvider extends PanelProvider
             ])
             ->sidebarCollapsibleOnDesktop()
             ->sidebarWidth('15rem')
-            // ->viteTheme('resources/css/app.css')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
-            ->pages([
-                Pages\Dashboard::class,
-            ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
@@ -64,6 +59,14 @@ class PaneladminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])
+
+            ->navigationGroups([
+                'Data Referensi',
+                'Data Pendidikan',
+                'Manajemen Konten Web',
+                'Manajemen Pengguna',
+                'Pengaturan',
             ])
 
             ->renderHook('panels::body.end', function () {

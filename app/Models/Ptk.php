@@ -10,7 +10,7 @@ class Ptk extends Model
     use HasUuids;
 
     protected $table = 'tbl_ptks';
-    protected $fillable = ['sekolah_id', 'nama', 'nuptk', 'nik', 'jenis_kelamin', 'tgl_lahir'];
+    protected $fillable = ['sekolah_id', 'nama', 'nuptk', 'nik', 'jenis_kelamin', 'tgl_lahir', 'status', 'jenjang'];
 
     public function sekolah()
     {

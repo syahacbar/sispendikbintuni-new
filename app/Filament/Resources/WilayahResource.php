@@ -2,17 +2,15 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
 use Filament\Tables;
 use App\Models\Wilayah;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
-use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\WilayahResource\Pages;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\WilayahResource\RelationManagers;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 
 class WilayahResource extends Resource
 {
@@ -25,37 +23,95 @@ class WilayahResource extends Resource
     protected static ?string $navigationGroup = 'Data Referensi';
     protected static ?string $slug = 'data-wilayah';
 
-    public static function getNavigationBadge(): ?string
-    {
-        return static::getModel()::count();
-    }
 
-    public static function getNavigationBadgeColor(): string|array|null
+    public static function getNavigationSort(): ?int
     {
-        return static::getModel()::count() > 5 ? 'warning' : 'success';
+        return 1;
     }
 
 
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Forms\Components\TextInput::make('kode')
-                ->label('Kode Wilayah')
+            // Pilih Provinsi
+            Select::make('provinsi')
+                ->label('Provinsi')
+                ->options(
+                    Wilayah::whereRaw("CHAR_LENGTH(REPLACE(kode, '.', '')) = 2")
+                        ->pluck('nama', 'kode')
+                )
+                ->reactive()
+                ->required(),
+
+            // Pilih Kabupaten
+            Select::make('kabupaten')
+                ->label('Kabupaten')
+                ->options(
+                    fn(callable $get) =>
+                    $get('provinsi')
+                        ? Wilayah::where('kode', 'like', $get('provinsi') . '.%')
+                        ->whereRaw("CHAR_LENGTH(REPLACE(kode, '.', '')) = 4")
+                        ->pluck('nama', 'kode')
+                        : []
+                )
+                ->reactive()
                 ->required()
-                ->maxLength(10),
-            Forms\Components\TextInput::make('nama')
-                ->label('Nama Wilayah')
+                ->disabled(fn(callable $get) => !$get('provinsi')),
+
+            // Pilih Kecamatan
+            Select::make('kecamatan')
+                ->label('Kecamatan')
+                ->options(
+                    fn(callable $get) =>
+                    $get('kabupaten')
+                        ? Wilayah::where('kode', 'like', $get('kabupaten') . '.%')
+                        ->whereRaw("CHAR_LENGTH(REPLACE(kode, '.', '')) = 6")
+                        ->pluck('nama', 'kode')
+                        : []
+                )
+                ->reactive()
                 ->required()
-                ->maxLength(255),
+                ->afterStateUpdated(function (callable $get, callable $set) {
+                    $kecKode = $get('kecamatan');
+
+                    if ($kecKode) {
+                        $jumlahKelurahan = Wilayah::where('kode', 'like', $kecKode . '.%')
+                            ->whereRaw("CHAR_LENGTH(REPLACE(kode, '.', '')) = 10")
+                            ->count();
+
+                        $newKode = $kecKode . '.' . str_pad($jumlahKelurahan + 1, 4, '0', STR_PAD_LEFT);
+                        $set('kode', $newKode);
+                    } else {
+                        $set('kode', null);
+                    }
+                })
+                ->disabled(fn(callable $get) => !$get('kabupaten')),
+
+            // Input Nama Kelurahan Baru
+            TextInput::make('nama')
+                ->label('Nama Kelurahan')
+                ->required(),
         ]);
     }
+
+
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                TextColumn::make('kode')->label('Kode')->searchable(),
-                TextColumn::make('nama')->label('Nama Wilayah')->searchable(),
+                TextColumn::make('kode')
+                    ->label('Kode')
+                    ->searchable(),
+                TextColumn::make('nama')
+                    ->label('Nama Wilayah')
+                    ->searchable(),
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable(),
+                TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable(),
             ])
             ->filters([
                 //

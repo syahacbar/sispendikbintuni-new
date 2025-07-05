@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Sekolah;
 
 class UserSeeder extends Seeder
 {
@@ -29,12 +30,17 @@ class UserSeeder extends Seeder
         $dinas->assignRole('admin_dinas');
 
         // Admin Sekolah
-        $sekolah = User::updateOrCreate([
-            'email' => 'adminsekolah@example.com',
-        ], [
-            'name' => 'Admin Sekolah',
-            'password' => Hash::make('password'),
-        ]);
-        $sekolah->assignRole('admin_sekolah');
+        $sekolahTarget = Sekolah::where('nama', 'SD Negeri Harapan Bangsa')->first();
+
+        if ($sekolahTarget) {
+            $sekolah = User::updateOrCreate([
+                'email' => 'adminsekolah@example.com',
+            ], [
+                'name' => 'Admin Sekolah',
+                'password' => Hash::make('password'),
+                'sekolah_id' => $sekolahTarget->id,
+            ]);
+            $sekolah->assignRole('admin_sekolah');
+        }
     }
 }

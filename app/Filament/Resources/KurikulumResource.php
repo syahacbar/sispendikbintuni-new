@@ -25,16 +25,11 @@ class KurikulumResource extends Resource
     protected static ?string $pluralModelLabel = 'Kurikulum';
     protected static ?string $navigationGroup = 'Data Pendidikan';
 
-    public static function getNavigationBadge(): ?string
-    {
-        return static::getModel()::count();
-    }
 
-    public static function getNavigationBadgeColor(): string|array|null
+    public static function getNavigationSort(): ?int
     {
-        return static::getModel()::count() > 5 ? 'warning' : 'success';
+        return 2;
     }
-
 
     public static function form(Form $form): Form
     {
