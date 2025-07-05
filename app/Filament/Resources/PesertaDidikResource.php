@@ -15,6 +15,7 @@ use Filament\Forms\Components\Fieldset;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
+
 use App\Filament\Resources\PesertaDidikResource\Pages;
 
 class PesertaDidikResource extends Resource
@@ -37,112 +38,133 @@ class PesertaDidikResource extends Resource
     {
         return $form
             ->schema([
-                Fieldset::make('Identitas Peserta Didik')
-                    ->schema([
-                        Select::make('sekolah_id')
-                            ->label('Sekolah')
-                            ->relationship('sekolah', 'nama')
-                            ->searchable()
-                            ->default(fn() => Filament::auth()->user()->sekolah_id)
-                            ->disabled(fn() => Filament::auth()->user()->hasRole('admin_sekolah'))
-                            ->dehydrated(fn() => true)
-                            ->required(),
-                        TextInput::make('nama')
-                            ->label('Nama Lengkap')
-                            ->required()
-                            ->maxLength(100),
-                        TextInput::make('nisn')
-                            ->label('NISN')
-                            ->required()
-                            ->maxLength(10),
-                        TextInput::make('nik')
-                            ->label('NIK')
-                            ->required()
-                            ->maxLength(20),
-                        Radio::make('jenis_kelamin')
-                            ->label('Jenis Kelamin')
+                Fieldset::make('Identitas Peserta Didik')->schema([
+                    Select::make('sekolah_id')
+                        ->label('Sekolah')
+                        ->relationship('sekolah', 'nama')
+                        ->searchable()
+                        ->default(fn() => Filament::auth()->user()->sekolah_id)
+                        ->disabled(fn() => Filament::auth()->user()->hasRole('admin_sekolah'))
+                        ->dehydrated()
+                        ->required(),
 
-                            ->options([
-                                'L' => 'Laki-laki',
-                                'P' => 'Perempuan',
-                            ])
-                            ->inline()
-                            ->required(),
-                    ])->columns(3),
-                Fieldset::make('Tempat, Tanggal Lahir')
-                    ->schema([
-                        Select::make('provinsi')
-                            ->label('Provinsi')
-                            ->options(
-                                Wilayah::whereRaw("CHAR_LENGTH(REPLACE(kode, '.', '')) = 2")
-                                    ->pluck('nama', 'kode')
-                            )
-                            ->reactive()
-                            ->required(),
+                    TextInput::make('nama')
+                        ->label('Nama Lengkap')
+                        ->required()
+                        ->maxLength(100),
 
-                        Select::make('kabupaten')
-                            ->label('Kabupaten/Kota')
-                            ->options(
-                                fn(callable $get) =>
-                                $get('provinsi')
-                                    ? Wilayah::where('kode', 'like', $get('provinsi') . '.%')
-                                    ->whereRaw("CHAR_LENGTH(REPLACE(kode, '.', '')) = 4")
-                                    ->pluck('nama', 'kode')
-                                    : []
-                            )
-                            ->reactive()
-                            ->required()
-                            ->disabled(fn(callable $get) => !$get('provinsi')),
+                    TextInput::make('nisn')
+                        ->label('NISN')
+                        ->required()
+                        ->maxLength(10),
 
-                        Select::make('kecamatan')
-                            ->label('Kecamatan')
-                            ->options(
-                                fn(callable $get) =>
-                                $get('kabupaten')
-                                    ? Wilayah::where('kode', 'like', $get('kabupaten') . '.%')
-                                    ->whereRaw("CHAR_LENGTH(REPLACE(kode, '.', '')) = 6")
-                                    ->pluck('nama', 'kode')
-                                    : []
-                            )
-                            ->reactive()
-                            ->required()
-                            ->disabled(fn(callable $get) => !$get('kabupaten')),
+                    TextInput::make('nik')
+                        ->label('NIK')
+                        ->required()
+                        ->maxLength(20),
 
-                        Select::make('desa_kelurahan')
-                            ->label('Desa/Kelurahan')
-                            ->options(
-                                fn(callable $get) =>
-                                $get('kecamatan')
-                                    ? Wilayah::where('kode', 'like', $get('kecamatan') . '.%')
-                                    ->whereRaw("CHAR_LENGTH(REPLACE(kode, '.', '')) = 10")
-                                    ->pluck('nama', 'kode')
-                                    : []
-                            )
-                            ->reactive()
-                            ->required()
-                            ->afterStateUpdated(function (callable $get, callable $set) {
-                                $desaKode = $get('desa_kelurahan');
-                                if ($desaKode) {
-                                    $set('kode_wilayah', $desaKode);
-                                }
-                            })
-                            ->disabled(fn(callable $get) => !$get('kecamatan')),
+                    Radio::make('jenis_kelamin')
+                        ->label('Jenis Kelamin')
+                        ->options([
+                            'L' => 'Laki-laki',
+                            'P' => 'Perempuan',
+                        ])
+                        ->inline()
+                        ->required(),
 
-                        TextInput::make('alamat_jalan')
-                            ->label('Tempat Lahir')
-                            ->nullable(),
-                        DatePicker::make('tgl_lahir')
-                            ->label('Tanggal Lahir')
-                            ->required()
-                            ->default(true)
-                            ->native(false)
-                            ->seconds(false)
-                            ->displayFormat('d/m/Y')
-                            ->default(now())
-                            ->required(),
-                    ])->columns(3)
+                    Select::make('jenjang')
+                        ->label('Jenjang')
+                        ->options([
+                            'TK' => 'TK',
+                            'KB' => 'KB',
+                            'TPA' => 'TPA',
+                            'SPS' => 'SPS',
+                            'PKBM' => 'PKBM',
+                            'SKB' => 'SKB',
+                            'SD' => 'SD',
+                            'SMP' => 'SMP',
+                            'SMK' => 'SMK',
+                            'SMA' => 'SMA',
+                            'SLB' => 'SLB',
+                        ])
+                        ->required(),
+                ])->columns(3),
+
+                Fieldset::make('Alamat dan Tempat Lahir')->schema([
+                    Select::make('provinsi')
+                        ->label('Provinsi')
+                        ->options(
+                            Wilayah::whereRaw("CHAR_LENGTH(REPLACE(kode, '.', '')) = 2")->pluck('nama', 'kode')
+                        )
+                        ->reactive()
+                        ->required(),
+
+                    Select::make('kabupaten')
+                        ->label('Kabupaten/Kota')
+                        ->options(
+                            fn(callable $get) =>
+                            $get('provinsi')
+                                ? Wilayah::where('kode', 'like', $get('provinsi') . '.%')
+                                ->whereRaw("CHAR_LENGTH(REPLACE(kode, '.', '')) = 4")
+                                ->pluck('nama', 'kode')
+                                : []
+                        )
+                        ->reactive()
+                        ->required()
+                        ->disabled(fn(callable $get) => !$get('provinsi')),
+
+                    Select::make('kecamatan')
+                        ->label('Kecamatan')
+                        ->options(
+                            fn(callable $get) =>
+                            $get('kabupaten')
+                                ? Wilayah::where('kode', 'like', $get('kabupaten') . '.%')
+                                ->whereRaw("CHAR_LENGTH(REPLACE(kode, '.', '')) = 6")
+                                ->pluck('nama', 'kode')
+                                : []
+                        )
+                        ->reactive()
+                        ->required()
+                        ->disabled(fn(callable $get) => !$get('kabupaten')),
+
+                    Select::make('desa_kelurahan')
+                        ->label('Desa/Kelurahan')
+                        ->options(
+                            fn(callable $get) =>
+                            $get('kecamatan')
+                                ? Wilayah::where('kode', 'like', $get('kecamatan') . '.%')
+                                ->whereRaw("CHAR_LENGTH(REPLACE(kode, '.', '')) = 10")
+                                ->pluck('nama', 'kode')
+                                : []
+                        )
+                        ->reactive()
+                        ->required()
+                        ->afterStateUpdated(function (callable $get, callable $set) {
+                            $desaKode = $get('desa_kelurahan');
+                            if ($desaKode) {
+                                $set('kode_wilayah', $desaKode);
+                            }
+                        })
+                        ->disabled(fn(callable $get) => !$get('kecamatan')),
+
+                    TextInput::make('alamat_jalan')
+                        ->label('Alamat Jalan')
+                        ->nullable(),
+
+                    TextInput::make('kode_pos')
+                        ->label('Kode Pos')
+                        ->maxLength(10)
+                        ->nullable(),
+
+                    DatePicker::make('tgl_lahir')
+                        ->label('Tanggal Lahir')
+                        ->native(false)
+                        ->displayFormat('d/m/Y')
+                        ->required(),
+                ])->columns(3),
             ]);
     }
+
 
     public static function table(Table $table): Table
     {
@@ -153,28 +175,75 @@ class PesertaDidikResource extends Resource
                     ->sortable()
                     ->searchable()
                     ->visible(fn() => !auth()->user()->hasRole('admin_sekolah')),
+
                 TextColumn::make('nama')
-                    ->searchable(),
-                TextColumn::make('nisn')
-                    ->searchable(),
-                TextColumn::make('nik')
-                    ->searchable(),
-                TextColumn::make('jenis_kelamin')
-                    ->searchable(),
-                TextColumn::make('tgl_lahir')
-                    ->date()
+                    ->label('Nama Lengkap')
+                    ->searchable()
                     ->sortable(),
+
+                TextColumn::make('nisn')
+                    ->label('NISN')
+                    ->searchable()
+                    ->sortable(),
+
+                TextColumn::make('nik')
+                    ->label('NIK')
+                    ->searchable()
+                    ->sortable(),
+
+                TextColumn::make('jenis_kelamin')
+                    ->label('Jenis Kelamin')
+                    ->formatStateUsing(fn($state) => $state === 'L' ? 'Laki-laki' : 'Perempuan')
+                    ->sortable(),
+
+                TextColumn::make('jenjang')
+                    ->label('Jenjang')
+                    ->sortable(),
+
+                TextColumn::make('tgl_lahir')
+                    ->label('Tanggal Lahir')
+                    ->date('d/m/Y')
+                    ->sortable(),
+
+                TextColumn::make('alamat_jalan')
+                    ->label('Alamat Jalan')
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->wrap(),
+
+                TextColumn::make('desa_kelurahan')
+                    ->label('Desa/Kelurahan')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('kecamatan')
+                    ->label('Kecamatan')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('kabupaten')
+                    ->label('Kabupaten/Kota')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('provinsi')
+                    ->label('Provinsi')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('kode_pos')
+                    ->label('Kode Pos')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('Dibuat')
+                    ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label('Diperbarui')
+                    ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                // Tambahkan filter di sini jika perlu
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
@@ -187,6 +256,7 @@ class PesertaDidikResource extends Resource
                 ]),
             ]);
     }
+
 
     public static function getRelations(): array
     {

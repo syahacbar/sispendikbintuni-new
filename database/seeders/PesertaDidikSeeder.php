@@ -16,18 +16,22 @@ class PesertaDidikSeeder extends Seeder
     {
         $faker = Faker::create('id_ID');
 
-        // Ganti dengan ID sekolah yang valid dari tabel tbl_sekolahs
-        $sekolahId = DB::table('tbl_sekolahs')->inRandomOrder()->value('id');
+        // Ambil semua ID sekolah
+        $sekolahIds = DB::table('tbl_sekolahs')->pluck('id');
+
+        // Daftar jenjang valid
+        $jenjangOptions = ['TK', 'KB', 'TPA', 'SPS', 'PKBM', 'SKB', 'SD', 'SMP', 'SMK', 'SMA', 'SLB'];
 
         for ($i = 0; $i < 1000; $i++) {
             DB::table('tbl_peserta_didiks')->insert([
                 'id' => Str::uuid(),
-                'sekolah_id' => $sekolahId,
+                'sekolah_id' => $faker->randomElement($sekolahIds),
                 'nama' => $faker->name(),
                 'nisn' => $faker->unique()->numerify('##########'),
                 'nik' => $faker->unique()->numerify('####################'),
                 'jenis_kelamin' => $faker->randomElement(['L', 'P']),
                 'tgl_lahir' => $faker->date('Y-m-d', '-5 years'),
+                'jenjang' => $faker->randomElement($jenjangOptions),
                 'alamat_jalan' => $faker->streetAddress(),
                 'desa_kelurahan' => $faker->citySuffix(),
                 'kode_pos' => $faker->postcode(),

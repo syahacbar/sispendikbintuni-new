@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('nik', 20);
             $table->enum('jenis_kelamin', ['L', 'P']);
             $table->date('tgl_lahir');
+            $table->enum('jenjang', ['TK', 'KB', 'TPA', 'SPS', 'PKBM', 'SKB', 'SD', 'SMP', 'SMK', 'SMA', 'SLB']);
             $table->text('alamat_jalan')->nullable();
             $table->string('desa_kelurahan', 100)->nullable();
             $table->string('kode_pos', 10)->nullable();

@@ -98,6 +98,22 @@ class PTKResource extends Resource
                     'PNS' => 'PNS',
                 ])
                 ->required(),
+            Select::make('jenjang')
+                ->label('Jenjang')
+                ->options([
+                    'TK' => 'TK',
+                    'KB' => 'KB',
+                    'TPA' => 'TPA',
+                    'SPS' => 'SPS',
+                    'PKBM' => 'PKBM',
+                    'SKB' => 'SKB',
+                    'SD' => 'SD',
+                    'SMP' => 'SMP',
+                    'SMK' => 'SMK',
+                    'SMA' => 'SMA',
+                    'SLB' => 'SLB',
+                ])
+                ->required(),
         ])->columns(3);
     }
 
@@ -120,6 +136,9 @@ class PTKResource extends Resource
                     ->searchable(),
                 TextColumn::make('tgl_lahir')
                     ->date()
+                    ->sortable(),
+                TextColumn::make('jenjang')
+                    ->label('Jenjang')
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()

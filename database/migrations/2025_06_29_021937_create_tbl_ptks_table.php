@@ -20,6 +20,7 @@ return new class extends Migration
             $table->enum('jenis_kelamin', ['L', 'P']);
             $table->enum('status', ['PNS', 'Honorer', 'GTY']);
             $table->date('tgl_lahir');
+            $table->enum('jenjang', ['TK', 'KB', 'TPA', 'SPS', 'PKBM', 'SKB', 'SD', 'SMP', 'SMK', 'SMA', 'SLB']);
             $table->timestamps();
         });
     }

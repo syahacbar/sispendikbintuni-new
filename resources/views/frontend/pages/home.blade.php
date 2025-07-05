@@ -125,69 +125,30 @@
                 <div class="col-lg-4" data-aos="fade-right">
                     <div class="card shadow-sm">
                         <div class="card-body">
-                            <h6 class="fw-bold text-muted">Peserta Didik <span
-                                    class="float-end text-primary">71.077</span>
+                            <h6 class="fw-bold text-muted">
+                                Peserta Didik
+                                <span class="float-end text-primary">{{ number_format($total_peserta_didik) }}</span>
                             </h6>
                             <hr class="mt-1 mb-2">
-                            <div class="d-flex justify-content-between">
-                                <span>SKB</span>
-                                <span>0</span>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <span>PAUD</span>
-                                <span>5.471</span>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <span>SD</span>
-                                <span>36.404</span>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <span>SMP</span>
-                                <span>13.814</span>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <span>SMA</span>
-                                <span>5.328</span>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <span>SMK</span>
-                                <span>5.601</span>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <span>PKBM</span>
-                                <span>4.459</span>
-                            </div>
+                            @foreach (['SKB', 'PAUD', 'SD', 'SMP', 'SMA', 'SMK', 'PKBM'] as $jenjang)
+                                <div class="d-flex justify-content-between">
+                                    <span>{{ $jenjang }}</span>
+                                    <span>{{ number_format($jumlah_peserta_didik[$jenjang] ?? 0) }}</span>
+                                </div>
+                            @endforeach
 
-                            <h6 class="text-muted mt-4">Guru <span class="float-end text-primary">3.605</span></h6>
+                            <h6 class="text-muted mt-4">
+                                Guru
+                                <span class="float-end text-primary">{{ number_format($total_guru) }}</span>
+                            </h6>
                             <hr class="mt-1 mb-2">
-                            <div class="d-flex justify-content-between">
-                                <span>SKB</span>
-                                <span>0</span>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <span>PAUD</span>
-                                <span>284</span>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <span>SD</span>
-                                <span>1.774</span>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <span>SMP</span>
-                                <span>788</span>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <span>SMA</span>
-                                <span>323</span>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <span>SMK</span>
-                                <span>406</span>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <span>PKBM</span>
-                                <span>30</span>
-                            </div>
+                            @foreach (['SKB', 'PAUD', 'SD', 'SMP', 'SMA', 'SMK', 'PKBM'] as $jenjang)
+                                <div class="d-flex justify-content-between">
+                                    <span>{{ $jenjang }}</span>
+                                    <span>{{ number_format($jumlah_guru[$jenjang] ?? 0) }}</span>
+                                </div>
+                            @endforeach
+
                         </div>
                     </div>
                 </div>

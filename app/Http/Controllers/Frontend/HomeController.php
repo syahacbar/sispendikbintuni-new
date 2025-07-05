@@ -17,6 +17,19 @@ class HomeController extends Controller
     {
         $jenjang = ['PAUD', 'SD', 'SMP', 'SMA', 'SMK', 'PKBM'];
 
+        $jumlah_peserta_didik = PesertaDidik::with('sekolah')
+            ->get()
+            ->groupBy(fn($pd) => $pd->sekolah->jenjang ?? 'Tidak Diketahui')
+            ->map(fn($group) => $group->count());
+
+        $jumlah_guru = Ptk::with('sekolah')
+            ->get()
+            ->groupBy(fn($ptk) => $ptk->sekolah->jenjang ?? 'Tidak Diketahui')
+            ->map(fn($group) => $group->count());
+
+        $total_peserta_didik = $jumlah_peserta_didik->sum();
+        $total_guru = $jumlah_guru->sum();
+
         $statistik = [
             'semua' => [],
             'Negeri' => [],
@@ -51,7 +64,11 @@ class HomeController extends Controller
             'guru',
             'akreditasi',
             'status_ptk',
-            'kondisi_sarpras'
+            'kondisi_sarpras',
+            'jumlah_peserta_didik',
+            'jumlah_guru',
+            'total_peserta_didik',
+            'total_guru',
         ));
     }
 }
