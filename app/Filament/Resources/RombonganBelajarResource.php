@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Models\Ptk;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Sekolah;
@@ -37,17 +38,30 @@ class RombonganBelajarResource extends Resource
                     ->searchable()
                     ->default(fn() => Filament::auth()->user()->sekolah_id)
                     ->disabled(fn() => Filament::auth()->user()->hasRole('admin_sekolah'))
-                    ->dehydrated(fn() => true)
-                    ->required(),
-                Select::make('wali_ptk_id')
-                    ->label('Wali Kelas')
-                    ->relationship('wali', 'nama')
-                    ->searchable()
-                    ->preload()
-                    ->required(),
+                    ->dehydrated(true)
+                    ->required()
+                    ->reactive(),
+
                 TextInput::make('nama_rombel')
                     ->required()
                     ->maxLength(50),
+
+                Select::make('wali_ptk_id')
+                    ->label('Wali Kelas')
+                    ->options(function (callable $get) {
+                        $sekolahId = $get('sekolah_id') ?? Filament::auth()->user()->sekolah_id;
+
+                        if (!$sekolahId) {
+                            return [];
+                        }
+
+                        return Ptk::where('sekolah_id', $sekolahId)->pluck('nama', 'id');
+                    })
+                    ->searchable()
+                    ->preload()
+                    ->required()
+                    ->reactive(),
+
                 TextInput::make('tingkat_kelas')
                     ->required()
                     ->numeric(),

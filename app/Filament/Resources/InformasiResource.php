@@ -15,6 +15,7 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use App\Filament\Resources\InformasiResource\Pages;
+use Illuminate\Database\Eloquent\Builder;
 
 class InformasiResource extends Resource
 {
@@ -25,6 +26,17 @@ class InformasiResource extends Resource
     protected static ?string $pluralModelLabel = 'Informasi';
     protected static ?string $navigationGroup = 'Managemen Konten Web';
 
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+
+        if (Filament::auth()->user()->hasRole('admin_sekolah')) {
+            $query->where('sekolah_id', Filament::auth()->user()->sekolah_id);
+        }
+
+        return $query;
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -33,6 +45,7 @@ class InformasiResource extends Resource
                     ->label('Sekolah')
                     ->relationship('sekolah', 'nama')
                     ->searchable()
+                    ->preload()
                     ->default(fn() => Filament::auth()->user()->sekolah_id)
                     ->disabled(fn() => Filament::auth()->user()->hasRole('admin_sekolah'))
                     ->dehydrated(fn() => true)

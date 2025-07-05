@@ -46,6 +46,7 @@ class PTKResource extends Resource
                 ->label('Sekolah')
                 ->relationship('sekolah', 'nama')
                 ->searchable()
+                ->preload()
                 ->default(fn() => Filament::auth()->user()->sekolah_id)
                 ->disabled(fn() => Filament::auth()->user()->hasRole('admin_sekolah'))
                 ->dehydrated(fn() => true)

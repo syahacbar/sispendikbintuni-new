@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tbl_mata_pelajarans', function (Blueprint $table) {
+        Schema::create('tbl_kelompok_mapels', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('nama_mapel', 100);
-            $table->uuid('kurikulum_id');
+            $table->string('nama', 100);
             $table->timestamps();
-
-            $table->foreign('kurikulum_id')->references('id')->on('tbl_kurikulums');
         });
     }
 
@@ -26,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tbl_mata_pelajarans');
+        Schema::dropIfExists('tbl_kelompok_mapels');
     }
 };

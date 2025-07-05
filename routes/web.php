@@ -7,6 +7,8 @@ use App\Http\Controllers\Frontend\InformasiController;
 use App\Http\Controllers\Frontend\PTKController;
 use App\Http\Controllers\Frontend\SiswaController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\PengaduanController;
+
 
 
 // Route::get('/', function () {
@@ -52,6 +54,14 @@ Route::get('/kalender', function () {
     return view('frontend.pages.kalender');
 });
 
-Route::get('/pengaduan', function () {
+Route::get('/pengaduan/buat-pengaduan', function () {
     return view('frontend.pages.pengaduan');
-});
+})->name('pengaduan.index');
+
+
+Route::post('/pengaduan/store', [PengaduanController::class, 'store'])->name('pengaduan.store');
+Route::post('/pengaduan/cek-pengaduan', [PengaduanController::class, 'cek'])->name('pengaduan.cek');
+
+// web.php
+Route::get('/pengaduan/lacak', [PengaduanController::class, 'lacakForm'])->name('pengaduan.lacak.form');
+Route::post('/pengaduan/lacak', [PengaduanController::class, 'lacak'])->name('pengaduan.lacak');
