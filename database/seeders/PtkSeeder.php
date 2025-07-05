@@ -10,14 +10,10 @@ use Faker\Factory as Faker;
 
 class PtkSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        $faker = Faker::create('id_ID'); // ✅ Tambahkan ini
+        $faker = Faker::create('id_ID');
 
-        // Ambil semua ID sekolah
         $sekolahIds = DB::table('tbl_sekolahs')->pluck('id');
 
         if ($sekolahIds->isEmpty()) {
@@ -29,6 +25,7 @@ class PtkSeeder extends Seeder
         $namaBelakang = ['Saputra', 'Wahyuni', 'Santoso', 'Lestari', 'Pratama', 'Rahmawati', 'Anggraini', 'Purnama', 'Hidayat', 'Siregar'];
         $statusList = ['PNS', 'Honorer', 'GTY'];
         $jenjangOptions = ['TK', 'KB', 'TPA', 'SPS', 'PKBM', 'SKB', 'SD', 'SMP', 'SMK', 'SMA', 'SLB'];
+        $kualifikasiOptions = ['D3', 'S1', 'S2', 'S3'];
 
         $data = [];
 
@@ -48,6 +45,7 @@ class PtkSeeder extends Seeder
                 'status' => $statusList[array_rand($statusList)],
                 'tgl_lahir' => Carbon::now()->subYears(rand(25, 60))->subDays(rand(0, 365))->format('Y-m-d'),
                 'jenjang' => $faker->randomElement($jenjangOptions),
+                'kualifikasi' => $faker->randomElement($kualifikasiOptions),
                 'created_at' => now(),
                 'updated_at' => now(),
             ];

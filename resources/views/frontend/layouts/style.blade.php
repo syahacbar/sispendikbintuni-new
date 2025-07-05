@@ -95,7 +95,7 @@
     table.dataTable.dtr-inline.collapsed>tbody>tr>td.dtr-control:before,
     table.dataTable.dtr-inline.collapsed>tbody>tr>th.dtr-control:before {
         content: '\002B';
-        background-color: #0394dd;
+        /* background-color: #0394dd;
         color: #fff;
         border-radius: 50%;
         width: 1.5em;
@@ -103,7 +103,7 @@
         line-height: 1.5em;
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: center; */
     }
 
     td.dtr-control.sorting_1 {
@@ -112,9 +112,19 @@
         align-items: center;
     }
 
-    table.dataTable.dtr-inline.collapsed>tbody>tr.parent>td.dtr-control:before,
+    /* table.dataTable.dtr-inline.collapsed>tbody>tr.parent>td.dtr-control:before,
     table.dataTable.dtr-inline.collapsed>tbody>tr.parent>th.dtr-control:before {
         content: '\2212';
         background-color: #dc3545;
+    } */
+
+    table#dataSekolah *,
+    table.dataTable>tbody>tr.child ul.dtr-details * {
+        font-size: 1rem;
+    }
+
+    table.dataTable tbody th,
+    table.dataTable tbody td {
+        padding: 4px 8px;
     }
 </style>

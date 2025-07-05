@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Models\User;
 use Filament\Tables;
 use App\Models\Sekolah;
 use App\Models\Wilayah;
@@ -14,8 +15,8 @@ use Illuminate\Support\Facades\Hash;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\DatePicker;
 use Filament\Notifications\Notification;
+use Filament\Forms\Components\DatePicker;
 use App\Filament\Resources\SekolahResource\Pages;
 
 class SekolahResource extends Resource
@@ -32,7 +33,6 @@ class SekolahResource extends Resource
     {
         return 1;
     }
-
 
     public static function form(Form $form): Form
     {
@@ -53,7 +53,7 @@ class SekolahResource extends Resource
             Select::make('provinsi')
                 ->label('Provinsi')
                 ->options(
-                    \App\Models\Wilayah::whereRaw("CHAR_LENGTH(REPLACE(kode, '.', '')) = 2")
+                    Wilayah::whereRaw("CHAR_LENGTH(REPLACE(kode, '.', '')) = 2")
                         ->pluck('nama', 'kode')
                 )
                 ->reactive()
@@ -64,7 +64,7 @@ class SekolahResource extends Resource
                 ->options(
                     fn(callable $get) =>
                     $get('provinsi')
-                        ? \App\Models\Wilayah::where('kode', 'like', $get('provinsi') . '.%')
+                        ? Wilayah::where('kode', 'like', $get('provinsi') . '.%')
                         ->whereRaw("CHAR_LENGTH(REPLACE(kode, '.', '')) = 4")
                         ->pluck('nama', 'kode')
                         : []
@@ -78,7 +78,7 @@ class SekolahResource extends Resource
                 ->options(
                     fn(callable $get) =>
                     $get('kabupaten')
-                        ? \App\Models\Wilayah::where('kode', 'like', $get('kabupaten') . '.%')
+                        ? Wilayah::where('kode', 'like', $get('kabupaten') . '.%')
                         ->whereRaw("CHAR_LENGTH(REPLACE(kode, '.', '')) = 6")
                         ->pluck('nama', 'kode')
                         : []
@@ -92,7 +92,7 @@ class SekolahResource extends Resource
                 ->options(
                     fn(callable $get) =>
                     $get('kecamatan')
-                        ? \App\Models\Wilayah::where('kode', 'like', $get('kecamatan') . '.%')
+                        ? Wilayah::where('kode', 'like', $get('kecamatan') . '.%')
                         ->whereRaw("CHAR_LENGTH(REPLACE(kode, '.', '')) = 10")
                         ->pluck('nama', 'kode')
                         : []
@@ -100,19 +100,12 @@ class SekolahResource extends Resource
                 ->reactive()
                 ->required()
                 ->afterStateUpdated(function (callable $get, callable $set) {
-                    // Isi otomatis kode wilayah saat desa dipilih
                     $desaKode = $get('desa_kelurahan');
                     if ($desaKode) {
                         $set('kode_wilayah', $desaKode);
                     }
                 })
                 ->disabled(fn(callable $get) => !$get('kecamatan')),
-
-            TextInput::make('kode_wilayah')
-                ->label('Kode Wilayah (Otomatis)')
-                ->disabled()
-                ->dehydrated()
-                ->required(),
 
             TextInput::make('alamat_jalan')
                 ->label('Alamat Jalan')
@@ -204,10 +197,6 @@ class SekolahResource extends Resource
                     ->label('Provinsi')
                     ->searchable(),
 
-                TextColumn::make('kode_wilayah')
-                    ->toggleable(isToggledHiddenByDefault: true)
-                    ->label('Kode Wilayah'),
-
                 TextColumn::make('status_sekolah')
                     ->label('Status Sekolah')
                     ->badge()
@@ -272,8 +261,8 @@ class SekolahResource extends Resource
                     ->visible(fn($record) => $record->user === null && $record->email !== null)
                     ->requiresConfirmation()
                     ->action(function ($record) {
-                        if (\App\Models\User::where('email', $record->email)->exists()) {
-                            \Filament\Notifications\Notification::make()
+                        if (User::where('email', $record->email)->exists()) {
+                            Notification::make()
                                 ->title('Email sudah digunakan')
                                 ->danger()
                                 ->send();
@@ -282,7 +271,7 @@ class SekolahResource extends Resource
 
                         $password = Str::random(8); // atau bisa pakai default seperti 'password123'
 
-                        $user = \App\Models\User::create([
+                        $user = User::create([
                             'name' => $record->nama,
                             'email' => $record->email,
                             'password' => Hash::make($password),

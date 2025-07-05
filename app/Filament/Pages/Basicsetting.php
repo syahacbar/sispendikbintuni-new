@@ -2,7 +2,7 @@
 
 namespace App\Filament\Pages;
 
-use App\Models\Basic;
+use App\Models\Pengaturan;
 use Filament\Forms\Get;
 use Filament\Forms\Form;
 use Filament\Pages\Page;
@@ -36,6 +36,11 @@ class Basicsetting extends Page
     }
 
 
+    public function mount(): void
+    {
+        $this->form->fill(Pengaturan::getAllAsArray());
+    }
+
     public function form(Form $form): Form
     {
         return $form
@@ -51,7 +56,7 @@ class Basicsetting extends Page
                                             ->required()
                                             ->maxLength(255),
 
-                                        TextInput::make('description')
+                                        TextInput::make('tagline')
                                             ->required(),
                                         TextInput::make('footer')
                                             ->label('Footer Text')
@@ -62,7 +67,7 @@ class Basicsetting extends Page
                                     ])->columns(2),
                                 Fieldset::make('Logo dan Favicon')
                                     ->schema([
-                                        FileUpload::make('logo_light')
+                                        FileUpload::make('logo')
                                             ->label('Logo')
                                             ->image()
                                             ->previewable(true)
@@ -91,7 +96,7 @@ class Basicsetting extends Page
                         Tab::make('Pengaturan API')
                             ->icon('heroicon-m-cog')
                             ->schema([
-                                Fieldset::make('Google API')
+                                Fieldset::make('Google Auth API')
                                     ->schema([
                                         TextInput::make('google_client_id')
                                             ->label('Google Client ID')
@@ -112,6 +117,33 @@ class Basicsetting extends Page
                                             ->required(),
                                         TextInput::make('recaptcha_secret_key')
                                             ->label('Google Recaptcha Secret Key')
+                                            ->required(),
+                                    ])->columns(2),
+                                Fieldset::make('WA Zenziva')
+                                    ->schema([
+                                        TextInput::make('zenziva_userkey')
+                                            ->label('Zenziva Userkey')
+                                            ->required(),
+                                        TextInput::make('zenziva_passkey')
+                                            ->label('Zenziva Passkey')
+                                            ->required(),
+                                        TextInput::make('zenziva_sender')
+                                            ->label('Zenziva Sender')
+                                            ->required(),
+                                    ])->columns(2),
+                                Fieldset::make('Google Maps API')
+                                    ->schema([
+                                        TextInput::make('google_maps_api_key')
+                                            ->label('API Key')
+                                            ->required(),
+                                    ])->columns(2),
+                                Fieldset::make('Google Maps API')
+                                    ->schema([
+                                        TextInput::make('firebase_server_key')
+                                            ->label('Firebase Server Key')
+                                            ->required(),
+                                        TextInput::make('firebase_project_id')
+                                            ->label('Firebase Project ID')
                                             ->required(),
                                     ])->columns(2),
                             ]),
@@ -213,7 +245,7 @@ class Basicsetting extends Page
     public function save()
     {
         $data = $this->form->getState();
-        Basic::setBulk($data);
+        Pengaturan::setBulk($data);
 
         Notification::make()
             ->title('Settings Updated')

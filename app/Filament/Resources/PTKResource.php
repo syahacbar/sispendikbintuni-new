@@ -114,6 +114,15 @@ class PTKResource extends Resource
                     'SLB' => 'SLB',
                 ])
                 ->required(),
+            Select::make('kualifikasi')
+                ->label('Kualifikasi')
+                ->options([
+                    'D3' => 'D3',
+                    'S1' => 'S1',
+                    'S2' => 'S2',
+                    'S3' => 'S3',
+                ])
+                ->required(),
         ])->columns(3);
     }
 
@@ -139,6 +148,9 @@ class PTKResource extends Resource
                     ->sortable(),
                 TextColumn::make('jenjang')
                     ->label('Jenjang')
+                    ->sortable(),
+                TextColumn::make('kualifikasi')
+                    ->label('Kualifikasi')
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()

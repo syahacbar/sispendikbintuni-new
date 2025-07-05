@@ -537,91 +537,23 @@
                     <div class="bg-white p-4 rounded-4 shadow-sm text-center">
                         <h6 class="text-success fw-bold">Mei 2025</h6>
                         <div class="table-responsive">
-                            <table class="table table-bordered table-sm mb-0">
-                                <thead class="text-muted small">
-                                    <tr>
-                                        <th>Sn</th>
-                                        <th>Sl</th>
-                                        <th>Rb</th>
-                                        <th>Km</th>
-                                        <th>Jn</th>
-                                        <th>Sb</th>
-                                        <th>Mn</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="small">
-                                    <tr>
-                                        <td>28</td>
-                                        <td>29</td>
-                                        <td>30</td>
-                                        <td>1</td>
-                                        <td>2</td>
-                                        <td>3</td>
-                                        <td>4</td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td>6</td>
-                                        <td>7</td>
-                                        <td>8</td>
-                                        <td>9</td>
-                                        <td>10</td>
-                                        <td>11</td>
-                                    </tr>
-                                    <tr>
-                                        <td>12</td>
-                                        <td>13</td>
-                                        <td>14</td>
-                                        <td>15</td>
-                                        <td>16</td>
-                                        <td>17</td>
-                                        <td>18</td>
-                                    </tr>
-                                    <tr>
-                                        <td>19</td>
-                                        <td>20</td>
-                                        <td>21</td>
-                                        <td>22</td>
-                                        <td>23</td>
-                                        <td>24</td>
-                                        <td>25</td>
-                                    </tr>
-                                    <tr>
-                                        <td>26</td>
-                                        <td class="bg-success text-white fw-bold rounded">27</td>
-                                        <td>28</td>
-                                        <td>29</td>
-                                        <td>30</td>
-                                        <td>31</td>
-                                        <td>1</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>3</td>
-                                        <td>4</td>
-                                        <td>5</td>
-                                        <td>6</td>
-                                        <td>7</td>
-                                        <td>8</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-        // Akreditasi Sekolah (Bar)
         new Chart(document.getElementById('chartAkreditasi'), {
             type: 'bar',
             data: {
-                labels: ['A', 'B', 'C', 'Belum Terakreditasi'],
+                labels: @json($akreditasiLabels),
                 datasets: [{
                     label: 'Jumlah Sekolah',
-                    data: [30, 45, 15, 10],
+                    data: @json($akreditasiData),
                     backgroundColor: ['#28a745', '#ffc107', '#dc3545', '#6c757d']
                 }]
             },
@@ -640,14 +572,13 @@
             }
         });
 
-        // Status PTK (Bar)
         new Chart(document.getElementById('chartStatusPTK'), {
             type: 'bar',
             data: {
-                labels: ['PNS', 'Honorer', 'GTY'],
+                labels: @json($statusPTKLabels),
                 datasets: [{
                     label: 'Jumlah PTK',
-                    data: [1200, 800, 500],
+                    data: @json($statusPTKData),
                     backgroundColor: ['#0093dd', '#17a2b8', '#ffc107']
                 }]
             },
@@ -666,14 +597,13 @@
             }
         });
 
-        // Kondisi Sarpras (Bar)
         new Chart(document.getElementById('chartKondisiSarpras'), {
             type: 'bar',
             data: {
-                labels: ['Baik', 'Rusak Ringan', 'Rusak Sedang', 'Rusak Berat'],
+                labels: @json($sarprasLabels),
                 datasets: [{
                     label: 'Jumlah Sarpras',
-                    data: [200, 100, 60, 20],
+                    data: @json($sarprasData),
                     backgroundColor: ['#28a745', '#ffc107', '#fd7e14', '#dc3545']
                 }]
             },
@@ -692,14 +622,14 @@
             }
         });
 
-        // Kualifikasi Guru (Bar)
+        // Kualifikasi Guru
         new Chart(document.getElementById('chartKualifikasiGuru'), {
             type: 'bar',
             data: {
-                labels: ['SMA', 'D3', 'S1', 'S2'],
+                labels: @json($kualifikasiLabels),
                 datasets: [{
                     label: 'Jumlah Guru',
-                    data: [100, 200, 800, 100],
+                    data: @json($kualifikasiData),
                     backgroundColor: ['#6c757d', '#17a2b8', '#0093dd', '#6610f2']
                 }]
             },
@@ -719,7 +649,7 @@
         });
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
     <script>
         const chartSemuaData = @json(array_values($statistik['semua']));

@@ -49,8 +49,6 @@ class ActiveUsers extends BaseWidget
                 ->label('Nama'),
             Tables\Columns\TextColumn::make('email')
                 ->label('Email'),
-            Tables\Columns\TextColumn::make('ip_address')
-                ->label('IP Address'),
             Tables\Columns\TextColumn::make('roles.name')
                 ->label('Role')
                 ->badge()

@@ -26,7 +26,6 @@ class Sekolah extends Model
         'kecamatan',
         'kabupaten',
         'provinsi',
-        'kode_wilayah',
         'status_sekolah',
         'akreditasi',
         'email',
