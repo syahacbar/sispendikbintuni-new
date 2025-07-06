@@ -1,86 +1,80 @@
 @extends('frontend.layouts.app')
-
 @section('content')
     <section class="identity-section mb-4 mt-5">
         <div class="container">
             <div class="identity-content">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/" class="text-white text-decoration-none">
-                                <i class="fas fa-home"></i> Beranda</a></li>
-                        <li class="breadcrumb-item"><a href="#" class="text-white text-decoration-none">
-                                <i class="fas fa-home"></i>
-                                ></a>
-                        </li>
-                        <li class="breadcrumb-item text-white"><i class="fas fa-info-circle"></i> Informasi Sekolah</li>
-                    </ol>
-                </nav>
-                <h1 class="text-white fw-bold" data-aos="fade-up">Informasi Sekolah</h1>
-                <p class="text-warning mb-4" data-aos="fade-up">Data Sekolah Kabupaten Teluk Bintuni</p>
+                <h1 class="text-white fw-bold" data-aos="fade-up">{{ $title }}</h1>
+                <p class="text-warning mb-4" data-aos="fade-up">{{ $subtitle }}</p>
             </div>
         </div>
     </section>
 
     <section class="about-section">
         <div class="container">
-            <div class="row">
-                <div class="text-center mb-4">
-                    <h3 class="text-success fw-bold">
-                        Data Sekolah
-                    </h3>
-                    <p class="text-muted">
-                        Tabel Informasi Sekolah Se-Kabupaten Teluk Bintuni
-                    </p>
-                </div>
-            </div>
             <div class="row my-3">
-                <table id="dataSekolah" class="display responsive nowrap" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>No.</th>
-                            <th>Nama Sekolah</th>
-                            <th>NPSN</th>
-                            <th>Status</th>
-                            <th>Jenjang</th>
-                            <th>Alamat</th>
-                            <th>Kecamatan</th>
-                            <th>Kabupaten</th>
-                            <th>Provinsi</th>
-                            <th>Email</th>
-                            <th>Telepon</th>
-                            <th>SK Pendirian</th>
-                            <th>Tanggal SK</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($sekolah as $item)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>
-                                    <a class="text-decoration-none"
-                                        href="{{ route('frontend.sekolah.show', ['slug' => $item->slug]) }}">
-                                        {{ $item->nama }} </a>
-                                </td>
-                                <td>{{ $item->npsn }}</td>
-                                <td>{{ $item->status_sekolah == 1 ? 'Negeri' : 'Swasta' }}</td>
-                                <td>{{ $item->jenjang }}</td>
-                                <td>
-                                    {{ $item->alamat_jalan }}
-                                    {{ $item->desa_kelurahan ? ', ' . $item->desa_kelurahan : '' }}
-                                    {{ $item->kode_pos ? ' (' . $item->kode_pos . ')' : '' }}
-                                </td>
-                                <td>{{ $item->kecamatan }}</td>
-                                <td>{{ $item->kabupaten }}</td>
-                                <td>{{ $item->provinsi }}</td>
-                                <td>{{ $item->email }}</td>
-                                <td>{{ $item->telepon }}</td>
-                                <td>{{ $item->sk_pendirian }}</td>
-                                <td>{{ $item->tanggal_sk_pendirian ? \Carbon\Carbon::parse($item->tanggal_sk_pendirian)->format('d-m-Y') : '-' }}
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                <div class="card">
+                    <div class="card-body">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a class="text-decoration-none"
+                                        href="{{ url('/data-pendidikan') }}">Data Pendidikan</a> /</li>
+                                <li class="breadcrumb-item"><a class="text-decoration-none"
+                                        href="{{ url('/data-pendidikan') }}">{{ $namaKabupaten }}</a> /</li>
+                                <li class="breadcrumb-item">
+                                    <a href="{{ url('/data-pendidikan/' . urlencode($kecamatan) . '/kelurahan') }}"
+                                        class="text-decoration-none">
+                                        Kec. {{ $namaKecamatan }}
+                                    </a> /
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">Kel. {{ $namaKelurahan }}</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <table id="dataKecamatan" class="display responsive nowrap" style="width:100%">
+                            <table id="dataSekolah" class="display responsive nowrap" style="width:100%">
+                                <thead class="bg-success text-light">
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama Sekolah</th>
+                                        <th>NPSN</th>
+                                        <th>Jenjang</th>
+                                        <th>Status</th>
+                                        <th>Peserta Didik</th>
+                                        <th>Rombel</th>
+                                        <th>PTK</th>
+                                        <th>Sarana</th>
+                                        <th>Prasarana</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($sekolahs as $i => $s)
+                                        <tr>
+                                            <td>{{ $i + 1 }}</td>
+                                            <td>
+                                                <a class="text-decoration-none"
+                                                    href="{{ url('/data-pendidikan/sekolah/' . $s->slug) }}">
+                                                    {{ $s->nama }}
+                                                </a>
+                                            </td>
+                                            <td>{{ $s->npsn }}</td>
+                                            <td>{{ $s->jenjang }}</td>
+                                            <td>{{ $s->status_sekolah }}</td>
+                                            <td>{{ $s->peserta_didiks_count }}</td>
+                                            <td>{{ $s->rombongan_belajars_count }}</td>
+                                            <td>{{ $s->ptks_count }}</td>
+                                            <td>{{ $s->saranas_count }}</td>
+                                            <td>{{ $s->prasaranas_count }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
