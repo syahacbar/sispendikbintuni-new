@@ -16,19 +16,19 @@
     $(document).ready(function() {
         $('#dataSekolah').DataTable({
             responsive: true,
-            dom: 'Bfrtip',
+            dom: 'Blfrtip',
             ordering: false
         });
 
-        $('#dataPTK').DataTable({
+        $('#dataKecamatan').DataTable({
             responsive: true,
-            dom: 'Bfrtip',
+            dom: 'Blfrtip',
             ordering: false
         });
 
         $('#dataSiswa').DataTable({
             responsive: true,
-            dom: 'Bfrtip',
+            dom: 'Blfrtip',
             ordering: false
         });
     });
@@ -119,6 +119,7 @@
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
+            themeSystem: 'spacelab',
             height: 600,
             events: [{
                     title: 'Test Dummy',

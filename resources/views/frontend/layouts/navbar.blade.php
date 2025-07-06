@@ -10,17 +10,22 @@
                     <a class="nav-link {{ Request::is('/') ? 'active' : '' }}" href="/">Beranda</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('sekolah*') ? 'active' : '' }}" href="/sekolah">Sekolah</a>
+                    <a class="nav-link {{ Request::is('tentang*') ? 'active' : '' }}" href="/tentang">Tentang</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('data-pendidikan*') ? 'active' : '' }}"
+                        href="/data-pendidikan">Data
+                        Pendidikan</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('sebaran*') ? 'active' : '' }}" href="/sebaran">Sebaran</a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link {{ Request::is('ptk*') ? 'active' : '' }}" href="/ptk">PTK</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('siswa*') ? 'active' : '' }}" href="/siswa">Siswa</a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('kalender*') ? 'active' : '' }}" href="/kalender">Kalender</a>
                 </li>
@@ -46,8 +51,8 @@
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownPengaduan">
                         <li><a class="dropdown-item {{ Request::is('pengaduan/buat-pengaduan') ? 'active' : '' }}"
                                 href="/pengaduan/buat-pengaduan">Buat Pengaduan</a></li>
-                        <li><a class="dropdown-item {{ Request::is('pengaduan/lacak') ? 'active' : '' }}"
-                                href="/pengaduan/lacak">Lacak Pengaduan</a></li>
+                        <li><a class="dropdown-item {{ Request::is('pengaduan/lacak-pengaduan') ? 'active' : '' }}"
+                                href="/pengaduan/lacak-pengaduan">Lacak Pengaduan</a></li>
                     </ul>
                 </li>
 

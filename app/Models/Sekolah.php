@@ -35,6 +35,7 @@ class Sekolah extends Model
         'slug',
     ];
 
+
     // Relasi opsional jika digunakan
     public function ptks()
     {
@@ -59,6 +60,16 @@ class Sekolah extends Model
     public function saranas()
     {
         return $this->hasMany(Sarana::class);
+    }
+
+    public function kecamatanWilayah()
+    {
+        return $this->belongsTo(Wilayah::class, 'kecamatan', 'kode');
+    }
+
+    public function kelurahanWilayah()
+    {
+        return $this->belongsTo(Wilayah::class, 'desa_kelurahan', 'kode');
     }
 
     public function user()

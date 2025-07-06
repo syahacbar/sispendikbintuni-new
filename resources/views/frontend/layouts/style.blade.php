@@ -53,42 +53,14 @@
         width: 100%;
     }
 
-    #calendar {
-        background-color: #1e293b;
-        color: #f8fafc;
-        padding: 1rem;
-        border-radius: 0.5rem;
+    .fc .fc-col-header-cell-cushion {
+        display: inline-block;
+        padding: 2px 4px;
+        text-decoration: none;
     }
 
-    .fc {
-        background-color: #1e293b;
-        color: #f8fafc;
-    }
-
-    .fc .fc-toolbar-title {
-        color: #f1f5f9;
-    }
-
-    .fc .fc-button {
-        background-color: #334155;
-        border-color: #334155;
-        color: #f8fafc;
-    }
-
-    .fc .fc-button:hover {
-        background-color: #475569;
-    }
-
-    .fc .fc-daygrid-day-number {
-        color: #cbd5e1;
-    }
-
-    .fc .fc-day-today {
-        background-color: #0f172a !important;
-    }
-
-    h5.fw-bold.text-teal.mb-4 {
-        color: #da251c !important;
+    fc-daygrid-day-top a {
+        text-decoration: none !important;
     }
 
     /* Ganti ikon panah default dengan ikon plus */
@@ -126,5 +98,12 @@
     table.dataTable tbody th,
     table.dataTable tbody td {
         padding: 4px 8px;
+    }
+
+    div#dataSekolah_length,
+    div#dataSekolah_filter,
+    div#dataKecamatan_length,
+    div#dataKecamatan_filter {
+        margin-bottom: 1rem;
     }
 </style>

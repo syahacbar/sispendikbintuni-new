@@ -181,6 +181,7 @@ class SekolahResource extends Resource
                     ->searchable(),
 
                 TextColumn::make('kode_pos')
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->label('Kode Pos'),
 
                 TextColumn::make('kecamatan')
