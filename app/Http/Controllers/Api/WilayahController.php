@@ -20,6 +20,7 @@ class WilayahController extends Controller
                 DB::raw("COUNT(CASE WHEN s.jenjang = 'TPA' THEN 1 END) as jumlah_tpa"),
                 DB::raw("COUNT(CASE WHEN s.jenjang = 'SPS' THEN 1 END) as jumlah_sps"),
                 DB::raw("COUNT(CASE WHEN s.jenjang = 'PKBM' THEN 1 END) as jumlah_pkbm"),
+                DB::raw("COUNT(CASE WHEN s.jenjang = 'SKB' THEN 1 END) as jumlah_skb"),
                 DB::raw("COUNT(CASE WHEN s.jenjang = 'SD' THEN 1 END) as jumlah_sd"),
                 DB::raw("COUNT(CASE WHEN s.jenjang = 'SMP' THEN 1 END) as jumlah_smp"),
                 DB::raw("COUNT(CASE WHEN s.jenjang = 'SMA' THEN 1 END) as jumlah_sma"),
