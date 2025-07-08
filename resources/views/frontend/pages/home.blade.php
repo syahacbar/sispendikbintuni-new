@@ -59,9 +59,10 @@
                         Desember 2024.
                     </p>
                 </div>
-
+            </div>
+            <div class="row">
                 <div class="col-lg-7" data-aos="fade-left">
-                    <div class="card shadow-sm">
+                    <div class="card shadow-sm my-3">
                         <div class="card-body">
 
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
