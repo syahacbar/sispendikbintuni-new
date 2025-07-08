@@ -118,4 +118,10 @@ class Sekolah extends Model
             }
         });
     }
+
+    // untuk endpoint API
+    public function wilayah()
+    {
+        return $this->belongsTo(Wilayah::class, 'kode_wilayah', 'kode');
+    }
 }

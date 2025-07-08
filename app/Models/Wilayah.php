@@ -53,4 +53,10 @@ class Wilayah extends Model
         $kodeFormatted = self::formatKodeWithDots($kode);
         return self::where('kode', $kodeFormatted)->value('nama');
     }
+
+    // untuk endpoint API
+    public function sekolahs()
+    {
+        return $this->hasMany(Sekolah::class, 'kode_wilayah', 'kode');
+    }
 }
