@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('tbl_peserta_didiks', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('sekolah_id');
+            $table->uuid('sekolah_id')->nullable();
             $table->string('nama', 100);
             $table->string('nisn', 10);
             $table->string('nik', 20);
             $table->enum('jenis_kelamin', ['L', 'P']);
             $table->date('tgl_lahir');
-            $table->enum('jenjang', ['TK', 'KB', 'TPA', 'SPS', 'PKBM', 'SKB', 'SD', 'SMP', 'SMK', 'SMA', 'SLB']);
+            $table->uuid('rombongan_belajar_id')->nullable();
             $table->text('alamat_jalan')->nullable();
             $table->string('desa_kelurahan', 100)->nullable();
             $table->string('kode_pos', 10)->nullable();
@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('provinsi', 100)->nullable();
             $table->timestamps();
 
-            $table->foreign('sekolah_id')->references('id')->on('tbl_sekolahs')->onDelete('cascade');
+            $table->foreign('rombongan_belajar_id')->references('id')->on('tbl_rombongan_belajars')->onDelete('set null');
         });
     }
 

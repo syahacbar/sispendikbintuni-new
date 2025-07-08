@@ -13,9 +13,6 @@ class JenisSarpras extends Model
 
     protected $fillable = [
         'id',
-        'sekolah_id',
         'nama',
-        'jumlah',
-        'status',
     ];
 }

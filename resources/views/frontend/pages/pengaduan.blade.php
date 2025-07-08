@@ -1,28 +1,5 @@
 @extends('frontend.layouts.app')
 @section('content')
-    <section class="identity-section mb-4 mt-5">
-        <div class="container">
-            <div class=" identity-content">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#" class="text-white text-decoration-none">
-                                <i class="fas fa-home"></i>
-                                Beranda</a></li>
-                        <li class="breadcrumb-item"><a href="#" class="text-white text-decoration-none">
-                                <i class="fas fa-home"></i>
-                                ></a></li>
-                        <li class="breadcrumb-item" class="text-white">
-                            <i class="fas fa-info-circle"></i>
-                            Pengaduan
-                        </li>
-                    </ol>
-                </nav>
-                <h1 class="text-white fw-bold" data-aos="fade-up">Pengaduan</h1>
-                <p class="text-warning mb-4" data-aos="fade-up">Form Pengaduan Kabupaten Teluk Bintuni</p>
-            </div>
-        </div>
-    </section>
-
     <section class="about-section">
         <div class="container">
             <div class="row">

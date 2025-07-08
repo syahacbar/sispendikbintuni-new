@@ -60,7 +60,7 @@
                     </p>
                 </div>
 
-                <div class="col-lg-8" data-aos="fade-left">
+                <div class="col-lg-7" data-aos="fade-left">
                     <div class="card shadow-sm">
                         <div class="card-body">
 
@@ -122,7 +122,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4" data-aos="fade-right">
+                <div class="col-lg-5" data-aos="fade-right">
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <h6 class="fw-bold text-muted">
@@ -155,45 +155,60 @@
             </div>
 
             <div class="row mt-4">
-                <div class="col-lg-3">
+                <div class="col-lg-4 mt-3">
                     <div class="card shadow-sm">
                         <div class="card-header">
                             <h6>Akreditasi Sekolah</h6>
                         </div>
                         <div class="card-body">
-                            <canvas id="chartAkreditasi"></canvas>
+                            <canvas style="height: 300px" id="chartAkreditasi"></canvas>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3">
-                    <div class="card shadow-sm">
-                        <div class="card-header">
-                            <h6>Status PTK</h6>
-                        </div>
-                        <div class="card-body">
-                            <canvas id="chartStatusPTK"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
+                <div class="col-lg-4 mt-3">
                     <div class="card shadow-sm">
                         <div class="card-header">
                             <h6>Kondisi Sarpras</h6>
                         </div>
                         <div class="card-body">
-                            <canvas id="chartKondisiSarpras"></canvas>
+                            <canvas style="height: 300px" id="chartKondisiSarpras"></canvas>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3">
+
+                <div class="col-lg-4 mt-3">
                     <div class="card shadow-sm">
                         <div class="card-header">
                             <h6>Kualifikasi Guru</h6>
                         </div>
                         <div class="card-body">
-                            <canvas id="chartKualifikasiGuru"></canvas>
+                            <canvas style="height: 300px" id="chartKualifikasiGuru"></canvas>
                         </div>
                     </div>
+                </div>
+
+                <div class="col-lg-4 mt-3">
+                    <div class="card shadow-sm">
+                        <div class="card-header">
+                            <h6>Status PTK</h6>
+                        </div>
+                        <div class="card-body">
+                            <canvas style="height: 300px" id="chartStatusPTK"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="my-5">
+        <div class="container">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h6>Sebaran Sekolah per Kecamatan</h6>
+                </div>
+                <div class="card-body">
+                    <canvas style="height: 300px" id="chartSebaranKecamatan"></canvas>
                 </div>
             </div>
         </div>
@@ -203,7 +218,7 @@
         <div class="row">
             <div class="col-md-6 mb-4">
                 <div class="card text-bg-white">
-                    <img src="{{ asset('themes/frontend/dummy.png') }}" class="card-img" alt="...">
+                    <img src="" class="card-img" alt="...">
                     <div class="card-img-overlay">
                         <span class="badge mb-2">
                             <p class="card-title text-white m-0"><i class="fas fa-newspaper"></i> Liputan
@@ -217,7 +232,7 @@
             </div>
             <div class="col-md-3 mb-4">
                 <div class="card">
-                    <img src="{{ asset('themes/frontend/dummy.png') }}" class="card-img-top" alt="Liputan 2" />
+                    <img src="" class="card-img-top" alt="Liputan 2" />
                     <div class="card-body">
                         <p class="card-text">Lorem ipsum dolor sit amet,
                             consectetur
@@ -230,7 +245,7 @@
             </div>
             <div class="col-md-3 mb-4">
                 <div class="card">
-                    <img src="{{ asset('themes/frontend/dummy.png') }}" class="card-img-top" alt="Liputan 2" />
+                    <img src="" class="card-img-top" alt="Liputan 2" />
                     <div class="card-body">
                         <p class="card-text">Lorem ipsum dolor sit amet,
                             consectetur
@@ -257,32 +272,27 @@
 
             <div class="marquee-wrapper">
                 <div class="marquee-content">
-                    <div class="icon-card"><img src="../sdgs.un.org/sites/default/files/goals/E_SDG_Icons-12.jpg" alt>
+                    <div class="icon-card">
+                        <img src="" alt>
                     </div>
-                    <div class="icon-card"><img src="../sdgs.un.org/sites/default/files/goals/E_SDG_Icons-13.jpg" alt>
+                    <div class="icon-card">
+                        <img src="" alt>
                     </div>
-                    <div class="icon-card"><img src="../sdgs.un.org/sites/default/files/goals/E_SDG_Icons-14.jpg" alt>
+                    <div class="icon-card">
+                        <img src="" alt>
                     </div>
-                    <div class="icon-card"><img src="../sdgs.un.org/sites/default/files/goals/E_SDG_Icons-15.jpg" alt>
+                    <div class="icon-card">
+                        <img src="" alt>
                     </div>
-                    <div class="icon-card"><img src="../sdgs.un.org/sites/default/files/goals/E_SDG_Icons-16.jpg" alt>
+                    <div class="icon-card">
+                        <img src="" alt>
                     </div>
-                    <div class="icon-card"><img src="../sdgs.un.org/sites/default/files/goals/E_SDG_Icons-17.jpg" alt>
-                    </div>
-                    <div class="icon-card"><img src="../sdgs.un.org/sites/default/files/goals/E_SDG_Icons-12.jpg" alt>
-                    </div>
-                    <div class="icon-card"><img src="../sdgs.un.org/sites/default/files/goals/E_SDG_Icons-13.jpg" alt>
-                    </div>
-                    <div class="icon-card"><img src="../sdgs.un.org/sites/default/files/goals/E_SDG_Icons-14.jpg" alt>
-                    </div>
-                    <div class="icon-card"><img src="../sdgs.un.org/sites/default/files/goals/E_SDG_Icons-15.jpg" alt>
-                    </div>
-                    <div class="icon-card"><img src="../sdgs.un.org/sites/default/files/goals/E_SDG_Icons-16.jpg" alt>
-                    </div>
-                    <div class="icon-card"><img src="../sdgs.un.org/sites/default/files/goals/E_SDG_Icons-17.jpg" alt>
+                    <div class="icon-card">
+                        <img src="" alt>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </section>
 
@@ -299,7 +309,7 @@
             <a>
                 <div class="col">
                     <div class="artikel-card">
-                        <img src="{{ asset('frontend/dummy.png') }}" alt="Artikel 1">
+                        <img src="{{ asset('themes/frontend/dummy.png') }}" alt="Artikel 1">
                         <div class="artikel-content">
                             <small class="badge badge-success">Artikel Penelitian</small>
                             <h6 class="fw-bold">Konstruksi Bangunan dengan Abu Vulkanik</h6>
@@ -311,7 +321,7 @@
             <a>
                 <div class="col">
                     <div class="artikel-card">
-                        <img src="{{ asset('frontend/dummy.png') }}" alt="Artikel 2">
+                        <img src="{{ asset('themes/frontend/dummy.png') }}" alt="Artikel 2">
                         <div class="artikel-content">
                             <small class="badge badge-success">Artikel Penelitian</small>
                             <h6 class="fw-bold">Potensi Nangka sebagai Bahan Baku Ramah
@@ -324,7 +334,7 @@
             <a>
                 <div class="col">
                     <div class="artikel-card">
-                        <img src="{{ asset('frontend/dummy.png') }}" alt="Artikel 3">
+                        <img src="{{ asset('themes/frontend/dummy.png') }}" alt="Artikel 3">
                         <div class="artikel-content">
                             <small class="badge badge-success">Artikel Penelitian</small>
                             <h6 class="fw-bold">Mengoptimalkan Pembelajaran Bahasa di Kelas
@@ -474,8 +484,7 @@
             <!-- Judul -->
             <div class="text-center mb-4">
                 <div class="d-inline-flex align-items-center mb-2">
-                    <img src="../img.icons8.com/emoji/48/calendar-emoji.png" alt="icon" width="32"
-                        class="me-2">
+                    <img src="" alt="icon" width="32" class="me-2">
                     <h5 class="fw-bold mb-0 text-success">Agenda Kegiatan</h5>
                 </div>
             </div>
@@ -544,53 +553,86 @@
             </div>
         </div>
     </section>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
         new Chart(document.getElementById('chartAkreditasi'), {
             type: 'bar',
             data: {
-                labels: @json($akreditasiLabels),
-                datasets: [{
-                    label: 'Jumlah Sekolah',
-                    data: @json($akreditasiData),
-                    backgroundColor: ['#28a745', '#ffc107', '#dc3545', '#6c757d']
-                }]
+                labels: @json($jenjangList),
+                datasets: @json($akreditasiDatasets)
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        display: false
+                        position: 'bottom'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Akreditasi Sekolah per Jenjang'
+                    },
+                    tooltip: {
+                        mode: 'nearest', // HANYA tampilkan tooltip untuk dataset yang sedang di-hover
+                        intersect: true,
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.dataset.label} di ${context.label}: ${context.parsed.y}`;
+                            }
+                        }
                     }
                 },
+                interaction: {
+                    mode: 'nearest', // ini penting
+                    intersect: true // ini juga penting
+                },
                 scales: {
+                    x: {
+                        stacked: true
+                    },
                     y: {
+                        stacked: true,
                         beginAtZero: true
                     }
                 }
             }
+
         });
 
         new Chart(document.getElementById('chartStatusPTK'), {
             type: 'bar',
             data: {
-                labels: @json($statusPTKLabels),
-                datasets: [{
-                    label: 'Jumlah PTK',
-                    data: @json($statusPTKData),
-                    backgroundColor: ['#0093dd', '#17a2b8', '#ffc107']
-                }]
+                labels: @json($jenjangList),
+                datasets: @json($statusPTKDatasets)
             },
             options: {
                 responsive: true,
                 plugins: {
                     legend: {
-                        display: false
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        mode: 'nearest', // tampilkan hanya 1 dataset per hover
+                        intersect: true, // aktif hanya saat benar-benar di atas bar
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.dataset.label} di ${context.label}: ${context.parsed.y}`;
+                            }
+                        }
                     }
                 },
+                interaction: {
+                    mode: 'nearest', // ini wajib untuk hover per warna
+                    intersect: true
+                },
                 scales: {
+                    x: {
+                        stacked: true
+                    },
                     y: {
+                        stacked: true,
                         beginAtZero: true
                     }
                 }
@@ -600,22 +642,47 @@
         new Chart(document.getElementById('chartKondisiSarpras'), {
             type: 'bar',
             data: {
-                labels: @json($sarprasLabels),
-                datasets: [{
-                    label: 'Jumlah Sarpras',
-                    data: @json($sarprasData),
-                    backgroundColor: ['#28a745', '#ffc107', '#fd7e14', '#dc3545']
-                }]
+                labels: @json($jenjangList),
+                datasets: @json($datasets)
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    mode: 'nearest',
+                    intersect: true
+                },
                 plugins: {
                     legend: {
-                        display: false
+                        position: 'bottom'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Kondisi Sarpras per Jenjang'
+                    },
+                    tooltip: {
+                        mode: 'nearest',
+                        intersect: true,
+                        callbacks: {
+                            label: function(context) {
+                                const jenjang = context.label;
+                                const kondisi = context.dataset.label;
+                                const jumlah = context.parsed.y;
+                                return `${kondisi} di ${jenjang}: ${jumlah}`;
+                            }
+                        }
                     }
                 },
                 scales: {
+                    x: {
+                        stacked: true,
+                        ticks: {
+                            maxRotation: 0,
+                            minRotation: 0
+                        }
+                    },
                     y: {
+                        stacked: true,
                         beginAtZero: true
                     }
                 }
@@ -626,23 +693,82 @@
         new Chart(document.getElementById('chartKualifikasiGuru'), {
             type: 'bar',
             data: {
-                labels: @json($kualifikasiLabels),
+                labels: @json($jenjangList),
+                datasets: @json($kualifikasiDatasets)
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Kualifikasi Guru per Jenjang'
+                    },
+                    tooltip: {
+                        mode: 'nearest',
+                        intersect: true,
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.dataset.label} di ${context.label}: ${context.parsed.y}`;
+                            }
+                        }
+                    }
+                },
+                interaction: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    x: {
+                        stacked: true
+                    },
+                    y: {
+                        stacked: true,
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+
+        const ctx = document.getElementById('chartSebaranKecamatan').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: @json($kecamatanLabels),
                 datasets: [{
-                    label: 'Jumlah Guru',
-                    data: @json($kualifikasiData),
-                    backgroundColor: ['#6c757d', '#17a2b8', '#0093dd', '#6610f2']
+                    label: 'Jumlah Sekolah',
+                    data: @json($jumlahSekolahData),
+                    borderColor: '#28a745', // <- warna garis
+                    backgroundColor: 'rgba(40, 167, 69, 0.1)', // area bawah garis (opsional)
+                    pointBackgroundColor: '#28a745', // warna titik
+                    fill: true,
+                    tension: 0.4
                 }]
             },
             options: {
                 responsive: true,
                 plugins: {
                     legend: {
-                        display: false
-                    }
+                        display: true
+                    },
                 },
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Jumlah Sekolah'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Kecamatan'
+                        }
                     }
                 }
             }

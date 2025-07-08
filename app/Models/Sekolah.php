@@ -19,6 +19,7 @@ class Sekolah extends Model
     protected $fillable = [
         'npsn',
         'nama',
+        'kurikulum_id',
         'jenjang',
         'alamat_jalan',
         'desa_kelurahan',
@@ -32,6 +33,10 @@ class Sekolah extends Model
         'telepon',
         'sk_pendirian',
         'tanggal_sk_pendirian',
+        'sk_izin_operasional',
+        'tanggal_sk_izin_operasional',
+        'lintang',
+        'bujur',
         'slug',
     ];
 
@@ -62,6 +67,11 @@ class Sekolah extends Model
         return $this->hasMany(Sarana::class);
     }
 
+    public function sarpras()
+    {
+        return $this->hasMany(Sarpras::class);
+    }
+
     public function kecamatanWilayah()
     {
         return $this->belongsTo(Wilayah::class, 'kecamatan', 'kode');
@@ -70,6 +80,21 @@ class Sekolah extends Model
     public function kelurahanWilayah()
     {
         return $this->belongsTo(Wilayah::class, 'desa_kelurahan', 'kode');
+    }
+
+    public function kepalaSekolah()
+    {
+        return $this->belongsTo(Ptk::class, 'kepala_sekolah_id');
+    }
+
+    public function operator()
+    {
+        return $this->belongsTo(Ptk::class, 'operator_id');
+    }
+
+    public function kurikulum()
+    {
+        return $this->belongsTo(Kurikulum::class, 'kurikulum_id');
     }
 
     public function user()

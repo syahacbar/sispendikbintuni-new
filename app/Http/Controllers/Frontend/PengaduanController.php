@@ -8,6 +8,14 @@ use App\Models\Pengaduan;
 
 class PengaduanController extends Controller
 {
+    public function index()
+    {
+        $title = 'Pengaduan';
+        $subtitle = 'Form Pengaduan';
+
+        return view('frontend.pages.pengaduan', compact('title', 'subtitle'));
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -48,11 +56,17 @@ class PengaduanController extends Controller
 
     public function lacakForm()
     {
-        return view('frontend.pages.lacak_pengaduan');
+        $title = 'Berita';
+        $subtitle = 'Berita';
+
+        return view('frontend.pages.lacak_pengaduan', compact('title', 'subtitle'));
     }
 
     public function lacak(Request $request)
     {
+        $title = 'Berita';
+        $subtitle = 'Berita';
+
         $request->validate([
             'cek_laporan' => 'required|string',
         ]);
@@ -63,6 +77,6 @@ class PengaduanController extends Controller
             return back()->withErrors(['cek_laporan' => 'Nomor laporan tidak ditemukan.'])->withInput();
         }
 
-        return view('frontend.pages.lacak_pengaduan', compact('data'));
+        return view('frontend.pages.lacak_pengaduan', compact('data', 'title', 'subtitle'));
     }
 }

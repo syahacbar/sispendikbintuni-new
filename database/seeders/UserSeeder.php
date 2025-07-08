@@ -29,18 +29,26 @@ class UserSeeder extends Seeder
         ]);
         $dinas->assignRole('admin_dinas');
 
-        // Admin Sekolah
-        $sekolahTarget = Sekolah::where('nama', 'SD Negeri Harapan Bangsa')->first();
+        $sekolah = User::updateOrCreate([
+            'email' => 'adminsekolah@example.com',
+        ], [
+            'name' => 'Admin Sekolah',
+            'password' => Hash::make('password'),
+        ]);
+        $dinas->assignRole('admin_sekolah');
 
-        if ($sekolahTarget) {
-            $sekolah = User::updateOrCreate([
-                'email' => 'adminsekolah@example.com',
-            ], [
-                'name' => 'Admin Sekolah',
-                'password' => Hash::make('password'),
-                'sekolah_id' => $sekolahTarget->id,
-            ]);
-            $sekolah->assignRole('admin_sekolah');
-        }
+        // // Admin Sekolah
+        // $sekolahTarget = Sekolah::where('nama', 'SD Negeri Harapan Bangsa')->first();
+
+        // if ($sekolahTarget) {
+        //     $sekolah = User::updateOrCreate([
+        //         'email' => 'adminsekolah@example.com',
+        //     ], [
+        //         'name' => 'Admin Sekolah',
+        //         'password' => Hash::make('password'),
+        //         'sekolah_id' => $sekolahTarget->id,
+        //     ]);
+        //     $sekolah->assignRole('admin_sekolah');
+        // }
     }
 }

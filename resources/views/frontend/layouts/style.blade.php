@@ -3,8 +3,6 @@
 <link rel="stylesheet" href="{{ asset('themes/frontend/css/aos.css') }}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
-<link href="https://cdn.datatables.net/columncontrol/1.0.6/css/columnControl.dataTables.min.css" rel="stylesheet">
-
 <!-- DataTables core CSS -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 
@@ -12,16 +10,14 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<!-- FullCalendar CSS -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet">
 
-<!-- Leaflet CSS -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 <!-- Marker Cluster CSS -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
 
-<!-- FullCalendar CSS -->
-<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet">
 
 <style>
     .w-5 {
@@ -67,15 +63,6 @@
     table.dataTable.dtr-inline.collapsed>tbody>tr>td.dtr-control:before,
     table.dataTable.dtr-inline.collapsed>tbody>tr>th.dtr-control:before {
         content: '\002B';
-        /* background-color: #0394dd;
-        color: #fff;
-        border-radius: 50%;
-        width: 1.5em;
-        height: 1.5em;
-        line-height: 1.5em;
-        display: flex;
-        align-items: center;
-        justify-content: center; */
     }
 
     td.dtr-control.sorting_1 {
@@ -83,12 +70,6 @@
         justify-content: space-between;
         align-items: center;
     }
-
-    /* table.dataTable.dtr-inline.collapsed>tbody>tr.parent>td.dtr-control:before,
-    table.dataTable.dtr-inline.collapsed>tbody>tr.parent>th.dtr-control:before {
-        content: '\2212';
-        background-color: #dc3545;
-    } */
 
     table#dataSekolah *,
     table.dataTable>tbody>tr.child ul.dtr-details * {
@@ -105,5 +86,9 @@
     div#dataKecamatan_length,
     div#dataKecamatan_filter {
         margin-bottom: 1rem;
+    }
+
+    footer li a:hover {
+        color: #0394dd !important;
     }
 </style>
