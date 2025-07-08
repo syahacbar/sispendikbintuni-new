@@ -56,6 +56,13 @@ class SekolahResource extends Resource
                 ->preload()
                 ->required(),
 
+            Select::make('kode_wilayah')
+                ->label('Kode Wilayah')
+                ->relationship('wilayah', 'nama')
+                ->searchable()
+                ->preload()
+                ->required(),
+
             // Wilayah Bertingkat
             Select::make('provinsi')
                 ->label('Provinsi')

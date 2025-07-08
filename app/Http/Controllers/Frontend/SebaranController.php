@@ -19,9 +19,7 @@ class SebaranController extends Controller
             'jenjang',
             'status_sekolah',
             'alamat_jalan',
-            'kecamatan',
-            'kabupaten',
-            'provinsi',
+            'kode_wilayah',
             'lintang',
             'bujur'
         )

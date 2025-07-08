@@ -202,7 +202,7 @@
         </div>
     </section>
 
-    <section class="my-5">
+    <section>
         <div class="container">
             <div class="card shadow-sm">
                 <div class="card-header">

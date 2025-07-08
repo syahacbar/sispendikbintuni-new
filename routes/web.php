@@ -2,12 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Frontend\TentangController;
 use App\Http\Controllers\Frontend\PTKController;
+use App\Http\Controllers\Api\DirektoriController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\SiswaController;
 use App\Http\Controllers\Frontend\SebaranController;
 use App\Http\Controllers\Frontend\SekolahController;
+use App\Http\Controllers\Frontend\TentangController;
 use App\Http\Controllers\Frontend\KalenderController;
 use App\Http\Controllers\Frontend\InformasiController;
 use App\Http\Controllers\Frontend\PengaduanController;
@@ -49,3 +50,6 @@ Route::get('/data-pendidikan', [DataPendidikanController::class, 'index']);
 Route::get('/data-pendidikan/{kecamatan}/kelurahan', [DataPendidikanController::class, 'kelurahan']);
 Route::get('/data-pendidikan/{kecamatan}/{kelurahan}/sekolah', [DataPendidikanController::class, 'sekolah']);
 Route::get('/data-pendidikan/sekolah/{slug}', [DataPendidikanController::class, 'detail']);
+
+
+Route::get('/direktori', [DirektoriController::class, 'index']);
