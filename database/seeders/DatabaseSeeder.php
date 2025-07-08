@@ -31,7 +31,6 @@ class DatabaseSeeder extends Seeder
             JenisSarprasSeeder::class,
             KelompokMapelSeeder::class,
             KelompokMapelSeeder::class,
-            WilayahSeeder::class,
             PengaduanSeeder::class,
             PengaturanSeeder::class,
         ]);
