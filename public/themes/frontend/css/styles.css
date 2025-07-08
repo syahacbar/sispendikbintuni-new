@@ -9,10 +9,14 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding-left: 0 !important;
+    /* padding-left: 0 !important; */
 }
 
 /* Main Navbar */
+
+/* .col-lg-5 {
+    width: 100%;
+} */
 
 .main-navbar .nav-link.active {
     color: #0093dd !important;

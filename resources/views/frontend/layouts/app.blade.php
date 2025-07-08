@@ -33,7 +33,7 @@
     @include('frontend.layouts.footer')
 
 
-    @include('frontend.layouts.mobilefooter')
+    @include('frontend.layouts.mobilemenu')
     @include('frontend.layouts.script')
     @livewireScripts
 

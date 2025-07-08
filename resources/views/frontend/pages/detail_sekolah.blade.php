@@ -66,7 +66,7 @@
 
             <div class="row">
                 <div class="col-lg-4">
-                    <div class="card">
+                    <div class="card mb-3">
                         <div class="card-header text-center">
                             <h3>{{ $sekolah->nama }}</h3>
                         </div>

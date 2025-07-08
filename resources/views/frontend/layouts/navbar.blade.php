@@ -20,12 +20,6 @@
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('sebaran*') ? 'active' : '' }}" href="/sebaran">Sebaran</a>
                 </li>
-                {{-- <li class="nav-item">
-                    <a class="nav-link {{ Request::is('ptk*') ? 'active' : '' }}" href="/ptk">PTK</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ Request::is('siswa*') ? 'active' : '' }}" href="/siswa">Siswa</a>
-                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('kalender*') ? 'active' : '' }}" href="/kalender">Kalender</a>
                 </li>

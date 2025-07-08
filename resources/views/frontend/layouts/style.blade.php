@@ -1,23 +1,14 @@
-<link href="{{ asset('themes/frontend/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" />
-<link rel="stylesheet" href="{{ asset('themes/frontend/css/styles.css') }}" />
+<link rel="stylesheet" href="{{ asset('themes/frontend/plugins/bootstrap/css/bootstrap.min.css') }}">
+<link rel="stylesheet" href="{{ asset('themes/frontend/css/styles.css') }}">
 <link rel="stylesheet" href="{{ asset('themes/frontend/css/aos.css') }}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-
-<!-- DataTables core CSS -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-
-<!-- Add-ons CSS -->
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
-
-<!-- FullCalendar CSS -->
-<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet">
-
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-<!-- Marker Cluster CSS -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
-
 
 <style>
     .w-5 {
@@ -90,5 +81,16 @@
 
     footer li a:hover {
         color: #0394dd !important;
+    }
+
+    footer img {
+        width: 70px;
+        height: auto;
+    }
+
+    @media (max-width: 576px) {
+        .col-lg-7.mt-4.mt-md-0 .col-lg-4 {
+            width: 33.33%;
+        }
     }
 </style>
