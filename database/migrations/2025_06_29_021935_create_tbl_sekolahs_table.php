@@ -17,9 +17,6 @@ return new class extends Migration
             $table->text('alamat_jalan')->nullable();
             $table->string('desa_kelurahan', 100)->nullable();
             $table->string('kode_pos', 10)->nullable();
-            // $table->string('kecamatan', 100)->nullable();
-            // $table->string('kabupaten', 100)->nullable();
-            // $table->string('provinsi', 100)->nullable();
             $table->enum('status_sekolah', ['Negeri', 'Swasta']);
             $table->char('akreditasi', 1)->nullable();
             $table->string('email', 100)->nullable();
