@@ -18,11 +18,7 @@ class SekolahImport implements ToModel, WithHeadingRow
             'nama' => $row['nama'],
             'jenjang' => $row['jenjang'],
             'alamat_jalan' => $row['alamat_jalan'],
-            'desa_kelurahan' => $row['desa_kelurahan'],
             'kode_pos' => $row['kode_pos'],
-            'kecamatan' => $row['kecamatan'],
-            'kabupaten' => $row['kabupaten'],
-            'provinsi' => $row['provinsi'],
             'status_sekolah' => $row['status_sekolah'],
             'akreditasi' => $row['akreditasi'],
             'email' => $row['email'],
@@ -33,6 +29,7 @@ class SekolahImport implements ToModel, WithHeadingRow
             'tanggal_sk_izin_operasional' => $row['tanggal_sk_izin_operasional'],
             'lintang' => $row['lintang'],
             'bujur' => $row['bujur'],
+            'kode_wilyah' => $row['kode_wilayah'],
             'slug' => Str::slug($row['nama'] . '-' . $row['npsn']),
         ]);
     }

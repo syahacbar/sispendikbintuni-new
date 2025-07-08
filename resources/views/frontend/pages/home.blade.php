@@ -743,9 +743,9 @@
                 datasets: [{
                     label: 'Jumlah Sekolah',
                     data: @json($jumlahSekolahData),
-                    borderColor: '#28a745', // <- warna garis
-                    backgroundColor: 'rgba(40, 167, 69, 0.1)', // area bawah garis (opsional)
-                    pointBackgroundColor: '#28a745', // warna titik
+                    borderColor: '#28a745',
+                    backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                    pointBackgroundColor: '#28a745',
                     fill: true,
                     tension: 0.4
                 }]

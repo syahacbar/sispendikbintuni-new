@@ -209,9 +209,9 @@ class HomeController extends Controller
 
         // Sebaran Sekolah per kecamatan
         $sebaranSekolahKecamatan = Sekolah::with('kecamatanWilayah')
-            ->select('kecamatan', DB::raw('count(*) as jumlah'))
-            ->groupBy('kecamatan')
-            ->orderBy('kecamatan')
+            ->select('kode_wilayah', DB::raw('count(*) as jumlah'))
+            ->groupBy('kode_wilayah')
+            ->orderBy('kode_wilayah')
             ->get();
 
         // Ambil nama kecamatan dari relasi Wilayah
@@ -236,8 +236,8 @@ class HomeController extends Controller
             'akreditasiDatasets',
             'statusPTKDatasets',
             'kualifikasiDatasets',
-            'kecamatanLabels',       // baru
-            'jumlahSekolahData'      // baru
+            'kecamatanLabels',
+            'jumlahSekolahData'
         ));
     }
 }

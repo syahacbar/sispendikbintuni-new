@@ -26,14 +26,15 @@ class DataPendidikanController extends Controller
             ->values()
             ->all();
 
-        $kecamatans = Sekolah::select('kecamatan')
+
+        $kecamatans = Sekolah::select('kode_wilayah')
             ->distinct()
-            ->orderBy('kecamatan')
+            ->orderBy('kode_wilayah')
             ->get()
             ->map(function ($item) use ($jenjangList) {
                 $namaKecamatan = Wilayah::where('kode', $item->kecamatan)->value('nama');
 
-                $data = Sekolah::where('kecamatan', $item->kecamatan)
+                $data = Sekolah::where('kode_wilayah', $item->kecamatan)
                     ->select('jenjang', 'status_sekolah', DB::raw('count(*) as total'))
                     ->groupBy('jenjang', 'status_sekolah')
                     ->get();
@@ -62,7 +63,7 @@ class DataPendidikanController extends Controller
                     'kecamatan' => $item->kecamatan,
                     'nama_kecamatan' => $namaKecamatan,
                     'jumlah' => $grouped,
-                    'total_all' => $totalAll, // ⬅ total semua jenjang per kecamatan
+                    'total_all' => $totalAll,
                 ];
             });
 
