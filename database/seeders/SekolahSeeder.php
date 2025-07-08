@@ -14,9 +14,17 @@ class SekolahSeeder extends Seeder
      */
     public function run(): void
     {
+        // Ambil ID kurikulum (gunakan random atau default jika kosong)
+        $kurikulumIds = DB::table('tbl_kurikulums')->pluck('id');
+        if ($kurikulumIds->isEmpty()) {
+            $this->command->error('Tidak ada data pada tabel tbl_kurikulums.');
+            return;
+        }
+
         $data = [
             [
                 'id' => (string) Str::uuid(),
+                'kurikulum_id' => $kurikulumIds->random(),
                 'npsn' => '1010000001',
                 'nama' => 'SD Negeri Harapan Bangsa',
                 'jenjang' => 'SD',
@@ -30,14 +38,20 @@ class SekolahSeeder extends Seeder
                 'akreditasi' => 'A',
                 'email' => 'sdharapan@example.com',
                 'telepon' => '0987123456',
+                'kepemilikan' => null,
                 'sk_pendirian' => 'SK-001/2020',
                 'tanggal_sk_pendirian' => Carbon::parse('2020-01-10'),
+                'sk_izin_operasional' => null,
+                'tanggal_sk_izin_operasional' => null,
+                'lintang' => null,
+                'bujur' => null,
                 'slug' => 'sd-negeri-harapan-bangsa',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'id' => (string) Str::uuid(),
+                'kurikulum_id' => $kurikulumIds->random(),
                 'npsn' => '1010000002',
                 'nama' => 'SMP Negeri Cemerlang',
                 'jenjang' => 'SMP',
@@ -51,79 +65,20 @@ class SekolahSeeder extends Seeder
                 'akreditasi' => 'B',
                 'email' => 'smpcemerlang@example.com',
                 'telepon' => '0987123457',
+                'kepemilikan' => null,
                 'sk_pendirian' => 'SK-002/2019',
                 'tanggal_sk_pendirian' => Carbon::parse('2019-03-15'),
+                'sk_izin_operasional' => null,
+                'tanggal_sk_izin_operasional' => null,
+                'lintang' => null,
+                'bujur' => null,
                 'slug' => 'smp-negeri-cemerlang',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => (string) Str::uuid(),
-                'npsn' => '1010000003',
-                'nama' => 'SMA Swasta Nusantara',
-                'jenjang' => 'SMA',
-                'alamat_jalan' => 'Jl. Nusantara No.3',
-                'desa_kelurahan' => 'Kelurahan C',
-                'kode_pos' => '98213',
-                'kecamatan' => 'Kecamatan Utara',
-                'kabupaten' => 'Kabupaten Teluk Bintuni',
-                'provinsi' => 'Papua Barat',
-                'status_sekolah' => 'Swasta',
-                'akreditasi' => 'A',
-                'email' => 'smanusantara@example.com',
-                'telepon' => '0987123458',
-                'sk_pendirian' => 'SK-003/2018',
-                'tanggal_sk_pendirian' => Carbon::parse('2018-06-20'),
-                'slug' => 'sma-swasta-nusantara',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => (string) Str::uuid(),
-                'npsn' => '1010000004',
-                'nama' => 'SMK Negeri 1 Teknologi',
-                'jenjang' => 'SMK',
-                'alamat_jalan' => 'Jl. Teknologi No.4',
-                'desa_kelurahan' => 'Kelurahan D',
-                'kode_pos' => '98214',
-                'kecamatan' => 'Kecamatan Selatan',
-                'kabupaten' => 'Kabupaten Teluk Bintuni',
-                'provinsi' => 'Papua Barat',
-                'status_sekolah' => 'Negeri',
-                'akreditasi' => 'B',
-                'email' => 'smkteknologi@example.com',
-                'telepon' => '0987123459',
-                'sk_pendirian' => 'SK-004/2017',
-                'tanggal_sk_pendirian' => Carbon::parse('2017-09-25'),
-                'slug' => 'smk-negeri-1-teknologi',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => (string) Str::uuid(),
-                'npsn' => '1010000005',
-                'nama' => 'MI Swasta Al-Falah',
-                'jenjang' => 'MI',
-                'alamat_jalan' => 'Jl. Pesantren No.5',
-                'desa_kelurahan' => 'Kelurahan E',
-                'kode_pos' => '98215',
-                'kecamatan' => 'Kecamatan Tengah',
-                'kabupaten' => 'Kabupaten Teluk Bintuni',
-                'provinsi' => 'Papua Barat',
-                'status_sekolah' => 'Swasta',
-                'akreditasi' => 'C',
-                'email' => 'mialfalah@example.com',
-                'telepon' => '0987123460',
-                'sk_pendirian' => 'SK-005/2016',
-                'tanggal_sk_pendirian' => Carbon::parse('2016-11-30'),
-                'slug' => 'mi-swasta-al-falah',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
         ];
 
         DB::table('tbl_sekolahs')->insert($data);
-
-        $this->command->info('5 data sekolah berhasil di-seed.');
+        $this->command->info(count($data) . ' data sekolah berhasil di-seed.');
     }
 }

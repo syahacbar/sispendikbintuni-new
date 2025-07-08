@@ -18,10 +18,11 @@ class PesertaDidikChart extends ChartWidget
 
     protected function getData(): array
     {
-        $data = PesertaDidik::select('jenjang', DB::raw('count(*) as total'))
-            ->groupBy('jenjang')
-            ->orderBy('jenjang')
+        $data = PesertaDidik::select('kecamatan', DB::raw('count(*) as total'))
+            ->groupBy('kecamatan')
+            ->orderBy('kecamatan')
             ->get();
+
 
         return [
             'datasets' => [
@@ -36,7 +37,7 @@ class PesertaDidikChart extends ChartWidget
                     ],
                 ],
             ],
-            'labels' => $data->pluck('jenjang'),
+            'labels' => $data->pluck('kecamatan'),
         ];
     }
 }

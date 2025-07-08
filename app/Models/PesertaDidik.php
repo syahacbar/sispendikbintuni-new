@@ -18,7 +18,7 @@ class PesertaDidik extends Model
         'nik',
         'jenis_kelamin',
         'tgl_lahir',
-        'jenjang',
+        'rombongan_belajar_id',
         'alamat_jalan',
         'desa_kelurahan',
         'kode_pos',
@@ -40,5 +40,10 @@ class PesertaDidik extends Model
     public function registrasi()
     {
         return $this->hasOne(RegistrasiPesertaDidik::class);
+    }
+
+    public function rombongan_belajar()
+    {
+        return $this->belongsTo(RombonganBelajar::class);
     }
 }

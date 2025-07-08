@@ -28,7 +28,7 @@ class KurikulumResource extends Resource
 
     public static function getNavigationSort(): ?int
     {
-        return 2;
+        return 1;
     }
 
     public static function form(Form $form): Form
@@ -70,13 +70,13 @@ class KurikulumResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('kode')
+                TextColumn::make('kode')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('nama')
+                TextColumn::make('nama')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('jenis')
+                TextColumn::make('jenis')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('tahun_mulai')
+                TextColumn::make('tahun_mulai')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('status')
@@ -88,11 +88,11 @@ class KurikulumResource extends Resource
                         default => 'gray',
                     })
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

@@ -43,6 +43,7 @@ class PesertaDidikResource extends Resource
                         ->label('Sekolah')
                         ->relationship('sekolah', 'nama')
                         ->searchable()
+                        ->preload()
                         ->default(fn() => Filament::auth()->user()->sekolah_id)
                         ->disabled(fn() => Filament::auth()->user()->hasRole('admin_sekolah'))
                         ->dehydrated()
@@ -71,23 +72,13 @@ class PesertaDidikResource extends Resource
                         ])
                         ->inline()
                         ->required(),
+                    Select::make('rombongan_belajar_id')
+                        ->label('Rombongan Belajar')
+                        ->relationship('rombongan_belajar', 'nama_rombel')
+                        ->searchable()
+                        ->preload()
+                        ->required()
 
-                    Select::make('jenjang')
-                        ->label('Jenjang')
-                        ->options([
-                            'TK' => 'TK',
-                            'KB' => 'KB',
-                            'TPA' => 'TPA',
-                            'SPS' => 'SPS',
-                            'PKBM' => 'PKBM',
-                            'SKB' => 'SKB',
-                            'SD' => 'SD',
-                            'SMP' => 'SMP',
-                            'SMK' => 'SMK',
-                            'SMA' => 'SMA',
-                            'SLB' => 'SLB',
-                        ])
-                        ->required(),
                 ])->columns(3),
 
                 Fieldset::make('Alamat dan Tempat Lahir')->schema([
@@ -196,8 +187,8 @@ class PesertaDidikResource extends Resource
                     ->formatStateUsing(fn($state) => $state === 'L' ? 'Laki-laki' : 'Perempuan')
                     ->sortable(),
 
-                TextColumn::make('jenjang')
-                    ->label('Jenjang')
+                TextColumn::make('rombongan_belajar.nama_rombel')
+                    ->label('Rombel')
                     ->sortable(),
 
                 TextColumn::make('tgl_lahir')

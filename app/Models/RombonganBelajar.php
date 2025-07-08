@@ -32,4 +32,14 @@ class RombonganBelajar extends Model
     {
         return $this->hasMany(RombelMapel::class);
     }
+
+    public function waliKelas()
+    {
+        return $this->belongsTo(Ptk::class, 'wali_ptk_id');
+    }
+
+    public function pesertaDidiks()
+    {
+        return $this->hasMany(PesertaDidik::class, 'rombongan_belajar_id');
+    }
 }

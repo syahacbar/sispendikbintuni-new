@@ -2,37 +2,30 @@
 
 namespace App\Filament\Resources;
 
-use App\Models\Ptk;
 use Filament\Forms;
 use Filament\Tables;
-use App\Models\Sekolah;
+use App\Models\Sarpras;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Facades\Filament;
-use App\Models\RombonganBelajar;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\SarprasResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\RombonganBelajarResource\Pages;
-use App\Filament\Resources\RombonganBelajarResource\RelationManagers;
+use App\Filament\Resources\SarprasResource\RelationManagers;
 
-class RombonganBelajarResource extends Resource
+class SarprasResource extends Resource
 {
-    protected static ?string $model = RombonganBelajar::class;
+    protected static ?string $model = Sarpras::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-video-camera-slash';
-    protected static ?string $navigationLabel = 'Rombongan Belajar';
-    protected static ?string $pluralModelLabel = 'Rombongan Belajar';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationLabel = 'Sarpras';
+    protected static ?string $pluralModelLabel = 'Sarpras';
     protected static ?string $navigationGroup = 'Data Pendidikan';
-
-
-    public static function getNavigationSort(): ?int
-    {
-        return 5;
-    }
 
     public static function form(Form $form): Form
     {
@@ -48,39 +41,42 @@ class RombonganBelajarResource extends Resource
                     ->dehydrated(true)
                     ->required()
                     ->reactive(),
-
-                TextInput::make('nama_rombel')
-                    ->required()
-                    ->maxLength(50),
-
-                Select::make('wali_ptk_id')
-                    ->label('Wali Kelas')
-                    ->options(function (callable $get) {
-                        $sekolahId = $get('sekolah_id') ?? Filament::auth()->user()->sekolah_id;
-
-                        if (!$sekolahId) {
-                            return [];
-                        }
-                        return Ptk::where('sekolah_id', $sekolahId)->pluck('nama', 'id');
-                    })
-                    ->searchable()
-                    ->preload()
-                    ->required()
-                    ->reactive(),
-
-                TextInput::make('tingkat_kelas')
-                    ->required()
-                    ->numeric(),
-                TextInput::make('semester')
-                    ->required()
-                    ->maxLength(6),
-                Select::make('kurikulum_id')
-                    ->label('Kurikulum')
-                    ->relationship('kurikulum', 'nama')
+                Select::make('jenis_sarpras_id')
+                    ->label('Jenis Sarpras')
+                    ->relationship('jenisSarpras', 'nama')
                     ->searchable()
                     ->preload()
                     ->required(),
-            ])->columns(3);
+
+                Select::make('kategori')
+                    ->options([
+                        'Sarana' => 'Sarana',
+                        'Prasarana' => 'Prasarana',
+                    ])
+                    ->required(),
+                TextInput::make('jumlah_ideal')
+                    ->required()
+                    ->numeric(),
+                TextInput::make('jumlah_saat_ini')
+                    ->required()
+                    ->numeric(),
+                Select::make('kondisi')
+                    ->options([
+                        'Baik' => 'Baik',
+                        'Rusak Ringan' => 'Rusak Ringan',
+                        'Rusak Berat' => 'Rusak Berat',
+                    ])
+                    ->required(),
+                Select::make('kurang_lebih')
+                    ->options([
+                        'Kurang' => 'Kurang',
+                        'Lebih' => 'Lebih',
+                    ])
+                    ->required(),
+                Textarea::make('keterangan')
+                    ->required()
+                    ->columnSpanFull(),
+            ])->columns(4);
     }
 
     public static function table(Table $table): Table
@@ -92,15 +88,24 @@ class RombonganBelajarResource extends Resource
                     ->sortable()
                     ->searchable()
                     ->visible(fn() => !auth()->user()->hasRole('admin_sekolah')),
-                TextColumn::make('wali.nama'),
-                TextColumn::make('nama_rombel')
+                TextColumn::make('jenisSarpras.nama')
+                    ->label('Jenis Sarpras')
+                    ->sortable()
                     ->searchable(),
-                TextColumn::make('tingkat_kelas')
+                TextColumn::make('kategori')
+                    ->searchable(),
+                TextColumn::make('jumlah_ideal')
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('semester')
+                TextColumn::make('jumlah_saat_ini')
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('kondisi')
+                    ->label('Kondisi')
                     ->searchable(),
-                TextColumn::make('kurikulum.nama'),
+                TextColumn::make('kurang_lebih')
+                    ->label('Kurang Lebih')
+                    ->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -135,9 +140,9 @@ class RombonganBelajarResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListRombonganBelajars::route('/'),
-            'create' => Pages\CreateRombonganBelajar::route('/create'),
-            'edit' => Pages\EditRombonganBelajar::route('/{record}/edit'),
+            'index' => Pages\ListSarpras::route('/'),
+            'create' => Pages\CreateSarpras::route('/create'),
+            'edit' => Pages\EditSarpras::route('/{record}/edit'),
         ];
     }
 }

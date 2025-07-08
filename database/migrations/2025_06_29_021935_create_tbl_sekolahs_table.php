@@ -6,13 +6,11 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('tbl_sekolahs', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->uuid('kurikulum_id');
             $table->string('npsn', 10)->unique();
             $table->string('nama', 100);
             $table->string('jenjang', 50);
@@ -26,16 +24,20 @@ return new class extends Migration
             $table->char('akreditasi', 1)->nullable();
             $table->string('email', 100)->nullable();
             $table->string('telepon', 20)->nullable();
+            $table->string('kepemilikan', 100)->nullable();
             $table->string('sk_pendirian', 100)->nullable();
             $table->date('tanggal_sk_pendirian')->nullable();
+            $table->string('sk_izin_operasional', 100)->nullable();
+            $table->date('tanggal_sk_izin_operasional')->nullable();
+            $table->string('lintang', 100)->nullable();
+            $table->string('bujur', 100)->nullable();
             $table->string('slug')->unique();
             $table->timestamps();
+
+            $table->foreign('kurikulum_id')->references('id')->on('tbl_kurikulums')->onDelete('cascade');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('tbl_sekolahs');

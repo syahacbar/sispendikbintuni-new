@@ -31,7 +31,7 @@ class SekolahResource extends Resource
 
     public static function getNavigationSort(): ?int
     {
-        return 1;
+        return 2;
     }
 
     public static function form(Form $form): Form
@@ -48,6 +48,13 @@ class SekolahResource extends Resource
             TextInput::make('jenjang')
                 ->required()
                 ->maxLength(50),
+
+            Select::make('kurikulum')
+                ->label('Kurikulum')
+                ->relationship('kurikulum', 'nama')
+                ->searchable()
+                ->preload()
+                ->required(),
 
             // Wilayah Bertingkat
             Select::make('provinsi')
@@ -170,12 +177,14 @@ class SekolahResource extends Resource
                     ->label('Jenjang')
                     ->searchable()
                     ->sortable(),
-
+                TextColumn::make('kurikulum.kode')
+                    ->label('Kurikulum')
+                    ->sortable()
+                    ->searchable(),
                 TextColumn::make('alamat_jalan')
                     ->label('Alamat')
                     ->searchable()
                     ->limit(50),
-
                 TextColumn::make('desa_kelurahan')
                     ->label('Desa/Kelurahan')
                     ->searchable(),

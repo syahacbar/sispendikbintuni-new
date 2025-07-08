@@ -1,14 +1,27 @@
 @extends('frontend.layouts.app')
-@section('content')
-    <section class="identity-section mb-4 mt-5">
-        <div class="container">
-            <div class="identity-content">
-                <h1 class="text-white fw-bold" data-aos="fade-up">{{ $title }}</h1>
-                <p class="text-warning mb-4" data-aos="fade-up">{{ $subtitle }}</p>
-            </div>
-        </div>
-    </section>
+<style>
+    table#dataSekolah tfoot * {
+        font-weight: bold;
+        font-size: 14px !important;
+    }
 
+    table#dataSekolah tbody td,
+    table#dataSekolah thead th,
+    table#dataSekolah tfoot th {
+        font-weight: normal !important;
+        font-size: 14px;
+    }
+
+    table#dataSekolah thead th,
+    table#dataSekolah tfoot th {
+        font-weight: normal !important;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+</style>
+@section('content')
     <section class="about-section">
         <div class="container">
             <div class="row my-3">
@@ -34,44 +47,40 @@
 
                 <div class="card mt-3">
                     <div class="card-body">
-                        <table id="dataKecamatan" class="display responsive nowrap" style="width:100%">
-                            <table id="dataSekolah" class="display responsive nowrap" style="width:100%">
-                                <thead class="bg-success text-light">
+                        <table id="dataSekolah" class="display responsive nowrap" style="width:100%">
+                            <thead class="bg-success text-light">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama Sekolah</th>
+                                    <th class="text-center">NPSN</th>
+                                    <th class="text-center">Jenjang</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">Peserta Didik</th>
+                                    <th class="text-center">Rombel</th>
+                                    <th class="text-center">Guru</th>
+                                    <th class="text-center">Pegawai</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($sekolahs as $i => $s)
                                     <tr>
-                                        <th>No</th>
-                                        <th>Nama Sekolah</th>
-                                        <th>NPSN</th>
-                                        <th>Jenjang</th>
-                                        <th>Status</th>
-                                        <th>Peserta Didik</th>
-                                        <th>Rombel</th>
-                                        <th>PTK</th>
-                                        <th>Sarana</th>
-                                        <th>Prasarana</th>
+                                        <td>{{ $i + 1 }}</td>
+                                        <td>
+                                            <a class="text-decoration-none"
+                                                href="{{ url('/data-pendidikan/sekolah/' . $s->slug) }}">
+                                                {{ $s->nama }}
+                                            </a>
+                                        </td>
+                                        <td class="text-center">{{ $s->npsn }}</td>
+                                        <td class="text-center">{{ $s->jenjang }}</td>
+                                        <td class="text-center">{{ $s->status_sekolah }}</td>
+                                        <td class="text-center">{{ $s->peserta_didiks_count }}</td>
+                                        <td class="text-center">{{ $s->rombongan_belajars_count }}</td>
+                                        <td class="text-center">{{ $s->ptks_count }}</td>
+                                        <td class="text-center">{{ $s->ptks_count }}</td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($sekolahs as $i => $s)
-                                        <tr>
-                                            <td>{{ $i + 1 }}</td>
-                                            <td>
-                                                <a class="text-decoration-none"
-                                                    href="{{ url('/data-pendidikan/sekolah/' . $s->slug) }}">
-                                                    {{ $s->nama }}
-                                                </a>
-                                            </td>
-                                            <td>{{ $s->npsn }}</td>
-                                            <td>{{ $s->jenjang }}</td>
-                                            <td>{{ $s->status_sekolah }}</td>
-                                            <td>{{ $s->peserta_didiks_count }}</td>
-                                            <td>{{ $s->rombongan_belajars_count }}</td>
-                                            <td>{{ $s->ptks_count }}</td>
-                                            <td>{{ $s->saranas_count }}</td>
-                                            <td>{{ $s->prasaranas_count }}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                @endforeach
+                            </tbody>
                         </table>
                     </div>
                 </div>

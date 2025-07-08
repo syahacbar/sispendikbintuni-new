@@ -11,6 +11,17 @@
 
 <body class="bg-light">
 
+    @if (!Request::is('/'))
+        <section class="identity-section mb-4 mt-5">
+            <div class="container">
+                <div class="identity-content">
+                    <h1 class="text-white fw-bold" data-aos="fade-up">{{ $title ?? '' }}</h1>
+                    <p class="text-warning mb-4" data-aos="fade-up">{{ $subtitle ?? '' }}</p>
+                </div>
+            </div>
+        </section>
+    @endif
+
     <!-- Main Navbar untuk desktop -->
     @include('frontend.layouts.navbar')
     @include('frontend.layouts.mobilelogo')
