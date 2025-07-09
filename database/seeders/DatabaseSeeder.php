@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
             KelompokMapelSeeder::class,
             PengaduanSeeder::class,
             PengaturanSeeder::class,
+            WilayahSeeder::class,
         ]);
     }
 }
