@@ -18,8 +18,6 @@ class SebaranController extends Controller
             'npsn',
             'jenjang',
             'status_sekolah',
-            'alamat_jalan',
-            'kode_wilayah', 
             'latitude',
             'longitude'
         )

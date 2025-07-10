@@ -143,12 +143,8 @@
                 <b>NPSN:</b> ${school.npsn}<br>
                 <b>Bentuk Pendidikan:</b> ${school.jenjang}<br>
                 <b>Status:</b> ${school.status_sekolah}<br>
-                <b>Alamat:</b> ${school.alamat_jalan ?? '-'}<br>
-                <b>Kecamatan:</b> ${school.kecamatan ?? '-'}<br>
-                <b>Kabupaten:</b> ${school.kabupaten ?? '-'}<br>
-                <b>Provinsi:</b> ${school.provinsi ?? '-'}<br>
-                <b>Latitude:</b> ${school.latitude}<br>
-                <b>Longitude:</b> ${school.longitude}
+                <b>Kurikulum:</b> <br>
+                <b>Koordinat:</b> ${school.latitude}, ${school.longitude}
             `;
 
                 var marker = L.marker([lat, lng], {
