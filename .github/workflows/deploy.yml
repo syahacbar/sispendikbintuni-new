@@ -17,5 +17,5 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            cd /var/www/html/namaproject  # ganti sesuai direktori di VPS
+            cd /var/www/sispendik  # ganti sesuai direktori di VPS
             git pull origin main
