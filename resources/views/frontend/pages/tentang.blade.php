@@ -4,7 +4,7 @@
     <section class="about-section">
         <div class="container">
             <div class="row my-3">
-                <div class="cardh-header">
+                <div class="card-header">
                     <h6>Tentang Web</h6>
                 </div>
                 <div class="card mt-3">
