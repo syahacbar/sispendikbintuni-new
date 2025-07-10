@@ -3542,11 +3542,15 @@ fieldset:disabled .btn {
     color: var(--bs-dropdown-link-hover-color);
     background-color: var(--bs-dropdown-link-hover-bg);
 }
+ul.dropdown-menu.show a.dropdown-item.active {
+    color: #0093dd !important;
+}
 .dropdown-item.active,
 .dropdown-item:active {
-    color: var(--bs-dropdown-link-active-color);
+    color: #0093dd !important;
     text-decoration: none;
-    background-color: var(--bs-dropdown-link-active-bg);
+    /* background-color: var(--bs-dropdown-link-active-bg); */
+    background-color: transparent);
 }
 .dropdown-item.disabled,
 .dropdown-item:disabled {
@@ -8582,10 +8586,11 @@ fieldset:disabled .btn {
 }
 .bg-success {
     --bs-bg-opacity: 1;
-    background-color: rgba(
+    background-color: #0093dd !important;
+    /* background-color: rgba(
         var(--bs-success-rgb),
         var(--bs-bg-opacity)
-    ) !important;
+    ) !important; */
 }
 .bg-info {
     --bs-bg-opacity: 1;

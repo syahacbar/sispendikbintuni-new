@@ -188,14 +188,10 @@ class SekolahResource extends Resource
                     ->label('Kurikulum')
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('alamat_jalan')
+                TextColumn::make('kode_wilayah.nama')
                     ->label('Alamat')
                     ->searchable()
                     ->limit(50),
-                TextColumn::make('desa_kelurahan')
-                    ->label('Desa/Kelurahan')
-                    ->searchable(),
-
                 TextColumn::make('kode_pos')
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->label('Kode Pos'),

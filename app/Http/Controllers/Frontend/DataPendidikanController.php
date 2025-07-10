@@ -4,37 +4,33 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Models\Sekolah;
 use App\Models\Wilayah;
-use App\Models\Pengaturan;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class DataPendidikanController extends Controller
 {
+    // Halaman utama: daftar kecamatan
     public function index()
     {
         $title = 'Data Pendidikan';
         $subtitle = 'Tabel Data Pendidikan Se-Kabupaten Teluk Bintuni';
 
-        $jenjangList = Sekolah::select('jenjang')
-            ->distinct()
-            ->pluck('jenjang')
-            ->sortBy(function ($jenjang) {
-                $order = ['TK', 'SD', 'SMP', 'SMA', 'SMK', 'SLB'];
-                return array_search($jenjang, $order) !== false ? array_search($jenjang, $order) : 999;
-            })
-            ->values()
-            ->all();
+        $jenjangList = Sekolah::select('jenjang')->distinct()->pluck('jenjang')->sortBy(function ($jenjang) {
+            $order = ['TK', 'SD', 'SMP', 'SMA', 'SMK', 'SLB'];
+            return array_search($jenjang, $order) !== false ? array_search($jenjang, $order) : 999;
+        })->values()->all();
 
+        $wilayahMap = Wilayah::pluck('nama', 'kode');
 
-        $kecamatans = Sekolah::select('kode_wilayah')
+        $kecamatans = Sekolah::selectRaw('LEFT(kode_wilayah, 8) as kode_kecamatan')
             ->distinct()
-            ->orderBy('kode_wilayah')
+            ->orderBy('kode_kecamatan')
             ->get()
-            ->map(function ($item) use ($jenjangList) {
-                $namaKecamatan = Wilayah::where('kode', $item->kecamatan)->value('nama');
+            ->map(function ($item) use ($jenjangList, $wilayahMap) {
+                $kodeKecamatan = $item->kode_kecamatan;
+                $namaKecamatan = $wilayahMap[$kodeKecamatan] ?? '-';
 
-                $data = Sekolah::where('kode_wilayah', $item->kecamatan)
+                $data = Sekolah::where('kode_wilayah', 'like', $kodeKecamatan . '%')
                     ->select('jenjang', 'status_sekolah', DB::raw('count(*) as total'))
                     ->groupBy('jenjang', 'status_sekolah')
                     ->get();
@@ -60,18 +56,15 @@ class DataPendidikanController extends Controller
                 }
 
                 return [
-                    'kecamatan' => $item->kecamatan,
+                    'kecamatan' => $kodeKecamatan,
                     'nama_kecamatan' => $namaKecamatan,
                     'jumlah' => $grouped,
                     'total_all' => $totalAll,
                 ];
             });
 
-
-
-        // Ambil nama kabupaten dari salah satu kecamatan
         $kodeKecamatan = optional($kecamatans->first())['kecamatan'];
-        $kodeKabupaten = substr($kodeKecamatan, 0, 5); // misal: "92.06"
+        $kodeKabupaten = substr($kodeKecamatan, 0, 5);
         $namaKabupaten = Wilayah::getNamaByKode($kodeKabupaten);
 
         return view('frontend.pages.kecamatan', compact(
@@ -84,92 +77,15 @@ class DataPendidikanController extends Controller
         ));
     }
 
-    public function kelurahan($kecamatan)
+    // Halaman daftar sekolah berdasarkan kecamatan
+    public function sekolahByKecamatan($kecamatan)
     {
         $title = 'Data Pendidikan';
-        $subtitle = 'Data Pendidikan berdasarkan Kelurahan di Kabupaten Teluk Bintuni';
-
-        $jenjangList = Sekolah::select('jenjang')
-            ->distinct()
-            ->pluck('jenjang')
-            ->sortBy(function ($jenjang) {
-                $order = ['TK', 'SD', 'SMP', 'SMA', 'SMK', 'SLB'];
-                return array_search($jenjang, $order) !== false ? array_search($jenjang, $order) : 999;
-            })
-            ->values()
-            ->all();
-
-        $kelurahans = Sekolah::where('kecamatan', $kecamatan)
-            ->select('desa_kelurahan')
-            ->distinct()
-            ->orderBy('desa_kelurahan')
-            ->get()
-            ->map(function ($item) use ($kecamatan, $jenjangList) {
-                $namaKelurahan = Wilayah::getNamaByKode($item->desa_kelurahan);
-
-                $data = Sekolah::where('kecamatan', $kecamatan)
-                    ->where('desa_kelurahan', $item->desa_kelurahan)
-                    ->select('jenjang', 'status_sekolah', DB::raw('count(*) as total'))
-                    ->groupBy('jenjang', 'status_sekolah')
-                    ->get();
-
-                $grouped = collect();
-                $totalAll = ['total' => 0, 'negeri' => 0, 'swasta' => 0];
-
-                foreach ($jenjangList as $jenjang) {
-                    $jenjangData = $data->where('jenjang', $jenjang);
-                    $total = $jenjangData->sum('total');
-                    $negeri = $jenjangData->where('status_sekolah', 'Negeri')->sum('total');
-                    $swasta = $jenjangData->where('status_sekolah', 'Swasta')->sum('total');
-
-                    $grouped[$jenjang] = [
-                        'total' => $total,
-                        'negeri' => $negeri,
-                        'swasta' => $swasta,
-                    ];
-
-                    $totalAll['total'] += $total;
-                    $totalAll['negeri'] += $negeri;
-                    $totalAll['swasta'] += $swasta;
-                }
-
-                return [
-                    'desa_kelurahan' => $item->desa_kelurahan,
-                    'nama_kelurahan' => $namaKelurahan,
-                    'jumlah' => $grouped,
-                    'total_all' => $totalAll,
-                ];
-            });
-
+        $subtitle = 'Data Sekolah di Kecamatan';
 
         $namaKecamatan = Wilayah::getNamaByKode($kecamatan);
-
         $kodeKabupaten = substr(preg_replace('/[^0-9]/', '', $kecamatan), 0, 4);
         $kodeKabupaten = substr($kodeKabupaten, 0, 2) . '.' . substr($kodeKabupaten, 2, 2);
-        $namaKabupaten = Wilayah::getNamaByKode($kodeKabupaten);
-
-        return view('frontend.pages.kelurahan', compact(
-            'title',
-            'subtitle',
-            'kelurahans',
-            'kecamatan',
-            'jenjangList',
-            'namaKecamatan',
-            'namaKabupaten'
-        ));
-    }
-
-    public function sekolah($kecamatan, $kelurahan)
-    {
-        $title = 'Data Pendidikan';
-        $subtitle = 'Data Pendidikan berdasarkan Kelurahan di Kabupaten Teluk Bintuni';
-
-        $namaKecamatan = Wilayah::getNamaByKode($kecamatan);
-        $namaKelurahan = Wilayah::getNamaByKode($kelurahan);
-
-        // Ambil kode kabupaten dari kode kecamatan
-        $kodeKabupaten = substr(preg_replace('/[^0-9]/', '', $kecamatan), 0, 4); // 9206
-        $kodeKabupaten = substr($kodeKabupaten, 0, 2) . '.' . substr($kodeKabupaten, 2, 2); // jadi 92.06
         $namaKabupaten = Wilayah::getNamaByKode($kodeKabupaten);
 
         $sekolahs = Sekolah::withCount([
@@ -179,27 +95,26 @@ class DataPendidikanController extends Controller
             'saranas',
             'prasaranas',
         ])
-            ->where('kecamatan', $kecamatan)
-            ->where('desa_kelurahan', $kelurahan)
+            ->where('kode_wilayah', 'like', $kecamatan . '%')
+            ->orderBy('jenjang')
             ->orderBy('nama')
             ->get();
 
-        return view('frontend.pages.sekolah', compact(
+        return view('frontend.pages.sekolah_by_kecamatan', compact(
             'title',
             'subtitle',
             'sekolahs',
             'kecamatan',
-            'kelurahan',
             'namaKecamatan',
-            'namaKelurahan',
             'namaKabupaten'
         ));
     }
 
+    // Halaman detail sekolah
     public function detail($slug)
     {
-        $title = 'Data Pendidikan';
-        $subtitle = 'Data Pendidikan berdasarkan Kelurahan di Kabupaten Teluk Bintuni';
+        $title = 'Detail Sekolah';
+        $subtitle = 'Informasi Lengkap Sekolah';
 
         $sekolah = Sekolah::with([
             'ptks',
@@ -215,29 +130,23 @@ class DataPendidikanController extends Controller
             ->where('slug', $slug)
             ->firstOrFail();
 
-        // Statistik guru berdasarkan kualifikasi
-        $kualifikasiGuru = $sekolah->ptks
-            ->groupBy('kualifikasi')
-            ->map(fn($group) => $group->count());
+        $kodeKecamatan = $sekolah->kode_wilayah ? substr($sekolah->kode_wilayah, 0, 8) : null;
+        $kodeKelurahan = $sekolah->kode_wilayah;
 
-        $kualifikasiLabels = $kualifikasiGuru->keys();
-        $kualifikasiData = $kualifikasiGuru->values();
-
-        $statusGuru = $sekolah->ptks
-            ->groupBy('status')
-            ->map(fn($group) => $group->count());
-
-        $statusLabels = $statusGuru->keys();
-        $statusData = $statusGuru->values();
-
-        // Data wilayah
-        $kodeKecamatan = $sekolah->kecamatan;
-        $kodeKelurahan = $sekolah->desa_kelurahan;
         $namaKecamatan = Wilayah::getNamaByKode($kodeKecamatan);
         $namaKelurahan = Wilayah::getNamaByKode($kodeKelurahan);
         $kodeKabupaten = substr(preg_replace('/[^0-9]/', '', $kodeKecamatan), 0, 4);
         $kodeKabupaten = substr($kodeKabupaten, 0, 2) . '.' . substr($kodeKabupaten, 2, 2);
         $namaKabupaten = Wilayah::getNamaByKode($kodeKabupaten);
+
+        $kualifikasiGuru = $sekolah->ptks->groupBy('kualifikasi')->map(fn($group) => $group->count());
+        $statusGuru = $sekolah->ptks->groupBy('status')->map(fn($group) => $group->count());
+
+        $kualifikasiLabels = $kualifikasiGuru->keys();
+        $kualifikasiData = $kualifikasiGuru->values();
+
+        $statusLabels = $statusGuru->keys();
+        $statusData = $statusGuru->values();
 
         return view('frontend.pages.detail_sekolah', compact(
             'title',
@@ -248,10 +157,12 @@ class DataPendidikanController extends Controller
             'namaKabupaten',
             'kodeKecamatan',
             'kodeKelurahan',
+            'kualifikasiGuru',
+            'statusGuru',
             'kualifikasiLabels',
             'kualifikasiData',
             'statusLabels',
-            'statusData',
+            'statusData'
         ));
     }
 }

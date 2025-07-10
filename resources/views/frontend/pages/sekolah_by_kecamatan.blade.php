@@ -30,19 +30,17 @@
                     <div class="card-body">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a class="text-decoration-none"
-                                        href="{{ url('/data-pendidikan') }}">Data Pendidikan</a></li>
-                                <li class="breadcrumb-item"><a class="text-decoration-none"
-                                        href="{{ url('/data-pendidikan') }}">{{ $namaKabupaten }}</a></li>
                                 <li class="breadcrumb-item">
-                                    <a href="{{ url('/data-pendidikan/' . urlencode($kecamatan) . '/kelurahan') }}"
-                                        class="text-decoration-none">
-                                        Kec. {{ $namaKecamatan }}
-                                    </a>
+                                    <a class="text-decoration-none" href="{{ url('/data-pendidikan') }}">Data Pendidikan</a>
                                 </li>
-                                <li class="breadcrumb-item active" aria-current="page">Kel. {{ $namaKelurahan }}</li>
+                                <li class="breadcrumb-item">
+                                    <a class="text-decoration-none"
+                                        href="{{ url('/data-pendidikan') }}">{{ $namaKabupaten }}</a>
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">Kec. {{ $namaKecamatan }}</li>
                             </ol>
                         </nav>
+
                     </div>
                 </div>
 

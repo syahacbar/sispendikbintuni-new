@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Frontend\PTKController;
 use App\Http\Controllers\Api\DirektoriController;
-use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\BerandaController;
 use App\Http\Controllers\Frontend\SiswaController;
 use App\Http\Controllers\Frontend\SebaranController;
 use App\Http\Controllers\Frontend\SekolahController;
@@ -14,7 +14,7 @@ use App\Http\Controllers\Frontend\InformasiController;
 use App\Http\Controllers\Frontend\PengaduanController;
 use App\Http\Controllers\Frontend\DataPendidikanController;
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [BerandaController::class, 'index']);
 
 Route::get('/sekolah', [SekolahController::class, 'index']);
 Route::get('/sekolah/{slug}', [SekolahController::class, 'show'])->name('frontend.sekolah.show');
@@ -34,8 +34,8 @@ Route::get('/get-kegiatan-by-date', [InformasiController::class, 'getByDate']);
 
 Route::get('/siswa', [SiswaController::class, 'index']);
 
-Route::get('/sebaran', [SebaranController::class, 'index']);
-Route::get('/kalender', [KalenderController::class, 'index']);
+Route::get('/peta-sebaran', [SebaranController::class, 'index']);
+Route::get('/kalender-pendidikan', [KalenderController::class, 'index']);
 
 Route::get('/pengaduan/buat-pengaduan', [PengaduanController::class, 'index'])->name('pengaduan.index');
 
@@ -46,10 +46,12 @@ Route::get('/pengaduan/lacak-pengaduan', [PengaduanController::class, 'lacakForm
 Route::post('/pengaduan/lacak-pengaduan', [PengaduanController::class, 'lacak'])->name('pengaduan.lacak');
 
 Route::get('/tentang', [TentangController::class, 'index']);
-Route::get('/data-pendidikan', [DataPendidikanController::class, 'index']);
-Route::get('/data-pendidikan/{kecamatan}/kelurahan', [DataPendidikanController::class, 'kelurahan']);
-Route::get('/data-pendidikan/{kecamatan}/{kelurahan}/sekolah', [DataPendidikanController::class, 'sekolah']);
-Route::get('/data-pendidikan/sekolah/{slug}', [DataPendidikanController::class, 'detail']);
+// Data Pendidikan (Kecamatan → Sekolah → Detail)
+Route::get('/data-pendidikan', [DataPendidikanController::class, 'index'])->name('pendidikan.index');
+Route::get('/data-pendidikan/kecamatan/{kecamatan}/sekolah', [DataPendidikanController::class, 'sekolahByKecamatan'])
+    ->where('kecamatan', '.*')->name('pendidikan.sekolahByKecamatan');
+Route::get('/data-pendidikan/sekolah/{slug}', [DataPendidikanController::class, 'detail'])
+    ->name('pendidikan.sekolah.detail');
 
 
 Route::get('/direktori', [DirektoriController::class, 'index']);

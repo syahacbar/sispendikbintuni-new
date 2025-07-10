@@ -27,47 +27,45 @@
             <div class="col-lg-7 mt-4 mt-md-0">
                 <div class="row mt-4">
                     <div class="col-lg-4">
-                        <h6 class="text-success fw-bold">LAYANAN</h6>
+                        <h6 class="text-success fw-bold">NAVIGASI</h6>
                         <ul class="list-unstyled small">
-                            <li class="mb-2"><a href="https://bansm.kemdikbud.go.id/akreditasi"
-                                    class="text-white text-decoration-none">Akreditasi Sekolah</a>
+                            <li class="mb-2"><a href="/data-pendidikan" class="text-white text-decoration-none">Data
+                                    Pendidikan</a>
                             </li>
-                            <li class="mb-2"><a href="http://perpustakaan.kemdikbud.go.id/"
-                                    class="text-white text-decoration-none">Perpustakaan</a></li>
-                            <li class="mb-2"><a href="https://belajar.kemdikbud.go.id/"
-                                    class="text-white text-decoration-none">Rumah Belajar</a></li>
+                            <li class="mb-2"><a href="/peta-sebaran" class="text-white text-decoration-none">Peta
+                                    Sebaran</a></li>
+                            <li class="mb-2"><a href="/informasi/pengumuman"
+                                    class="text-white text-decoration-none">Pengumuman</a></li>
+                            <li class="mb-2"><a href="/informasi/berita"
+                                    class="text-white text-decoration-none">Berita</a></li>
+                            <li class="mb-2"><a href="/kalender-pendidikan"
+                                    class="text-white text-decoration-none">Kalender Pendidikan</a></li>
+                            <li class="mb-2"><a href="/form-pengaduan" class="text-white text-decoration-none">Form
+                                    Pengaduan</a></li>
                         </ul>
                     </div>
                     <div class="col-lg-4 mt-md-0">
-                        <h6 class="text-success fw-bold">UNIT UTAMA</h6>
+                        <h6 class="text-success fw-bold">LINK PEMDA</h6>
                         <ul class="list-unstyled small">
-                            <li class="mb-2"><a href="https://www.kemendikdasmen.go.id/"
-                                    class="text-white text-decoration-none">Kemdikdasmen</a></li>
-                            <li class="mb-2"><a href="https://setjen.kemendikdasmen.go.id/"
-                                    class="text-white text-decoration-none">Sekretariat
-                                    Jenderal</a></li>
-                            <li class="mb-2"><a href="https://vokasi.kemendikdasmen.go.id/"
-                                    class="text-white text-decoration-none">Ditjen Vokasi</a></li>
-                            <li class="mb-2"><a href="https://kebudayaan.kemdikbud.go.id/"
-                                    class="text-white text-decoration-none">Ditjen Kebudayaan</a>
-                            </li>
+                            <li class="mb-2"><a href="https://papuabaratprov.go.id/"
+                                    class="text-white text-decoration-none">Pemprov Papua Barat</a></li>
+                            <li class="mb-2"><a href="https://telukbintuni.go.id/"
+                                    class="text-white text-decoration-none">Kab. Teluk Bintuni</a></li>
                         </ul>
                     </div>
 
                     <div class="col-lg-4 mt-md-0">
-                        <h6 class="text-success fw-bold">DIREKTORAT</h6>
+                        <h6 class="text-success fw-bold">LINK KEMENDIKDASMEN</h6>
                         <ul class="list-unstyled small">
-                            <li class="mb-2"><a href="https://ditpsd.kemdikbud.go.id/"
-                                    class="text-white text-decoration-none">Direktorat SD</a></li>
-                            <li class="mb-2"><a href="https://ditsmp.kemendikdasmen.go.id/"
-                                    class="text-white text-decoration-none">Direktorat SMP</a></li>
-                            <li class="mb-2"><a href="https://sma.kemdikbud.go.id/"
-                                    class="text-white text-decoration-none">Direktorat SMA</a></li>
-                            <li class="mb-2"><a href="https://smk.kemendikdasmen.go.id/"
-                                    class="text-white text-decoration-none">SMK</a>
-                            </li>
-                            <li class="mb-2"><a href="https://pmpk.kemdikbud.go.id/"
-                                    class="text-white text-decoration-none">PMPK</a>
+                            <li class="mb-2"><a href="https://pdm.dikdasmen.go.id/"
+                                    class="text-white text-decoration-none">Dirjen PAUD & Dikdasmen
+                                </a></li>
+                            <li class="mb-2"><a href="https://vokasi.kemendikdasmen.go.id/"
+                                    class="text-white text-decoration-none">Dirjen Pendidikan Vokasi, Khusus, & Layanan
+                                    Khusus
+                                </a></li>
+                            <li class="mb-2"><a href="https://gtk.dikdasmen.go.id/"
+                                    class="text-white text-decoration-none">Dirjen Guru, Tendik, & Pendidikan Guru</a>
                             </li>
                         </ul>
                     </div>

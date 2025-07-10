@@ -18,10 +18,12 @@
                         Pendidikan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('sebaran*') ? 'active' : '' }}" href="/sebaran">Sebaran</a>
+                    <a class="nav-link {{ Request::is('peta-sebaran*') ? 'active' : '' }}"
+                        href="/peta-sebaran">Sebaran</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('kalender*') ? 'active' : '' }}" href="/kalender">Kalender</a>
+                    <a class="nav-link {{ Request::is('kalender-pendidikan*') ? 'active' : '' }}"
+                        href="/kalender-pendidikan">Kalender</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle {{ Request::is('informasi*') ? 'active' : '' }}" href="#"

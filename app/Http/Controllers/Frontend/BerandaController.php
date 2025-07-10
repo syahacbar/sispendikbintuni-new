@@ -6,16 +6,18 @@ use App\Models\Ptk;
 use App\Models\Sarana;
 use App\Models\Sarpras;
 use App\Models\Sekolah;
+use App\Models\Wilayah;
 use App\Models\Prasarana;
 use App\Models\PesertaDidik;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
-class HomeController extends Controller
+class BerandaController extends Controller
 {
     public function index()
     {
+
         $jenjang = ['PAUD', 'SD', 'SMP', 'SMA', 'SMK', 'PKBM'];
 
         $jumlah_peserta_didik = PesertaDidik::with('sekolah')
@@ -207,19 +209,24 @@ class HomeController extends Controller
             ];
         }
 
-        // Sebaran Sekolah per kecamatan
-        $sebaranSekolahKecamatan = Sekolah::with('kecamatanWilayah')
-            ->select('kode_wilayah', DB::raw('count(*) as jumlah'))
-            ->groupBy('kode_wilayah')
-            ->orderBy('kode_wilayah')
+        // 1. Ambil data jumlah sekolah berdasarkan 8 digit awal kode_wilayah (kecamatan)
+        $sebaranSekolahKecamatan = DB::table('tbl_sekolahs')
+            ->selectRaw("SUBSTRING(kode_wilayah, 1, 8) as kecamatan_kode, COUNT(*) as jumlah")
+            ->groupBy('kecamatan_kode')
+            ->orderBy('kecamatan_kode')
             ->get();
 
-        // Ambil nama kecamatan dari relasi Wilayah
-        $kecamatanLabels = $sebaranSekolahKecamatan->map(fn($item) => $item->kecamatanWilayah->nama ?? $item->kecamatan);
+        // 2. Ambil semua nama kecamatan dari tabel wilayah
+        $kecamatanCodes = $sebaranSekolahKecamatan->pluck('kecamatan_kode');
+        $wilayahMap = Wilayah::whereIn('kode', $kecamatanCodes)->pluck('nama', 'kode');
+
+        // 3. Siapkan data untuk Chart.js
+        $kecamatanLabels = $sebaranSekolahKecamatan->map(
+            fn($item) => $wilayahMap[$item->kecamatan_kode] ?? $item->kecamatan_kode
+        );
         $jumlahSekolahData = $sebaranSekolahKecamatan->pluck('jumlah');
 
-
-        return view('frontend.pages.home', compact(
+        return view('frontend.pages.beranda', compact(
             'statistik',
             'peserta_didik',
             'guru',

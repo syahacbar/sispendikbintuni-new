@@ -24,15 +24,20 @@ class SarprasSeeder extends Seeder
 
         foreach ($sekolahs as $sekolah) {
             foreach ($jenisSarprasList as $jenis) {
+                $jumlahIdeal = fake()->numberBetween(5, 20);
+                $jumlahSaatIni = fake()->numberBetween(0, 20);
+
+                $kurangLebih = $jumlahSaatIni < $jumlahIdeal ? 'Kurang' : 'Lebih';
+
                 Sarpras::create([
                     'id' => Str::uuid(),
                     'sekolah_id' => $sekolah->id,
                     'jenis_sarpras_id' => $jenis->id,
                     'kategori' => fake()->randomElement($kategoriOptions),
-                    'jumlah_ideal' => fake()->numberBetween(5, 20),
-                    'jumlah_saat_ini' => fake()->numberBetween(0, 20),
+                    'jumlah_ideal' => $jumlahIdeal,
+                    'jumlah_saat_ini' => $jumlahSaatIni,
                     'kondisi' => fake()->randomElement($kondisiOptions),
-                    'kurang_lebih' => fake()->randomElement($kurangLebihOptions),
+                    'kurang_lebih' => $kurangLebih,
                     'keterangan' => fake()->sentence(),
                 ]);
             }

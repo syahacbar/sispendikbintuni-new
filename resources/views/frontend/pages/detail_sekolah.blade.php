@@ -23,6 +23,10 @@
     div#dataKondisiGuru_length {
         margin-bottom: 15px;
     }
+
+    .bg-success {
+        background-color: #0093dd !important;
+    }
 </style>
 
 @section('content')
@@ -36,28 +40,27 @@
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb m-0">
                                         <li class="breadcrumb-item">
-                                            <a class="text-decoration-none" href="{{ url('/data-pendidikan') }}">Data
-                                                Pendidikan</a> /
+                                            <a class="text-decoration-none" href="{{ url('/data-pendidikan') }}">
+                                                Data Pendidikan
+                                            </a>
+                                        </li>
+                                        <li class="breadcrumb-item">
+                                            <a class="text-decoration-none" href="{{ url('/data-pendidikan') }}">
+                                                {{ $namaKabupaten }}
+                                            </a>
                                         </li>
                                         <li class="breadcrumb-item">
                                             <a class="text-decoration-none"
-                                                href="{{ url('/data-pendidikan') }}">{{ $namaKabupaten }}</a> /
-                                        </li>
-                                        <li class="breadcrumb-item">
-                                            <a href="{{ url('/data-pendidikan/' . urlencode($kodeKecamatan) . '/kelurahan') }}"
-                                                class="text-decoration-none">
+                                                href="{{ url('/data-pendidikan/kecamatan/' . urlencode($kodeKecamatan) . '/sekolah') }}">
                                                 Kec. {{ $namaKecamatan }}
-                                            </a> /
+                                            </a>
                                         </li>
-                                        <li class="breadcrumb-item">
-                                            <a href="{{ url('/data-pendidikan/' . urlencode($kodeKecamatan) . '/' . urlencode($kodeKelurahan) . '/sekolah') }}"
-                                                class="text-decoration-none">
-                                                Kel. {{ $namaKelurahan }}
-                                            </a> /
+                                        <li class="breadcrumb-item active" aria-current="page">
+                                            {{ $sekolah->nama }}
                                         </li>
-                                        <li class="breadcrumb-item active" aria-current="page">{{ $sekolah->nama }}</li>
                                     </ol>
                                 </nav>
+
                             </ol>
                         </nav>
                     </div>

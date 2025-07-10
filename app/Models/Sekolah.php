@@ -22,11 +22,7 @@ class Sekolah extends Model
         'kurikulum_id',
         'jenjang',
         'alamat_jalan',
-        'desa_kelurahan',
         'kode_pos',
-        'kecamatan',
-        'kabupaten',
-        'provinsi',
         'status_sekolah',
         'akreditasi',
         'email',
@@ -37,6 +33,7 @@ class Sekolah extends Model
         'tanggal_sk_izin_operasional',
         'lintang',
         'bujur',
+        'kode_wilayah',
         'slug',
     ];
 
@@ -72,14 +69,9 @@ class Sekolah extends Model
         return $this->hasMany(Sarpras::class);
     }
 
-    public function kecamatanWilayah()
+    public function kode_wilayah()
     {
-        return $this->belongsTo(Wilayah::class, 'kecamatan', 'kode');
-    }
-
-    public function kelurahanWilayah()
-    {
-        return $this->belongsTo(Wilayah::class, 'desa_kelurahan', 'kode');
+        return $this->belongsTo(Wilayah::class, 'kode_wilayah', 'kode');
     }
 
     public function kepalaSekolah()

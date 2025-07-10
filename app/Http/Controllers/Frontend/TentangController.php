@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Tentang;
 
 class TentangController extends Controller
 {
@@ -12,9 +13,12 @@ class TentangController extends Controller
         $title = 'Tentang Sispendik Bintuni';
         $subtitle = 'Tentang Sispendik Bintuni';
 
+        $tentangData = Tentang::pluck('value', 'key')->toArray();
+
         return view('frontend.pages.tentang', compact(
             'title',
             'subtitle',
+            'tentangData'
         ));
     }
 }

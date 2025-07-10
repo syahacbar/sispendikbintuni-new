@@ -41,9 +41,9 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a class="text-decoration-none"
-                                        href="{{ url('/data-pendidikan') }}">Data Pendidikan</a> /</li>
+                                        href="{{ url('/data-pendidikan') }}">Data Pendidikan</a></li>
                                 <li class="breadcrumb-item"><a class="text-decoration-none"
-                                        href="{{ url('/data-pendidikan') }}">{{ $namaKabupaten }}</a> /</li>
+                                        href="{{ url('/data-pendidikan') }}">{{ $namaKabupaten }}</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Kec. {{ $namaKecamatan }}</li>
                             </ol>
                         </nav>

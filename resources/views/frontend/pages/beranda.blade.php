@@ -6,12 +6,12 @@
                 <p>Selamat datang di website</p>
                 <h1>Sispendik<br />Kabupaten Teluk Bintuni</h1>
                 <p>Sistem Informasi Pendidikan Kabupaten Teluk Bintuni.</p>
-                <div class="hero-buttons">
+                {{-- <div class="hero-buttons">
                     <a href="about.html" class="btn-gelas"><i class="bi bi-buildings-fill"></i>
                         Tentang Sispendik Bintuni</a>
                     <a href="#" class="btn-gelas"><i class="bi bi-pencil"></i>
                         Pengaduan</a>
-                </div>
+                </div> --}}
             </div>
         </div>
     </section>
@@ -52,7 +52,7 @@
                 <div class="col-lg-12" data-aos="fade-right">
                     <div class="d-flex align-items-center mb-3">
                         <i class="bi bi-bar-chart text-bg-success rounded p-1"></i>
-                        <h5 class="mb-0 text-success fw-bold mx-2">Statistik Sekolah</h5>
+                        <h5 class="mb-0 text-success fw-bold mx-2">Kondisi Pendidikan</h5>
                     </div>
                     <p class="text-dark">
                         Berikut adalah data jumlah sekolah berdasarkan jenjang pendidikan di Kabupaten Teluk Bintuni per 15
@@ -62,9 +62,11 @@
             </div>
             <div class="row">
                 <div class="col-lg-7" data-aos="fade-left">
-                    <div class="card shadow-sm my-3">
+                    <div class="card shadow-sm mb-3">
+                        <div class="card-header">
+                            <h6>Jumlah Sekolah</h6>
+                        </div>
                         <div class="card-body">
-
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link active" id="allSekolah-tab" data-bs-toggle="tab"
@@ -125,6 +127,9 @@
                 </div>
                 <div class="col-lg-5" data-aos="fade-right">
                     <div class="card shadow-sm">
+                        <div class="card-header">
+                            <h6>Total PD & PTK</h6>
+                        </div>
                         <div class="card-body">
                             <h6 class="fw-bold text-muted">
                                 Peserta Didik
@@ -139,7 +144,7 @@
                             @endforeach
 
                             <h6 class="text-muted mt-4">
-                                Guru
+                                PTK
                                 <span class="float-end text-primary">{{ number_format($total_guru) }}</span>
                             </h6>
                             <hr class="mt-1 mb-2">
@@ -215,7 +220,7 @@
         </div>
     </section>
 
-    <section class="container my-5" data-aos="fade-up">
+    {{-- <section class="container my-5" data-aos="fade-up">
         <div class="row">
             <div class="col-md-6 mb-4">
                 <div class="card text-bg-white">
@@ -351,7 +356,6 @@
     <section class="py-5 bg-light" data-aos="fade-up">
         <div class="container">
             <div class="row g-4">
-                <!-- Kartu Program (ulang bagian ini untuk setiap program) -->
                 <div class="col-md-4">
                     <div class="edu-card h-100 p-4 bg-white rounded-3 shadow-sm">
                         <h6><i class="fas fa-graduation-cap me-2"></i>Program Diploma</h6>
@@ -430,7 +434,6 @@
             </div>
 
             <div class="row row-cols-1 row-cols-md-3 row-cols-lg-5 g-4" data-aos="fade-up">
-                <!-- Item 1 -->
                 <div class="col-lg-3 card-pengumuman">
                     <a href="#" class="text-white text-decoration-none">
                         <div>
@@ -441,7 +444,6 @@
                     </a>
                 </div>
 
-                <!-- Item 2 -->
                 <div class="col-lg-3 card-pengumuman">
                     <a href="#" class="text-white text-decoration-none">
                         <div>
@@ -451,7 +453,6 @@
                     </a>
                 </div>
 
-                <!-- Item 3 -->
                 <div class="col-lg-3 card-pengumuman">
                     <a href="#" class="text-white text-decoration-none">
                         <div>
@@ -463,7 +464,6 @@
                     </a>
                 </div>
 
-                <!-- Item 4 -->
                 <div class="col-lg-3 card-pengumuman">
                     <a href="#" class="text-white text-decoration-none">
                         <div>
@@ -474,7 +474,6 @@
                     </a>
                 </div>
 
-                <!-- Item 5 -->
 
             </div>
         </div>
@@ -482,7 +481,6 @@
 
     <section class="py-5 bg-light">
         <div class="container">
-            <!-- Judul -->
             <div class="text-center mb-4">
                 <div class="d-inline-flex align-items-center mb-2">
                     <img src="" alt="icon" width="32" class="me-2">
@@ -491,10 +489,8 @@
             </div>
 
             <div class="row">
-                <!-- Agenda Kiri -->
                 <div class="col-md-8" data-aos="fade-right">
                     <div class="bg-white p-4 rounded-4 shadow-sm">
-                        <!-- Agenda Rutin -->
                         <h6 class="text-success fw-semibold mb-3">Agenda Rutin</h6>
                         <div class="d-flex justify-content-between align-items-center border rounded-3 p-3 mb-4">
                             <div class="d-flex align-items-start">
@@ -517,7 +513,6 @@
                             </div>
                         </div>
 
-                        <!-- Agenda Mendatang -->
                         <h6 class="text-success fw-semibold mb-3">Agenda Mendatang</h6>
                         <div class="d-flex justify-content-between align-items-center border rounded-3 p-3">
                             <div class="d-flex align-items-start">
@@ -542,7 +537,6 @@
                     </div>
                 </div>
 
-                <!-- Kalender Kanan -->
                 <div class="col-md-4 mt-4 mt-md-0" data-aos="fade-left">
                     <div class="bg-white p-4 rounded-4 shadow-sm text-center">
                         <h6 class="text-success fw-bold">Mei 2025</h6>
@@ -553,9 +547,10 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 
     <script>
         new Chart(document.getElementById('chartAkreditasi'), {
@@ -583,7 +578,17 @@
                                 return `${context.dataset.label} di ${context.label}: ${context.parsed.y}`;
                             }
                         }
-                    }
+                    },
+                    // datalabels: {
+                    //     color: '#000',
+                    //     anchor: 'center',
+                    //     align: 'center',
+                    //     font: {
+                    //         weight: 'bold',
+                    //         size: 10
+                    //     },
+                    //     formatter: (value) => value
+                    // }
                 },
                 interaction: {
                     mode: 'nearest', // ini penting
@@ -598,7 +603,8 @@
                         beginAtZero: true
                     }
                 }
-            }
+            },
+            // plugins: [ChartDataLabels]
 
         });
 
@@ -622,7 +628,17 @@
                                 return `${context.dataset.label} di ${context.label}: ${context.parsed.y}`;
                             }
                         }
-                    }
+                    },
+                    // datalabels: {
+                    //     color: '#000',
+                    //     anchor: 'center',
+                    //     align: 'center',
+                    //     font: {
+                    //         weight: 'bold',
+                    //         size: 10
+                    //     },
+                    //     formatter: (value) => value
+                    // }
                 },
                 interaction: {
                     mode: 'nearest', // ini wajib untuk hover per warna
@@ -637,7 +653,8 @@
                         beginAtZero: true
                     }
                 }
-            }
+            },
+            // plugins: [ChartDataLabels]
         });
 
         new Chart(document.getElementById('chartKondisiSarpras'), {
@@ -672,7 +689,17 @@
                                 return `${kondisi} di ${jenjang}: ${jumlah}`;
                             }
                         }
-                    }
+                    },
+                    // datalabels: {
+                    //     color: '#000',
+                    //     anchor: 'center',
+                    //     align: 'center',
+                    //     font: {
+                    //         weight: 'bold',
+                    //         size: 10
+                    //     },
+                    //     formatter: (value) => value
+                    // }
                 },
                 scales: {
                     x: {
@@ -687,7 +714,8 @@
                         beginAtZero: true
                     }
                 }
-            }
+            },
+            // plugins: [ChartDataLabels]
         });
 
         // Kualifikasi Guru
@@ -716,7 +744,17 @@
                                 return `${context.dataset.label} di ${context.label}: ${context.parsed.y}`;
                             }
                         }
-                    }
+                    },
+                    // datalabels: {
+                    //     color: '#000',
+                    //     anchor: 'center',
+                    //     align: 'center',
+                    //     font: {
+                    //         weight: 'bold',
+                    //         size: 10
+                    //     },
+                    //     formatter: (value) => value
+                    // }
                 },
                 interaction: {
                     mode: 'nearest',
@@ -731,7 +769,8 @@
                         beginAtZero: true
                     }
                 }
-            }
+            },
+            // plugins: [ChartDataLabels]
         });
 
 
@@ -756,6 +795,14 @@
                     legend: {
                         display: true
                     },
+                    datalabels: {
+                        align: 'top',
+                        anchor: 'end',
+                        font: {
+                            weight: 'bold'
+                        },
+                        formatter: (value) => value
+                    }
                 },
                 scales: {
                     y: {
@@ -772,7 +819,8 @@
                         }
                     }
                 }
-            }
+            },
+            plugins: [ChartDataLabels] // <- aktifkan plugin
         });
     </script>
 
