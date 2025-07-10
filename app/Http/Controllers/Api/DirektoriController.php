@@ -23,3 +23,5 @@ class DirektoriController extends Controller
         ]);
     }
 }
+
+//tes auto deploy ini cuma iseng2 saja
