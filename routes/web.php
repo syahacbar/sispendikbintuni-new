@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Frontend\PTKController;
-use App\Http\Controllers\Api\DirektoriController;
+// use App\Http\Controllers\Api\DirektoriController;
 use App\Http\Controllers\Frontend\BerandaController;
 use App\Http\Controllers\Frontend\SiswaController;
 use App\Http\Controllers\Frontend\SebaranController;
@@ -54,4 +54,4 @@ Route::get('/data-pendidikan/sekolah/{slug}', [DataPendidikanController::class, 
     ->name('pendidikan.sekolah.detail');
 
 
-Route::get('/direktori', [DirektoriController::class, 'index']);
+// Route::get('/direktori', [DirektoriController::class, 'index']);
