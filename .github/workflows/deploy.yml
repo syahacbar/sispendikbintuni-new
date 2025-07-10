@@ -37,7 +37,7 @@ jobs:
             php artisan view:clear
 
             echo "🛠 Jalankan migrasi database..."
-            php artisan migrate:fresh --seed
+            php artisan migrate --seed
             php artisan shield:generate --all
 
             echo "📂 Set permission folder storage & bootstrap/cache..."
