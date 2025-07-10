@@ -19,12 +19,12 @@ class SebaranController extends Controller
             'jenjang',
             'status_sekolah',
             'alamat_jalan',
-            'kode_wilayah',
-            'lintang',
-            'bujur'
+            'kode_wilayah', 
+            'latitude',
+            'longitude'
         )
-            ->whereNotNull('lintang')
-            ->whereNotNull('bujur')
+            ->whereNotNull('latitude')
+            ->whereNotNull('longitude')
             ->get();
 
         return view('frontend.pages.sebaran', compact('title', 'subtitle', 'sekolah'));

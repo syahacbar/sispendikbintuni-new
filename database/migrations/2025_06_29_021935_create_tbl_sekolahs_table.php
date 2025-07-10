@@ -26,8 +26,8 @@ return new class extends Migration
             $table->date('tanggal_sk_pendirian')->nullable();
             $table->string('sk_izin_operasional', 100)->nullable();
             $table->date('tanggal_sk_izin_operasional')->nullable();
-            $table->string('lintang', 100)->nullable();
-            $table->string('bujur', 100)->nullable();
+            $table->string('latitude', 100)->nullable();
+            $table->string('longitude', 100)->nullable();
             $table->string('slug')->unique();
             $table->string('kode_wilayah');
             $table->timestamps();
