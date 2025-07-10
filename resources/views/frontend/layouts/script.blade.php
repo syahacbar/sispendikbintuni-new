@@ -16,7 +16,9 @@
         duration: 1000
     });
 </script>
+
 <!-- untuk peta sebaran -->
+ 
  <script>
        var map = L.map('map').setView([-2.2, 133.55], 9);
 
@@ -125,7 +127,8 @@
             }),
         };
 
-        const schools = @json($sekolah);
+        const schools = @if(isset($sekolah) && !empty($sekolah)) @json($sekolah) @else null @endif;
+
         const markers = L.markerClusterGroup();
 
         schools.forEach(school => {
@@ -157,8 +160,6 @@
 
         map.addLayer(markers);
     </script>
-
-
 <script>
     $(document).ready(function() {
         $('#dataSekolahByKecamatan').DataTable({
