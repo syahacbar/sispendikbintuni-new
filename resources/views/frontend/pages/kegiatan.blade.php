@@ -20,9 +20,12 @@
                             <div id="activity-list">
                                 <article class="card-research mt-4" data-aos="fade-up">
                                     <div class="card-img-wrapper">
-                                        <img src="{{ asset('storage/' . ($item->gambar ?? 'frontend/informasi.png')) }}"
-                                            alt="{{ $item->judul }}">
+                                        <img src="{{ $item->gambar && file_exists(public_path('storage/' . $item->gambar))
+                                            ? asset('storage/' . $item->gambar)
+                                            : asset('themes/frontend/informasi/kegiatan/default.png') }}"
+                                            class="card-img-top" alt="{{ $item->judul }}">
                                     </div>
+
                                     <div class="card-content">
                                         <h5 class="card-title text-truncate"
                                             style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">

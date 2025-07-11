@@ -11,7 +11,8 @@ class SebaranController extends Controller
     public function index()
     {
         $title = 'Peta Sebaran Sekolah';
-        $subtitle = 'Peta Sebaran Sekolah Se-Kabupaten Teluk Bintuni';
+        $subtitle = 'Visualisasi lokasi sekolah di wilayah Kabupaten Teluk Bintuni.';
+
 
         $sekolah = Sekolah::select(
             'nama',

@@ -10,8 +10,8 @@ class PengaduanController extends Controller
 {
     public function index()
     {
-        $title = 'Pengaduan';
-        $subtitle = 'Form Pengaduan';
+        $title = 'Form Pengaduan';
+        $subtitle = 'Setiap pengaduan akan ditindaklanjuti sesuai prosedur yang berlaku.';
 
         return view('frontend.pages.pengaduan', compact('title', 'subtitle'));
     }
@@ -56,8 +56,9 @@ class PengaduanController extends Controller
 
     public function lacakForm()
     {
-        $title = 'Berita';
-        $subtitle = 'Berita';
+        $title = 'Lacak Pengaduan';
+        $subtitle = 'Cek Status Laporan dan detail perkembangan penanganannya.';
+
 
         return view('frontend.pages.lacak_pengaduan', compact('title', 'subtitle'));
     }

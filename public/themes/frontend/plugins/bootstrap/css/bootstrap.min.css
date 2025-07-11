@@ -3705,7 +3705,7 @@ ul.dropdown-menu.show a.dropdown-item.active {
     padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
     font-size: var(--bs-nav-link-font-size);
     font-weight: var(--bs-nav-link-font-weight);
-    color: var(--bs-nav-link-color);
+    color: #fff;
     text-decoration: none;
     background: 0 0;
     border: 0;
@@ -3719,7 +3719,7 @@ ul.dropdown-menu.show a.dropdown-item.active {
 }
 .nav-link:focus,
 .nav-link:hover {
-    color: var(--bs-nav-link-hover-color);
+    color: #ecf0f6;
 }
 .nav-link:focus-visible {
     outline: 0;
@@ -3889,7 +3889,8 @@ ul.dropdown-menu.show a.dropdown-item.active {
 }
 .navbar-nav .nav-link.active,
 .navbar-nav .nav-link.show {
-    color: var(--bs-navbar-active-color);
+    color: #fff500;
+    font-weight: bold;
 }
 .navbar-nav .dropdown-menu {
     position: static;
@@ -3914,7 +3915,7 @@ ul.dropdown-menu.show a.dropdown-item.active {
         var(--bs-navbar-toggler-padding-x);
     font-size: var(--bs-navbar-toggler-font-size);
     line-height: 1;
-    color: var(--bs-navbar-color);
+    color: #fff500;
     background-color: transparent;
     border: var(--bs-border-width) solid var(--bs-navbar-toggler-border-color);
     border-radius: var(--bs-navbar-toggler-border-radius);

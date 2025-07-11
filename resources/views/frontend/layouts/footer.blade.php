@@ -45,7 +45,7 @@
                         </ul>
                     </div>
                     <div class="col-lg-4 mt-md-0">
-                        <h6 class="text-success fw-bold">LINK PEMDA</h6>
+                        <h6 class="text-success fw-bold">PEMDA</h6>
                         <ul class="list-unstyled small">
                             <li class="mb-2"><a href="https://papuabaratprov.go.id/"
                                     class="text-white text-decoration-none">Pemprov Papua Barat</a></li>
@@ -55,7 +55,7 @@
                     </div>
 
                     <div class="col-lg-4 mt-md-0">
-                        <h6 class="text-success fw-bold">LINK KEMENDIKDASMEN</h6>
+                        <h6 class="text-success fw-bold">KEMENDIKDASMEN</h6>
                         <ul class="list-unstyled small">
                             <li class="mb-2"><a href="https://pdm.dikdasmen.go.id/"
                                     class="text-white text-decoration-none">Dirjen PAUD & Dikdasmen

@@ -69,8 +69,8 @@ class InformasiResource extends Resource
                     ])
                     ->required(),
                 RichEditor::make('deskripsi')
-                    ->columnSpanFull()
                     ->columnSpanFull(),
+
                 FileUpload::make('gambar')
                     ->label('Gambar')
                     ->disk('public')

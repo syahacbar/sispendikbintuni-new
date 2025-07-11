@@ -9,11 +9,12 @@ use App\Http\Controllers\Controller;
 
 class DataPendidikanController extends Controller
 {
+
     // Halaman utama: daftar kecamatan
     public function index()
     {
         $title = 'Data Pendidikan';
-        $subtitle = 'Tabel Data Pendidikan Se-Kabupaten Teluk Bintuni';
+        $subtitle = 'Rekapitulasi data pendidikan Berdasarkan Kecamatan.';
 
         $jenjangList = Sekolah::select('jenjang')->distinct()->pluck('jenjang')->sortBy(function ($jenjang) {
             $order = ['TK', 'SD', 'SMP', 'SMA', 'SMK', 'SLB'];
@@ -81,7 +82,7 @@ class DataPendidikanController extends Controller
     public function sekolahByKecamatan($kecamatan)
     {
         $title = 'Data Pendidikan';
-        $subtitle = 'Data Sekolah di Kecamatan';
+        $subtitle = 'Rekapitulasi data pendidikan berdasarkan sekolah.';
 
         $namaKecamatan = Wilayah::getNamaByKode($kecamatan);
         $kodeKabupaten = substr(preg_replace('/[^0-9]/', '', $kecamatan), 0, 4);
@@ -114,7 +115,8 @@ class DataPendidikanController extends Controller
     public function detail($slug)
     {
         $title = 'Detail Sekolah';
-        $subtitle = 'Informasi Lengkap Sekolah';
+        $subtitle = 'Informasi lengkap mengenai kondisi sekolah.';
+
 
         $sekolah = Sekolah::with([
             'ptks',

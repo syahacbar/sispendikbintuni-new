@@ -19,7 +19,9 @@
                         @foreach ($berita as $item)
                             <div class="col-lg-3 col-md-6 d-flex my-3">
                                 <div class="card mb-3 h-100 w-100">
-                                    <img src="{{ asset('storage/' . ($item->gambar ?? 'frontend/informasi.png')) }}"
+                                    <img src="{{ $item->gambar && file_exists(public_path('storage/' . $item->gambar))
+                                        ? asset('storage/' . $item->gambar)
+                                        : asset('themes/frontend/informasi/berita/default.png') }}"
                                         class="card-img-top" alt="{{ $item->judul }}">
                                     <div class="card-body d-flex flex-column">
                                         <h5 class="card-title text-truncate"

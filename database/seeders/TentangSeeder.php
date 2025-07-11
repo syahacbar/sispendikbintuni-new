@@ -29,12 +29,11 @@ class TentangSeeder extends Seeder
             ],
         ];
 
-        foreach ($data as $index => $item) {
+        foreach ($data as $item) {
             DB::table('tbl_tentangs')->insert([
                 'id' => Str::uuid(),
                 'key' => $item['key'],
                 'value' => $item['value'],
-                'sort_order' => $index,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

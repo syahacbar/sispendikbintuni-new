@@ -10,8 +10,8 @@ class TentangController extends Controller
 {
     public function index()
     {
-        $title = 'Tentang Sispendik Bintuni';
-        $subtitle = 'Tentang Sispendik Bintuni';
+        $title = 'Tentang Sispendik ';
+        $subtitle = 'Sistem Informasi Pendidikan Kabupaten Teluk Bintuni.';
 
         $tentangData = Tentang::pluck('value', 'key')->toArray();
 

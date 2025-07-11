@@ -12,7 +12,8 @@ class InformasiController extends Controller
     public function berita()
     {
         $title = 'Berita';
-        $subtitle = 'Berita';
+        $subtitle = 'Informasi terkini dan terpercaya.';
+
 
         $berita = Informasi::where('kategori', 'Berita')
             ->orderBy('created_at', 'desc')
@@ -23,8 +24,9 @@ class InformasiController extends Controller
 
     public function pengumuman()
     {
-        $title = 'Berita';
-        $subtitle = 'Berita';
+        $title = 'Pengumuman';
+        $subtitle = 'Pengumuman resmi dari dinas pendidikan.';
+
 
         $pengumuman = Informasi::where('kategori', 'Pengumuman')
             ->orderBy('created_at', 'desc')
@@ -35,8 +37,9 @@ class InformasiController extends Controller
 
     public function kegiatan()
     {
-        $title = 'Berita';
-        $subtitle = 'Berita';
+        $title = 'Kegiatan';
+        $subtitle = 'Dokumentasi berbagai kegiatan dan program.';
+
 
         $kegiatan = Informasi::where('kategori', 'Kegiatan')
             ->orderBy('created_at', 'desc')

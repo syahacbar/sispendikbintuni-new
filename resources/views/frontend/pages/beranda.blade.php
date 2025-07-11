@@ -17,36 +17,39 @@
     </section>
 
     <section class="bg-white">
-        <div class="container">
+        <div class="container pb-3">
             <div class="row align-items-center">
                 <div class="col-lg-5 text-center mb-4 mb-lg-0 d-flex justify-content-center " data-aos="fade-right">
-                    <img src="{{ asset('themes/frontend/kadis.jpeg') }}" alt="Kepala Dinasi Kab. Teluk Bintuni"
-                        class="img-fluid quote-img" style="max-height: 450px; object-fit: cover;">
+                    <img src="{{ asset('storage/' . ($sambutan['gambar_kadin'] ?? 'kadis.jpeg')) }}"
+                        alt="Kepala Dinas Kabupaten Teluk Bintuni" class="img-fluid quote-img"
+                        style="max-height: 450px; object-fit: cover;">
                 </div>
                 <div class="col-lg-7 mt-4" data-aos="fade-left">
                     <h5 class="fw-bold text-teal mb-4">
-                        Pendidikan adalah salah satu kunci terpenting bagi bangsa dan
-                        negara untuk bertahan dalam persaingan global dan merupakan bidang
-                        kesejahteraan nasional yang paling strategis.
+                        {{ $sambutan['judul_sambutan'] ?? 'Judul sambutan belum tersedia.' }}
                     </h5>
-                    <p class="text-dark">
-                        Sumber daya manusia (SDM) yang cerdas dan berkarakter merupakan
-                        prasyarat bagi pembangunan peradaban yang tinggi.
-                        University Of Tech Innovation (UTI) berusaha memajukan SDM di
-                        Indonesia melalui pendidikan berkualitas guna menyejahterakan
-                        bangsa dan negara.
-                        Tersedia berbagai program pendidikan vokasi, sarjana, profesi,
-                        magister, spesialis, sub spesialis dan doktoral yang dapat Anda
-                        pilih sesuai minat dan bakat
-                        untuk mendukung karier dan keahlian profesional Anda pada masa
-                        depan.
-                    </p>
+                    @php
+                        $fullContent = $sambutan['isi_sambutan'] ?? 'Isi sambutan belum tersedia.';
+                        $shortContent = Str::limit(strip_tags($fullContent), 1000);
+                    @endphp
+
+                    <div class="text-dark">
+                        <div id="sambutan-content" class="mb-3">
+                            {!! $shortContent !!}
+                        </div>
+                        <button id="toggle-sambutan" class="btn btn-sm btn-outline-primary">Baca Selengkapnya</button>
+                    </div>
+
+                    <div id="sambutan-full" class="d-none">
+                        {!! $fullContent !!}
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="py-5 bg-light">
+
+    <section class="pt-5 bg-light">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12" data-aos="fade-right">
@@ -208,7 +211,7 @@
     </section>
 
     <section>
-        <div class="container">
+        <div class="container my-4">
             <div class="card shadow-sm">
                 <div class="card-header">
                     <h6>Sebaran Sekolah per Kecamatan</h6>
@@ -912,6 +915,28 @@
                     }
                 }
             }
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtn = document.getElementById('toggle-sambutan');
+            const contentDiv = document.getElementById('sambutan-content');
+            const fullContent = document.getElementById('sambutan-full').innerHTML;
+            const shortContent = `{!! addslashes($shortContent) !!}`; // escape quote
+
+            let expanded = false;
+
+            toggleBtn.addEventListener('click', function() {
+                if (expanded) {
+                    contentDiv.innerHTML = shortContent;
+                    toggleBtn.innerText = 'Baca Selengkapnya';
+                } else {
+                    contentDiv.innerHTML = fullContent;
+                    toggleBtn.innerText = 'Tampilkan Lebih Sedikit';
+                }
+                expanded = !expanded;
+            });
         });
     </script>
 @endsection

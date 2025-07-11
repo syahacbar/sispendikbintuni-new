@@ -33,7 +33,6 @@ class WilayahResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            // Pilih Provinsi
             Select::make('provinsi')
                 ->label('Provinsi')
                 ->options(
@@ -43,7 +42,6 @@ class WilayahResource extends Resource
                 ->reactive()
                 ->required(),
 
-            // Pilih Kabupaten
             Select::make('kabupaten')
                 ->label('Kabupaten')
                 ->options(
@@ -58,7 +56,6 @@ class WilayahResource extends Resource
                 ->required()
                 ->disabled(fn(callable $get) => !$get('provinsi')),
 
-            // Pilih Kecamatan
             Select::make('kecamatan')
                 ->label('Kecamatan')
                 ->options(
@@ -87,7 +84,6 @@ class WilayahResource extends Resource
                 })
                 ->disabled(fn(callable $get) => !$get('kabupaten')),
 
-            // Input Nama Kelurahan Baru
             TextInput::make('nama')
                 ->label('Nama Kelurahan')
                 ->required(),

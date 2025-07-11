@@ -32,9 +32,11 @@ class DatabaseSeeder extends Seeder
             KelompokMapelSeeder::class,
             KelompokMapelSeeder::class,
             PengaduanSeeder::class,
-            PengaturanSeeder::class,
+            PengaturanAPISeeder::class,
+            PengaturanEmailSeeder::class,
+            PengaturanUmumSeeder::class,
             TentangSeeder::class,
-            //WilayahSeeder::class,
+            WilayahSeeder::class,
         ]);
     }
 }

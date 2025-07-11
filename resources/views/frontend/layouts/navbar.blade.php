@@ -1,10 +1,15 @@
-<nav id="mainNavbar" class="navbar navbar-expand-md main-navbar">
-    <div class="container">
+<nav class="navbar navbar-expand-lg navbar-dark bg-success fixed-top" aria-label="Sispendik Navbar">
+    <div class="container d-flex justify-content-between">
         <a class="w-15 navbar-brand d-flex align-items-center" href="{{ url('/') }}">
             <img class="w-25 mr-3" src="{{ asset('themes/frontend/logo.png') }}" alt="Logo Kab Bintuni">
-            <h5 class="d-md-none mb-0 fw-bold text-success mx-2">Sispendik Bintuni</h5>
+            <h5 class="mb-0 text-white fw-bold mx-2">Sispendik Bintuni</h5>
         </a>
-        <div class="w-85 collapse navbar-collapse" id="navbarContent">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSispendikBintuni"
+            aria-controls="navbarSispendikBintuni" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-list fs-2"></i>
+        </button>
+
+        <div class="w-85 collapse navbar-collapse" id="navbarSispendikBintuni">
             <ul class="navbar-nav ms-auto flex-md-row">
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('/') ? 'active' : '' }}" href="/">Beranda</a>

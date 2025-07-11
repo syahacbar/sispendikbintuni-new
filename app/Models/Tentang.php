@@ -9,7 +9,7 @@ class Tentang extends Model
 {
     protected $table = 'tbl_tentangs';
 
-    protected $fillable = ['id', 'key', 'value', 'sort_order'];
+    protected $fillable = ['id', 'key', 'value'];
     public $incrementing = false;
     protected $keyType = 'string';
 

@@ -8,6 +8,7 @@ use App\Models\Sarpras;
 use App\Models\Sekolah;
 use App\Models\Wilayah;
 use App\Models\Prasarana;
+use App\Models\PengaturanUmum;
 use App\Models\PesertaDidik;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -226,6 +227,9 @@ class BerandaController extends Controller
         );
         $jumlahSekolahData = $sebaranSekolahKecamatan->pluck('jumlah');
 
+
+        $sambutan = PengaturanUmum::getAllAsArray();
+
         return view('frontend.pages.beranda', compact(
             'statistik',
             'peserta_didik',
@@ -244,7 +248,8 @@ class BerandaController extends Controller
             'statusPTKDatasets',
             'kualifikasiDatasets',
             'kecamatanLabels',
-            'jumlahSekolahData'
+            'jumlahSekolahData',
+            'sambutan'
         ));
     }
 }

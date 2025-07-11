@@ -9,8 +9,8 @@ class KalenderController extends Controller
 {
     public function index()
     {
-        $title = 'Tentang Sispendik Bintuni';
-        $subtitle = 'Tentang Sispendik Bintuni';
+        $title = 'Kalender Pendidikan';
+        $subtitle = 'Informasi jadwal penting sepanjang tahun ajaran.';
 
         return view('frontend.pages.kalender', compact(
             'title',

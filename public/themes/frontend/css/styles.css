@@ -57,7 +57,7 @@ li.nav-item.dropdown ul li a {
 .logo {
     height: 50px;
 }
-
+/* 
 @media (max-width: 668px) {
     .main-navbar {
         display: none !important;
@@ -78,7 +78,7 @@ li.nav-item.dropdown ul li a {
         color: #006633 !important;
         width: 100%;
     }
-}
+} */
 
 /* Hero */
 
@@ -200,11 +200,12 @@ li.nav-item.dropdown ul li a {
         padding: 4rem 1rem 2rem 1rem;
         background-attachment: scroll;
         background-position: center;
-        padding-top: 60px !important; /* beri ruang di atas */
+        padding-top: 60px !important;
     }
+    /*     
     .main-navbar {
         display: none !important;
-    }
+    } */
     .main-navbar.show-navbar {
         display: block !important;
         position: fixed;
@@ -230,7 +231,7 @@ li.nav-item.dropdown ul li a {
         height: auto;
         background-attachment: scroll;
         background-position: center;
-        padding-top: 60px !important; /* beri ruang di atas */
+        padding-top: 60px !important;
     }
 
     .hero-buttons {

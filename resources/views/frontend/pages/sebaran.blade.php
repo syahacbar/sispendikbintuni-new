@@ -2,11 +2,15 @@
 @section('content')
     <section class="about-section">
         <div class="container">
-            <div class="text-center mb-4">
-                <h3 class="text-success fw-bold">{{ $title }}</h3>
-                <p class="text-muted">{{ $subtitle }}</p>
+            <div class="row my-3">
+                <div class="col-lg-12">
+                    <div class="card mt-3 p-0">
+                        <div class="card-body p-0">
+                            <div id="map" style="height: 750px;"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div id="map" style="height: 600px;"></div>
         </div>
     </section>
 @endsection

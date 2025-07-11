@@ -93,4 +93,23 @@
             width: 33.33%;
         }
     }
+
+    .fc .fc-daygrid-day-number {
+        padding: 4px;
+        position: relative;
+        z-index: 4;
+        text-decoration: none;
+    }
+
+    .navbar-toggler:focus {
+        box-shadow: none;
+    }
+
+    .sticky-top {
+        z-index: 1030;
+    }
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
 </style>

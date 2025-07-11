@@ -13,10 +13,12 @@ class Kalender extends Model
 
     protected $fillable = [
         'id',
-        'sekolah_id',
         'nama',
         'tanggal_mulai',
         'tanggal_akhir',
+        'waktu',
+        'jam_mulai',
+        'jam_akhir',
         'deskripsi',
     ];
 

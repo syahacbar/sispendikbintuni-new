@@ -33,36 +33,38 @@
     <section class="about-section">
         <div class="container">
             <div class="row my-3">
-                <div class="card">
-                    <div class="card-body">
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb m-0">
-                                <nav aria-label="breadcrumb">
-                                    <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item">
-                                            <a class="text-decoration-none" href="{{ url('/data-pendidikan') }}">
-                                                Data Pendidikan
-                                            </a>
-                                        </li>
-                                        <li class="breadcrumb-item">
-                                            <a class="text-decoration-none" href="{{ url('/data-pendidikan') }}">
-                                                {{ $namaKabupaten }}
-                                            </a>
-                                        </li>
-                                        <li class="breadcrumb-item">
-                                            <a class="text-decoration-none"
-                                                href="{{ url('/data-pendidikan/kecamatan/' . urlencode($kodeKecamatan) . '/sekolah') }}">
-                                                Kec. {{ $namaKecamatan }}
-                                            </a>
-                                        </li>
-                                        <li class="breadcrumb-item active" aria-current="page">
-                                            {{ $sekolah->nama }}
-                                        </li>
-                                    </ol>
-                                </nav>
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb m-0">
+                                    <nav aria-label="breadcrumb">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item">
+                                                <a class="text-decoration-none" href="{{ url('/data-pendidikan') }}">
+                                                    Data Pendidikan
+                                                </a>
+                                            </li>
+                                            <li class="breadcrumb-item">
+                                                <a class="text-decoration-none" href="{{ url('/data-pendidikan') }}">
+                                                    {{ $namaKabupaten }}
+                                                </a>
+                                            </li>
+                                            <li class="breadcrumb-item">
+                                                <a class="text-decoration-none"
+                                                    href="{{ url('/data-pendidikan/kecamatan/' . urlencode($kodeKecamatan) . '/sekolah') }}">
+                                                    Kec. {{ $namaKecamatan }}
+                                                </a>
+                                            </li>
+                                            <li class="breadcrumb-item active" aria-current="page">
+                                                {{ $sekolah->nama }}
+                                            </li>
+                                        </ol>
+                                    </nav>
 
-                            </ol>
-                        </nav>
+                                </ol>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -187,32 +189,35 @@
                                         <div>
                                             <h4 class="bg-success p-2 mb-3 text-light">Data Guru</h4>
                                         </div>
-                                        <table id="dataKondisiGuru" class="display responsive nowrap" style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Mata Pelajaran</th>
-                                                    <th class="text-center">Jumlah Rombel</th>
-                                                    <th class="text-center">Jumlah Ideal</th>
-                                                    <th class="text-center">Jumlah Sekarang</th>
-                                                    <th class="text-center">Kurang/Lebih</th>
-                                                    <th class="text-center">Keterangan</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($sekolah->ptks as $index => $ptk)
+                                        <div class="table-responsive">
+                                            <table id="dataKondisiGuru" class="display responsive nowrap"
+                                                style="width:100%">
+                                                <thead>
                                                     <tr>
-                                                        <td>{{ $index + 1 }}</td>
-                                                        <td>{{ $ptk->mata_pelajaran ?? '-' }}</td>
-                                                        <td class="text-center">{{ $ptk->jumlah_rombel ?? '-' }}</td>
-                                                        <td class="text-center">{{ $ptk->jumlah_ideal ?? '-' }}</td>
-                                                        <td class="text-center">{{ $ptk->jumlah_sekarang ?? '-' }}</td>
-                                                        <td class="text-center">{{ $ptk->selisih ?? '-' }}</td>
-                                                        <td class="text-center">{{ $ptk->keterangan ?? '-' }}</td>
+                                                        <th>No</th>
+                                                        <th>Mata Pelajaran</th>
+                                                        <th class="text-center">Jumlah Rombel</th>
+                                                        <th class="text-center">Jumlah Ideal</th>
+                                                        <th class="text-center">Jumlah Sekarang</th>
+                                                        <th class="text-center">Kurang/Lebih</th>
+                                                        <th class="text-center">Keterangan</th>
                                                     </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($sekolah->ptks as $index => $ptk)
+                                                        <tr>
+                                                            <td>{{ $index + 1 }}</td>
+                                                            <td>{{ $ptk->mata_pelajaran ?? '-' }}</td>
+                                                            <td class="text-center">{{ $ptk->jumlah_rombel ?? '-' }}</td>
+                                                            <td class="text-center">{{ $ptk->jumlah_ideal ?? '-' }}</td>
+                                                            <td class="text-center">{{ $ptk->jumlah_sekarang ?? '-' }}</td>
+                                                            <td class="text-center">{{ $ptk->selisih ?? '-' }}</td>
+                                                            <td class="text-center">{{ $ptk->keterangan ?? '-' }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                     <hr>
                                     <div class="row mt-3">
@@ -233,96 +238,104 @@
                                         <div>
                                             <h4 class="bg-success p-2 mb-3 text-light">Data Tenaga Pendidik</h4>
                                         </div>
-                                        <table id="dataKondisiTendik" class="display responsive nowrap" style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Mata Pelajaran</th>
-                                                    <th class="text-center">Jumlah Rombel</th>
-                                                    <th class="text-center">Jumlah Ideal</th>
-                                                    <th class="text-center">Jumlah Sekarang</th>
-                                                    <th class="text-center">Kurang/Lebih</th>
-                                                    <th class="text-center">Uraian Item</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($sekolah->ptks as $index => $ptk)
+                                        <div class="table-responsive">
+                                            <table id="dataKondisiTendik" class="display responsive nowrap"
+                                                style="width:100%">
+                                                <thead>
                                                     <tr>
-                                                        <td>{{ $index + 1 }}</td>
-                                                        <td>{{ $ptk->mata_pelajaran ?? '-' }}</td>
-                                                        <td class="text-center">{{ $ptk->jumlah_rombel ?? '-' }}</td>
-                                                        <td class="text-center">{{ $ptk->jumlah_ideal ?? '-' }}</td>
-                                                        <td class="text-center">{{ $ptk->jumlah_sekarang ?? '-' }}</td>
-                                                        <td class="text-center">{{ $ptk->selisih ?? '-' }}</td>
-                                                        <td class="text-center">{{ $ptk->uraian_item ?? '-' }}</td>
+                                                        <th>No</th>
+                                                        <th>Mata Pelajaran</th>
+                                                        <th class="text-center">Jumlah Rombel</th>
+                                                        <th class="text-center">Jumlah Ideal</th>
+                                                        <th class="text-center">Jumlah Sekarang</th>
+                                                        <th class="text-center">Kurang/Lebih</th>
+                                                        <th class="text-center">Uraian Item</th>
                                                     </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($sekolah->ptks as $index => $ptk)
+                                                        <tr>
+                                                            <td>{{ $index + 1 }}</td>
+                                                            <td>{{ $ptk->mata_pelajaran ?? '-' }}</td>
+                                                            <td class="text-center">{{ $ptk->jumlah_rombel ?? '-' }}</td>
+                                                            <td class="text-center">{{ $ptk->jumlah_ideal ?? '-' }}</td>
+                                                            <td class="text-center">{{ $ptk->jumlah_sekarang ?? '-' }}
+                                                            </td>
+                                                            <td class="text-center">{{ $ptk->selisih ?? '-' }}</td>
+                                                            <td class="text-center">{{ $ptk->uraian_item ?? '-' }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                     <hr>
                                     <div class="row mt-4 mb4">
                                         <div>
                                             <h4 class="bg-success p-2 mb-3 text-light">Data Rombel</h4>
                                         </div>
-                                        <table id="dataRombel" class="display responsive nowrap" style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Nama Rombel</th>
-                                                    <th class="text-center">Tingkat</th>
-                                                    <th class="text-center">Jumlah Siswa</th>
-                                                    <th class="text-center">Wali Kelas</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($sekolah->rombonganBelajars ?? [] as $index => $rombel)
+                                        <div class="table-responsive">
+                                            <table id="dataRombel" class="display responsive nowrap" style="width:100%">
+                                                <thead>
                                                     <tr>
-                                                        <td>{{ $index + 1 }}</td>
-                                                        <td>{{ $rombel->nama_rombel }}</td>
-                                                        <td class="text-center">{{ $rombel->tingkat_kelas }}</td>
-                                                        <td class="text-center">
-                                                            {{ $rombel->peserta_didiks_count ?? 0 }}
-                                                        </td>
-                                                        <td class="text-center">
-                                                            {{ $rombel->waliKelas->nama ?? '-' }}
-                                                        </td>
+                                                        <th>No</th>
+                                                        <th>Nama Rombel</th>
+                                                        <th class="text-center">Tingkat</th>
+                                                        <th class="text-center">Jumlah Siswa</th>
+                                                        <th class="text-center">Wali Kelas</th>
                                                     </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($sekolah->rombonganBelajars ?? [] as $index => $rombel)
+                                                        <tr>
+                                                            <td>{{ $index + 1 }}</td>
+                                                            <td>{{ $rombel->nama_rombel }}</td>
+                                                            <td class="text-center">{{ $rombel->tingkat_kelas }}</td>
+                                                            <td class="text-center">
+                                                                {{ $rombel->peserta_didiks_count ?? 0 }}
+                                                            </td>
+                                                            <td class="text-center">
+                                                                {{ $rombel->waliKelas->nama ?? '-' }}
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                     <hr>
                                     <div class="row mt-3">
                                         <div>
                                             <h4 class="bg-success p-2 mb-3 text-light">Data Sarana & Prasarana</h4>
                                         </div>
-                                        <table id="dataSarpras" class="display responsive nowrap" style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Jenis Sarpras</th>
-                                                    <th class="text-center">Jumlah Ideal</th>
-                                                    <th class="text-center">Jumlah Saat Ini</th>
-                                                    <th class="text-center">Kondisi</th>
-                                                    <th class="text-center">Kurang/Lebih</th>
-                                                    <th class="text-center">Keterangan</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($sekolah->sarpras as $index => $sarpras)
+                                        <div class="table-responsive">
+                                            <table id="dataSarpras" class="display responsive nowrap" style="width:100%">
+                                                <thead>
                                                     <tr>
-                                                        <td>{{ $index + 1 }}</td>
-                                                        <td>{{ $sarpras->jenisSarpras->nama ?? '-' }}</td>
-                                                        <td class="text-center">{{ $sarpras->jumlah_saat_ini }}</td>
-                                                        <td class="text-center">{{ $sarpras->jumlah_ideal }}</td>
-                                                        <td class="text-center">{{ $sarpras->kondisi }}</td>
-                                                        <td class="text-center">{{ $sarpras->kurang_lebih }}</td>
-                                                        <td class="text-center">{{ $sarpras->keterangan }}</td>
+                                                        <th>No</th>
+                                                        <th>Jenis Sarpras</th>
+                                                        <th class="text-center">Jumlah Ideal</th>
+                                                        <th class="text-center">Jumlah Saat Ini</th>
+                                                        <th class="text-center">Kondisi</th>
+                                                        <th class="text-center">Kurang/Lebih</th>
+                                                        <th class="text-center">Keterangan</th>
                                                     </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($sekolah->sarpras as $index => $sarpras)
+                                                        <tr>
+                                                            <td>{{ $index + 1 }}</td>
+                                                            <td>{{ $sarpras->jenisSarpras->nama ?? '-' }}</td>
+                                                            <td class="text-center">{{ $sarpras->jumlah_saat_ini }}</td>
+                                                            <td class="text-center">{{ $sarpras->jumlah_ideal }}</td>
+                                                            <td class="text-center">{{ $sarpras->kondisi }}</td>
+                                                            <td class="text-center">{{ $sarpras->kurang_lebih }}</td>
+                                                            <td class="text-center">{{ $sarpras->keterangan }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -332,28 +345,31 @@
                                         <div>
                                             <h4 class="bg-success p-2 mb-3 text-light">Data Sarana & Prasarana</h4>
                                         </div>
-                                        <table id="DirektoriPTK" class="display responsive nowrap" style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Nama</th>
-                                                    <th class="text-center">NIK</th>
-                                                    <th class="text-center">Status</th>
-                                                    <th class="text-center">Jabatan</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($sekolah->ptks as $index => $ptk)
+                                        <div class="table-responsive">
+                                            <table id="DirektoriPTK" class="display responsive nowrap"
+                                                style="width:100%">
+                                                <thead>
                                                     <tr>
-                                                        <td>{{ $index + 1 }}</td>
-                                                        <td>{{ $ptk->nama }}</td>
-                                                        <td class="text-center">{{ $ptk->nik }}</td>
-                                                        <td class="text-center">{{ $ptk->status }}</td>
-                                                        <td class="text-center">{{ $ptk->jabatan }}</td>
+                                                        <th>No</th>
+                                                        <th>Nama</th>
+                                                        <th class="text-center">NIK</th>
+                                                        <th class="text-center">Status</th>
+                                                        <th class="text-center">Jabatan</th>
                                                     </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($sekolah->ptks as $index => $ptk)
+                                                        <tr>
+                                                            <td>{{ $index + 1 }}</td>
+                                                            <td>{{ $ptk->nama }}</td>
+                                                            <td class="text-center">{{ $ptk->nik }}</td>
+                                                            <td class="text-center">{{ $ptk->status }}</td>
+                                                            <td class="text-center">{{ $ptk->jabatan }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="nav-direktoriPesertaDidik" role="tabpanel"
@@ -362,25 +378,27 @@
                                         <div>
                                             <h4 class="bg-success p-2 mb-3 text-light">Data Sarana & Prasarana</h4>
                                         </div>
-                                        <table id="DirektoriPesertaDidik" class="display responsive nowrap"
-                                            style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Nama</th>
-                                                    <th class="text-center">NISN</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($sekolah->pesertaDidiks as $index => $pd)
+                                        <div class="table-responsive">
+                                            <table id="DirektoriPesertaDidik" class="display responsive nowrap"
+                                                style="width:100%">
+                                                <thead>
                                                     <tr>
-                                                        <td>{{ $index + 1 }}</td>
-                                                        <td>{{ $pd->nama }}</td>
-                                                        <td class="text-center">{{ $pd->nisn }}</td>
+                                                        <th>No</th>
+                                                        <th>Nama</th>
+                                                        <th class="text-center">NISN</th>
                                                     </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($sekolah->pesertaDidiks as $index => $pd)
+                                                        <tr>
+                                                            <td>{{ $index + 1 }}</td>
+                                                            <td>{{ $pd->nama }}</td>
+                                                            <td class="text-center">{{ $pd->nisn }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
