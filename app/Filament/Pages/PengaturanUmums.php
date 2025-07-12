@@ -53,26 +53,66 @@ class PengaturanUmums extends Page
                             ->schema([
                                 Fieldset::make('Identitas Web')
                                     ->schema([
-                                        TextInput::make('title')
+                                        TextInput::make('judul')
+                                            ->label('Judul Web')
+                                            ->required()
+                                            ->maxLength(255),
+                                        TextInput::make('deskripsi')
+                                            ->label('Deskripsi')
+                                            ->required()
+                                            ->maxLength(255),
+                                        TextInput::make('slogan')
+                                            ->label('Slogan')
+                                            ->required(),
+                                        TextInput::make('hak_cipta')
+                                            ->label('Hak Cipta')
+                                            ->required(),
+                                        TextInput::make('nama_instansi')
+                                            ->label('Nama Instansi')
+                                            ->required(),
+                                        TextInput::make('teks_selamat_datang')
+                                            ->label('Welcome Text')
+                                            ->required(),
+                                        TextInput::make('alamat_lengkap')
+                                            ->label('Alamat Kantor')
+                                            ->required(),
+                                        TextInput::make('kode_pos')
+                                            ->label('Kode Pos')
+                                            ->required(),
+                                        TextInput::make('no_hp')
+                                            ->label('Nomor HP')
+                                            ->required(),
+                                        TextInput::make('telepon')
+                                            ->label('Telepon')
+                                            ->required(),
+                                    ])->columns(3),
+                                Fieldset::make('Media Sosial')
+                                    ->schema([
+                                        TextInput::make('facebook')
+                                            ->label('Facebook')
                                             ->required()
                                             ->maxLength(255),
 
-                                        TextInput::make('tagline')
+                                        TextInput::make('email')
+                                            ->label('Email')
                                             ->required(),
-                                        TextInput::make('footer')
-                                            ->label('Footer Text')
+                                        TextInput::make('instagram')
+                                            ->label('Instagram')
                                             ->required(),
-                                        TextInput::make('created_by')
-                                            ->label('Credit Footer')
+                                        TextInput::make('youtube')
+                                            ->label('Youtube')
                                             ->required(),
-                                    ])->columns(2),
+                                        TextInput::make('twitter')
+                                            ->label('Twitter')
+                                            ->required(),
+                                    ])->columns(3),
                                 Fieldset::make('Logo dan Favicon')
                                     ->schema([
                                         FileUpload::make('logo')
                                             ->label('Logo')
                                             ->image()
                                             ->previewable(true)
-                                            ->imagePreviewHeight('200')
+                                            ->imagePreviewHeight('150')
                                             ->loadingIndicatorPosition('left')
                                             ->panelAspectRatio('2:1')
                                             ->panelLayout('integrated')
@@ -84,7 +124,7 @@ class PengaturanUmums extends Page
                                         FileUpload::make('favicon')
                                             ->image()
                                             ->previewable(true)
-                                            ->imagePreviewHeight('200')
+                                            ->imagePreviewHeight('150')
                                             ->loadingIndicatorPosition('left')
                                             ->panelAspectRatio('2:1')
                                             ->panelLayout('integrated')
@@ -93,33 +133,6 @@ class PengaturanUmums extends Page
                                             ->uploadProgressIndicatorPosition('left')
                                             ->nullable(),
                                     ])->columns(4),
-                            ]),
-                        Tabs\Tab::make('Sambutan')
-                            ->icon('heroicon-m-megaphone')
-                            ->schema([
-                                Fieldset::make('Identitas Web')
-                                    ->schema([
-                                        TextInput::make('judul_sambutan')
-                                            ->label('Judul')
-                                            ->required()
-                                            ->maxLength(255),
-
-                                        RichEditor::make('isi_sambutan')
-                                            ->label('Isi Sambutan')
-                                            ->required()
-                                            ->columnSpanFull(),
-
-                                        FileUpload::make('gambar_kadin')
-                                            ->label('Foto Kepala Dinas Pendidikan')
-                                            ->disk('public')
-                                            ->directory('assets')
-                                            ->visibility('public')
-                                            ->image()
-                                            ->downloadable()
-                                            ->openable()
-                                            ->previewable(true)
-                                            ->nullable(),
-                                    ])->columns(2),
                             ]),
                     ])
             ])

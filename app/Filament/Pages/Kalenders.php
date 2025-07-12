@@ -38,6 +38,10 @@ class Kalenders extends Page implements HasTable, HasActions, HasForms
     use InteractsWithTable, InteractsWithForms, InteractsWithActions;
 
     protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
+    protected static ?string $navigationLabel = 'Kalender Pendidikan';
+    protected static ?string $modelLabel = 'Kalender Pendidikan';
+    protected static ?string $navigationGroup = 'Manajemen Konten Web';
+    protected static ?string $title = 'Kalender Pendidikan';
     protected static string $view = 'filament.pages.kalender';
 
     public ?string $startDate = null;
@@ -66,6 +70,17 @@ class Kalenders extends Page implements HasTable, HasActions, HasForms
                         ->columnSpanFull()
                         ->maxLength(255),
 
+                    DatePicker::make('tanggal_mulai')
+                        ->label('Tanggal Mulai')
+                        ->native(false)
+                        ->default(fn(Kalenders $livewire) => $livewire->startDate ?? now()),
+
+                    DatePicker::make('tanggal_akhir')
+                        ->label('Tanggal Akhir')
+                        ->native(false)
+                        ->default(fn(Kalenders $livewire) => $livewire->endDate ?? now())
+                        ->rules(['after_or_equal:tanggal_mulai']),
+
                     Toggle::make('waktu')
                         ->columnSpanFull()
                         ->default(false)
@@ -77,17 +92,6 @@ class Kalenders extends Page implements HasTable, HasActions, HasForms
                                 $set('jam_akhir', null);
                             }
                         }),
-
-                    DatePicker::make('tanggal_mulai')
-                        ->label('Tanggal Mulai')
-                        ->native(false)
-                        ->default(fn(Kalenders $livewire) => $livewire->startDate ?? now()),
-
-                    DatePicker::make('tanggal_akhir')
-                        ->label('Tanggal Akhir')
-                        ->native(false)
-                        ->default(fn(Kalenders $livewire) => $livewire->endDate ?? now())
-                        ->rules(['after_or_equal:tanggal_mulai']),
 
                     TimePicker::make('jam_mulai')
                         ->label('Jam Mulai')

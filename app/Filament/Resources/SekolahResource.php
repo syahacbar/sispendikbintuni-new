@@ -26,6 +26,7 @@ class SekolahResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-building-library';
     protected static ?string $navigationLabel = 'Sekolah';
     protected static ?string $pluralModelLabel = 'Sekolah';
+    protected static ?string $slug = 'data-sekolah';
     protected static ?string $navigationGroup = 'Data Pendidikan';
 
 

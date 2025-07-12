@@ -1,17 +1,32 @@
 @extends('frontend.layouts.app')
 @section('content')
+    @php
+        use App\Helpers\PengaturanHelper;
+
+        $deskripsi = PengaturanHelper::get('deskripsi', 'Sistem Informasi Pendidikan');
+        $slogan = PengaturanHelper::get('slogan', 'Membangun Pendidikan Cerdas, Terhubung, dan Transparan');
+        $teks_selamat_datang = PengaturanHelper::get('teks_selamat_datang', 'Selamat Datang di');
+        $nama_instansi = PengaturanHelper::get('nama_instansi', 'Kabupaten Teluk Bintuni');
+        $alamat_lengkap = PengaturanHelper::get(
+            'alamat_lengkap',
+            'Jalan Trikora Wesiri, Kec. Bintuni, Kabupaten Teluk Bintuni, Provinsi Papua Barat',
+        );
+        $email = PengaturanHelper::get('email', 'info@sispendikbintuni.go.id');
+        $no_hp = PengaturanHelper::get('no_hp', '+6281255554444');
+        $telepon = PengaturanHelper::get('telepon', '98312-5587');
+        $instagram = PengaturanHelper::get('instagram', 'Kabupaten Teluk Bintuni');
+        $facebook = PengaturanHelper::get('facebook', 'Kabupaten Teluk Bintuni');
+        $youtube = PengaturanHelper::get('youtube', 'Kabupaten Teluk Bintuni');
+        $twitter = PengaturanHelper::get('twitter', 'Kabupaten Teluk Bintuni');
+
+    @endphp
+
     <section class="hero w-100 container-fluid d-flex align-items-start justify-content-start text-start">
         <div class="container">
             <div class="hero-content" data-aos="fade-up">
-                <p>Selamat datang di website</p>
-                <h1>Sispendik<br />Kabupaten Teluk Bintuni</h1>
-                <p>Sistem Informasi Pendidikan Kabupaten Teluk Bintuni.</p>
-                {{-- <div class="hero-buttons">
-                    <a href="about.html" class="btn-gelas"><i class="bi bi-buildings-fill"></i>
-                        Tentang Sispendik Bintuni</a>
-                    <a href="#" class="btn-gelas"><i class="bi bi-pencil"></i>
-                        Pengaduan</a>
-                </div> --}}
+                <p>{{ $teks_selamat_datang }}</p>
+                <h1>{{ $deskripsi }}<br />{{ $nama_instansi }}</h1>
+                <p>{{ $slogan }}</p>
             </div>
         </div>
     </section>
@@ -20,7 +35,7 @@
         <div class="container pb-3">
             <div class="row align-items-center">
                 <div class="col-lg-5 text-center mb-4 mb-lg-0 d-flex justify-content-center " data-aos="fade-right">
-                    <img src="{{ asset('storage/' . ($sambutan['gambar_kadin'] ?? 'kadis.jpeg')) }}"
+                    <img src="{{ asset('storage/' . ($sambutan['gambar_kadin'] ?? 'assets/default.png')) }}"
                         alt="Kepala Dinas Kabupaten Teluk Bintuni" class="img-fluid quote-img"
                         style="max-height: 450px; object-fit: cover;">
                 </div>

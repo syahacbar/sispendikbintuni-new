@@ -24,6 +24,7 @@ class PTKResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?string $navigationLabel = 'PTK';
+    protected static ?string $slug = 'data-ptk';
     protected static ?string $pluralModelLabel = 'PTK';
     protected static ?string $navigationGroup = 'Data Pendidikan';
 

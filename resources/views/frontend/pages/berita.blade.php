@@ -30,7 +30,11 @@
                                         </h5>
                                         <p class="card-text mt-3">{{ $item->short_desc }}</p>
                                         <p class="card-text m-0">
-                                            <small class="text-body-secondary">{{ $item->created_at }}</small>
+                                            <small class="text-body-secondary me-3"><i class="bi bi-calendar-fill"></i>
+                                                {{ $item->created_at->format('d M Y') }}</small>
+                                            <span class="text-body-secondary"><i class="bi bi-eye-fill"></i>
+                                                {{ $item->lihat }}
+                                                kali</span>
                                         </p>
                                         <a href="{{ url('informasi/berita/' . $item->slug) }}" class="stretched-link"></a>
                                     </div>

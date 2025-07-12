@@ -12,7 +12,7 @@ class Informasi extends Model
     use HasUuids;
 
     protected $table = 'tbl_informasis';
-    protected $fillable = ['sekolah_id', 'judul', 'deskripsi', 'kategori', 'gambar', 'slug'];
+    protected $fillable = ['sekolah_id', 'judul', 'deskripsi', 'kategori', 'gambar', 'slug', 'lihat'];
 
     public function sekolah()
     {

@@ -23,6 +23,7 @@ class KurikulumResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-arrow-trending-up';
     protected static ?string $navigationLabel = 'Kurikulum';
     protected static ?string $pluralModelLabel = 'Kurikulum';
+    protected static ?string $slug = 'data-kurikulum';
     protected static ?string $navigationGroup = 'Data Pendidikan';
 
 

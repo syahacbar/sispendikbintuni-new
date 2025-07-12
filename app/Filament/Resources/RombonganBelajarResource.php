@@ -25,6 +25,7 @@ class RombonganBelajarResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-video-camera-slash';
     protected static ?string $navigationLabel = 'Rombongan Belajar';
+    protected static ?string $slug = 'data-rombel';
     protected static ?string $pluralModelLabel = 'Rombongan Belajar';
     protected static ?string $navigationGroup = 'Data Pendidikan';
 

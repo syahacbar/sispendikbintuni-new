@@ -24,6 +24,7 @@ class SarprasResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?string $navigationLabel = 'Sarpras';
+    protected static ?string $slug = 'data-sarpras';
     protected static ?string $pluralModelLabel = 'Sarpras';
     protected static ?string $navigationGroup = 'Data Pendidikan';
 

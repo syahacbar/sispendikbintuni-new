@@ -19,6 +19,7 @@ return new class extends Migration
             $table->enum('kategori', ['Berita', 'Kegiatan', 'Pengumuman']);
             $table->string('gambar')->nullable();
             $table->string('slug')->unique();
+            $table->unsignedBigInteger('lihat')->default(0)->after('slug');
             $table->timestamps();
 
             $table->foreign('sekolah_id')->references('id')->on('tbl_sekolahs')->onDelete('cascade');

@@ -27,6 +27,7 @@ class PengaduanResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?string $navigationLabel = 'Pengaduan';
+    protected static ?string $slug = 'data-pengaduan';
     protected static ?string $pluralModelLabel = 'Pengaduan';
     protected static ?string $navigationGroup = 'Manajemen Konten Web';
 

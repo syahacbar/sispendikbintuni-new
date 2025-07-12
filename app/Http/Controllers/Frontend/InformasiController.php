@@ -14,7 +14,6 @@ class InformasiController extends Controller
         $title = 'Berita';
         $subtitle = 'Informasi terkini dan terpercaya.';
 
-
         $berita = Informasi::where('kategori', 'Berita')
             ->orderBy('created_at', 'desc')
             ->paginate(6);
@@ -26,7 +25,6 @@ class InformasiController extends Controller
     {
         $title = 'Pengumuman';
         $subtitle = 'Pengumuman resmi dari dinas pendidikan.';
-
 
         $pengumuman = Informasi::where('kategori', 'Pengumuman')
             ->orderBy('created_at', 'desc')
@@ -51,32 +49,56 @@ class InformasiController extends Controller
 
     public function show_berita($slug)
     {
-        $title = 'Berita';
+        $title = 'Detail Berita';
         $subtitle = 'Berita';
 
         $berita = Informasi::where('slug', $slug)->firstOrFail();
 
-        return view('frontend.pages.detail_berita', compact('berita', 'title', 'subtitle'));
+        $berita->increment('lihat');
+
+        $list_berita = Informasi::where('kategori', 'Berita')
+            ->where('id', '!=', $berita->id)
+            ->latest()
+            ->take(5)
+            ->get();
+
+        return view('frontend.pages.detail_berita', compact('berita', 'list_berita', 'title', 'subtitle'));
     }
 
 
 
     public function show_pengumuman($slug)
     {
-        $title = 'Berita';
-        $subtitle = 'Berita';
+        $title = 'Detail Pengumuman';
+        $subtitle = 'Detail Pengumuman';
         $pengumuman = Informasi::where('slug', $slug)->firstOrFail();
 
-        return view('frontend.pages.detail_pengumuman', compact('pengumuman', 'title', 'subtitle'));
+        $pengumuman->increment('lihat');
+
+        $list_pengumuman = Informasi::where('kategori', 'Pengumuman')
+            ->where('id', '!=', $pengumuman->id)
+            ->latest()
+            ->take(5)
+            ->get();
+
+        return view('frontend.pages.detail_pengumuman', compact('pengumuman', 'list_pengumuman', 'title', 'subtitle'));
     }
 
     public function show_kegiatan($slug)
     {
-        $title = 'Berita';
-        $subtitle = 'Berita';
+        $title = 'Detail Kegiatan';
+        $subtitle = 'Detail Kegiatan';
         $kegiatan = Informasi::where('slug', $slug)->firstOrFail();
 
-        return view('frontend.pages.detail_kegiatan', compact('kegiatan', 'title', 'subtitle'));
+        $kegiatan->increment('lihat');
+
+        $list_kegiatan = Informasi::where('kategori', 'Kegiatan')
+            ->where('id', '!=', $kegiatan->id)
+            ->latest()
+            ->take(5)
+            ->get();
+
+        return view('frontend.pages.detail_kegiatan', compact('kegiatan', 'list_kegiatan', 'title', 'subtitle'));
     }
 
     public function getByDate(Request $request)

@@ -25,6 +25,7 @@ class PesertaDidikResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
     protected static ?string $navigationLabel = 'Peserta Didik';
     protected static ?string $pluralModelLabel = 'Peserta Didik';
+    protected static ?string $slug = 'data-peserta-didik';
     protected static ?string $navigationGroup = 'Data Pendidikan';
 
 

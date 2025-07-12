@@ -27,13 +27,18 @@
                                     </div>
 
                                     <div class="card-content">
-                                        <h5 class="card-title text-truncate"
-                                            style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                        <h5 class="card-title">
                                             {{ $item->judul }}
                                         </h5>
                                         <p class="card-desc">{{ $item->short_desc }}</p>
-                                        <time class="card-date">{{ $item->created_at }}</time>
-                                        <a href="{{ url('informasi/' . $item->slug) }}" class="stretched-link"></a>
+                                        <p class="card-text m-0">
+                                            <small class="text-body-secondary me-3"><i class="bi bi-calendar-fill"></i>
+                                                {{ $item->created_at->format('d M Y') }}</small>
+                                            <span class="text-body-secondary"><i class="bi bi-eye-fill"></i>
+                                                {{ $item->lihat }}
+                                                kali</span>
+                                        </p>
+                                        <a href="{{ url('informasi/kegiatan/' . $item->slug) }}" class="stretched-link"></a>
                                     </div>
                                 </article>
                             </div>

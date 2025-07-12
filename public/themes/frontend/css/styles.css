@@ -110,7 +110,7 @@ li.nav-item.dropdown ul li a {
     background: linear-gradient(
         90deg,
         rgba(0, 147, 221, 1) 0%,
-        rgba(255, 245, 0, 0) 100%
+        rgba(59, 59, 59, 0.6) 100%
     );
     z-index: 1;
 }
