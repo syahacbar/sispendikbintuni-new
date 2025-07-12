@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
             PengaturanEmailSeeder::class,
             PengaturanUmumSeeder::class,
             TentangSeeder::class,
-            WilayahSeeder::class,
+            //WilayahSeeder::class,
         ]);
     }
 }
