@@ -22,17 +22,46 @@
 
                 let calendarEl = document.getElementById('kalender');
                 let calendar = new FullCalendar.Calendar(calendarEl, {
+                    editable: true,
+                    selectable: true,
+                    eventResizableFromStart: true,
                     initialView: 'dayGridMonth',
                     headerToolbar: {
                         left: 'prev,next today',
                         center: 'title',
                         right: 'dayGridMonth,timeGridWeek,listWeek'
                     },
-                    events: [{
-                        title: 'The Title',
-                        start: '2025-07-15',
-                        end: '2025-07-17'
-                    }]
+                    height: 600,
+
+                    eventResize: function(info) {
+                        $wire.mountAction('droppedEvent', {
+                            id: info.event.id,
+                            startDate: info.event.startStr,
+                            endDate: info.event.endStr
+                        });
+                    },
+
+                    eventClick: function(info) {
+                        $wire.mountAction('viewAction', {
+                            id: info.event.id
+                        });
+                    },
+
+                    select: function(info) {
+                        $wire.set('startDate', info.startStr);
+                        $wire.set('endDate', info.endStr);
+                        $wire.mountAction('createAction');
+                    },
+
+                    eventDrop: function(info) {
+                        $wire.mountAction('droppedEvent', {
+                            id: info.event.id,
+                            startDate: info.event.startStr,
+                            endDate: info.event.endStr
+                        });
+                    },
+
+                    events: JSON.parse($wire.events)
                 });
                 calendar.render();
             }
@@ -40,7 +69,12 @@
 
             document.addEventListener('livewire:navigated', () => {
                 calendarFunction();
-            })
+            });
+
+
+            $wire.on('refresh-calendar', () => {
+                calendarFunction();
+            });
         </script>
     @endscript
 
