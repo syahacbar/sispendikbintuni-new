@@ -37,6 +37,7 @@ class DatabaseSeeder extends Seeder
             PengaturanUmumSeeder::class,
             TentangSeeder::class,
             //WilayahSeeder::class,
+            KalenderSeeder::class,
         ]);
     }
 }

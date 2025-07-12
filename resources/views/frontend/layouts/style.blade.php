@@ -94,6 +94,35 @@
         }
     }
 
+    /* @media (max-width: 992px) {
+        h5.mb-0.text-white.fw-bold.mx-2 {
+            display: none
+        }
+    } */
+
+    @media (max-width: 991.98px) {
+        .navbar .btnLogin {
+            width: 100%;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .navbar-nav {
+            flex-direction: column !important;
+            align-items: flex-start;
+        }
+
+        .navbar .dropdown-menu {
+            position: static;
+            float: none;
+        }
+
+        a.nav-link.btn.btn-primary.btn-sm.btnLogin {
+            width: 120px;
+        }
+    }
+
+
     .fc .fc-daygrid-day-number {
         padding: 4px;
         position: relative;
