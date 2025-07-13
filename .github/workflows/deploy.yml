@@ -41,8 +41,8 @@ jobs:
             # php artisan shield:generate --all
 
             echo "tambahan"
-           # composer dump-autoload
-           # php artisan storage:link
+            # composer dump-autoload
+            # php artisan storage:link
 
             echo "📂 Set permission folder storage & bootstrap/cache..."
             chmod -R 775 storage

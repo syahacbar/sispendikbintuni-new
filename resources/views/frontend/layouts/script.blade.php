@@ -1,16 +1,16 @@
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="{{ asset('themes/frontend/js/aos.js') }}"></script>
-<script src="{{ asset('themes/frontend/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-{{-- <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script> --}}
-{{-- <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script> --}}
-{{-- <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script> --}}
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+<script data-navigate-once src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script data-navigate-once src="{{ asset('themes/frontend/js/aos.js') }}"></script>
+<script data-navigate-once src="{{ asset('themes/frontend/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script data-navigate-once src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+{{-- <script data-navigate-once  src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script> --}}
+{{-- <script data-navigate-once  src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script> --}}
+{{-- <script data-navigate-once  src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script> --}}
+<script data-navigate-once src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
 
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+<script data-navigate-once src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script data-navigate-once src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
 
-<script src="https://unpkg.com/osmtogeojson@3.0.0/osmtogeojson.js"></script>
+<script data-navigate-once src="https://unpkg.com/osmtogeojson@3.0.0/osmtogeojson.js"></script>
 
 <script>
     AOS.init({
@@ -180,9 +180,15 @@
         });
 </script>
 
-
 <script>
     $(document).ready(function() {
+        $('#DirektoriPTK').DataTable({
+            responsive: true
+        });
+        $('#DirektoriPesertaDidik').DataTable({
+            responsive: true
+        });
+
         $('#dataSekolahByKecamatan').DataTable({
             responsive: true,
             scrollX: true
@@ -211,19 +217,15 @@
             scrollX: true
         });
 
-        $('#DirektoriPTK').DataTable({
-            responsive: true,
-            scrollX: true
-        });
-
-        $('#DirektoriPesertaDidik').DataTable({
-            responsive: true,
-            scrollX: true
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+            $($.fn.dataTable.tables(true)).DataTable()
+                .columns.adjust()
+                .responsive.recalc();
         });
     });
 </script>
 
-<script>
+{{-- <script>
     $(document).ready(function() {
         const tableIds = [
             // '#dataSekolah',
@@ -241,7 +243,7 @@
             }
         });
     });
-</script>
+</script> --}}
 
 
 <script>

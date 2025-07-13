@@ -5,13 +5,6 @@
         font-size: 14px !important;
     }
 
-    table#dataSekolah tbody td,
-    table#dataSekolah thead th,
-    table#dataSekolah tfoot th {
-        font-weight: normal !important;
-        font-size: 14px;
-    }
-
     table#dataSekolah thead th,
     table#dataSekolah tfoot th {
         font-weight: normal !important;
@@ -19,6 +12,12 @@
 
     .text-center {
         text-align: center;
+    }
+
+    table.dataTable.nowrap th,
+    table.dataTable.nowrap td {
+        white-space: nowrap;
+        font-size: 12px;
     }
 </style>
 

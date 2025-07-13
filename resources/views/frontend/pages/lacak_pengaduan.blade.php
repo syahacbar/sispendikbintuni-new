@@ -45,23 +45,23 @@
                                                 <td>{{ $data->nomor_laporan }}</td>
                                             </tr>
                                             <tr>
-                                                <th>Nama</th>
-                                                <td>{{ $data->nama }}</td>
+                                                <th>Nama Pelapor</th>
+                                                <td>{{ $data->nama_pelapor }}</td>
                                             </tr>
                                             <tr>
                                                 <th>Email</th>
                                                 <td>{{ $data->email }}</td>
                                             </tr>
                                             <tr>
-                                                <th>Telepon</th>
-                                                <td>{{ $data->telepon }}</td>
+                                                <th>Nomor WA Pelapor</th>
+                                                <td>{{ $data->no_hp }}</td>
                                             </tr>
                                             <tr>
-                                                <th>Kategori</th>
+                                                <th>Kategori Laporan</th>
                                                 <td>{{ $data->kategori }}</td>
                                             </tr>
                                             <tr>
-                                                <th>Status</th>
+                                                <th>Status Laporan</th>
                                                 <td>
                                                     @if ($data->status == 'selesai')
                                                         <span class="badge bg-success">Selesai</span>

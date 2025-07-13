@@ -137,8 +137,4 @@
     .sticky-top {
         z-index: 1030;
     }
-
-    /* ::-webkit-scrollbar {
-        display: none;
-    } */
 </style>

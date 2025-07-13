@@ -20,6 +20,12 @@
     .text-center {
         text-align: center;
     }
+
+    table.dataTable.nowrap th,
+    table.dataTable.nowrap td {
+        white-space: nowrap;
+        font-size: 12px;
+    }
 </style>
 
 @section('content')

@@ -27,6 +27,14 @@
     .bg-success {
         background-color: #0093dd !important;
     }
+
+    div#nav-tab button {
+        color: #0093dd !important;
+    }
+
+    div#nav-tab button.active {
+        color: #000 !important;
+    }
 </style>
 
 @section('content')
@@ -182,7 +190,7 @@
 
                                 </div>
                             </nav>
-                            <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-content navigasiKondisiSekolah" id="nav-tabContent">
                                 <div class="tab-pane fade show active" id="nav-kondisiSekolah" role="tabpanel"
                                     aria-labelledby="nav-kondisiSekolah-tab" tabindex="0">
                                     <div class="row mt-3">
@@ -343,7 +351,7 @@
                                     aria-labelledby="nav-direktoriPTK-tab" tabindex="0">
                                     <div class="row mt-3">
                                         <div>
-                                            <h4 class="bg-success p-2 mb-3 text-light">Data Sarana & Prasarana</h4>
+                                            <h4 class="bg-success p-2 mb-3 text-light">Direktori PTK</h4>
                                         </div>
                                         <div class="table-responsive">
                                             <table id="DirektoriPTK" class="display responsive nowrap"
@@ -352,9 +360,9 @@
                                                     <tr>
                                                         <th>No</th>
                                                         <th>Nama</th>
-                                                        <th class="text-center">NIK</th>
-                                                        <th class="text-center">Status</th>
-                                                        <th class="text-center">Jabatan</th>
+                                                        <th>NIK</th>
+                                                        <th>Status</th>
+                                                        <th>Jabatan</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -362,9 +370,9 @@
                                                         <tr>
                                                             <td>{{ $index + 1 }}</td>
                                                             <td>{{ $ptk->nama }}</td>
-                                                            <td class="text-center">{{ $ptk->nik }}</td>
-                                                            <td class="text-center">{{ $ptk->status }}</td>
-                                                            <td class="text-center">{{ $ptk->jabatan }}</td>
+                                                            <td>{{ $ptk->nik }}</td>
+                                                            <td>{{ $ptk->status }}</td>
+                                                            <td>{{ $ptk->jabatan }}</td>
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
@@ -376,29 +384,27 @@
                                     aria-labelledby="nav-direktoriPesertaDidik-tab" tabindex="0">
                                     <div class="row mt-3">
                                         <div>
-                                            <h4 class="bg-success p-2 mb-3 text-light">Data Sarana & Prasarana</h4>
+                                            <h4 class="bg-success p-2 mb-3 text-light">Direktori Peserta Didik</h4>
                                         </div>
-                                        <div class="table-responsive">
-                                            <table id="DirektoriPesertaDidik" class="display responsive nowrap"
-                                                style="width:100%">
-                                                <thead>
+                                        <table id="DirektoriPesertaDidik" class="display responsive nowrap"
+                                            style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th class="w-5">No</th>
+                                                    <th class="w-75">Nama</th>
+                                                    <th class="text-center w-25">NISN</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($sekolah->pesertaDidiks as $index => $pd)
                                                     <tr>
-                                                        <th>No</th>
-                                                        <th>Nama</th>
-                                                        <th class="text-center">NISN</th>
+                                                        <td class="w-5">{{ $index + 1 }}</td>
+                                                        <td class="w-75">{{ $pd->nama }}</td>
+                                                        <td class="text-center w-25">{{ $pd->nisn }}</td>
                                                     </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($sekolah->pesertaDidiks as $index => $pd)
-                                                        <tr>
-                                                            <td>{{ $index + 1 }}</td>
-                                                            <td>{{ $pd->nama }}</td>
-                                                            <td class="text-center">{{ $pd->nisn }}</td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
