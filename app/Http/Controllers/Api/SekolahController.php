@@ -24,7 +24,7 @@ class SekolahController extends Controller
         $data = Cache::remember($cacheKey, now()->addMinutes(30), function () use ($kode_wilayah) {
             $sekolahList = DB::table('tbl_sekolahs')
                 ->where('kode_wilayah', $kode_wilayah)
-                ->select('id', 'nama', 'npsn', 'jenjang', 'status_sekolah')
+                ->select('id', 'nama', 'npsn', 'jenjang', 'status_sekolah', 'latitude', 'longitude')
                 ->orderBy('jenjang')
                 ->orderBy('nama')
                 ->get();
@@ -48,6 +48,8 @@ class SekolahController extends Controller
                     'npsn' => $sekolah->npsn,
                     'jenjang' => $sekolah->jenjang,
                     'status_sekolah' => $sekolah->status_sekolah,
+                    'latitude' => $sekolah->latitude,
+                    'longitude' => $sekolah->longitude,
                     'peserta_didik' => $jumlahPesertaDidik,
                     'rombel' => $jumlahRombel,
                     'guru' => $jumlahGuru,
@@ -97,7 +99,7 @@ class SekolahController extends Controller
                 'nama' => $sekolah->nama,
                 'jenjang' => $sekolah->jenjang,
                 'status_sekolah' => $sekolah->status_sekolah,
-                
+
                 'total_peserta_didik' => $jumlahPesertaDidik,
                 'total_rombel' => $jumlahRombel,
                 'total_guru' => $jumlahGuru,
