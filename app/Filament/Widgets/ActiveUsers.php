@@ -42,6 +42,11 @@ class ActiveUsers extends BaseWidget
         return false;
     }
 
+    public static function canView(): bool
+    {
+        return auth()->user()?->hasRole('super_admin');
+    }
+
     protected function getTableColumns(): array
     {
         return [

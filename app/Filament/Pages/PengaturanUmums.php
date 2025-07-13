@@ -17,6 +17,7 @@ use Filament\Notifications\Notification;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Components\RichEditor;
+use Illuminate\Support\Facades\Storage;
 
 class PengaturanUmums extends Page
 {
@@ -34,6 +35,17 @@ class PengaturanUmums extends Page
     public static function getNavigationSort(): ?int
     {
         return 5;
+    }
+
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->hasRole('super_admin');
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()?->hasRole('super_admin');
     }
 
 
@@ -106,11 +118,14 @@ class PengaturanUmums extends Page
                                             ->label('Twitter')
                                             ->required(),
                                     ])->columns(3),
+
+
                                 Fieldset::make('Logo dan Favicon')
                                     ->schema([
                                         FileUpload::make('logo')
                                             ->label('Logo')
                                             ->image()
+                                            ->directory('logos') // direktori penyimpanan
                                             ->previewable(true)
                                             ->imagePreviewHeight('150')
                                             ->loadingIndicatorPosition('left')
@@ -119,10 +134,17 @@ class PengaturanUmums extends Page
                                             ->removeUploadedFileButtonPosition('right')
                                             ->uploadButtonPosition('left')
                                             ->uploadProgressIndicatorPosition('left')
-                                            ->nullable(),
+                                            ->nullable()
+                                            ->deleteUploadedFileUsing(function ($file, $record) {
+                                                if ($record && $record->logo && Storage::disk('public')->exists($record->logo)) {
+                                                    Storage::disk('public')->delete($record->logo);
+                                                }
+                                            }),
 
                                         FileUpload::make('favicon')
+                                            ->label('Favicon')
                                             ->image()
+                                            ->directory('favicons')
                                             ->previewable(true)
                                             ->imagePreviewHeight('150')
                                             ->loadingIndicatorPosition('left')
@@ -131,8 +153,14 @@ class PengaturanUmums extends Page
                                             ->removeUploadedFileButtonPosition('right')
                                             ->uploadButtonPosition('left')
                                             ->uploadProgressIndicatorPosition('left')
-                                            ->nullable(),
+                                            ->nullable()
+                                            ->deleteUploadedFileUsing(function ($file, $record) {
+                                                if ($record && $record->favicon && Storage::disk('public')->exists($record->favicon)) {
+                                                    Storage::disk('public')->delete($record->favicon);
+                                                }
+                                            }),
                                     ])->columns(4),
+
                             ]),
                     ])
             ])

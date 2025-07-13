@@ -35,6 +35,17 @@ class PengaturanApis extends Page
         return 5;
     }
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->hasRole('super_admin');
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()?->hasRole('super_admin');
+    }
+
+
 
     public function mount(): void
     {

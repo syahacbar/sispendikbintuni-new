@@ -69,7 +69,7 @@ class Sekolah extends Model
         return $this->hasMany(Sarpras::class);
     }
 
-    public function kode_wilayah()
+    public function wilayah()
     {
         return $this->belongsTo(Wilayah::class, 'kode_wilayah', 'kode');
     }
@@ -112,8 +112,8 @@ class Sekolah extends Model
     }
 
     // untuk endpoint API
-    public function wilayah()
-    {
-        return $this->belongsTo(Wilayah::class, 'kode_wilayah', 'kode');
-    }
+    // public function wilayah()
+    // {
+    //     return $this->belongsTo(Wilayah::class, 'kode_wilayah', 'kode');
+    // }
 }
