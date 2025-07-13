@@ -12,7 +12,7 @@ class PetaSebaranController extends Controller
     public function index()
     {
         $data = DB::table('tbl_sekolahs')
-            ->select('nama', 'jenjang', 'latitude as lat', 'longitude as lng')
+            ->select('id as sekolah_id', 'nama', 'jenjang', 'latitude as lat', 'longitude as lng')
             ->whereNotNull('latitude')
             ->whereNotNull('longitude')
             ->get();
