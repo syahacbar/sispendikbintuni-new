@@ -23,7 +23,7 @@ jobs:
             git pull origin main
 
             echo "📦 Install Composer dependencies..."
-            composer install --no-interaction --prefer-dist --optimize-autoloader
+            # composer install --no-interaction --prefer-dist --optimize-autoloader
 
             echo "🔐 Update environment..."
             php artisan config:cache
@@ -37,12 +37,12 @@ jobs:
             php artisan view:clear
 
             echo "🛠 Jalankan migrasi database..."
-            php artisan migrate:fresh --seed
-            php artisan shield:generate --all
+            # php artisan migrate:fresh --seed
+            # php artisan shield:generate --all
 
             echo "tambahan"
-            composer dump-autoload
-            php artisan storage:link
+           # composer dump-autoload
+           # php artisan storage:link
 
             echo "📂 Set permission folder storage & bootstrap/cache..."
             chmod -R 775 storage
