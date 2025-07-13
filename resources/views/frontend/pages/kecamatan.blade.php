@@ -36,6 +36,12 @@
         div#dataSekolahByKecamatan_length {
             margin-bottom: 15px;
         }
+
+        table.dataTable.nowrap th,
+        table.dataTable.nowrap td {
+            white-space: nowrap;
+            font-size: 12px;
+        }
     </style>
     @section('content')
         <section class="about-section">

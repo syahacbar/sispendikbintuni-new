@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use App\Models\PTK;
+use App\Models\Ptk;
 use Filament\Forms;
 use Filament\Tables;
 use Filament\Forms\Form;
@@ -20,7 +20,7 @@ use App\Filament\Resources\PTKResource\Pages;
 
 class PTKResource extends Resource
 {
-    protected static ?string $model = PTK::class;
+    protected static ?string $model = Ptk::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?string $navigationLabel = 'PTK';

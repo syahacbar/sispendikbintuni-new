@@ -16,10 +16,13 @@ class DataPendidikanController extends Controller
         $title = 'Data Pendidikan';
         $subtitle = 'Rekapitulasi data pendidikan Berdasarkan Kecamatan.';
 
-        $jenjangList = Sekolah::select('jenjang')->distinct()->pluck('jenjang')->sortBy(function ($jenjang) {
-            $order = ['TK', 'SD', 'SMP', 'SMA', 'SMK', 'SLB'];
-            return array_search($jenjang, $order) !== false ? array_search($jenjang, $order) : 999;
-        })->values()->all();
+        // $jenjangList = Sekolah::select('jenjang')->distinct()->pluck('jenjang')->sortBy(function ($jenjang) {
+        //     $order = ['TK', 'KB', 'TPA', 'SPS', 'PKBM', 'SKB', 'SD', 'SMP', 'SMA', 'SMK', 'SLB'];
+        //     return array_search($jenjang, $order) !== false ? array_search($jenjang, $order) : 999;
+        // })->values()->all();
+
+        $jenjangList = ['TK', 'KB', 'TPA', 'SPS', 'PKBM', 'SKB', 'SD', 'SMP', 'SMA', 'SMK', 'SLB'];
+
 
         $wilayahMap = Wilayah::pluck('nama', 'kode');
 
