@@ -15,29 +15,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            KurikulumSeeder::class,
-            SekolahSeeder::class,
-            PtkSeeder::class,
-            PesertaDidikSeeder::class,
-            RombonganBelajarSeeder::class,
-            AnggotaRombelSeeder::class,
-            RegistrasiPesertaDidikSeeder::class,
-            MataPelajaranSeeder::class,
-            RombelMapelSeeder::class,
-            RoleSeeder::class,
-            UserSeeder::class,
-            PermissionSeeder::class,
-            InformasiSeeder::class,
-            JenisSarprasSeeder::class,
-            KelompokMapelSeeder::class,
-            KelompokMapelSeeder::class,
-            PengaduanSeeder::class,
-            PengaturanAPISeeder::class,
-            PengaturanEmailSeeder::class,
-            PengaturanUmumSeeder::class,
-            TentangSeeder::class,
+            RefSarprasSeeder::class,
             //WilayahSeeder::class,
-            KalenderSeeder::class,
         ]);
     }
 }

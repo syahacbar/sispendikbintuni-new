@@ -23,7 +23,7 @@ class WilayahSeeder extends Seeder
         fgetcsv($file);
 
         while (($row = fgetcsv($file)) !== false) {
-            DB::table('tbl_wilayahs')->insert([
+            DB::table('ref_wilayah')->insert([
                 'kode' => $row[0],
                 'nama' => $row[1],
                 'created_at' => $row[2],
