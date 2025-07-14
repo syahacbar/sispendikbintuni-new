@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tbl_kelompok_mapels', function (Blueprint $table) {
+        Schema::create('sys_api', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('nama', 100);
             $table->timestamps();
         });
     }
@@ -23,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tbl_kelompok_mapels');
+        Schema::dropIfExists('sys_api');
     }
 };

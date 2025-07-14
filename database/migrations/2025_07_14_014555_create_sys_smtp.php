@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tbl_pengaturan_emails', function (Blueprint $table) {
-            $table->uuid('id');
-            $table->string('key')->unique();
-            $table->text('value')->nullable();
+        Schema::create('sys_smtp', function (Blueprint $table) {
+            $table->uuid('id')->primary();
             $table->timestamps();
         });
     }
@@ -24,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tbl_pengaturan_emails');
+        Schema::dropIfExists('sys_smtp');
     }
 };

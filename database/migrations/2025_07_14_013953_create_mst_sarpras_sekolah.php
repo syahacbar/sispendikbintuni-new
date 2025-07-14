@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('tbl_peserta_didiks', function (Blueprint $table) {
-            $table->foreign('sekolah_id')
-                ->references('id')->on('tbl_sekolahs')->nullOnDelete();
+        Schema::create('mst_sarpras_sekolah', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->timestamps();
         });
     }
 
@@ -22,8 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('tbl_peserta_didiks', function (Blueprint $table) {
-            $table->dropForeign(['sekolah_id']);
-        });
+        Schema::dropIfExists('mst_sarpras_sekolah');
     }
 };

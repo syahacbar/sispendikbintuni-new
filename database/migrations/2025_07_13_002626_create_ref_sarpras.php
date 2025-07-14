@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tbl_pengaturan_umums', function (Blueprint $table) {
-            $table->uuid('id');
-            $table->string('key')->unique();
-            $table->text('value')->nullable();
+        Schema::create('ref_sarpras', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('nama');
             $table->timestamps();
         });
     }
@@ -24,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tbl_pengaturan_umums');
+        Schema::dropIfExists('ref_sarpras');
     }
 };

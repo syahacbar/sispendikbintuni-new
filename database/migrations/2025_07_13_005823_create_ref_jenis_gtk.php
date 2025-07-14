@@ -11,15 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tbl_registrasi_peserta_didiks', function (Blueprint $table) {
+        Schema::create('ref_jenis_gtk', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('peserta_didik_id');
-            $table->date('tanggal_masuk');
-            $table->string('jenis_pendaftaran', 50);
-            $table->string('asal_sekolah')->nullable();
+            $table->string('nama');
             $table->timestamps();
-
-            $table->foreign('peserta_didik_id')->references('id')->on('tbl_peserta_didiks');
         });
     }
 
@@ -28,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tbl_registrasi_peserta_didiks');
+        Schema::dropIfExists('ref_jenis_gtk');
     }
 };

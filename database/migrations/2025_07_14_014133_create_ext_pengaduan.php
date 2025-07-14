@@ -11,14 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tbl_anggota_rombels', function (Blueprint $table) {
+        Schema::create('ext_pengaduan', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('rombongan_belajar_id');
-            $table->uuid('peserta_didik_id');
             $table->timestamps();
-
-            $table->foreign('rombongan_belajar_id')->references('id')->on('tbl_rombongan_belajars');
-            $table->foreign('peserta_didik_id')->references('id')->on('tbl_peserta_didiks');
         });
     }
 
@@ -27,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tbl_anggota_rombels');
+        Schema::dropIfExists('ext_pengaduan');
     }
 };

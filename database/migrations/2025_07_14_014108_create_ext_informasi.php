@@ -11,13 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tbl_kurikulums', function (Blueprint $table) {
+        Schema::create('ext_informasi', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('kode', 20);
-            $table->string('nama', 100);
-            $table->enum('jenis', ['Nasional', 'Muatan Lokal', 'Lainnya']);
-            $table->year('tahun_mulai');
-            $table->enum('status', ['Aktif', 'Tidak Aktif']);
             $table->timestamps();
         });
     }
@@ -27,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tbl_kurikulums');
+        Schema::dropIfExists('ext_informasi');
     }
 };

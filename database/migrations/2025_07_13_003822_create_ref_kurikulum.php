@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tbl_jenis_sarpras', function (Blueprint $table) {
+        Schema::create('ref_kurikulum', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('nama', 255);
+            $table->string('kode');
+            $table->string('nama');
+            $table->enum('jenis', ['Nasional', 'Muatan Lokal', 'Lainnya']);
+            $table->year('tahun_mulai');
+            $table->enum('status', ['Aktif', 'Tidak Aktif']);
             $table->timestamps();
         });
     }
@@ -23,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tbl_jenis_sarpras');
+        Schema::dropIfExists('ref_kurikulum');
     }
 };

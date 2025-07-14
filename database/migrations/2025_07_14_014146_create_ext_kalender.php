@@ -6,18 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
-        Schema::create('tbl_tentangs', function (Blueprint $table) {
+        Schema::create('ext_kalender', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('key')->unique();
-            $table->text('value')->nullable();
             $table->timestamps();
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
-        Schema::dropIfExists('tbl_tentangs');
+        Schema::dropIfExists('ext_kalender');
     }
 };

@@ -11,18 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tbl_wilayahs', function (Blueprint $table) {
+        Schema::create('ref_mapel', function (Blueprint $table) {
+            $table->uuid('id')->primary();
             $table->string('kode');
             $table->string('nama');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
+
     public function down(): void
     {
-        Schema::dropIfExists('tbl_wilayahs');
+        Schema::dropIfExists('ref_mapel');
     }
 };

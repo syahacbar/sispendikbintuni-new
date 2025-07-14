@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tbl_pengaturan_apis', function (Blueprint $table) {
-            $table->uuid('id');
-            $table->string('key')->unique();
-            $table->text('value')->nullable();
+        Schema::create('mst_rombel', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('nama')->nullable();
+            $table->integer('tingkat')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tbl_pengaturan_apis');
+        Schema::dropIfExists('mst_rombel');
     }
 };
