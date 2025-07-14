@@ -1,16 +1,16 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-success fixed-top" aria-label="Sispendik Navbar">
     <div class="container d-flex justify-content-between">
-        @php
+        {{-- @php
             use App\Helpers\PengaturanHelper;
 
             $logo = PengaturanHelper::get('logo', 'logo.png');
             $judul = PengaturanHelper::get('judul', 'Sistem Informasi Pendidikan');
-        @endphp
+        @endphp --}}
 
         <a class="w-15 navbar-brand d-flex align-items-center" href="{{ url('/') }}">
             <img class="w-25 mr-3" src="{{ asset('themes/frontend/logo.png') }}" alt="Logo">
             {{-- <img class="w-25 mr-3" src="{{ asset('storage/' . $logo) }}" alt="Logo"> --}}
-            <h5 class="mb-0 text-white fw-bold mx-2">{{ $judul }}</h5>
+            {{-- <h5 class="mb-0 text-white fw-bold mx-2">{{ $judul }}</h5> --}}
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSispendikBintuni"
             aria-controls="navbarSispendikBintuni" aria-expanded="false" aria-label="Toggle navigation">

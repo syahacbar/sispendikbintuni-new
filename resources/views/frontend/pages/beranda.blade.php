@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 @section('content')
-    @php
+    {{-- @php
         use App\Helpers\PengaturanHelper;
 
         $deskripsi = PengaturanHelper::get('deskripsi', 'Sistem Informasi Pendidikan');
@@ -19,17 +19,18 @@
         $youtube = PengaturanHelper::get('youtube', 'Kabupaten Teluk Bintuni');
         $twitter = PengaturanHelper::get('twitter', 'Kabupaten Teluk Bintuni');
 
-    @endphp
+    @endphp --}}
 
     <section class="hero w-100 container-fluid d-flex align-items-start justify-content-start text-start">
         <div class="container">
             <div class="hero-content" data-aos="fade-up">
-                <p>{{ $teks_selamat_datang }}</p>
-                <h1>{{ $deskripsi }}<br />{{ $nama_instansi }}</h1>
-                <p>{{ $slogan }}</p>
+                <p>{{ $teks_selamat_datang ?? '' }}</p>
+                <h1>{{ $deskripsi ?? '' }}<br />{{ $nama_instansi ?? '' }}</h1>
+                <p>{{ $slogan ?? '' }}</p>
             </div>
         </div>
     </section>
+
 
     <section class="bg-white">
         <div class="container pb-3">
@@ -148,7 +149,7 @@
                         <div class="card-header">
                             <h6>Total PD & PTK</h6>
                         </div>
-                        <div class="card-body">
+                        {{-- <div class="card-body">
                             <h6 class="fw-bold text-muted">
                                 Peserta Didik
                                 <span class="float-end text-primary">{{ number_format($total_peserta_didik) }}</span>
@@ -173,7 +174,7 @@
                                 </div>
                             @endforeach
 
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -570,7 +571,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 
-    <script>
+    {{-- <script>
         new Chart(document.getElementById('chartAkreditasi'), {
             type: 'bar',
             data: {
@@ -840,7 +841,7 @@
             },
             plugins: [ChartDataLabels] // <- aktifkan plugin
         });
-    </script>
+    </script> --}}
 
 
 

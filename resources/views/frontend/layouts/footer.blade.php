@@ -1,4 +1,4 @@
-    @php
+    {{-- @php
         use App\Helpers\PengaturanHelper;
 
         $deskripsi = PengaturanHelper::get('deskripsi', 'Sistem Informasi Pendidikan');
@@ -17,7 +17,7 @@
         $youtube = PengaturanHelper::get('youtube', 'Kabupaten Teluk Bintuni');
         $twitter = PengaturanHelper::get('twitter', 'Kabupaten Teluk Bintuni');
 
-    @endphp
+    @endphp --}}
 
     <footer class="bg-dark text-white pt-5 pb-3 mb-4">
         <div class="container">
@@ -25,22 +25,22 @@
                 <div class="col-sm-5">
                     <div class="mb-3 d-flex gap-2 justify-content-start align-items-center">
                         <img class="mr-3" src="{{ asset('themes/frontend/logo.png') }}" alt="Logo Kab Bintuni">
-                        <strong class="text-success fw-bold">{{ $deskripsi }}</strong>
+                        {{-- <strong class="text-success fw-bold">{{ $deskripsi }}</strong> --}}
                     </div>
-                    <p class="small mb-1">
+                    {{-- <p class="small mb-1">
                         {{ $alamat_lengkap }}, {{ $kode_pos }} <br />
                         Telepon: {{ $telepon }} <br />
                         Email: <a href="mailto:{{ $email }}" class="text-white text-decoration-none">
                             <i class="fas fa-envelope me-1"></i>
                             {{ $email }} </a>
-                    </p>
+                    </p> --}}
 
-                    <div class="d-flex mt-3">
+                    {{-- <div class="d-flex mt-3">
                         <a href="{{ $youtube }}" class="text-white me-3"><i class="bi bi-youtube fs-5"></i></a>
                         <a href="{{ $twitter }}" class="text-white me-3"><i class="bi bi-twitter fs-5"></i></a>
                         <a href="{{ $facebook }}" class="text-white me-3"><i class="bi bi-facebook fs-5"></i></a>
                         <a href="{{ $instagram }}" class="text-white me-3"><i class="bi bi-instagram fs-5"></i></a>
-                    </div>
+                    </div> --}}
                 </div>
 
                 <div class="col-lg-7 mt-4 mt-md-0">
@@ -98,7 +98,7 @@
             </div>
 
             <div class="d-flex justify-content-between align-items-center border-top border-secondary pt-3 mt-3 mb-4">
-                <div class="small"> {{ $hak_cipta }} </div>
+                {{-- <div class="small"> {{ $hak_cipta }} </div> --}}
                 <i class="fas fa-university fa-2x text-success me-2"></i>
             </div>
         </div>

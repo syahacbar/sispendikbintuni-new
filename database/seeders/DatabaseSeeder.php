@@ -24,6 +24,17 @@ class DatabaseSeeder extends Seeder
             RefSemesterSeeder::class,
 
             MstSekolahSeeder::class,
+            MstGtkSeeder::class,
+            MstPesertaDidikSeeder::class,
+            MstRombelSeeder::class,
+            MstSarprasSekolahSeeder::class,
+
+            ExtPengaduanSeeder::class,
+            ExtInformasiSeeder::class,
+            ExtKalenderSeeder::class,
+            MstPembelajaranSeeder::class,
+            MstAnggotaRombelSeeder::class,
+
         ]);
     }
 }

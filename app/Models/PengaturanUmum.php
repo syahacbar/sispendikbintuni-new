@@ -22,10 +22,10 @@ class PengaturanUmum extends Model
         static::updateOrCreate(['key' => $key], ['value' => $value]);
     }
 
-    public static function getAllAsArray(): array
-    {
-        return static::all()->pluck('value', 'key')->toArray();
-    }
+    // public static function getAllAsArray(): array
+    // {
+    //     return static::all()->pluck('value', 'key')->toArray();
+    // }
 
     public static function setBulk(array $data): void
     {

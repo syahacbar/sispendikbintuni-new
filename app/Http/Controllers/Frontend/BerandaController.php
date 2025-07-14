@@ -21,18 +21,18 @@ class BerandaController extends Controller
 
         $jenjang = ['PAUD', 'SD', 'SMP', 'SMA', 'SMK', 'PKBM'];
 
-        $jumlah_peserta_didik = PesertaDidik::with('sekolah')
-            ->get()
-            ->groupBy(fn($pd) => $pd->sekolah->jenjang ?? 'Tidak Diketahui')
-            ->map(fn($group) => $group->count());
+        // $jumlah_peserta_didik = PesertaDidik::with('sekolah')
+        //     ->get()
+        //     ->groupBy(fn($pd) => $pd->sekolah->jenjang ?? 'Tidak Diketahui')
+        //     ->map(fn($group) => $group->count());
 
-        $jumlah_guru = Ptk::with('sekolah')
-            ->get()
-            ->groupBy(fn($ptk) => $ptk->sekolah->jenjang ?? 'Tidak Diketahui')
-            ->map(fn($group) => $group->count());
+        // $jumlah_guru = Ptk::with('sekolah')
+        //     ->get()
+        //     ->groupBy(fn($ptk) => $ptk->sekolah->jenjang ?? 'Tidak Diketahui')
+        //     ->map(fn($group) => $group->count());
 
-        $total_peserta_didik = $jumlah_peserta_didik->sum();
-        $total_guru = $jumlah_guru->sum();
+        // $total_peserta_didik = $jumlah_peserta_didik->sum();
+        // $total_guru = $jumlah_guru->sum();
 
         $statistik = [
             'semua' => [],
@@ -40,14 +40,14 @@ class BerandaController extends Controller
             'Swasta' => [],
         ];
 
-        foreach ($jenjang as $j) {
-            $statistik['semua'][$j] = Sekolah::where('jenjang', $j)->count();
-            $statistik['Negeri'][$j] = Sekolah::where('jenjang', $j)->where('status_sekolah', 'Negeri')->count();
-            $statistik['Swasta'][$j] = Sekolah::where('jenjang', $j)->where('status_sekolah', 'Swasta')->count();
-        }
+        // foreach ($jenjang as $j) {
+        //     $statistik['semua'][$j] = Sekolah::where('jenjang', $j)->count();
+        //     $statistik['Negeri'][$j] = Sekolah::where('jenjang', $j)->where('status_sekolah', 'Negeri')->count();
+        //     $statistik['Swasta'][$j] = Sekolah::where('jenjang', $j)->where('status_sekolah', 'Swasta')->count();
+        // }
 
-        $peserta_didik = PesertaDidik::with('sekolah')->get()->groupBy(fn($pd) => $pd->sekolah->jenjang ?? 'Tidak Diketahui')->map->count();
-        $guru = Ptk::with('sekolah')->get()->groupBy(fn($ptk) => $ptk->sekolah->jenjang ?? 'Tidak Diketahui')->map->count();
+        // $peserta_didik = PesertaDidik::with('sekolah')->get()->groupBy(fn($pd) => $pd->sekolah->jenjang ?? 'Tidak Diketahui')->map->count();
+        // $guru = Ptk::with('sekolah')->get()->groupBy(fn($ptk) => $ptk->sekolah->jenjang ?? 'Tidak Diketahui')->map->count();
 
         // Akreditasi
         // Akreditasi (stacked per jenjang)
@@ -64,13 +64,13 @@ class BerandaController extends Controller
         // Data akreditasi per jenjang
         $akreditasiByJenjang = [];
 
-        foreach ($akreditasiLabels as $akreditasi) {
-            foreach ($jenjangList as $jenjang) {
-                $akreditasiByJenjang[$akreditasi][$jenjang] = Sekolah::where('jenjang', $jenjang)
-                    ->where('akreditasi', $akreditasi)
-                    ->count();
-            }
-        }
+        // foreach ($akreditasiLabels as $akreditasi) {
+        //     foreach ($jenjangList as $jenjang) {
+        //         $akreditasiByJenjang[$akreditasi][$jenjang] = Sekolah::where('jenjang', $jenjang)
+        //             ->where('akreditasi', $akreditasi)
+        //             ->count();
+        //     }
+        // }
 
         // Dataset Akreditasi ChartJS
         $akreditasiDatasets = [];
@@ -97,15 +97,15 @@ class BerandaController extends Controller
             'GTY' => '#ffc107',
         ];
 
-        $statusPTKByJenjang = [];
+        // $statusPTKByJenjang = [];
 
-        foreach ($statusPTKLabels as $status) {
-            foreach ($jenjangList as $jenjang) {
-                $statusPTKByJenjang[$status][$jenjang] = Ptk::where('status', $status)
-                    ->whereHas('sekolah', fn($q) => $q->where('jenjang', $jenjang))
-                    ->count();
-            }
-        }
+        // foreach ($statusPTKLabels as $status) {
+        //     foreach ($jenjangList as $jenjang) {
+        //         $statusPTKByJenjang[$status][$jenjang] = Ptk::where('status', $status)
+        //             ->whereHas('sekolah', fn($q) => $q->where('jenjang', $jenjang))
+        //             ->count();
+        //     }
+        // }
 
         $statusPTKDatasets = [];
 
@@ -139,17 +139,17 @@ class BerandaController extends Controller
         $sarprasByJenjangKondisi = [];
 
         // Hitung jumlah per jenjang per kondisi
-        foreach ($sarprasLabels as $kondisi) {
-            foreach ($jenjangList as $jenjang) {
-                $count = Sarpras::where('kondisi', $kondisi)
-                    ->whereHas('sekolah', function ($q) use ($jenjang) {
-                        $q->where('jenjang', $jenjang);
-                    })
-                    ->count();
+        // foreach ($sarprasLabels as $kondisi) {
+        //     foreach ($jenjangList as $jenjang) {
+        //         $count = Sarpras::where('kondisi', $kondisi)
+        //             ->whereHas('sekolah', function ($q) use ($jenjang) {
+        //                 $q->where('jenjang', $jenjang);
+        //             })
+        //             ->count();
 
-                $sarprasByJenjangKondisi[$kondisi][$jenjang] = $count;
-            }
-        }
+        //         $sarprasByJenjangKondisi[$kondisi][$jenjang] = $count;
+        //     }
+        // }
 
         // Bangun dataset ChartJS berdasarkan kondisi (bukan jenjang)
         $datasets = [];
@@ -181,17 +181,17 @@ class BerandaController extends Controller
         ];
 
         // Hitung jumlah guru per jenjang per kualifikasi
-        $kualifikasiByJenjang = [];
+        // $kualifikasiByJenjang = [];
 
-        foreach ($kualifikasiLabels as $kualifikasi) {
-            foreach ($jenjangList as $jenjang) {
-                $count = Ptk::where('kualifikasi', $kualifikasi)
-                    ->whereHas('sekolah', fn($q) => $q->where('jenjang', $jenjang))
-                    ->count();
+        // foreach ($kualifikasiLabels as $kualifikasi) {
+        //     foreach ($jenjangList as $jenjang) {
+        //         $count = Ptk::where('kualifikasi', $kualifikasi)
+        //             ->whereHas('sekolah', fn($q) => $q->where('jenjang', $jenjang))
+        //             ->count();
 
-                $kualifikasiByJenjang[$kualifikasi][$jenjang] = $count;
-            }
-        }
+        //         $kualifikasiByJenjang[$kualifikasi][$jenjang] = $count;
+        //     }
+        // }
 
         // Format data ke dalam dataset ChartJS
         $kualifikasiDatasets = [];
@@ -211,45 +211,45 @@ class BerandaController extends Controller
         }
 
         // 1. Ambil data jumlah sekolah berdasarkan 8 digit awal kode_wilayah (kecamatan)
-        $sebaranSekolahKecamatan = DB::table('tbl_sekolahs')
-            ->selectRaw("SUBSTRING(kode_wilayah, 1, 8) as kecamatan_kode, COUNT(*) as jumlah")
-            ->groupBy('kecamatan_kode')
-            ->orderBy('kecamatan_kode')
-            ->get();
+        // $sebaranSekolahKecamatan = DB::table('tbl_sekolahs')
+        //     ->selectRaw("SUBSTRING(kode_wilayah, 1, 8) as kecamatan_kode, COUNT(*) as jumlah")
+        //     ->groupBy('kecamatan_kode')
+        //     ->orderBy('kecamatan_kode')
+        //     ->get();
 
         // 2. Ambil semua nama kecamatan dari tabel wilayah
-        $kecamatanCodes = $sebaranSekolahKecamatan->pluck('kecamatan_kode');
-        $wilayahMap = Wilayah::whereIn('kode', $kecamatanCodes)->pluck('nama', 'kode');
+        // $kecamatanCodes = $sebaranSekolahKecamatan->pluck('kecamatan_kode');
+        // $wilayahMap = Wilayah::whereIn('kode', $kecamatanCodes)->pluck('nama', 'kode');
 
-        // 3. Siapkan data untuk Chart.js
-        $kecamatanLabels = $sebaranSekolahKecamatan->map(
-            fn($item) => $wilayahMap[$item->kecamatan_kode] ?? $item->kecamatan_kode
-        );
-        $jumlahSekolahData = $sebaranSekolahKecamatan->pluck('jumlah');
+        // // 3. Siapkan data untuk Chart.js
+        // $kecamatanLabels = $sebaranSekolahKecamatan->map(
+        //     fn($item) => $wilayahMap[$item->kecamatan_kode] ?? $item->kecamatan_kode
+        // );
+        // $jumlahSekolahData = $sebaranSekolahKecamatan->pluck('jumlah');
 
 
-        $sambutan = PengaturanUmum::getAllAsArray();
+        // $sambutan = PengaturanUmum::getAllAsArray();
 
         return view('frontend.pages.beranda', compact(
             'statistik',
-            'peserta_didik',
-            'guru',
-            'jumlah_peserta_didik',
-            'jumlah_guru',
-            'total_peserta_didik',
-            'total_guru',
-            'akreditasiLabels',
-            'statusPTKLabels',
-            'sarprasLabels',
-            'kualifikasiLabels',
-            'jenjangList',
-            'datasets',
-            'akreditasiDatasets',
-            'statusPTKDatasets',
-            'kualifikasiDatasets',
-            'kecamatanLabels',
-            'jumlahSekolahData',
-            'sambutan'
+            // 'peserta_didik',
+            // 'guru',
+            // 'jumlah_peserta_didik',
+            // 'jumlah_guru',
+            // 'total_peserta_didik',
+            // 'total_guru',
+            // 'akreditasiLabels',
+            // 'statusPTKLabels',
+            // 'sarprasLabels',
+            // 'kualifikasiLabels',
+            // 'jenjangList',
+            // 'datasets',
+            // 'akreditasiDatasets',
+            // 'statusPTKDatasets',
+            // 'kualifikasiDatasets',
+            // 'kecamatanLabels',
+            // 'jumlahSekolahData',
+            // 'sambutan'
         ));
     }
 }
