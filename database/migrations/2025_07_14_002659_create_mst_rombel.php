@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+
         Schema::create('mst_rombel', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('sekolah_id')->nullable();

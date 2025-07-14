@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('kode_jenjang')->nullable();
             $table->enum('akreditasi', ['A', 'B', 'C', 'Belum Terakreditasi'])->nullable();
             $table->string('email', 100)->unique();
-            $table->string('telepon', 20)->unique();
+            $table->string('telepon', 20)->unique()->nullable();
             $table->string('kepemilikan', 100)->nullable();
             $table->string('sk_pendirian', 100)->nullable();
             $table->date('tanggal_sk_pendirian')->nullable();
