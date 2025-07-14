@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ref_kurikulum', function (Blueprint $table) {
+        Schema::create('sys_users', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('kode');
-            $table->string('nama');
-            $table->text('deskripsi')->nullable();
-            $table->year('tahun_mulai');
-            $table->enum('status', ['Aktif', 'Tidak Aktif']);
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ref_kurikulum');
+        Schema::dropIfExists('sys_users');
     }
 };

@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('mst_sarpras_sekolah', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->uuid('sekolah_id');
+            $table->uuid('sarpras_id');
+            $table->string('nama')->nullable();
+            $table->integer('jumlah_saat_ini')->default(0);
+            $table->string('jumlah_ideal')->nullable();
+            $table->string('keterangan')->nullable();
             $table->timestamps();
         });
     }

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-         Schema::create('dapo_gtk', function (Blueprint $table) {
+        Schema::create('mst_gtk', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('nama', 100);
             $table->string('nik', 20)->nullable();
@@ -19,11 +19,12 @@ return new class extends Migration
             $table->string('nuptk', 20)->nullable();
             $table->string('tempat_lahir')->nullable();
             $table->date('tgl_lahir')->nullable();
-            $table->enum('jenis_kelamin', ['L', 'P']);
-            $table->enum('agama', ['Islam', 'Kristen', 'Hindu', 'Buddha', 'Konghucu']);
-            $table->enum('status_kepegawaian', ['PNS', 'PPPK', 'Honorer Daerah','Honorer Sekolah', 'GTY/PTY', 'Lainnya']);
+            $table->enum('jenis_kelamin', ['L', 'P'])->nullable();
+            $table->enum('agama', ['Islam', 'Kristen', 'Hindu', 'Buddha', 'Konghucu'])->nullable();
+            $table->enum('status_kepegawaian', ['PNS', 'PPPK', 'Honorer Daerah', 'Honorer Sekolah', 'GTY/PTY', 'Lainnya'])->nullable();
+            $table->uuid('jenis_gtk')->nullable();
             $table->enum('pend_terakhir', ['SD', 'SMP', 'SMA', 'D3', 'S1', 'S2', 'S3'])->nullable();
-            $table->enum('status_keaktifan', ['Aktif', 'Tidak Aktif']);
+            $table->enum('status_keaktifan', ['Aktif', 'Tidak Aktif'])->nullable();
             $table->timestamps();
         });
     }
@@ -33,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dapo_gtk');
+        Schema::dropIfExists('mst_gtk');
     }
 };

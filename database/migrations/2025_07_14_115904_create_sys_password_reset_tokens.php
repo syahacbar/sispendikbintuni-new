@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sys_api', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->string('key');
-            $table->text('value')->nullable();
-            $table->timestamps();
+        Schema::create('sys_password_reset_tokens', function (Blueprint $table) {
+            $table->string('email')->primary();
+            $table->string('token');
         });
     }
 
@@ -24,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sys_api');
+        Schema::dropIfExists('sys_password_reset_tokens');
     }
 };

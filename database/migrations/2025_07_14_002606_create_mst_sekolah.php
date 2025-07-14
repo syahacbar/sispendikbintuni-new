@@ -16,9 +16,11 @@ return new class extends Migration
             $table->string('npsn', 10)->unique();
             $table->string('nama', 100);
             $table->text('alamat')->nullable();
+            $table->string('kode_wilayah')->nullable();
             $table->string('kode_pos', 10)->nullable();
             $table->enum('status', ['Negeri', 'Swasta'])->nullable();
-            $table->enum('akreditasi', ['A', 'B', 'C','Belum Terakreditasi'])->nullable();
+            $table->string('kode_jenjang')->nullable();
+            $table->enum('akreditasi', ['A', 'B', 'C', 'Belum Terakreditasi'])->nullable();
             $table->string('email', 100)->unique();
             $table->string('telepon', 20)->unique();
             $table->string('kepemilikan', 100)->nullable();
@@ -28,6 +30,7 @@ return new class extends Migration
             $table->date('tanggal_sk_izin_operasional')->nullable();
             $table->string('latitude', 100)->nullable();
             $table->string('longitude', 100)->nullable();
+            $table->uuid('users_id')->nullable();
             $table->timestamps();
         });
     }

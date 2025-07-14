@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ref_kurikulum', function (Blueprint $table) {
+        Schema::create('ref_semester', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('kode');
-            $table->string('nama');
-            $table->text('deskripsi')->nullable();
-            $table->year('tahun_mulai');
-            $table->enum('status', ['Aktif', 'Tidak Aktif']);
+            $table->string('kode_semester')->unique();
+            $table->string('tahun_ajaran');
+            $table->string('nama_semester');
+            $table->boolean('is_aktif')->default(false);
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ref_kurikulum');
+        Schema::dropIfExists('ref_semester');
     }
 };

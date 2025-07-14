@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dapo_peserta_didik', function (Blueprint $table) {
+        Schema::create('mst_peserta_didik', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('nama', 100);
             $table->string('nisn', 10)->nullable();
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dapo_peserta_didik');
+        Schema::dropIfExists('mst_peserta_didik');
     }
 };

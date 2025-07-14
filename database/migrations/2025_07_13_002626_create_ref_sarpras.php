@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('ref_sarpras', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('nama');
+            $table->string('nama')->nullable();
+            $table->enum('kategori', ['Sarana', 'Prasarana'])->nullable();
             $table->timestamps();
         });
     }

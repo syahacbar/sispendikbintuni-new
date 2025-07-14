@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ref_kurikulum', function (Blueprint $table) {
+        Schema::create('sys_sessions', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('kode');
-            $table->string('nama');
-            $table->text('deskripsi')->nullable();
-            $table->year('tahun_mulai');
-            $table->enum('status', ['Aktif', 'Tidak Aktif']);
-            $table->timestamps();
+            $table->foreignId('user_id')->nullable()->index();
+            $table->string('ip_address', 45)->nullable();
+            $table->text('user_agent')->nullable();
+            $table->longText('payload');
+            $table->integer('last_activity')->index();
         });
     }
 
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ref_kurikulum');
+        Schema::dropIfExists('sys_sessions');
     }
 };

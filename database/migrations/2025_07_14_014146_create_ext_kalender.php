@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('ext_kalender', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->string('nama');
+            $table->date('tanggal_mulai');
+            $table->date('tanggal_akhir');
+            $table->boolean('waktu')->default(0);
+            $table->string('deskripsi')->nullable();
+            $table->time('jam_mulai')->nullable();
+            $table->time('jam_akhir')->nullable();
             $table->timestamps();
         });
     }

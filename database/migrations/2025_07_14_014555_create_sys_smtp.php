@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('sys_smtp', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->string('key');
+            $table->text('value')->nullable();
             $table->timestamps();
         });
     }

@@ -11,18 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mst_rombel', function (Blueprint $table) {
+        Schema::create('mst_pembelajaran', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('sekolah_id')->nullable();
-            $table->uuid('kurikulum_id')->nullable();
-            $table->string('nama', 100)->nullable();
-            $table->integer('tingkat')->nullable();
-            $table->string('jurusan', 50)->nullable();
-            $table->integer('kapasitas')->nullable();
-            $table->uuid('wali_kelas_ptk_id')->nullable();
-            $table->uuid('semester_id')->nullable();
+            $table->uuid('rombongan_belajar_id');
+            $table->uuid('mata_pelajaran_id');
+            $table->uuid('ptk_id')->nullable();
+            $table->uuid('semester_id');
+            $table->integer('jam_mengajar_per_minggu')->nullable();
+            $table->string('jenis_pembelajaran', 50)->nullable();
             $table->boolean('status_aktif')->default(true);
+            $table->date('tgl_mulai')->nullable();
+            $table->date('tgl_selesai')->nullable();
             $table->text('keterangan')->nullable();
+
             $table->timestamps();
         });
     }
@@ -32,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mst_rombel');
+        Schema::dropIfExists('mst_pembelajaran');
     }
 };
