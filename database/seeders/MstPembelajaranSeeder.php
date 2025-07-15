@@ -35,7 +35,7 @@ class MstPembelajaranSeeder extends Seeder
                     'id' => Str::uuid(),
                     'rombongan_belajar_id' => $rombonganBelajarId,
                     'mata_pelajaran_id' => $mapelId,
-                    'ptk_id' => $faker->randomElement($ptkIds),
+                    'gtk_id' => $faker->randomElement($ptkIds),
                     'semester_id' => $faker->randomElement($semesterIds),
                     'jam_mengajar_per_minggu' => rand(2, 6),
                     'jenis_pembelajaran' => $faker->randomElement(['Tatap Muka', 'Daring', 'Hybrid']),

@@ -15,7 +15,6 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->uuid('rombel_id');
             $table->uuid('peserta_didik_id');
-            $table->uuid('semester_id');
             $table->boolean('status_keaktifan')->default(true);
             $table->date('tanggal_masuk')->nullable();
             $table->date('tanggal_keluar')->nullable();

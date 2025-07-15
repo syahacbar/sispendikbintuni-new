@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+
             WilayahSeeder::class,
             RefSarprasSeeder::class,
             RefMapelSeeder::class,
@@ -34,6 +35,8 @@ class DatabaseSeeder extends Seeder
             ExtKalenderSeeder::class,
             MstPembelajaranSeeder::class,
             MstAnggotaRombelSeeder::class,
+            
+            SysSettingsSeeder::class,
 
         ]);
     }

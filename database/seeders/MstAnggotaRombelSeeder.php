@@ -41,7 +41,6 @@ class MstAnggotaRombelSeeder extends Seeder
                     'id' => Str::uuid(),
                     'rombel_id' => $rombelId,
                     'peserta_didik_id' => $siswaId,
-                    'semester_id' => $faker->randomElement($semesterIds),
                     'status_keaktifan' => true,
                     'tanggal_masuk' => $tanggalMasuk->format('Y-m-d'),
                     'tanggal_keluar' => $tanggalKeluar?->format('Y-m-d'),

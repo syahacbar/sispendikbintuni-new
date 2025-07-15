@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->uuid('rombongan_belajar_id');
             $table->uuid('mata_pelajaran_id');
-            $table->uuid('ptk_id')->nullable();
+            $table->uuid('gtk_id')->nullable();
             $table->uuid('semester_id');
             $table->integer('jam_mengajar_per_minggu')->nullable();
             $table->string('jenis_pembelajaran', 50)->nullable();
