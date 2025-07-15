@@ -26,17 +26,16 @@ class MstGtk extends Model
         'status_keaktifan',
     ];
 
-    public function sekolah()
-    {
-        return $this->belongsTo(MstSekolah::class, 'mst_sekolah_id');
-    }
-
-    public function waliRombels()
-    {
-        return $this->hasMany(RombonganBelajar::class, 'wali_ptk_id');
-    }
-    public function rombelMapels()
-    {
-        return $this->hasMany(RombelMapel::class);
-    }
+    // public function sekolah()
+    // {
+    //     return $this->belongsTo(MstSekolah::class);
+    // }
+    // public function waliRombels()
+    // {
+    //     return $this->hasMany(RombonganBelajar::class, 'wali_ptk_id');
+    // }
+    // public function rombelMapels()
+    // {
+    //     return $this->hasMany(RombelMapel::class);
+    // }
 }

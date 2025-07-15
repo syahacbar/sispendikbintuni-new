@@ -145,7 +145,7 @@
                     </div>
                 </div>
                 <div class="col-lg-5" data-aos="fade-right">
-                    <div class="card shadow-sm">
+                    {{-- <div class="card shadow-sm">
                         <div class="card-header">
                             <h6>Total PD & PTK</h6>
                         </div>
@@ -175,7 +175,7 @@
                             @endforeach
 
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
 
