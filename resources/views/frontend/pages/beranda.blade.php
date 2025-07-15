@@ -24,9 +24,9 @@
     <section class="hero w-100 container-fluid d-flex align-items-start justify-content-start text-start">
         <div class="container">
             <div class="hero-content" data-aos="fade-up">
-                <p>{{ $teks_selamat_datang ?? '' }}</p>
-                <h1>{{ $deskripsi ?? '' }}<br />{{ $nama_instansi ?? '' }}</h1>
-                <p>{{ $slogan ?? '' }}</p>
+                <p>{{ $pengaturan['welcome_text'] ?? '' }}</p>
+                <h1>{{ $pengaturan['site_description'] ?? '' }}<br />{{ $pengaturan['site_name'] ?? '' }}</h1>
+                <p>{{ $pengaturan['site_tagline'] ?? '' }}</p>
             </div>
         </div>
     </section>
@@ -36,16 +36,16 @@
         <div class="container pb-3">
             <div class="row align-items-center">
                 <div class="col-lg-5 text-center mb-4 mb-lg-0 d-flex justify-content-center " data-aos="fade-right">
-                    <img src="{{ asset('storage/' . ($sambutan['gambar_kadin'] ?? 'assets/default.png')) }}"
+                    <img src="{{ asset('storage/' . ($pengaturan['sambutan_foto'] ?? 'assets/default.png')) }}"
                         alt="Kepala Dinas Kabupaten Teluk Bintuni" class="img-fluid quote-img"
                         style="max-height: 450px; object-fit: cover;">
                 </div>
                 <div class="col-lg-7 mt-4" data-aos="fade-left">
                     <h5 class="fw-bold text-teal mb-4">
-                        {{ $sambutan['judul_sambutan'] ?? 'Judul sambutan belum tersedia.' }}
+                        {{ $pengaturan['judul_sambutan'] ?? 'Judul sambutan belum tersedia.' }}
                     </h5>
                     @php
-                        $fullContent = $sambutan['isi_sambutan'] ?? 'Isi sambutan belum tersedia.';
+                        $fullContent = $pengaturan['isi_sambutan'] ?? 'Isi sambutan belum tersedia.';
                         $shortContent = Str::limit(strip_tags($fullContent), 1000);
                     @endphp
 
@@ -149,13 +149,13 @@
                         <div class="card-header">
                             <h6>Total PD & PTK</h6>
                         </div>
-                        {{-- <div class="card-body">
+                        <div class="card-body">
                             <h6 class="fw-bold text-muted">
                                 Peserta Didik
                                 <span class="float-end text-primary">{{ number_format($total_peserta_didik) }}</span>
                             </h6>
                             <hr class="mt-1 mb-2">
-                            @foreach (['SKB', 'PAUD', 'SD', 'SMP', 'SMA', 'SMK', 'PKBM'] as $jenjang)
+                            @foreach ($jenjangList as $jenjang)
                                 <div class="d-flex justify-content-between">
                                     <span>{{ $jenjang }}</span>
                                     <span>{{ number_format($jumlah_peserta_didik[$jenjang] ?? 0) }}</span>
@@ -167,14 +167,14 @@
                                 <span class="float-end text-primary">{{ number_format($total_guru) }}</span>
                             </h6>
                             <hr class="mt-1 mb-2">
-                            @foreach (['SKB', 'PAUD', 'SD', 'SMP', 'SMA', 'SMK', 'PKBM'] as $jenjang)
+                            @foreach ($jenjangList as $jenjang)
                                 <div class="d-flex justify-content-between">
                                     <span>{{ $jenjang }}</span>
                                     <span>{{ number_format($jumlah_guru[$jenjang] ?? 0) }}</span>
                                 </div>
                             @endforeach
 
-                        </div> --}}
+                        </div>
                     </div>
                 </div>
             </div>

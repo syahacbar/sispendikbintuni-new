@@ -9,27 +9,24 @@ class PesertaDidik extends Model
 {
     use HasUuids;
 
-    protected $table = 'tbl_peserta_didiks';
+    protected $table = 'mst_peserta_didik';
 
     protected $fillable = [
-        'sekolah_id',
         'nama',
         'nisn',
         'nik',
-        'jenis_kelamin',
+        'tempat_lahir',
         'tgl_lahir',
-        'rombongan_belajar_id',
-        'alamat_jalan',
-        'desa_kelurahan',
+        'jenis_kelamin',
+        'agama',
+        'alamat',
+        'kode_wilayah',
         'kode_pos',
-        'kecamatan',
-        'kabupaten',
-        'provinsi',
     ];
 
     public function sekolah()
     {
-        return $this->belongsTo(Sekolah::class);
+        return $this->belongsTo(MstSekolah::class, 'mst_sekolah_id');
     }
 
     public function anggotaRombels()

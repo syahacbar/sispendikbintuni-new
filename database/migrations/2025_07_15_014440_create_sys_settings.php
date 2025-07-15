@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('sys_settings', function (Blueprint $table) {
             $table->id();
-            $table->string('group')->nullable();           // Contoh: api, smtp, payment
-            $table->string('key')->unique()->nullable();               // Contoh: api.google_maps_key
-            $table->text('value')->nullable();             // Nilai setting
+            $table->string('group')->nullable();
+            $table->string('key')->unique()->nullable();
+            $table->text('value')->nullable();
             $table->timestamps();
         });
     }

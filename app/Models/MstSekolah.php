@@ -7,41 +7,40 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Support\Str;
 
-class Sekolah extends Model
+class MstSekolah extends Model
 {
     use HasUuids;
     use HasFactory;
 
-    protected $table = 'tbl_sekolahs';
+    protected $table = 'mst_sekolah';
     public $incrementing = false;
     protected $keyType = 'string';
 
     protected $fillable = [
         'npsn',
         'nama',
-        'kurikulum_id',
-        'jenjang',
-        'alamat_jalan',
+        'alamat',
+        'kode_wilayah',
         'kode_pos',
-        'status_sekolah',
+        'status',
+        'kode_jenjang',
         'akreditasi',
         'email',
         'telepon',
+        'kepemilikan',
         'sk_pendirian',
         'tanggal_sk_pendirian',
         'sk_izin_operasional',
         'tanggal_sk_izin_operasional',
-        'lintang',
-        'bujur',
-        'kode_wilayah',
-        'slug',
+        'latitude',
+        'longitude',
+        'users_id',
     ];
 
 
-    // Relasi opsional jika digunakan
     public function ptks()
     {
-        return $this->hasMany(Ptk::class);
+        return $this->hasMany(MstGtk::class);
     }
 
     public function pesertaDidiks()
@@ -76,12 +75,12 @@ class Sekolah extends Model
 
     public function kepalaSekolah()
     {
-        return $this->belongsTo(Ptk::class, 'kepala_sekolah_id');
+        return $this->belongsTo(MstGtk::class, 'kepala_sekolah_id');
     }
 
     public function operator()
     {
-        return $this->belongsTo(Ptk::class, 'operator_id');
+        return $this->belongsTo(MstGtk::class, 'operator_id');
     }
 
     public function kurikulum()
@@ -102,7 +101,7 @@ class Sekolah extends Model
 
                 $original = $slug;
                 $counter = 1;
-                while (Sekolah::where('slug', $slug)->where('id', '!=', $sekolah->id)->exists()) {
+                while (MstSekolah::where('slug', $slug)->where('id', '!=', $sekolah->id)->exists()) {
                     $slug = $original . '-' . $counter++;
                 }
 

@@ -37,7 +37,7 @@ return new class extends Migration
         Schema::table('mst_pembelajaran', function (Blueprint $table) {
             $table->foreign('rombongan_belajar_id')->references('id')->on('mst_rombel')->nullOnDelete();
             $table->foreign('mata_pelajaran_id')->references('id')->on('ref_mapel')->nullOnDelete();
-            $table->foreign('ptk_id')->references('id')->on('mst_gtk')->nullOnDelete();
+            $table->foreign('gtk_id')->references('id')->on('mst_gtk')->nullOnDelete();
             $table->foreign('semester_id')->references('id')->on('ref_semester')->nullOnDelete();
         });
 
