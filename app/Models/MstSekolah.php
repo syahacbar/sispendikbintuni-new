@@ -60,6 +60,13 @@ class MstSekolah extends Model
         return $this->hasMany(PesertaDidik::class);
     }
 
+
+    // Join ke tabel Jenjang pendidikan
+    public function jenjang()
+    {
+        return $this->belongsTo(RefJenjangPendidikan::class, 'kode_jenjang', 'kode');
+    }
+
     // public function rombonganBelajars()
     // {
     //     return $this->hasMany(RombonganBelajar::class);

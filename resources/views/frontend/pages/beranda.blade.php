@@ -222,7 +222,7 @@
                             <h6>Kualifikasi Guru</h6>
                         </div>
                         <div class="card-body">
-                            <canvas style="height: 300px" id="chartKualifikasiGuru"></canvas>
+                            <canvas style="height: 300px" id="chartGtkKualifikasi"></canvas>
                         </div>
                     </div>
                 </div>
@@ -233,7 +233,7 @@
                             <h6>Status PTK</h6>
                         </div>
                         <div class="card-body">
-                            <canvas style="height: 300px" id="chartStatusPTK"></canvas>
+                            <canvas style="height: 300px" id="chartGtkKepegawaian"></canvas>
                         </div>
                     </div>
                 </div>
@@ -257,6 +257,136 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+
+    <script>
+        new Chart(document.getElementById('chartAkreditasi'), {
+            type: 'bar',
+            data: {
+                labels: @json($akreditasiJenjangLabels),
+                datasets: @json($akreditasiDatasets)
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Akreditasi Sekolah per Jenjang'
+                    },
+                    tooltip: {
+                        mode: 'nearest',
+                        intersect: true,
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.dataset.label} di ${context.label}: ${context.parsed.y}`;
+                            }
+                        }
+                    }
+                },
+                interaction: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    x: {
+                        stacked: true
+                    },
+                    y: {
+                        stacked: true,
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+
+        // // Kualifikasi Guru
+        new Chart(document.getElementById('chartGtkKualifikasi'), {
+            type: 'bar',
+            data: {
+                labels: @json($kualifikasiJenjangLabels),
+                datasets: @json($gtkKualifikasiDatasets)
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Kualifikasi Pendidikan Guru per Jenjang'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.dataset.label} di ${context.label}: ${context.parsed.y}`;
+                            }
+                        }
+                    }
+                },
+                interaction: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    x: {
+                        stacked: true
+                    },
+                    y: {
+                        stacked: true,
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Status Kepegawaian
+        new Chart(document.getElementById('chartGtkKepegawaian'), {
+            type: 'bar',
+            data: {
+                labels: @json($jenjangLabelsKepegawaian),
+                datasets: @json($gtkKepegawaianDatasets)
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    title: {
+                        display: true,
+                        text: 'GTK Berdasarkan Status Kepegawaian per Jenjang'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.dataset.label} di ${context.label}: ${context.parsed.y}`;
+                            }
+                        }
+                    }
+                },
+                interaction: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    x: {
+                        stacked: true
+                    },
+                    y: {
+                        stacked: true,
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 
     <script>
         const ctx = document.getElementById('chartSebaranKecamatan').getContext('2d');

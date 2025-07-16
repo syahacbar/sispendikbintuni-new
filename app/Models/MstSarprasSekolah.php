@@ -5,20 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
-class Sarpras extends Model
+class MstSarprasSekolah extends Model
 {
     use HasUuids;
 
-    protected $table = 'tbl_sarpras';
+    protected $table = 'mst_sarpras_sekolah';
 
     protected $fillable = [
         'sekolah_id',
-        'jenis_sarpras_id',
-        'kategori',
-        'jumlah_ideal',
+        'sarpras_id',
+        'nama',
         'jumlah_saat_ini',
-        'kondisi',
-        'kurang_lebih',
+        'jumlah_ideal',
         'keterangan',
     ];
 
