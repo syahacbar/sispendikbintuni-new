@@ -137,4 +137,12 @@
     .sticky-top {
         z-index: 1030;
     }
+
+    ul#myTab button {
+        color: #0093dd;
+    }
+
+    ul#myTab button.nav-link.active {
+        color: #000;
+    }
 </style>

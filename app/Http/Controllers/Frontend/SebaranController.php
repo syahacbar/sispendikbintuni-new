@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\MstSekolah;
+use App\Models\SysSetting;
 
 class SebaranController extends Controller
 {
@@ -26,6 +27,10 @@ class SebaranController extends Controller
             ->whereNotNull('longitude')
             ->get();
 
-        return view('frontend.pages.sebaran', compact('title', 'subtitle', 'sekolah'));
+        return view('frontend.pages.sebaran', compact(
+            'title',
+            'subtitle',
+            'sekolah'
+        ));
     }
 }

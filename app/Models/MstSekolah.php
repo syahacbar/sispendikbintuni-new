@@ -38,6 +38,13 @@ class MstSekolah extends Model
     ];
 
 
+    // MstSekolah.php
+    public function rombonganBelajars()
+    {
+        return $this->hasMany(MstRombel::class, 'sekolah_id'); // foreignKey di mst_rombel
+    }
+
+
     public function sekolah()
     {
         return $this->belongsTo(MstSekolah::class, 'id_sekolah');
@@ -53,50 +60,50 @@ class MstSekolah extends Model
         return $this->hasMany(PesertaDidik::class);
     }
 
-    public function rombonganBelajars()
-    {
-        return $this->hasMany(RombonganBelajar::class);
-    }
+    // public function rombonganBelajars()
+    // {
+    //     return $this->hasMany(RombonganBelajar::class);
+    // }
 
-    public function prasaranas()
-    {
-        return $this->hasMany(Prasarana::class);
-    }
+    // public function prasaranas()
+    // {
+    //     return $this->hasMany(Prasarana::class);
+    // }
 
-    public function saranas()
-    {
-        return $this->hasMany(Sarana::class);
-    }
+    // public function saranas()
+    // {
+    //     return $this->hasMany(Sarana::class);
+    // }
 
-    public function sarpras()
-    {
-        return $this->hasMany(Sarpras::class);
-    }
+    // public function sarpras()
+    // {
+    //     return $this->hasMany(Sarpras::class);
+    // }
 
-    public function wilayah()
-    {
-        return $this->belongsTo(Wilayah::class, 'kode_wilayah', 'kode');
-    }
+    // public function wilayah()
+    // {
+    //     return $this->belongsTo(Wilayah::class, 'kode_wilayah', 'kode');
+    // }
 
-    public function kepalaSekolah()
-    {
-        return $this->belongsTo(MstGtk::class, 'kepala_sekolah_id');
-    }
+    // public function kepalaSekolah()
+    // {
+    //     return $this->belongsTo(MstGtk::class, 'kepala_sekolah_id');
+    // }
 
-    public function operator()
-    {
-        return $this->belongsTo(MstGtk::class, 'operator_id');
-    }
+    // public function operator()
+    // {
+    //     return $this->belongsTo(MstGtk::class, 'operator_id');
+    // }
 
-    public function kurikulum()
-    {
-        return $this->belongsTo(Kurikulum::class, 'kurikulum_id');
-    }
+    // public function kurikulum()
+    // {
+    //     return $this->belongsTo(Kurikulum::class, 'kurikulum_id');
+    // }
 
-    public function user()
-    {
-        return $this->hasOne(User::class, 'sekolah_id');
-    }
+    // public function user()
+    // {
+    //     return $this->hasOne(User::class, 'sekolah_id');
+    // }
 
     protected static function booted()
     {

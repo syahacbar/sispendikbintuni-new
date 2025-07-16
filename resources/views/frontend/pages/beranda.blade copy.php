@@ -35,45 +35,30 @@
     <section class="bg-white">
         <div class="container pb-3">
             <div class="row align-items-center">
-                <div class="col-lg-5 text-center mb-4 mb-lg-0 d-flex justify-content-center mt-3" data-aos="fade-right">
-                    @php
-                        $sambutanFoto = $pengaturan['sambutan_foto'] ?? null;
-                        $imagePath =
-                            $sambutanFoto && file_exists(public_path('storage/' . $sambutanFoto))
-                                ? asset('storage/' . $sambutanFoto)
-                                : asset('themes/frontend/sambutan/default.png');
-                    @endphp
-
-                    <img src="{{ $imagePath }}" alt="Kepala Dinas Kabupaten Teluk Bintuni" class="img-fluid quote-img"
+                <div class="col-lg-5 text-center mb-4 mb-lg-0 d-flex justify-content-center " data-aos="fade-right">
+                    <img src="{{ asset('storage/' . ($pengaturan['sambutan_foto'] ?? 'assets/default.png')) }}"
+                        alt="Kepala Dinas Kabupaten Teluk Bintuni" class="img-fluid quote-img"
                         style="max-height: 450px; object-fit: cover;">
-
                 </div>
                 <div class="col-lg-7 mt-4" data-aos="fade-left">
                     <h5 class="fw-bold text-teal mb-4">
                         {{ $pengaturan['judul_sambutan'] ?? 'Judul sambutan belum tersedia.' }}
                     </h5>
                     @php
-                        $fullContent = $pengaturan['isi_sambutan'] ?? '';
+                        $fullContent = $pengaturan['isi_sambutan'] ?? 'Isi sambutan belum tersedia.';
                         $shortContent = Str::limit(strip_tags($fullContent), 1000);
-                        $isExpandable = !empty($fullContent) && strlen(strip_tags($fullContent)) > 1000;
                     @endphp
 
                     <div class="text-dark">
                         <div id="sambutan-content" class="mb-3">
-                            {!! $isExpandable ? $shortContent : $fullContent !!}
+                            {!! $shortContent !!}
                         </div>
-
-                        @if ($isExpandable)
-                            <button id="toggle-sambutan" class="btn btn-sm btn-outline-primary">Baca Selengkapnya</button>
-                        @endif
+                        <button id="toggle-sambutan" class="btn btn-sm btn-outline-primary">Baca Selengkapnya</button>
                     </div>
 
-                    @if ($isExpandable)
-                        <div id="sambutan-full" class="d-none">
-                            {!! $fullContent !!}
-                        </div>
-                    @endif
-
+                    <div id="sambutan-full" class="d-none">
+                        {!! $fullContent !!}
+                    </div>
                 </div>
             </div>
         </div>
@@ -255,58 +240,283 @@
     </section>
 
 
+
+
+
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 
     <script>
-        const ctx = document.getElementById('chartSebaranKecamatan').getContext('2d');
-        const chart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: @json($kecamatanLabels),
-                datasets: [{
-                    label: 'Jumlah Sekolah',
-                    data: @json($jumlahSekolahData),
-                    borderColor: '#28a745',
-                    backgroundColor: 'rgba(40, 167, 69, 0.1)',
-                    pointBackgroundColor: '#28a745',
-                    fill: true,
-                    tension: 0.4
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: true
-                    },
-                    datalabels: {
-                        align: 'top',
-                        anchor: 'end',
-                        font: {
-                            weight: 'bold'
-                        },
-                        formatter: (value) => value
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Jumlah Sekolah'
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Kecamatan'
-                        }
-                    }
-                }
-            },
-            plugins: [ChartDataLabels] // <- aktifkan plugin
-        });
+        // new Chart(document.getElementById('chartAkreditasi'), {
+        //     type: 'bar',
+        //     data: {
+        //         labels: @json($jenjangList),
+        //         datasets: @json($akreditasiDatasets)
+        //     },
+        //     options: {
+        //         responsive: true,
+        //         maintainAspectRatio: false,
+        //         plugins: {
+        //             legend: {
+        //                 position: 'bottom'
+        //             },
+        //             title: {
+        //                 display: true,
+        //                 text: 'Akreditasi Sekolah per Jenjang'
+        //             },
+        //             tooltip: {
+        //                 mode: 'nearest', // HANYA tampilkan tooltip untuk dataset yang sedang di-hover
+        //                 intersect: true,
+        //                 callbacks: {
+        //                     label: function(context) {
+        //                         return `${context.dataset.label} di ${context.label}: ${context.parsed.y}`;
+        //                     }
+        //                 }
+        //             },
+        //             // datalabels: {
+        //             //     color: '#000',
+        //             //     anchor: 'center',
+        //             //     align: 'center',
+        //             //     font: {
+        //             //         weight: 'bold',
+        //             //         size: 10
+        //             //     },
+        //             //     formatter: (value) => value
+        //             // }
+        //         },
+        //         interaction: {
+        //             mode: 'nearest', // ini penting
+        //             intersect: true // ini juga penting
+        //         },
+        //         scales: {
+        //             x: {
+        //                 stacked: true
+        //             },
+        //             y: {
+        //                 stacked: true,
+        //                 beginAtZero: true
+        //             }
+        //         }
+        //     },
+        //     // plugins: [ChartDataLabels]
+
+        // });
+
+        // new Chart(document.getElementById('chartStatusPTK'), {
+        //     type: 'bar',
+        //     data: {
+        //         labels: @json($jenjangList),
+        //         datasets: @json($statusPTKDatasets)
+        //     },
+        //     options: {
+        //         responsive: true,
+        //         plugins: {
+        //             legend: {
+        //                 position: 'bottom'
+        //             },
+        //             tooltip: {
+        //                 mode: 'nearest', // tampilkan hanya 1 dataset per hover
+        //                 intersect: true, // aktif hanya saat benar-benar di atas bar
+        //                 callbacks: {
+        //                     label: function(context) {
+        //                         return `${context.dataset.label} di ${context.label}: ${context.parsed.y}`;
+        //                     }
+        //                 }
+        //             },
+        //             // datalabels: {
+        //             //     color: '#000',
+        //             //     anchor: 'center',
+        //             //     align: 'center',
+        //             //     font: {
+        //             //         weight: 'bold',
+        //             //         size: 10
+        //             //     },
+        //             //     formatter: (value) => value
+        //             // }
+        //         },
+        //         interaction: {
+        //             mode: 'nearest', // ini wajib untuk hover per warna
+        //             intersect: true
+        //         },
+        //         scales: {
+        //             x: {
+        //                 stacked: true
+        //             },
+        //             y: {
+        //                 stacked: true,
+        //                 beginAtZero: true
+        //             }
+        //         }
+        //     },
+        //     // plugins: [ChartDataLabels]
+        // });
+
+        // new Chart(document.getElementById('chartKondisiSarpras'), {
+        //     type: 'bar',
+        //     data: {
+        //         labels: @json($jenjangList),
+        //         datasets: @json($datasets)
+        //     },
+        //     options: {
+        //         responsive: true,
+        //         maintainAspectRatio: false,
+        //         interaction: {
+        //             mode: 'nearest',
+        //             intersect: true
+        //         },
+        //         plugins: {
+        //             legend: {
+        //                 position: 'bottom'
+        //             },
+        //             title: {
+        //                 display: true,
+        //                 text: 'Kondisi Sarpras per Jenjang'
+        //             },
+        //             tooltip: {
+        //                 mode: 'nearest',
+        //                 intersect: true,
+        //                 callbacks: {
+        //                     label: function(context) {
+        //                         const jenjang = context.label;
+        //                         const kondisi = context.dataset.label;
+        //                         const jumlah = context.parsed.y;
+        //                         return `${kondisi} di ${jenjang}: ${jumlah}`;
+        //                     }
+        //                 }
+        //             },
+        //             // datalabels: {
+        //             //     color: '#000',
+        //             //     anchor: 'center',
+        //             //     align: 'center',
+        //             //     font: {
+        //             //         weight: 'bold',
+        //             //         size: 10
+        //             //     },
+        //             //     formatter: (value) => value
+        //             // }
+        //         },
+        //         scales: {
+        //             x: {
+        //                 stacked: true,
+        //                 ticks: {
+        //                     maxRotation: 0,
+        //                     minRotation: 0
+        //                 }
+        //             },
+        //             y: {
+        //                 stacked: true,
+        //                 beginAtZero: true
+        //             }
+        //         }
+        //     },
+        //     // plugins: [ChartDataLabels]
+        // });
+
+        // // Kualifikasi Guru
+        // new Chart(document.getElementById('chartKualifikasiGuru'), {
+        //     type: 'bar',
+        //     data: {
+        //         labels: @json($jenjangList),
+        //         datasets: @json($kualifikasiDatasets)
+        //     },
+        //     options: {
+        //         responsive: true,
+        //         maintainAspectRatio: false,
+        //         plugins: {
+        //             legend: {
+        //                 position: 'bottom'
+        //             },
+        //             title: {
+        //                 display: true,
+        //                 text: 'Kualifikasi Guru per Jenjang'
+        //             },
+        //             tooltip: {
+        //                 mode: 'nearest',
+        //                 intersect: true,
+        //                 callbacks: {
+        //                     label: function(context) {
+        //                         return `${context.dataset.label} di ${context.label}: ${context.parsed.y}`;
+        //                     }
+        //                 }
+        //             },
+        //             // datalabels: {
+        //             //     color: '#000',
+        //             //     anchor: 'center',
+        //             //     align: 'center',
+        //             //     font: {
+        //             //         weight: 'bold',
+        //             //         size: 10
+        //             //     },
+        //             //     formatter: (value) => value
+        //             // }
+        //         },
+        //         interaction: {
+        //             mode: 'nearest',
+        //             intersect: true
+        //         },
+        //         scales: {
+        //             x: {
+        //                 stacked: true
+        //             },
+        //             y: {
+        //                 stacked: true,
+        //                 beginAtZero: true
+        //             }
+        //         }
+        //     },
+        //     // plugins: [ChartDataLabels]
+        // });
+
+
+        // const ctx = document.getElementById('chartSebaranKecamatan').getContext('2d');
+        // const chart = new Chart(ctx, {
+        //     type: 'line',
+        //     data: {
+        //         labels: @json($kecamatanLabels),
+        //         datasets: [{
+        //             label: 'Jumlah Sekolah',
+        //             data: @json($jumlahSekolahData),
+        //             borderColor: '#28a745',
+        //             backgroundColor: 'rgba(40, 167, 69, 0.1)',
+        //             pointBackgroundColor: '#28a745',
+        //             fill: true,
+        //             tension: 0.4
+        //         }]
+        //     },
+        //     options: {
+        //         responsive: true,
+        //         plugins: {
+        //             legend: {
+        //                 display: true
+        //             },
+        //             datalabels: {
+        //                 align: 'top',
+        //                 anchor: 'end',
+        //                 font: {
+        //                     weight: 'bold'
+        //                 },
+        //                 formatter: (value) => value
+        //             }
+        //         },
+        //         scales: {
+        //             y: {
+        //                 beginAtZero: true,
+        //                 title: {
+        //                     display: true,
+        //                     text: 'Jumlah Sekolah'
+        //                 }
+        //             },
+        //             x: {
+        //                 title: {
+        //                     display: true,
+        //                     text: 'Kecamatan'
+        //                 }
+        //             }
+        //         }
+        //     },
+        //     plugins: [ChartDataLabels] // <- aktifkan plugin
+        // });
     </script>
 
 
@@ -403,11 +613,9 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const toggleBtn = document.getElementById('toggle-sambutan');
-            if (!toggleBtn) return;
-
             const contentDiv = document.getElementById('sambutan-content');
             const fullContent = document.getElementById('sambutan-full').innerHTML;
-            const shortContent = `{!! addslashes($shortContent) !!}`;
+            const shortContent = `{!! addslashes($shortContent) !!}`; // escape quote
 
             let expanded = false;
 

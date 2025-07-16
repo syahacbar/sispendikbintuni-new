@@ -12,7 +12,6 @@ class TentangController extends Controller
     {
         $title = 'Tentang Sispendik ';
         $subtitle = 'Sistem Informasi Pendidikan Kabupaten Teluk Bintuni.';
-        // $tentang = SysSetting::getAllAsArray();
 
         $tentang = SysSetting::where('group', 'tentang')->get()->pluck('value', 'key');
 

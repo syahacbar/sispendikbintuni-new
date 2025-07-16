@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\Informasi;
+use App\Models\SysSetting;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -11,6 +12,7 @@ class InformasiController extends Controller
 
     public function berita()
     {
+
         $title = 'Berita';
         $subtitle = 'Informasi terkini dan terpercaya.';
 
@@ -18,7 +20,11 @@ class InformasiController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(6);
 
-        return view('frontend.pages.berita', compact('berita', 'title', 'subtitle'));
+        return view('frontend.pages.berita', compact(
+            'berita',
+            'title',
+            'subtitle'
+        ));
     }
 
     public function pengumuman()
@@ -30,7 +36,11 @@ class InformasiController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(6);
 
-        return view('frontend.pages.pengumuman', compact('pengumuman', 'title', 'subtitle'));
+        return view('frontend.pages.pengumuman', compact(
+            'pengumuman',
+            'title',
+            'subtitle'
+        ));
     }
 
     public function kegiatan()

@@ -1,7 +1,10 @@
 <?php
 
+
 namespace App\Providers;
 
+use Illuminate\Support\Facades\View;
+use App\Models\SysSetting;
 use Illuminate\Support\ServiceProvider;
 use BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch;
 
@@ -23,6 +26,11 @@ class AppServiceProvider extends ServiceProvider
         LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
             $switch
                 ->locales(['id', 'en']); // also accepts a closure
+        });
+
+        View::composer('*', function ($view) {
+            $pengaturan = SysSetting::getAllAsArray();
+            $view->with('pengaturan', $pengaturan);
         });
     }
 }

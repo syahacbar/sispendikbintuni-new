@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Models\MstSekolah;
 use App\Models\Wilayah;
+use App\Models\SysSetting;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
@@ -13,6 +14,7 @@ class DataPendidikanController extends Controller
     // Halaman utama: daftar kecamatan
     public function index()
     {
+
         $title = 'Data Pendidikan';
         $subtitle = 'Rekapitulasi data pendidikan Berdasarkan Kecamatan.';
 
