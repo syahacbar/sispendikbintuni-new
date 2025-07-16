@@ -38,6 +38,11 @@ class MstSekolah extends Model
     ];
 
 
+    public function sekolah()
+    {
+        return $this->belongsTo(MstSekolah::class, 'id_sekolah');
+    }
+
     public function ptks()
     {
         return $this->hasMany(MstGtk::class);

@@ -8,16 +8,17 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 class Pengaduan extends Model
 {
     use HasUuids;
-    protected $table = 'tbl_pengaduans';
+    protected $table = 'ext_pengaduan';
     protected $fillable = [
         'nomor_laporan',
-        'judul_laporan',
         'nama_pelapor',
+        'judul_laporan',
         'email',
         'no_hp',
         'kategori',
         'dok_lampiran',
         'isi',
         'status',
+        'ip_address',
     ];
 }

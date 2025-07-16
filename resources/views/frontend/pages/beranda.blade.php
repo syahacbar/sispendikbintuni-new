@@ -145,7 +145,7 @@
                     </div>
                 </div>
                 <div class="col-lg-5" data-aos="fade-right">
-                    {{-- <div class="card shadow-sm">
+                    <div class="card shadow-sm">
                         <div class="card-header">
                             <h6>Total PD & PTK</h6>
                         </div>
@@ -175,7 +175,7 @@
                             @endforeach
 
                         </div>
-                    </div> --}}
+                    </div>
                 </div>
             </div>
 
@@ -571,7 +571,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 
-    {{-- <script>
+    <script>
         new Chart(document.getElementById('chartAkreditasi'), {
             type: 'bar',
             data: {
@@ -626,222 +626,7 @@
             // plugins: [ChartDataLabels]
 
         });
-
-        new Chart(document.getElementById('chartStatusPTK'), {
-            type: 'bar',
-            data: {
-                labels: @json($jenjangList),
-                datasets: @json($statusPTKDatasets)
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    },
-                    tooltip: {
-                        mode: 'nearest', // tampilkan hanya 1 dataset per hover
-                        intersect: true, // aktif hanya saat benar-benar di atas bar
-                        callbacks: {
-                            label: function(context) {
-                                return `${context.dataset.label} di ${context.label}: ${context.parsed.y}`;
-                            }
-                        }
-                    },
-                    // datalabels: {
-                    //     color: '#000',
-                    //     anchor: 'center',
-                    //     align: 'center',
-                    //     font: {
-                    //         weight: 'bold',
-                    //         size: 10
-                    //     },
-                    //     formatter: (value) => value
-                    // }
-                },
-                interaction: {
-                    mode: 'nearest', // ini wajib untuk hover per warna
-                    intersect: true
-                },
-                scales: {
-                    x: {
-                        stacked: true
-                    },
-                    y: {
-                        stacked: true,
-                        beginAtZero: true
-                    }
-                }
-            },
-            // plugins: [ChartDataLabels]
-        });
-
-        new Chart(document.getElementById('chartKondisiSarpras'), {
-            type: 'bar',
-            data: {
-                labels: @json($jenjangList),
-                datasets: @json($datasets)
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                interaction: {
-                    mode: 'nearest',
-                    intersect: true
-                },
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    },
-                    title: {
-                        display: true,
-                        text: 'Kondisi Sarpras per Jenjang'
-                    },
-                    tooltip: {
-                        mode: 'nearest',
-                        intersect: true,
-                        callbacks: {
-                            label: function(context) {
-                                const jenjang = context.label;
-                                const kondisi = context.dataset.label;
-                                const jumlah = context.parsed.y;
-                                return `${kondisi} di ${jenjang}: ${jumlah}`;
-                            }
-                        }
-                    },
-                    // datalabels: {
-                    //     color: '#000',
-                    //     anchor: 'center',
-                    //     align: 'center',
-                    //     font: {
-                    //         weight: 'bold',
-                    //         size: 10
-                    //     },
-                    //     formatter: (value) => value
-                    // }
-                },
-                scales: {
-                    x: {
-                        stacked: true,
-                        ticks: {
-                            maxRotation: 0,
-                            minRotation: 0
-                        }
-                    },
-                    y: {
-                        stacked: true,
-                        beginAtZero: true
-                    }
-                }
-            },
-            // plugins: [ChartDataLabels]
-        });
-
-        // Kualifikasi Guru
-        new Chart(document.getElementById('chartKualifikasiGuru'), {
-            type: 'bar',
-            data: {
-                labels: @json($jenjangList),
-                datasets: @json($kualifikasiDatasets)
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    },
-                    title: {
-                        display: true,
-                        text: 'Kualifikasi Guru per Jenjang'
-                    },
-                    tooltip: {
-                        mode: 'nearest',
-                        intersect: true,
-                        callbacks: {
-                            label: function(context) {
-                                return `${context.dataset.label} di ${context.label}: ${context.parsed.y}`;
-                            }
-                        }
-                    },
-                    // datalabels: {
-                    //     color: '#000',
-                    //     anchor: 'center',
-                    //     align: 'center',
-                    //     font: {
-                    //         weight: 'bold',
-                    //         size: 10
-                    //     },
-                    //     formatter: (value) => value
-                    // }
-                },
-                interaction: {
-                    mode: 'nearest',
-                    intersect: true
-                },
-                scales: {
-                    x: {
-                        stacked: true
-                    },
-                    y: {
-                        stacked: true,
-                        beginAtZero: true
-                    }
-                }
-            },
-            // plugins: [ChartDataLabels]
-        });
-
-
-        const ctx = document.getElementById('chartSebaranKecamatan').getContext('2d');
-        const chart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: @json($kecamatanLabels),
-                datasets: [{
-                    label: 'Jumlah Sekolah',
-                    data: @json($jumlahSekolahData),
-                    borderColor: '#28a745',
-                    backgroundColor: 'rgba(40, 167, 69, 0.1)',
-                    pointBackgroundColor: '#28a745',
-                    fill: true,
-                    tension: 0.4
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: true
-                    },
-                    datalabels: {
-                        align: 'top',
-                        anchor: 'end',
-                        font: {
-                            weight: 'bold'
-                        },
-                        formatter: (value) => value
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Jumlah Sekolah'
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Kecamatan'
-                        }
-                    }
-                }
-            },
-            plugins: [ChartDataLabels] // <- aktifkan plugin
-        });
-    </script> --}}
+    </script>
 
 
 

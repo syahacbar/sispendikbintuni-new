@@ -7,7 +7,7 @@
                 <div class="col-lg-12">
                     <div class="card mt-3">
                         <div class="card-body">
-                            @forelse($tentangData as $key => $value)
+                            @forelse($tentang as $key => $value)
                                 <h4 class="text-capitalize mt-4">{{ str_replace('_', ' ', $key) }}</h4>
                                 <div>{!! $value !!}</div>
                             @empty

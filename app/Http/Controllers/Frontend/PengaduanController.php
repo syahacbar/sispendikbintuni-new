@@ -51,34 +51,6 @@ class PengaduanController extends Controller
 
         return back()->with([
             'success' => 'Pengaduan berhasil dikirim!',
-            'nomor_laporan' => $nomorLaporan,
         ]);
-    }
-
-    public function lacakForm()
-    {
-        $title = 'Lacak Pengaduan';
-        $subtitle = 'Cek Status Laporan dan detail perkembangan penanganannya.';
-
-
-        return view('frontend.pages.lacak_pengaduan', compact('title', 'subtitle'));
-    }
-
-    public function lacak(Request $request)
-    {
-        $title = 'Berita';
-        $subtitle = 'Berita';
-
-        $request->validate([
-            'cek_laporan' => 'required|string',
-        ]);
-
-        $data = Pengaduan::where('nomor_laporan', $request->cek_laporan)->first();
-
-        if (!$data) {
-            return back()->withErrors(['cek_laporan' => 'Nomor laporan tidak ditemukan.'])->withInput();
-        }
-
-        return view('frontend.pages.lacak_pengaduan', compact('data', 'title', 'subtitle'));
     }
 }

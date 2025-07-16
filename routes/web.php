@@ -28,11 +28,8 @@ Route::get('/get-kegiatan-by-date', [InformasiController::class, 'getByDate']);
 Route::get('/siswa', [SiswaController::class, 'index']);
 Route::get('/peta-sebaran', [SebaranController::class, 'index']);
 Route::get('/kalender-pendidikan', [KalenderController::class, 'index']);
-Route::get('/pengaduan/buat-pengaduan', [PengaduanController::class, 'index'])->name('pengaduan.index');
+Route::get('/buat-pengaduan', [PengaduanController::class, 'index'])->name('pengaduan.index');
 Route::post('/pengaduan/store', [PengaduanController::class, 'store'])->name('pengaduan.store');
-Route::post('/pengaduan/cek-pengaduan', [PengaduanController::class, 'cek'])->name('pengaduan.cek');
-Route::get('/pengaduan/lacak-pengaduan', [PengaduanController::class, 'lacakForm'])->name('pengaduan.lacak.form');
-Route::post('/pengaduan/lacak-pengaduan', [PengaduanController::class, 'lacak'])->name('pengaduan.lacak');
 Route::get('/tentang', [TentangController::class, 'index']);
 Route::get('/data-pendidikan', [DataPendidikanController::class, 'index'])->name('pendidikan.index');
 Route::get('/data-pendidikan/kecamatan/{kecamatan}/sekolah', [DataPendidikanController::class, 'sekolahByKecamatan'])

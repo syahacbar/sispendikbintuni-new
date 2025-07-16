@@ -19,18 +19,6 @@
                         @if (session('success'))
                             <div class="alert alert-success d-flex flex-column gap-2">
                                 <div><strong>{{ session('success') }}</strong></div>
-
-                                @if (session('nomor_laporan'))
-                                    <div class="d-flex align-items-center gap-2">
-                                        <span id="nomor-laporan"
-                                            class="fw-semibold text-primary">{{ session('nomor_laporan') }}</span>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary"
-                                            onclick="copyNomorLaporan()">
-                                            📋 Salin
-                                        </button>
-                                    </div>
-                                    <small class="text-muted">Simpan nomor laporan ini untuk pelacakan.</small>
-                                @endif
                             </div>
                         @endif
 
@@ -171,16 +159,5 @@
                 }, 100);
             });
         });
-    </script>
-
-    <script>
-        function copyNomorLaporan() {
-            const nomor = document.getElementById('nomor-laporan').innerText;
-            navigator.clipboard.writeText(nomor).then(() => {
-                alert('Nomor laporan berhasil disalin!');
-            }).catch(() => {
-                alert('Gagal menyalin nomor laporan.');
-            });
-        }
     </script>
 @endsection

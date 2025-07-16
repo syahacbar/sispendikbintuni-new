@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Wilayah extends Model
 {
-    protected $table = 'tbl_wilayahs';
+    protected $table = 'ref_wilayah';
     protected $fillable = ['kode', 'nama'];
 
     protected $primaryKey = 'kode';
@@ -57,6 +57,6 @@ class Wilayah extends Model
     // untuk endpoint API
     public function sekolahs()
     {
-        return $this->hasMany(Sekolah::class, 'kode_wilayah', 'kode');
+        return $this->hasMany(MstSekolah::class, 'kode_wilayah', 'kode');
     }
 }

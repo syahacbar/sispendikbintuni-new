@@ -52,17 +52,10 @@
                                 href="/informasi/kegiatan">Kegiatan</a></li>
                     </ul>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle {{ Request::is('pengaduan*') ? 'active' : '' }}" href="#"
-                        id="navbarDropdownPengaduan" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Pengaduan
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownPengaduan">
-                        <li><a class="dropdown-item {{ Request::is('pengaduan/buat-pengaduan') ? 'active' : '' }}"
-                                href="/pengaduan/buat-pengaduan">Buat Pengaduan</a></li>
-                        <li><a class="dropdown-item {{ Request::is('pengaduan/lacak-pengaduan') ? 'active' : '' }}"
-                                href="/pengaduan/lacak-pengaduan">Lacak Pengaduan</a></li>
-                    </ul>
+
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('buat-pengaduan*') ? 'active' : '' }}"
+                        href="/buat-pengaduan">Pengaduan</a>
                 </li>
 
                 @guest

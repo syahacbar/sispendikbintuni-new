@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Models\Sekolah;
+use App\Models\MstSekolah;
 use App\Models\Wilayah;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -26,7 +26,7 @@ class DataPendidikanController extends Controller
 
         $wilayahMap = Wilayah::pluck('nama', 'kode');
 
-        $kecamatans = Sekolah::selectRaw('LEFT(kode_wilayah, 8) as kode_kecamatan')
+        $kecamatans = MstSekolah::selectRaw('LEFT(kode_wilayah, 8) as kode_kecamatan')
             ->distinct()
             ->orderBy('kode_kecamatan')
             ->get()
@@ -34,19 +34,19 @@ class DataPendidikanController extends Controller
                 $kodeKecamatan = $item->kode_kecamatan;
                 $namaKecamatan = $wilayahMap[$kodeKecamatan] ?? '-';
 
-                $data = Sekolah::where('kode_wilayah', 'like', $kodeKecamatan . '%')
-                    ->select('jenjang', 'status_sekolah', DB::raw('count(*) as total'))
-                    ->groupBy('jenjang', 'status_sekolah')
+                $data = MstSekolah::where('kode_wilayah', 'like', $kodeKecamatan . '%')
+                    ->select('kode_jenjang', 'status', DB::raw('count(*) as total'))
+                    ->groupBy('kode_jenjang', 'status')
                     ->get();
 
                 $grouped = collect();
                 $totalAll = ['total' => 0, 'negeri' => 0, 'swasta' => 0];
 
                 foreach ($jenjangList as $jenjang) {
-                    $jenjangData = $data->where('jenjang', $jenjang);
+                    $jenjangData = $data->where('kode_jenjang', $jenjang);
                     $total = $jenjangData->sum('total');
-                    $negeri = $jenjangData->where('status_sekolah', 'Negeri')->sum('total');
-                    $swasta = $jenjangData->where('status_sekolah', 'Swasta')->sum('total');
+                    $negeri = $jenjangData->where('status', 'Negeri')->sum('total');
+                    $swasta = $jenjangData->where('status', 'Swasta')->sum('total');
 
                     $grouped[$jenjang] = [
                         'total' => $total,
@@ -92,7 +92,7 @@ class DataPendidikanController extends Controller
         $kodeKabupaten = substr($kodeKabupaten, 0, 2) . '.' . substr($kodeKabupaten, 2, 2);
         $namaKabupaten = Wilayah::getNamaByKode($kodeKabupaten);
 
-        $sekolahs = Sekolah::withCount([
+        $sekolahs = MstSekolah::withCount([
             'pesertaDidiks',
             'rombonganBelajars',
             'ptks',
@@ -100,7 +100,7 @@ class DataPendidikanController extends Controller
             'prasaranas',
         ])
             ->where('kode_wilayah', 'like', $kecamatan . '%')
-            ->orderBy('jenjang')
+            ->orderBy('kode_jenjang')
             ->orderBy('nama')
             ->get();
 
@@ -121,7 +121,7 @@ class DataPendidikanController extends Controller
         $subtitle = 'Informasi lengkap mengenai kondisi sekolah.';
 
 
-        $sekolah = Sekolah::with([
+        $sekolah = MstSekolah::with([
             'ptks',
             'pesertaDidiks',
             'sarpras.jenisSarpras',

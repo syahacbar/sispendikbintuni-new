@@ -145,28 +145,7 @@ class SysSettingsSeeder extends Seeder
             [
                 'group' => 'sambutan',
                 'key' => 'isi_sambutan',
-                'value' => 'Assalamu’alaikum warahmatullahi wabarakatuh,
-Salam sejahtera bagi kita semua,
-Om Swastyastu, Namo Buddhaya, Salam Kebajikan.
-
-Puji dan syukur kita panjatkan ke hadirat Tuhan Yang Maha Esa, karena atas rahmat dan karunia-Nya, kita dapat terus melanjutkan upaya bersama dalam membangun dunia pendidikan di Kabupaten Teluk Bintuni tercinta ini.
-
-Pendidikan merupakan fondasi utama dalam membentuk generasi yang cerdas, berakhlak mulia, serta mampu bersaing di era global. Sebagai Kepala Dinas Pendidikan Kabupaten Teluk Bintuni, saya menyampaikan apresiasi yang setinggi-tingginya kepada seluruh pemangku kepentingan – baik para pendidik, tenaga kependidikan, peserta didik, orang tua, maupun masyarakat luas – yang selama ini telah berperan aktif dalam mendukung kemajuan pendidikan di daerah kita.
-
-Pemerintah Kabupaten Teluk Bintuni melalui Dinas Pendidikan terus berkomitmen untuk meningkatkan kualitas layanan pendidikan, pemerataan akses, serta penguatan karakter peserta didik. Program-program strategis seperti peningkatan kompetensi guru, digitalisasi sekolah, pembangunan sarana prasarana pendidikan, dan pemberdayaan sekolah berbasis masyarakat menjadi fokus utama dalam mendukung visi dan misi pembangunan daerah di bidang pendidikan.
-
-Kami menyadari bahwa tantangan ke depan tidaklah ringan. Oleh karena itu, kolaborasi dan sinergi dari semua pihak sangat diperlukan. Mari kita terus bergandengan tangan untuk menciptakan ekosistem pendidikan yang inklusif, berkualitas, dan berkelanjutan.
-
-Akhir kata, saya mengajak seluruh elemen masyarakat untuk terus menjaga semangat belajar, berinovasi, dan berkontribusi demi terwujudnya generasi Teluk Bintuni yang unggul dan berdaya saing tinggi.
-
-Terima kasih.
-Wassalamu’alaikum warahmatullahi wabarakatuh.
-Salam sejahtera bagi kita semua.
-
-
-
-Kepala Dinas Pendidikan Kabupaten Teluk Bintuni
-Dr. Angling Dharma, S.Hut., S.Jati.',
+                'value' => 'Assalamu’alaikum warahmatullahi wabarakatuh',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -178,6 +157,36 @@ Dr. Angling Dharma, S.Hut., S.Jati.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            // Grup Tentang
+            [
+                'group' => 'tentang',
+                'key' => 'deskripsi_web',
+                'value' => 'Sistem Informasi Pendidikan Kabupaten Teluk Bintuni (Sispendik Bintuni) merupakan platform digital yang dikembangkan untuk memberikan kemudahan dalam pengelolaan dan penyajian data pendidikan. Sistem ini menjadi wadah integrasi informasi dari satuan pendidikan, tenaga kependidikan, peserta didik, hingga sarana dan prasarana secara realtime dan akurat.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'group' => 'tentang',
+                'key' => 'visi',
+                'value' => 'Menjadi sistem informasi pendidikan yang akurat, terintegrasi, dan transparan untuk mendukung peningkatan mutu pendidikan di Kabupaten Teluk Bintuni.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'group' => 'tentang',
+                'key' => 'misi',
+                'value' => 'Menyediakan akses data pendidikan yang cepat dan mudah. Mendukung pengambilan kebijakan berbasis data. Mempermudah koordinasi antar instansi pendidikan. Meningkatkan partisipasi publik terhadap pendidikan melalui transparansi informasi.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'group' => 'tentang',
+                'key' => 'tujuan',
+                'value' => 'Memberikan informasi yang valid dan terkini tentang kondisi pendidikan. Mendukung efisiensi dalam pengelolaan data pendidikan. Mendorong akuntabilitas dalam pelaksanaan program pendidikan.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
         ]);
     }
 }

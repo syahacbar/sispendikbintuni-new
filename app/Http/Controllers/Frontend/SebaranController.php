@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Sekolah;
+use App\Models\MstSekolah;
 
 class SebaranController extends Controller
 {
@@ -14,11 +14,11 @@ class SebaranController extends Controller
         $subtitle = 'Visualisasi lokasi sekolah di wilayah Kabupaten Teluk Bintuni.';
 
 
-        $sekolah = Sekolah::select(
+        $sekolah = MstSekolah::select(
             'nama',
             'npsn',
-            'jenjang',
-            'status_sekolah',
+            'kode_jenjang',
+            'status',
             'latitude',
             'longitude'
         )

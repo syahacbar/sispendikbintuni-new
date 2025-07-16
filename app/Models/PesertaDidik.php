@@ -24,23 +24,8 @@ class PesertaDidik extends Model
         'kode_pos',
     ];
 
-    // public function sekolah()
-    // {
-    //     return $this->belongsTo(MstSekolah::class);
-    // }
-
-    // public function anggotaRombels()
-    // {
-    //     return $this->hasMany(AnggotaRombel::class);
-    // }
-
-    // public function registrasi()
-    // {
-    //     return $this->hasOne(RegistrasiPesertaDidik::class);
-    // }
-
-    // public function rombongan_belajar()
-    // {
-    //     return $this->belongsTo(RombonganBelajar::class);
-    // }
+    public function sekolah()
+    {
+        return $this->belongsTo(MstSekolah::class, 'id_sekolah');
+    }
 }

@@ -11,13 +11,21 @@ class Informasi extends Model
 {
     use HasUuids;
 
-    protected $table = 'tbl_informasis';
-    protected $fillable = ['sekolah_id', 'judul', 'deskripsi', 'kategori', 'gambar', 'slug', 'lihat'];
+    protected $table = 'ext_informasi';
+    protected $fillable = [
+        'judul',
+        'deskripsi',
+        'kategori',
+        'gambar',
+        'slug',
+        'lihat',
+        'users_id',
+    ];
 
-    public function sekolah()
-    {
-        return $this->belongsTo(Sekolah::class);
-    }
+    // public function sekolah()
+    // {
+    //     return $this->belongsTo(Sekolah::class);
+    // }
 
 
     protected static function booted()

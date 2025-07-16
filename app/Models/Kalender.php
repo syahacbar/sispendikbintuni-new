@@ -9,7 +9,7 @@ class Kalender extends Model
 {
     use HasUuids;
 
-    protected $table = 'tbl_kalenders';
+    protected $table = 'ext_kalender';
 
     protected $fillable = [
         'id',
@@ -24,6 +24,6 @@ class Kalender extends Model
 
     public function sekolah()
     {
-        return $this->belongsTo(Sekolah::class);
+        return $this->belongsTo(MstSekolah::class);
     }
 }
