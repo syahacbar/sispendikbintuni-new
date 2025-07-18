@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Models\MstSekolah;
 use App\Models\Wilayah;
+use App\Models\MstGtk;
 use App\Models\SysSetting;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -94,13 +95,15 @@ class DataPendidikanController extends Controller
         $kodeKabupaten = substr($kodeKabupaten, 0, 2) . '.' . substr($kodeKabupaten, 2, 2);
         $namaKabupaten = Wilayah::getNamaByKode($kodeKabupaten);
 
-        $sekolahs = MstSekolah::withCount([
-            'pesertaDidiks',
-            'rombonganBelajars',
-            'ptks',
-            'saranas',
-            'prasaranas',
+        $sekolahs = MstSekolah::with([
+            'jenjang', // relasi ke ref_jenjang_pendidikan
         ])
+            ->withCount([
+                'rombonganBelajars',
+                'pesertaDidiks as peserta_didiks_count', // total peserta didik
+                'gtkGuru as ptks_count',                 // total guru
+                'gtkPegawai as pegawai_count',           // total pegawai
+            ])
             ->where('kode_wilayah', 'like', $kecamatan . '%')
             ->orderBy('kode_jenjang')
             ->orderBy('nama')
@@ -116,44 +119,51 @@ class DataPendidikanController extends Controller
         ));
     }
 
+
+
     // Halaman detail sekolah
-    public function detail($slug)
+    public function detail($npsn)
     {
         $title = 'Detail Sekolah';
         $subtitle = 'Informasi lengkap mengenai kondisi sekolah.';
 
-
         $sekolah = MstSekolah::with([
             'ptks',
             'pesertaDidiks',
-            'sarpras.jenisSarpras',
-            'prasaranas',
+            'mstSarprasSekolah.jenisSarpras',
+            // 'prasaranas',
             'rombonganBelajars.waliKelas',
             'rombonganBelajars.pesertaDidiks'
         ])
             ->with(['rombonganBelajars' => function ($query) {
                 $query->withCount('pesertaDidiks');
             }])
-            ->where('slug', $slug)
+            ->where('npsn', $npsn)
             ->firstOrFail();
 
+        // Wilayah
         $kodeKecamatan = $sekolah->kode_wilayah ? substr($sekolah->kode_wilayah, 0, 8) : null;
         $kodeKelurahan = $sekolah->kode_wilayah;
-
         $namaKecamatan = Wilayah::getNamaByKode($kodeKecamatan);
         $namaKelurahan = Wilayah::getNamaByKode($kodeKelurahan);
         $kodeKabupaten = substr(preg_replace('/[^0-9]/', '', $kodeKecamatan), 0, 4);
         $kodeKabupaten = substr($kodeKabupaten, 0, 2) . '.' . substr($kodeKabupaten, 2, 2);
         $namaKabupaten = Wilayah::getNamaByKode($kodeKabupaten);
 
+        $kurikulum = optional($sekolah->rombonganBelajars->first()?->kurikulum);
+        // Chart Data
         $kualifikasiGuru = $sekolah->ptks->groupBy('kualifikasi')->map(fn($group) => $group->count());
         $statusGuru = $sekolah->ptks->groupBy('status')->map(fn($group) => $group->count());
 
+        // Siapkan label & data chart
         $kualifikasiLabels = $kualifikasiGuru->keys();
         $kualifikasiData = $kualifikasiGuru->values();
-
         $statusLabels = $statusGuru->keys();
         $statusData = $statusGuru->values();
+
+        // Ambil data wali kelas dari rombongan belajar
+        $gtkIds = $sekolah->rombonganBelajars->pluck('wali_kelas_ptk_id')->unique()->filter();
+        $ptks = MstGtk::whereIn('id', $gtkIds)->get();
 
         return view('frontend.pages.detail_sekolah', compact(
             'title',
@@ -169,7 +179,8 @@ class DataPendidikanController extends Controller
             'kualifikasiLabels',
             'kualifikasiData',
             'statusLabels',
-            'statusData'
+            'statusData',
+            'kurikulum'
         ));
     }
 }

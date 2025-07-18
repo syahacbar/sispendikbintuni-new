@@ -163,7 +163,6 @@ class BerandaController extends Controller
             'S3' => '#6f42c1',
         ];
 
-
         $gtk_wali_kelas = DB::table('mst_rombel as r')
             ->join('mst_sekolah as s', 's.id', '=', 'r.sekolah_id')
             ->join('mst_gtk as g', 'g.id', '=', 'r.wali_kelas_ptk_id')

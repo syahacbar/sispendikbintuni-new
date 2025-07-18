@@ -36,8 +36,8 @@ class MstGtk extends Model
         return $this->belongsTo(RefJenisGtk::class, 'jenis_gtk');
     }
 
-    // public function rombels()
-    // {
-    //     return $this->hasMany(MstRombel::class, 'wali_kelas_ptk_id');
-    // }
+    public function jenis()
+    {
+        return $this->belongsTo(RefJenisGtk::class, 'jenis_gtk');
+    }
 }

@@ -75,12 +75,12 @@
                                                 <td>{{ $i + 1 }}</td>
                                                 <td>
                                                     <a class="text-decoration-none"
-                                                        href="{{ url('/data-pendidikan/sekolah/' . $s->slug) }}">
+                                                        href="{{ url('/data-pendidikan/sekolah/' . $s->npsn) }}">
                                                         {{ $s->nama }}
                                                     </a>
                                                 </td>
                                                 <td class="text-center">{{ $s->npsn }}</td>
-                                                <td class="text-center">{{ $s->jenjang }}</td>
+                                                <td class="text-center">{{ $s->kode_jenjang }}</td>
                                                 <td class="text-center">{{ $s->status_sekolah }}</td>
                                                 <td class="text-center">{{ $s->peserta_didiks_count }}</td>
                                                 <td class="text-center">{{ $s->rombongan_belajars_count }}</td>

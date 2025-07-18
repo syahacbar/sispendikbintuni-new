@@ -95,7 +95,7 @@
                                         <tr>
                                             <td>Bentuk Pendidikan</td>
                                             <td>:</td>
-                                            <td>{{ $sekolah->jenjang }}</td>
+                                            <td>{{ $sekolah->kode_jenjang }}</td>
                                         </tr>
                                         <tr>
                                             <td>Status</td>
@@ -150,12 +150,13 @@
                                         <tr>
                                             <td>Kurikulum</td>
                                             <td>:</td>
-                                            <td>{{ $sekolah->kurikulum->kode }}</td>
+                                            {{-- <td>{{ $sekolah->kurikulum->kode }}</td> --}}
+                                            <td>{{ $kurikulum?->kode ?? '-' }}</td>
                                         </tr>
                                         <tr>
                                             <td>Koordinat</td>
                                             <td>:</td>
-                                            <td>Lintang: {{ $sekolah->lintang }}, Bujur: {{ $sekolah->bujur }}</td>
+                                            <td>{{ $sekolah->latitude }}, {{ $sekolah->longitude }}</td>
                                         </tr>
 
                                         <tr>

@@ -34,7 +34,7 @@ Route::get('/tentang', [TentangController::class, 'index']);
 Route::get('/data-pendidikan', [DataPendidikanController::class, 'index'])->name('pendidikan.index');
 Route::get('/data-pendidikan/kecamatan/{kecamatan}/sekolah', [DataPendidikanController::class, 'sekolahByKecamatan'])
     ->where('kecamatan', '.*')->name('pendidikan.sekolahByKecamatan');
-Route::get('/data-pendidikan/sekolah/{slug}', [DataPendidikanController::class, 'detail'])
+Route::get('/data-pendidikan/sekolah/{npsn}', [DataPendidikanController::class, 'detail'])
     ->name('pendidikan.sekolah.detail');
 
 

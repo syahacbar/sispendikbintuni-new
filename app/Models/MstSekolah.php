@@ -38,79 +38,94 @@ class MstSekolah extends Model
     ];
 
 
-    // MstSekolah.php
-    public function rombonganBelajars()
-    {
-        return $this->hasMany(MstRombel::class, 'sekolah_id'); // foreignKey di mst_rombel
-    }
-
-
     public function sekolah()
     {
         return $this->belongsTo(MstSekolah::class, 'id_sekolah');
     }
 
-    public function ptks()
-    {
-        return $this->hasMany(MstGtk::class);
-    }
 
-    public function pesertaDidiks()
-    {
-        return $this->hasMany(PesertaDidik::class);
-    }
-
-
-    // Join ke tabel Jenjang pendidikan
+    // Relasi ke jenjang
     public function jenjang()
     {
         return $this->belongsTo(RefJenjangPendidikan::class, 'kode_jenjang', 'kode');
     }
 
-    // public function rombonganBelajars()
-    // {
-    //     return $this->hasMany(RombonganBelajar::class);
-    // }
+    // Relasi ke rombel
+    public function rombonganBelajars()
+    {
+        return $this->hasMany(MstRombel::class, 'sekolah_id');
+    }
 
-    // public function prasaranas()
-    // {
-    //     return $this->hasMany(Prasarana::class);
-    // }
+    // Relasi ke anggota rombel → peserta didik
+    public function pesertaDidiks()
+    {
+        return $this->hasManyThrough(
+            MstPesertaDidik::class,
+            MstAnggotaRombel::class,
+            'rombel_id', // foreign key di MstAnggotaRombel
+            'id', // foreign key di MstPesertaDidik
+            'id', // local key di MstSekolah (via rombel)
+            'peserta_didik_id' // foreign key di MstAnggotaRombel
+        );
+    }
 
-    // public function saranas()
-    // {
-    //     return $this->hasMany(Sarana::class);
-    // }
+    public function gtkGuru()
+    {
+        return $this->hasManyThrough(
+            MstGtk::class,
+            MstRombel::class,
+            'sekolah_id',         // Foreign key di mst_rombel yang mengarah ke mst_sekolah
+            'id',                 // Foreign key di mst_gtk yang dicari berdasarkan wali_kelas_ptk_id
+            'id',                 // Primary key di mst_sekolah
+            'wali_kelas_ptk_id'   // Foreign key di mst_rombel yang mengarah ke mst_gtk
+        )->whereHas('jenis', function ($q) {
+            $q->where('nama', 'Guru');
+        });
+    }
 
-    // public function sarpras()
-    // {
-    //     return $this->hasMany(Sarpras::class);
-    // }
+    // Relasi ke GTK (jenis Pegawai)
+    public function gtkPegawai()
+    {
+        return $this->hasManyThrough(
+            MstGtk::class,
+            MstRombel::class,
+            'sekolah_id',
+            'id',
+            'id',
+            'wali_kelas_ptk_id'
+        )->whereHas('jenis', function ($q) {
+            $q->where('nama', '!=', 'Guru');
+        });
+    }
 
-    // public function wilayah()
-    // {
-    //     return $this->belongsTo(Wilayah::class, 'kode_wilayah', 'kode');
-    // }
+    // Relasi tidak langsung ke GTK (via rombel)
+    public function ptks()
+    {
+        return $this->hasManyThrough(
+            MstGtk::class,
+            MstRombel::class,
+            'sekolah_id',         // Foreign key di mst_rombel yang mengarah ke mst_sekolah
+            'id',                 // Foreign key di mst_gtk (id dicocokkan dengan wali_kelas_ptk_id)
+            'id',                 // Local key di mst_sekolah
+            'wali_kelas_ptk_id'   // Foreign key di mst_rombel yang mengarah ke mst_gtk
+        );
+    }
 
-    // public function kepalaSekolah()
-    // {
-    //     return $this->belongsTo(MstGtk::class, 'kepala_sekolah_id');
-    // }
 
-    // public function operator()
-    // {
-    //     return $this->belongsTo(MstGtk::class, 'operator_id');
-    // }
+    public function sarpras()
+    {
+        return $this->belongsToMany(
+            RefSarpras::class,
+            'mst_sarpras_sekolah',
+            'sekolah_id',
+            'sarpras_id'
+        )->withPivot('jumlah_saat_ini', 'jumlah_ideal', 'keterangan');
+    }
 
-    // public function kurikulum()
-    // {
-    //     return $this->belongsTo(Kurikulum::class, 'kurikulum_id');
-    // }
-
-    // public function user()
-    // {
-    //     return $this->hasOne(User::class, 'sekolah_id');
-    // }
+    public function mstSarprasSekolah()
+    {
+        return $this->hasMany(MstSarprasSekolah::class, 'sekolah_id');
+    }
 
     protected static function booted()
     {
@@ -128,10 +143,4 @@ class MstSekolah extends Model
             }
         });
     }
-
-    // untuk endpoint API
-    // public function wilayah()
-    // {
-    //     return $this->belongsTo(Wilayah::class, 'kode_wilayah', 'kode');
-    // }
 }

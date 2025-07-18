@@ -157,7 +157,23 @@ class SysSettingsSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+
+
             // Grup Tentang
+            [
+                'group' => 'tentang',
+                'key' => 'tentang_page_title',
+                'value' => 'Tentang Sispendik',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'group' => 'tentang',
+                'key' => 'tentang_page_subtitle',
+                'value' => 'Sistem Informasi Pendidikan Kabupaten Teluk Bintuni.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
             [
                 'group' => 'tentang',
                 'key' => 'deskripsi_web',
@@ -183,6 +199,116 @@ class SysSettingsSeeder extends Seeder
                 'group' => 'tentang',
                 'key' => 'tujuan',
                 'value' => 'Memberikan informasi yang valid dan terkini tentang kondisi pendidikan. Mendukung efisiensi dalam pengelolaan data pendidikan. Mendorong akuntabilitas dalam pelaksanaan program pendidikan.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            // Grup Data Pendidikan
+            [
+                'group' => 'data_pendidikan',
+                'key' => 'data_pendidikan_page_title',
+                'value' => 'Data Pendidikan',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'group' => 'data_pendidikan',
+                'key' => 'data_pendidikan_page_subtitle',
+                'value' => 'Rekapitulasi data pendidikan Berdasarkan Kecamatan.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            // Grup Sebaran
+            [
+                'group' => 'sebaran',
+                'key' => 'sebaran_page_title',
+                'value' => 'Peta Sebaran Sekolah',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'group' => 'sebaran',
+                'key' => 'sebaran_page_subtitle',
+                'value' => 'Visualisasi lokasi sekolah di wilayah Kabupaten Teluk Bintuni.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+
+            // Grup Kalender Pendidikan
+            [
+                'group' => 'kalender',
+                'key' => 'kalender_page_title',
+                'value' => 'Kalender Pendidikan',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'group' => 'kalender',
+                'key' => 'kalender_page_subtitle',
+                'value' => 'Informasi jadwal penting sepanjang tahun ajaran.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+
+            // Grup Informasi
+            [
+                'group' => 'informasi',
+                'key' => 'berita_page_title',
+                'value' => 'Berita',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'group' => 'informasi',
+                'key' => 'berita_page_subtitle',
+                'value' => 'Informasi terkini dan terpercaya.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'group' => 'informasi',
+                'key' => 'pengumuman_page_title',
+                'value' => 'Pengumuman',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'group' => 'informasi',
+                'key' => 'pengumuman_page_subtitle',
+                'value' => 'Pengumuman resmi dari dinas pendidikan.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'group' => 'informasi',
+                'key' => 'kegiatan_page_title',
+                'value' => 'Kegiatan',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'group' => 'informasi',
+                'key' => 'kegiatan_page_subtitle',
+                'value' => 'Dokumentasi berbagai kegiatan dan program.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            // Grup Pengaduan
+            [
+                'group' => 'pengaduan',
+                'key' => 'pengaduan_page_title',
+                'value' => 'Form Pengaduan',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'group' => 'pengaduan',
+                'key' => 'pengaduan_page_subtitle',
+                'value' => 'Setiap pengaduan akan ditindaklanjuti sesuai prosedur yang berlaku.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
