@@ -81,7 +81,7 @@
                                                 </td>
                                                 <td class="text-center">{{ $s->npsn }}</td>
                                                 <td class="text-center">{{ $s->kode_jenjang }}</td>
-                                                <td class="text-center">{{ $s->status_sekolah }}</td>
+                                                <td class="text-center">{{ $s->status }}</td>
                                                 <td class="text-center">{{ $s->peserta_didiks_count }}</td>
                                                 <td class="text-center">{{ $s->rombongan_belajars_count }}</td>
                                                 <td class="text-center">{{ $s->ptks_count }}</td>
