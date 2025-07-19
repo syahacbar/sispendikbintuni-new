@@ -38,8 +38,18 @@ class MstRombel extends Model
             ->select('mst_peserta_didik.*');
     }
 
-    public function waliKelas(): BelongsTo
+    public function kurikulum()
     {
-        return $this->belongsTo(MstGtk::class, 'wali_kelas_ptk_id');
+        return $this->belongsTo(RefKurikulum::class, 'kurikulum_id', 'id');
+    }
+
+    public function waliKelas()
+    {
+        return $this->belongsTo(MstGtk::class, 'wali_kelas_ptk_id', 'id');
+    }
+
+    public function anggotaRombels()
+    {
+        return $this->hasMany(MstAnggotaRombel::class, 'rombel_id', 'id');
     }
 }

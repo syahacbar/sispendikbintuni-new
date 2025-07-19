@@ -127,6 +127,44 @@ class MstSekolah extends Model
         return $this->hasMany(MstSarprasSekolah::class, 'sekolah_id');
     }
 
+    // public function kurikulums()
+    // {
+    //     return $this->hasManyThrough(
+    //         RefKurikulum::class,
+    //         MstRombel::class,
+    //         'sekolah_id',
+    //         'id',
+    //         'id',
+    //         'kurikulum_id'
+    //     );
+    // }
+
+
+    public function kepalaSekolahDetail()
+    {
+        return $this->hasOneThrough(
+            MstGtk::class,        // Model target (GTK)
+            MstRombel::class,     // Model perantara (rombongan belajar)
+            'sekolah_id',         // FK di mst_rombel → mst_sekolah.id
+            'id',                 // PK di mst_gtk
+            'id',                 // PK di mst_sekolah
+            'wali_kelas_ptk_id'   // FK di mst_rombel → mst_gtk.id
+        )
+            ->whereHas('jenis', fn($q) => $q->where('nama', 'Kepala Sekolah'));
+    }
+
+    public function anggotaRombels()
+    {
+        return $this->hasManyThrough(
+            MstAnggotaRombel::class,  // target
+            MstRombel::class,         // perantara
+            'sekolah_id',    // FK di mst_rombel → mst_sekolah.id
+            'rombel_id',     // FK di mst_anggota_rombel → mst_rombel.id
+            'id',            // PK di mst_sekolah
+            'id'             // PK di mst_rombel
+        );
+    }
+
     protected static function booted()
     {
         static::saving(function ($sekolah) {

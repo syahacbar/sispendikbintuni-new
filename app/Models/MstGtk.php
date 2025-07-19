@@ -36,8 +36,13 @@ class MstGtk extends Model
         return $this->belongsTo(RefJenisGtk::class, 'jenis_gtk');
     }
 
+    // public function jenis()
+    // {
+    //     return $this->belongsTo(RefJenisGtk::class, 'jenis_gtk');
+    // }
+
     public function jenis()
     {
-        return $this->belongsTo(RefJenisGtk::class, 'jenis_gtk');
+        return $this->belongsTo(RefJenisGtk::class, 'jenis_gtk', 'id');
     }
 }

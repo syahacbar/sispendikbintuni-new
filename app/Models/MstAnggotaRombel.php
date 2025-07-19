@@ -23,8 +23,13 @@ class MstAnggotaRombel extends Model
     {
         return $this->belongsTo(MstRombel::class);
     }
+    // public function pesertaDidik()
+    // {
+    //     return $this->belongsTo(MstPesertaDidik::class);
+    // }
+
     public function pesertaDidik()
     {
-        return $this->belongsTo(MstPesertaDidik::class);
+        return $this->belongsTo(MstPesertaDidik::class, 'peserta_didik_id');
     }
 }

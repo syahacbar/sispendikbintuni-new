@@ -48,7 +48,6 @@
                                     <li class="breadcrumb-item active" aria-current="page">Kec. {{ $namaKecamatan }}</li>
                                 </ol>
                             </nav>
-
                         </div>
                     </div>
 
@@ -70,27 +69,29 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($sekolahs as $i => $s)
+                                        @foreach ($sekolahs as $index => $sekolah)
                                             <tr>
-                                                <td>{{ $i + 1 }}</td>
+                                                <td>{{ $index + 1 }}</td>
                                                 <td>
-                                                    <a class="text-decoration-none"
-                                                        href="{{ url('/data-pendidikan/sekolah/' . $s->npsn) }}">
-                                                        {{ $s->nama }}
+                                                    <a href="{{ url('/data-pendidikan/sekolah/' . $sekolah->npsn) }}">
+                                                        {{ $sekolah->nama }}
                                                     </a>
                                                 </td>
-                                                <td class="text-center">{{ $s->npsn }}</td>
-                                                <td class="text-center">{{ $s->kode_jenjang }}</td>
-                                                <td class="text-center">{{ $s->status }}</td>
-                                                <td class="text-center">{{ $s->peserta_didiks_count }}</td>
-                                                <td class="text-center">{{ $s->rombongan_belajars_count }}</td>
-                                                <td class="text-center">{{ $s->ptks_count }}</td>
-                                                <td class="text-center">{{ $s->ptks_count }}</td>
+                                                <td class="text-center">{{ $sekolah->npsn }}</td>
+                                                <td class="text-center">
+                                                    {{ $sekolah->jenjang->nama ?? $sekolah->kode_jenjang }}</td>
+                                                <td class="text-center">{{ $sekolah->status }}</td>
+                                                <td class="text-center">{{ $sekolah->peserta_count }}</td>
+                                                <td class="text-center">{{ $sekolah->rombongan_belajars_count }}</td>
+                                                <td class="text-center">{{ $sekolah->guru_count }}</td>
+                                                <td class="text-center">{{ $sekolah->pegawai_count }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
+
                                 </table>
                             </div>
+
                         </div>
                     </div>
                 </div>

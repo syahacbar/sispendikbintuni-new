@@ -439,14 +439,12 @@
         });
     </script>
 
-
-
     <script>
         const chartSemuaData = @json(array_values($statistik['semua']));
         const chartSwastaData = @json(array_values($statistik['Swasta']));
         const chartNegeriData = @json(array_values($statistik['Negeri']));
 
-        const labelsJenjang = ['PAUD', 'SD', 'SMP', 'SMA', 'SMK', 'PKBM'];
+        const labelsJenjang = ['TK', 'KB', 'TPA', 'SPS', 'PKBM', 'SKB', 'SD', 'SMP', 'SMA', 'SMK', 'SLB'];
 
         // Semua Sekolah
         new Chart(document.getElementById('semuaSekolahChart'), {

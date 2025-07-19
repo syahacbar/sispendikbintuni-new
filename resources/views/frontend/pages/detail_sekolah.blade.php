@@ -100,7 +100,7 @@
                                         <tr>
                                             <td>Status</td>
                                             <td>:</td>
-                                            <td>{{ $sekolah->status_sekolah }}</td>
+                                            <td>{{ $sekolah->status }}</td>
                                         </tr>
                                         <tr>
                                             <td>Akreditasi</td>
@@ -120,7 +120,7 @@
                                         <tr>
                                             <td>Kepala Sekolah</td>
                                             <td>:</td>
-                                            <td>{{ $sekolah->kepsek }}</td>
+                                            <td>{{ optional($sekolah->kepalaSekolahDetail)->nama ?? '-' }}</td>
                                         </tr>
                                         <tr>
                                             <td>Status Kepemilikan</td>
@@ -150,7 +150,6 @@
                                         <tr>
                                             <td>Kurikulum</td>
                                             <td>:</td>
-                                            {{-- <td>{{ $sekolah->kurikulum->kode }}</td> --}}
                                             <td>{{ $kurikulum?->kode ?? '-' }}</td>
                                         </tr>
                                         <tr>
@@ -397,7 +396,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($sekolah->pesertaDidiks as $index => $pd)
+                                                @foreach ($pesertaDidiks as $index => $pd)
                                                     <tr>
                                                         <td class="w-5">{{ $index + 1 }}</td>
                                                         <td class="w-75">{{ $pd->nama }}</td>
