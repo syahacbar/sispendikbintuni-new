@@ -15,8 +15,8 @@ class MstPesertaDidikSeeder extends Seeder
         $agamaList = ['Islam', 'Kristen', 'Hindu', 'Buddha', 'Konghucu'];
         $jkList = ['L', 'P'];
 
-        $batchSize = 50;
-        $total = 1000;
+        $batchSize = 100;
+        $total = 20000;
 
         for ($i = 0; $i < $total / $batchSize; $i++) {
             $batchData = [];

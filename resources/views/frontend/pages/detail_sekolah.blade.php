@@ -161,7 +161,7 @@
                                         <tr>
                                             <td>Alamat</td>
                                             <td>:</td>
-                                            <td>{{ $sekolah->alamat_jalan }}, Kel. {{ $namaKelurahan }}, Kec.
+                                            <td>{{ $sekolah->alamat }}, Kel. {{ $namaKelurahan }}, Kec.
                                                 {{ $namaKecamatan }}, {{ $namaKabupaten }}, {{ $sekolah->kode_pos }}
                                             </td>
                                         </tr>
