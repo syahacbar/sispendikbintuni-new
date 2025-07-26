@@ -73,13 +73,14 @@
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
                                                 <td>
-                                                    <a href="{{ url('/data-pendidikan/sekolah/' . $sekolah->npsn) }}">
-                                                        {{ $sekolah->nama }}
+                                                    <a class="text-decoration-none"
+                                                        href="{{ url('/data-pendidikan/sekolah/' . $sekolah->npsn) }}">
+                                                        {{ ucwords(strtolower($sekolah->nama)) }}
                                                     </a>
                                                 </td>
                                                 <td class="text-center">{{ $sekolah->npsn }}</td>
                                                 <td class="text-center">
-                                                    {{ $sekolah->jenjang->nama ?? $sekolah->kode_jenjang }}</td>
+                                                    {{ $sekolah->jenjang->kode_jenjang }}</td>
                                                 <td class="text-center">{{ $sekolah->status }}</td>
                                                 <td class="text-center">{{ $sekolah->peserta_count }}</td>
                                                 <td class="text-center">{{ $sekolah->rombongan_belajars_count }}</td>

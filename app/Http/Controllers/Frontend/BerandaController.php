@@ -5,15 +5,16 @@ namespace App\Http\Controllers\Frontend;
 use App\Models\MstGtk;
 use App\Models\Sarana;
 use App\Models\Sarpras;
-use App\Models\MstSekolah;
-use App\Models\RefJenjangPendidikan;
 use App\Models\Wilayah;
-use App\Models\RefJenisGtk;
+use App\Models\Informasi;
+use App\Models\MstSekolah;
 use App\Models\SysSetting;
+use App\Models\RefJenisGtk;
 use App\Models\PesertaDidik;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\RefJenjangPendidikan;
 
 class BerandaController extends Controller
 {
@@ -274,6 +275,17 @@ class BerandaController extends Controller
             ];
         }
 
+        // Menampilkan Kegiatan di halaman beranda
+        $berita = Informasi::where('kategori', 'Berita')
+            ->orderBy('created_at', 'desc')
+            ->paginate(1);
+        $pengumuman = Informasi::where('kategori', 'Pengumuman')
+            ->orderBy('created_at', 'desc')
+            ->paginate(1);
+        $kegiatan = Informasi::where('kategori', 'Kegiatan')
+            ->orderBy('created_at', 'desc')
+            ->paginate(1);
+
 
         return view('frontend.pages.beranda', compact(
             'statistik',
@@ -295,7 +307,12 @@ class BerandaController extends Controller
             'kualifikasiJenjangLabels',
 
             'jenjangLabelsKepegawaian',
-            'gtkKepegawaianDatasets'
+            'gtkKepegawaianDatasets',
+
+            // Kegiatan di halaman beranda
+            'kegiatan',
+            'berita',
+            'pengumuman',
         ));
     }
 }

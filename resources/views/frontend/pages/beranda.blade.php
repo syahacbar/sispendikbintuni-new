@@ -1,26 +1,18 @@
 @extends('frontend.layouts.app')
+<style>
+    @media (min-width: 991px) {
+        .berandaInformasi .d-flex.align-items-start {
+            display: block !important;
+        }
+
+        .berandaInformasi img {
+            width: 100% !important;
+            height: 150px;
+            object-fit: cover;
+        }
+    }
+</style>
 @section('content')
-    {{-- @php
-        use App\Helpers\PengaturanHelper;
-
-        $deskripsi = PengaturanHelper::get('deskripsi', 'Sistem Informasi Pendidikan');
-        $slogan = PengaturanHelper::get('slogan', 'Membangun Pendidikan Cerdas, Terhubung, dan Transparan');
-        $teks_selamat_datang = PengaturanHelper::get('teks_selamat_datang', 'Selamat Datang di');
-        $nama_instansi = PengaturanHelper::get('nama_instansi', 'Kabupaten Teluk Bintuni');
-        $alamat_lengkap = PengaturanHelper::get(
-            'alamat_lengkap',
-            'Jalan Trikora Wesiri, Kec. Bintuni, Kabupaten Teluk Bintuni, Provinsi Papua Barat',
-        );
-        $email = PengaturanHelper::get('email', 'info@sispendikbintuni.go.id');
-        $no_hp = PengaturanHelper::get('no_hp', '+6281255554444');
-        $telepon = PengaturanHelper::get('telepon', '98312-5587');
-        $instagram = PengaturanHelper::get('instagram', 'Kabupaten Teluk Bintuni');
-        $facebook = PengaturanHelper::get('facebook', 'Kabupaten Teluk Bintuni');
-        $youtube = PengaturanHelper::get('youtube', 'Kabupaten Teluk Bintuni');
-        $twitter = PengaturanHelper::get('twitter', 'Kabupaten Teluk Bintuni');
-
-    @endphp --}}
-
     <section class="hero w-100 container-fluid d-flex align-items-start justify-content-start text-start">
         <div class="container">
             <div class="hero-content" data-aos="fade-up">
@@ -253,6 +245,96 @@
             </div>
         </div>
     </section>
+
+
+    <section class="pt-5 bg-light berandaInformasi">
+        <div class="container mb-4">
+            <div class="row">
+                <div class="col-lg-12" data-aos="fade-right">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-megaphone text-bg-success rounded p-1"></i>
+                        <h5 class="mb-0 text-success fw-bold mx-2">Informasi Pendidikan</h5>
+                    </div>
+                    <p class="text-dark">
+                        Berikut adalah data jumlah sekolah berdasarkan jenjang pendidikan di Kabupaten Teluk Bintuni per 15
+                        Desember 2024.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 mt-3" data-aos="fade-left">
+                    <h6 class="text-success fw-semibold mb-3">Berita Terbaru</h6>
+                    @foreach ($berita as $item)
+                        <div class="d-flex justify-content-between align-items-center border rounded-3 p-2 mb-4">
+                            <div class="d-flex align-items-start">
+                                <img src="{{ $item->gambar && file_exists(public_path('storage/' . $item->gambar))
+                                    ? asset('storage/' . $item->gambar)
+                                    : asset('themes/frontend/informasi/kegiatan/default.png') }}"
+                                    class="card-img-top w-25" alt="{{ $item->judul }}">
+                                <div class="px-2">
+                                    <div class="fw-semibold">{{ $item->judul }}</div>
+                                    <div class="text-muted small mb-2">
+                                        {{ $item->short_desc }}
+                                    </div>
+                                    <small class="text-body-secondary me-3"><i class="bi bi-calendar-fill"></i>
+                                        {{ $item->created_at->format('d M Y') }}</small>
+                                </div>
+                                <a href="{{ url('informasi/berita/' . $item->slug) }}" class="stretched-link"></a>
+                            </div>
+                        </div>
+                    @endforeach
+                    <a class="btn btn-success" href="">Kegiatan Lainnya</a>
+                </div>
+                <div class="col-lg-4 mt-3" data-aos="fade-right">
+                    <h6 class="text-success fw-semibold mb-3">Pengumuman Terbaru</h6>
+                    @foreach ($pengumuman as $item)
+                        <div class="d-flex justify-content-between align-items-center border rounded-3 p-2 mb-4">
+                            <div class="d-flex align-items-start">
+                                <img src="{{ $item->gambar && file_exists(public_path('storage/' . $item->gambar))
+                                    ? asset('storage/' . $item->gambar)
+                                    : asset('themes/frontend/informasi/kegiatan/default.png') }}"
+                                    class="card-img-top w-25" alt="{{ $item->judul }}">
+                                <div class="px-2">
+                                    <div class="fw-semibold">{{ $item->judul }}</div>
+                                    <div class="text-muted small mb-2">
+                                        {{ $item->short_desc }}
+                                    </div>
+                                    <small class="text-body-secondary me-3"><i class="bi bi-calendar-fill"></i>
+                                        {{ $item->created_at->format('d M Y') }}</small>
+                                </div>
+                                <a href="{{ url('informasi/pengumuman/' . $item->slug) }}" class="stretched-link"></a>
+                            </div>
+                        </div>
+                    @endforeach
+                    <a class="btn btn-success" href="">Kegiatan Lainnya</a>
+                </div>
+                <div class="col-lg-4 mt-3" data-aos="fade-right">
+                    <h6 class="text-success fw-semibold mb-3">Agenda Terbaru</h6>
+                    @foreach ($kegiatan as $item)
+                        <div class="d-flex justify-content-between align-items-center border rounded-3 p-2 mb-4">
+                            <div class="d-flex align-items-start">
+                                <img src="{{ $item->gambar && file_exists(public_path('storage/' . $item->gambar))
+                                    ? asset('storage/' . $item->gambar)
+                                    : asset('themes/frontend/informasi/kegiatan/default.png') }}"
+                                    class="card-img-top w-25" alt="{{ $item->judul }}">
+                                <div class="px-2">
+                                    <div class="fw-semibold">{{ $item->judul }}</div>
+                                    <div class="text-muted small mb-2">
+                                        {{ $item->short_desc }}
+                                    </div>
+                                    <small class="text-body-secondary me-3"><i class="bi bi-calendar-fill"></i>
+                                        {{ $item->created_at->format('d M Y') }}</small>
+                                </div>
+                                <a href="{{ url('informasi/kegiatan/' . $item->slug) }}" class="stretched-link"></a>
+                            </div>
+                        </div>
+                    @endforeach
+                    <a class="btn btn-success" href="">Kegiatan Lainnya</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

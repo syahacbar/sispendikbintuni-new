@@ -64,7 +64,7 @@
 
     table#dataSekolah *,
     table.dataTable>tbody>tr.child ul.dtr-details * {
-        font-size: 1rem;
+        font-size: 14px;
     }
 
     table.dataTable tbody th,
