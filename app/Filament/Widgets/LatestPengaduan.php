@@ -3,7 +3,7 @@
 namespace App\Filament\Widgets;
 
 use Filament\Tables;
-use App\Models\Pengaduan;
+use App\Models\ExtPengaduan;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Illuminate\Database\Eloquent\Builder;
@@ -16,7 +16,7 @@ class LatestPengaduan extends BaseWidget
 
     protected function getTableQuery(): Builder
     {
-        return Pengaduan::query()->latest()->limit(5);
+        return ExtPengaduan::query()->latest()->limit(5);
     }
 
     public function getTableRecordsPerPage(): int

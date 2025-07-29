@@ -2,7 +2,7 @@
 
 namespace App\Filament\Pages;
 
-use App\Models\PengaturanUmum;
+use App\Models\SysSetting;
 use Filament\Forms\Form;
 use Filament\Pages\Page;
 use Filament\Forms\Contracts\HasForms;
@@ -37,21 +37,21 @@ class Sambutan extends Page implements HasForms
 
     public ?array $data = [];
 
-    public static function canAccess(): bool
-    {
-        return auth()->user()?->hasRole('super_admin');
-    }
+    // public static function canAccess(): bool
+    // {
+    //     return auth()->user()?->hasRole('super_admin');
+    // }
 
-    public static function shouldRegisterNavigation(): bool
-    {
-        return auth()->user()?->hasRole('super_admin');
-    }
+    // public static function shouldRegisterNavigation(): bool
+    // {
+    //     return auth()->user()?->hasRole('super_admin');
+    // }
 
 
 
     public function mount(): void
     {
-        $this->form->fill(PengaturanUmum::getAllAsArray());
+        $this->form->fill(SysSetting::getAllAsArray());
     }
 
     public function form(Form $form): Form
@@ -89,7 +89,7 @@ class Sambutan extends Page implements HasForms
     public function save()
     {
         $data = $this->form->getState();
-        PengaturanUmum::setBulk($data);
+        SysSetting::setBulk($data);
 
         Notification::make()
             ->title('Sambutan Diperbarui')

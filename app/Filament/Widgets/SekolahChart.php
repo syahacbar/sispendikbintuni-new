@@ -2,6 +2,7 @@
 
 namespace App\Filament\Widgets;
 
+use App\Models\MstSekolah;
 use App\Models\Sekolah;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Facades\DB;
@@ -18,9 +19,9 @@ class SekolahChart extends ChartWidget
 
     protected function getData(): array
     {
-        $data = Sekolah::select('jenjang', DB::raw('count(*) as total'))
-            ->groupBy('jenjang')
-            ->orderBy('jenjang')
+        $data = MstSekolah::select('kode_jenjang', DB::raw('count(*) as total'))
+            ->groupBy('kode_jenjang')
+            ->orderBy('kode_jenjang')
             ->get();
 
         return [
@@ -36,7 +37,7 @@ class SekolahChart extends ChartWidget
                     ],
                 ],
             ],
-            'labels' => $data->pluck('jenjang'),
+            'labels' => $data->pluck('kode_jenjang'),
         ];
     }
 }

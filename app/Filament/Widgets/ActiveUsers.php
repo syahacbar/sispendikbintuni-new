@@ -21,12 +21,12 @@ class ActiveUsers extends BaseWidget
 
         return User::query()
             ->select([
-                'users.*',
+                'sys_users.*',
                 'sessions.last_activity',
                 'sessions.ip_address',
                 'sessions.user_agent'
             ])
-            ->join('sessions', 'users.id', '=', 'sessions.user_id')
+            ->join('sessions', 'sys_users.id', '=', 'sessions.user_id')
             ->where('sessions.last_activity', '>=', $tenMinutesAgo)
             ->orderBy('sessions.last_activity', 'desc')
             ->distinct();

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Widgets;
 
+use App\Models\MstPesertaDidik;
 use App\Models\PesertaDidik;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Facades\DB;
@@ -18,9 +19,9 @@ class PesertaDidikChart extends ChartWidget
 
     protected function getData(): array
     {
-        $data = PesertaDidik::select('kecamatan', DB::raw('count(*) as total'))
-            ->groupBy('kecamatan')
-            ->orderBy('kecamatan')
+        $data = MstPesertaDidik::select('kode_wilayah', DB::raw('count(*) as total'))
+            ->groupBy('kode_wilayah')
+            ->orderBy('kode_wilayah')
             ->get();
 
 
@@ -37,7 +38,7 @@ class PesertaDidikChart extends ChartWidget
                     ],
                 ],
             ],
-            'labels' => $data->pluck('kecamatan'),
+            'labels' => $data->pluck('kode_wilayah'),
         ];
     }
 }

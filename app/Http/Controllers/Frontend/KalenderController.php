@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Kalender;
+use App\Models\ExtKalender;
 use App\Models\SysSetting;
 
 class KalenderController extends Controller
@@ -16,7 +16,7 @@ class KalenderController extends Controller
         $title = 'Kalender Pendidikan';
         $subtitle = 'Informasi jadwal penting sepanjang tahun ajaran.';
 
-        $events = Kalender::all()->map(function ($event) {
+        $events = ExtKalender::all()->map(function ($event) {
             return [
                 'title' => $event->nama,
                 'start' => $event->tanggal_mulai,

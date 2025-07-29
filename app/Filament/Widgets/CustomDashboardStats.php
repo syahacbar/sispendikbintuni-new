@@ -2,18 +2,23 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\Informasi;
-use App\Models\Kurikulum;
-use App\Models\MataPelajaran;
 use App\Models\Ptk;
 use App\Models\User;
-use App\Models\Sekolah;
-use App\Models\Pengaduan;
-use App\Models\PesertaDidik;
-use App\Models\Prasarana;
-use App\Models\RombonganBelajar;
+use App\Models\MstGtk;
 use App\Models\Sarana;
+use App\Models\Sekolah;
+use App\Models\RefMapel;
+use App\Models\MstRombel;
+use App\Models\MstSekolah;
+use App\Models\RefSarpras;
+use App\Models\ExtInformasi;
+use App\Models\ExtPengaduan;
+use App\Models\PesertaDidik;
+use App\Models\RefKurikulum;
 use Filament\Widgets\Widget;
+use App\Models\MstPesertaDidik;
+use App\Models\RombonganBelajar;
+use App\Models\MstSarprasSekolah;
 
 class CustomDashboardStats extends Widget
 {
@@ -26,15 +31,15 @@ class CustomDashboardStats extends Widget
             'cards' => [
                 [
                     'title' => 'Total Sekolah',
-                    'value' => Sekolah::count(),
+                    'value' => MstSekolah::count(),
                 ],
                 [
                     'title' => 'Total Peserta Didk',
-                    'value' => PesertaDidik::count(),
+                    'value' => MstPesertaDidik::count(),
                 ],
                 [
                     'title' => 'Total PTK',
-                    'value' => Ptk::count(),
+                    'value' => MstGtk::count(),
                 ],
                 [
                     'title' => 'Total Users',
@@ -49,31 +54,31 @@ class CustomDashboardStats extends Widget
                 ],
                 [
                     'title' => 'Total Pengaduan',
-                    'value' => Pengaduan::count(),
+                    'value' => ExtPengaduan::count(),
                 ],
                 [
                     'title' => 'Total Rombel',
-                    'value' => RombonganBelajar::count(),
+                    'value' => MstRombel::count(),
                 ],
                 [
                     'title' => 'Total Sarana',
-                    'value' => Sarana::count(),
+                    'value' => RefSarpras::count(),
                 ],
                 [
                     'title' => 'Total Prasarana',
-                    'value' => Prasarana::count(),
+                    'value' => MstSarprasSekolah::count(),
                 ],
                 [
                     'title' => 'Total Kurikulum',
-                    'value' => Kurikulum::count(),
+                    'value' => RefKurikulum::count(),
                 ],
                 [
                     'title' => 'Total Mata pelajaran',
-                    'value' => MataPelajaran::count(),
+                    'value' => RefMapel::count(),
                 ],
                 [
                     'title' => 'Total Informasi',
-                    'value' => Informasi::count(),
+                    'value' => ExtInformasi::count(),
                 ],
             ],
         ];

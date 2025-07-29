@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Models\Informasi;
+use App\Models\ExtInformasi;
 use App\Models\SysSetting;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,7 +16,7 @@ class InformasiController extends Controller
         $title = 'Berita';
         $subtitle = 'Informasi terkini dan terpercaya.';
 
-        $berita = Informasi::where('kategori', 'Berita')
+        $berita = ExtInformasi::where('kategori', 'Berita')
             ->orderBy('created_at', 'desc')
             ->paginate(6);
 
@@ -32,7 +32,7 @@ class InformasiController extends Controller
         $title = 'Pengumuman';
         $subtitle = 'Pengumuman resmi dari dinas pendidikan.';
 
-        $pengumuman = Informasi::where('kategori', 'Pengumuman')
+        $pengumuman = ExtInformasi::where('kategori', 'Pengumuman')
             ->orderBy('created_at', 'desc')
             ->paginate(6);
 
@@ -49,7 +49,7 @@ class InformasiController extends Controller
         $subtitle = 'Dokumentasi berbagai kegiatan dan program.';
 
 
-        $kegiatan = Informasi::where('kategori', 'Kegiatan')
+        $kegiatan = ExtInformasi::where('kategori', 'Kegiatan')
             ->orderBy('created_at', 'desc')
             ->paginate(6);
 
@@ -62,11 +62,11 @@ class InformasiController extends Controller
         $title = 'Detail Berita';
         $subtitle = 'Berita';
 
-        $berita = Informasi::where('slug', $slug)->firstOrFail();
+        $berita = ExtInformasi::where('slug', $slug)->firstOrFail();
 
         $berita->increment('lihat');
 
-        $list_berita = Informasi::where('kategori', 'Berita')
+        $list_berita = ExtInformasi::where('kategori', 'Berita')
             ->where('id', '!=', $berita->id)
             ->latest()
             ->take(5)
@@ -81,11 +81,11 @@ class InformasiController extends Controller
     {
         $title = 'Detail Pengumuman';
         $subtitle = 'Detail Pengumuman';
-        $pengumuman = Informasi::where('slug', $slug)->firstOrFail();
+        $pengumuman = ExtInformasi::where('slug', $slug)->firstOrFail();
 
         $pengumuman->increment('lihat');
 
-        $list_pengumuman = Informasi::where('kategori', 'Pengumuman')
+        $list_pengumuman = ExtInformasi::where('kategori', 'Pengumuman')
             ->where('id', '!=', $pengumuman->id)
             ->latest()
             ->take(5)
@@ -98,11 +98,11 @@ class InformasiController extends Controller
     {
         $title = 'Detail Kegiatan';
         $subtitle = 'Detail Kegiatan';
-        $kegiatan = Informasi::where('slug', $slug)->firstOrFail();
+        $kegiatan = ExtInformasi::where('slug', $slug)->firstOrFail();
 
         $kegiatan->increment('lihat');
 
-        $list_kegiatan = Informasi::where('kategori', 'Kegiatan')
+        $list_kegiatan = ExtInformasi::where('kategori', 'Kegiatan')
             ->where('id', '!=', $kegiatan->id)
             ->latest()
             ->take(5)
@@ -117,7 +117,7 @@ class InformasiController extends Controller
         $subtitle = 'Berita';
         $date = $request->get('date');
 
-        $kegiatan = Informasi::where('kategori', 'Kegiatan')
+        $kegiatan = ExtInformasi::where('kategori', 'Kegiatan')
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 

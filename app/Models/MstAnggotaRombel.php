@@ -19,14 +19,15 @@ class MstAnggotaRombel extends Model
         'keterangan',
     ];
 
-    public function rombonganBelajar()
-    {
-        return $this->belongsTo(MstRombel::class);
-    }
-    // public function pesertaDidik()
+    // public function rombonganBelajar()
     // {
-    //     return $this->belongsTo(MstPesertaDidik::class);
+    //     return $this->belongsTo(MstRombel::class);
     // }
+
+    public function rombel()
+    {
+        return $this->belongsTo(MstRombel::class, 'rombel_id');
+    }
 
     public function pesertaDidik()
     {

@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('gambar')->nullable();
             $table->string('slug')->unique()->nullable();
             $table->unsignedBigInteger('lihat')->default(0)->nullable();
-            $table->uuid('users_id')->nullable();
+            $table->unsignedBigInteger('users_id')->nullable();
+            // $table->uuid('users_id')->nullable();
             $table->timestamps();
         });
     }

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use App\Models\SysSetting;
 use App\Models\Tentang;
 use Filament\Forms\Form;
 use Filament\Pages\Page;
@@ -50,7 +51,7 @@ class TentangWeb extends Page implements HasForms
 
     public function mount(): void
     {
-        $this->form->fill(Tentang::getAllAsArray());
+        $this->form->fill(SysSetting::getAllAsArray());
     }
 
     public function form(Form $form): Form
@@ -81,7 +82,7 @@ class TentangWeb extends Page implements HasForms
     public function save()
     {
         $data = $this->form->getState();
-        Tentang::setBulk($data);
+        SysSetting::setBulk($data);
 
         Notification::make()
             ->title('Tentang Diperbarui')

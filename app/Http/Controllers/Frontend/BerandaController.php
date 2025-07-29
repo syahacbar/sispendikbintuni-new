@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Frontend;
 use App\Models\MstGtk;
 use App\Models\Sarana;
 use App\Models\Sarpras;
-use App\Models\Wilayah;
-use App\Models\Informasi;
+use App\Models\RefWilayah;
+use App\Models\ExtInformasi;
 use App\Models\MstSekolah;
 use App\Models\SysSetting;
 use App\Models\RefJenisGtk;
@@ -93,7 +93,7 @@ class BerandaController extends Controller
 
         // 2. Ambil semua nama kecamatan dari tabel wilayah
         $kecamatanCodes = $sebaranSekolahKecamatan->pluck('kode_wilayah');
-        $wilayahMap = Wilayah::whereIn('kode', $kecamatanCodes)->pluck('nama', 'kode');
+        $wilayahMap = RefWilayah::whereIn('kode', $kecamatanCodes)->pluck('nama', 'kode');
 
         // 3. Siapkan data untuk Chart.js
         $kecamatanLabels = $sebaranSekolahKecamatan->map(
@@ -276,13 +276,13 @@ class BerandaController extends Controller
         }
 
         // Menampilkan Kegiatan di halaman beranda
-        $berita = Informasi::where('kategori', 'Berita')
+        $berita = ExtInformasi::where('kategori', 'Berita')
             ->orderBy('created_at', 'desc')
             ->paginate(1);
-        $pengumuman = Informasi::where('kategori', 'Pengumuman')
+        $pengumuman = ExtInformasi::where('kategori', 'Pengumuman')
             ->orderBy('created_at', 'desc')
             ->paginate(1);
-        $kegiatan = Informasi::where('kategori', 'Kegiatan')
+        $kegiatan = ExtInformasi::where('kategori', 'Kegiatan')
             ->orderBy('created_at', 'desc')
             ->paginate(1);
 

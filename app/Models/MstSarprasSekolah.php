@@ -27,7 +27,7 @@ class MstSarprasSekolah extends Model
 
     public function jenisSarpras()
     {
-        return $this->belongsTo(JenisSarpras::class, 'jenis_sarpras_id');
+        return $this->belongsTo(RefSarpras::class, 'jenis_sarpras_id');
     }
 
     public function sarpras()

@@ -11,13 +11,12 @@ class RefJenjangPendidikan extends Model
 
     protected $table = 'ref_jenjang_pendidikan';
 
+    protected $primaryKey = 'kode';
+    public $incrementing = false;
+    protected $keyType = 'string';
+
     protected $fillable = [
         'nama',
         'kode',
     ];
-
-    public function sekolahs()
-    {
-        return $this->hasMany(MstSekolah::class, 'kode_jenjang', 'kode');
-    }
 }

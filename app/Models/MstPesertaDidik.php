@@ -28,4 +28,9 @@ class MstPesertaDidik extends Model
     {
         return $this->belongsTo(MstSekolah::class, 'id_sekolah');
     }
+
+    public function wilayah()
+    {
+        return $this->belongsTo(RefWilayah::class, 'kode_wilayah', 'kode');
+    }
 }

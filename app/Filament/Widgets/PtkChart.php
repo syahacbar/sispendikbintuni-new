@@ -2,6 +2,7 @@
 
 namespace App\Filament\Widgets;
 
+use App\Models\MstGtk;
 use App\Models\Ptk;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Facades\DB;
@@ -18,9 +19,9 @@ class PtkChart extends ChartWidget
 
     protected function getData(): array
     {
-        $data = Ptk::select('status', DB::raw('count(*) as total'))
-            ->groupBy('status')
-            ->orderBy('status')
+        $data = MstGtk::select('status_kepegawaian', DB::raw('count(*) as total'))
+            ->groupBy('status_kepegawaian')
+            ->orderBy('status_kepegawaian')
             ->get();
 
         return [
@@ -36,7 +37,7 @@ class PtkChart extends ChartWidget
                     ],
                 ],
             ],
-            'labels' => $data->pluck('status'),
+            'labels' => $data->pluck('status_kepegawaian'),
         ];
     }
 }

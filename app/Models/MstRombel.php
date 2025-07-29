@@ -52,4 +52,9 @@ class MstRombel extends Model
     {
         return $this->hasMany(MstAnggotaRombel::class, 'rombel_id', 'id');
     }
+
+    public function semester()
+    {
+        return $this->belongsTo(RefSemester::class, 'semester_id');
+    }
 }

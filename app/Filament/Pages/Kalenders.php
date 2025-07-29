@@ -5,7 +5,7 @@ namespace App\Filament\Pages;
 use Carbon\Carbon;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
-use App\Models\Kalender;
+use App\Models\ExtKalender;
 use Filament\Forms\Form;
 use Filament\Pages\Page;
 use Filament\Tables\Table;
@@ -49,15 +49,15 @@ class Kalenders extends Page implements HasTable, HasActions, HasForms
 
     public $events;
 
-    public static function canAccess(): bool
-    {
-        return auth()->user()?->hasRole('super_admin');
-    }
+    // public static function canAccess(): bool
+    // {
+    //     return auth()->user()?->hasRole('super_admin');
+    // }
 
-    public static function shouldRegisterNavigation(): bool
-    {
-        return auth()->user()?->hasRole('super_admin');
-    }
+    // public static function shouldRegisterNavigation(): bool
+    // {
+    //     return auth()->user()?->hasRole('super_admin');
+    // }
 
 
     public function createAction(): Action
@@ -66,7 +66,7 @@ class Kalenders extends Page implements HasTable, HasActions, HasForms
             ->createAnother(false)
             ->label('Tambah Kegiatan')
             ->modalHeading('Tambah Kegiatan Kalender')
-            ->model(Kalender::class)
+            ->model(ExtKalender::class)
             ->form(function (Form $form) {
                 return $form->schema([
                     TextInput::make('nama')
@@ -143,7 +143,7 @@ class Kalenders extends Page implements HasTable, HasActions, HasForms
             ->label('Ubah Kegiatan')
             ->modalHeading('Tambah Kegiatan')
             ->record(function (array $arguments) {
-                return Kalender::query()->where('id', $arguments['id'])->first();
+                return ExtKalender::query()->where('id', $arguments['id'])->first();
             })
             // ->model(Kalender::class)
             ->form(function (Form $form) {
@@ -219,7 +219,7 @@ class Kalenders extends Page implements HasTable, HasActions, HasForms
     {
         return ViewAction::make('view')
             ->record(function (array $arguments) {
-                return Kalender::query()->where('id', $arguments['id'])->first();
+                return ExtKalender::query()->where('id', $arguments['id'])->first();
             })
             ->infolist(function (Infolist $infolist) {
                 return $infolist
@@ -263,7 +263,7 @@ class Kalenders extends Page implements HasTable, HasActions, HasForms
     {
         return DeleteAction::make('delete')
             ->record(function (array $arguments) {
-                return Kalender::query()->where('id', $arguments['id'])->first();
+                return ExtKalender::query()->where('id', $arguments['id'])->first();
             })
 
             ->after(function () {
@@ -288,7 +288,7 @@ class Kalenders extends Page implements HasTable, HasActions, HasForms
                     $endDate = Carbon::parse($arguments['endDate'])->subDay()->format('Y-m-d');
                 }
 
-                $event = Kalender::query()->where('id', $id)->first();
+                $event = ExtKalender::query()->where('id', $id)->first();
                 $if_updated =  $event->update(
                     [
                         'tanggal_mulai' => $startDate,
@@ -317,7 +317,7 @@ class Kalenders extends Page implements HasTable, HasActions, HasForms
     public function table(Table $table): Table
     {
         return $table
-            ->query(Kalender::query())
+            ->query(ExtKalender::query())
             ->columns([
                 TextColumn::make('nama')->label('Nama Kegiatan')->searchable(),
                 TextColumn::make('deskripsi')->label('Deskripsi')->searchable(),
@@ -340,7 +340,7 @@ class Kalenders extends Page implements HasTable, HasActions, HasForms
 
     public function render(): View
     {
-        $events = Kalender::all();
+        $events = ExtKalender::all();
         $arr = [];
         foreach ($events as $event) {
 
