@@ -47,6 +47,8 @@ class MstKondisiSarprasResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('jumlah')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('keterangan')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable(),
