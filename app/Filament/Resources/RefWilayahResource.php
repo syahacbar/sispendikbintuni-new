@@ -17,7 +17,11 @@ class RefWilayahResource extends Resource
 {
     protected static ?string $model = RefWilayah::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-globe-alt';
+    protected static ?string $navigationGroup = 'Data Referensi';
+    protected static ?string $navigationLabel = 'Wilayah Indonesia';
+    protected static ?string $pluralLabel = 'Wilayah Indonesia';
+    protected static ?string $slug = 'data-mata-pelajaran';
 
     public static function form(Form $form): Form
     {

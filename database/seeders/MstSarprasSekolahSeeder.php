@@ -39,7 +39,6 @@ class MstSarprasSekolahSeeder extends Seeder
                     'nama' => $sarpras->nama ?? $faker->words(2, true),
                     'jumlah_saat_ini' => $jumlahSaatIni,
                     'jumlah_ideal' => $jumlahIdeal,
-                    'keterangan' => $faker->optional()->sentence(),
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];

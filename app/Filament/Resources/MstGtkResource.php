@@ -17,7 +17,11 @@ class MstGtkResource extends Resource
 {
     protected static ?string $model = MstGtk::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
+    protected static ?string $navigationGroup = 'Data Master';
+    protected static ?string $navigationLabel = 'GTK';
+    protected static ?string $pluralLabel = 'GTK';
+    protected static ?string $slug = 'data-gtk';
 
     public static function form(Form $form): Form
     {

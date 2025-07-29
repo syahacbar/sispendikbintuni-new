@@ -17,8 +17,11 @@ class MstRombelResource extends Resource
 {
     protected static ?string $model = MstRombel::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-group';
+    protected static ?string $navigationGroup = 'Data Master';
+    protected static ?string $navigationLabel = 'Rombel';
+    protected static ?string $pluralLabel = 'Rombel';
+    protected static ?string $slug = 'data-rombongan-belajar';
     public static function form(Form $form): Form
     {
         return $form

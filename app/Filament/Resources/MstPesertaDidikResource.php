@@ -17,7 +17,11 @@ class MstPesertaDidikResource extends Resource
 {
     protected static ?string $model = MstPesertaDidik::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
+    protected static ?string $navigationGroup = 'Data Master';
+    protected static ?string $navigationLabel = 'Peserta Didik';
+    protected static ?string $pluralLabel = 'Peserta Didik';
+    protected static ?string $slug = 'data-peserta-didik';
 
     public static function form(Form $form): Form
     {

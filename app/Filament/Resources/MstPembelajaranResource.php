@@ -19,7 +19,11 @@ class MstPembelajaranResource extends Resource
 {
     protected static ?string $model = MstPembelajaran::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-book-open';
+    protected static ?string $navigationGroup = 'Data Master';
+    protected static ?string $navigationLabel = 'Pembelajaran';
+    protected static ?string $pluralLabel = 'Pembelajaran';
+    protected static ?string $slug = 'data-pembelajaran';
 
     public static function form(Form $form): Form
     {

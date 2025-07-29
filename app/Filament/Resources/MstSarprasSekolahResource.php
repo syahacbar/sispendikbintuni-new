@@ -17,7 +17,11 @@ class MstSarprasSekolahResource extends Resource
 {
     protected static ?string $model = MstSarprasSekolah::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-computer-desktop';
+    protected static ?string $navigationGroup = 'Data Master';
+    protected static ?string $navigationLabel = 'Sarpras';
+    protected static ?string $pluralLabel = 'Sarpras';
+    protected static ?string $slug = 'data-sarana-prasarana';
 
     public static function form(Form $form): Form
     {
@@ -34,8 +38,6 @@ class MstSarprasSekolahResource extends Resource
                     ->numeric()
                     ->default(0),
                 Forms\Components\TextInput::make('jumlah_ideal')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('keterangan')
                     ->maxLength(255),
             ]);
     }
@@ -59,8 +61,6 @@ class MstSarprasSekolahResource extends Resource
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('jumlah_ideal')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('keterangan')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

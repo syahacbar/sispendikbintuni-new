@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('nama')->nullable();
             $table->integer('jumlah_saat_ini')->default(0);
             $table->string('jumlah_ideal')->nullable();
-            $table->string('keterangan')->nullable();
             $table->timestamps();
         });
     }

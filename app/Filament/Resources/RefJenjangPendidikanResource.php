@@ -17,7 +17,11 @@ class RefJenjangPendidikanResource extends Resource
 {
     protected static ?string $model = RefJenjangPendidikan::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-bars-3-bottom-left';
+    protected static ?string $navigationGroup = 'Data Referensi';
+    protected static ?string $navigationLabel = 'Jenjang Pendidikan';
+    protected static ?string $pluralLabel = 'Jenjang Pendidikan';
+    protected static ?string $slug = 'data-jenjang-pendidikan';
 
     public static function form(Form $form): Form
     {

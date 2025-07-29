@@ -17,7 +17,11 @@ class SysSettingResource extends Resource
 {
     protected static ?string $model = SysSetting::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-cog';
+    protected static ?string $navigationGroup = 'Manajemen Konten Web';
+    protected static ?string $navigationLabel = 'Pengaturan';
+    protected static ?string $pluralLabel = 'Pengaturan';
+    protected static ?string $slug = 'pengaturan';
 
     public static function form(Form $form): Form
     {

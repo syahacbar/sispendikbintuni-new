@@ -17,7 +17,11 @@ class ExtPengaduanResource extends Resource
 {
     protected static ?string $model = ExtPengaduan::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-right';
+    protected static ?string $navigationGroup = 'Manajemen Konten Web';
+    protected static ?string $navigationLabel = 'Pengaduan';
+    protected static ?string $pluralLabel = 'Pengaduan';
+    protected static ?string $slug = 'pegaduan-layanan';
 
     public static function form(Form $form): Form
     {

@@ -17,7 +17,11 @@ class RefKurikulumResource extends Resource
 {
     protected static ?string $model = RefKurikulum::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static ?string $navigationGroup = 'Data Referensi';
+    protected static ?string $navigationLabel = 'Kurikulum';
+    protected static ?string $pluralLabel = 'Kurikulum';
+    protected static ?string $slug = 'data-kurikulum';
 
     public static function form(Form $form): Form
     {

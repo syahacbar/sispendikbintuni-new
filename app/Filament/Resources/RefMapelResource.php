@@ -17,7 +17,12 @@ class RefMapelResource extends Resource
 {
     protected static ?string $model = RefMapel::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?string $navigationIcon = 'heroicon-o-bookmark-square';
+    protected static ?string $navigationGroup = 'Data Referensi';
+    protected static ?string $navigationLabel = 'Mata Pelajaran';
+    protected static ?string $pluralLabel = 'Mata Pelajaran';
+    protected static ?string $slug = 'data-mata-pelajaran';
 
     public static function form(Form $form): Form
     {

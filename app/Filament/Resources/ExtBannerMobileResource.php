@@ -19,7 +19,11 @@ class ExtBannerMobileResource extends Resource
 {
     protected static ?string $model = ExtBannerMobile::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-photo';
+    protected static ?string $navigationGroup = 'Manajemen Konten Web';
+    protected static ?string $navigationLabel = 'Banner Mobile';
+    protected static ?string $pluralLabel = 'Banner Mobile';
+    protected static ?string $slug = 'banner-mobile';
 
     public static function form(Form $form): Form
     {

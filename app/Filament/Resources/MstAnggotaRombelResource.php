@@ -19,7 +19,11 @@ class MstAnggotaRombelResource extends Resource
 {
     protected static ?string $model = MstAnggotaRombel::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
+    protected static ?string $navigationGroup = 'Data Master';
+    protected static ?string $navigationLabel = 'Anggota Rombel';
+    protected static ?string $pluralLabel = 'Anggota Rombel';
+    protected static ?string $slug = 'anggota-rombel';
 
     public static function form(Form $form): Form
     {

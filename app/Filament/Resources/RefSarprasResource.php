@@ -17,7 +17,11 @@ class RefSarprasResource extends Resource
 {
     protected static ?string $model = RefSarpras::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-pencil-square';
+    protected static ?string $navigationGroup = 'Data Referensi';
+    protected static ?string $navigationLabel = 'Sarana Prasarana';
+    protected static ?string $pluralLabel = 'Sarana Prasarana';
+    protected static ?string $slug = 'data-referensi-sarana-prasarana';
 
     public static function form(Form $form): Form
     {

@@ -17,7 +17,11 @@ class MstSekolahResource extends Resource
 {
     protected static ?string $model = MstSekolah::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-building-library';
+    protected static ?string $navigationGroup = 'Data Master';
+    protected static ?string $navigationLabel = 'Sekolah';
+    protected static ?string $pluralLabel = 'Sekolah';
+    protected static ?string $slug = 'data-sekolah';
 
     public static function form(Form $form): Form
     {

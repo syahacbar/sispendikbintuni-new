@@ -17,7 +17,6 @@ class MstSarprasSekolah extends Model
         'nama',
         'jumlah_saat_ini',
         'jumlah_ideal',
-        'keterangan',
     ];
 
     public function sekolah()

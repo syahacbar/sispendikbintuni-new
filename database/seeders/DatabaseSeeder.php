@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
 
             SysSettingsSeeder::class,
             ExtBannerMobileSeeder::class,
-
+            MstKondisiSarprasSeeder::class,
         ]);
     }
 }

@@ -17,7 +17,11 @@ class RefJenisGtkResource extends Resource
 {
     protected static ?string $model = RefJenisGtk::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-identification';
+    protected static ?string $navigationGroup = 'Data Referensi';
+    protected static ?string $navigationLabel = 'Jenis GTK';
+    protected static ?string $pluralLabel = 'Jenis GTK';
+    protected static ?string $slug = 'data-jenis-gtk';
 
     public static function form(Form $form): Form
     {

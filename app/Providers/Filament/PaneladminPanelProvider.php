@@ -63,7 +63,7 @@ class PaneladminPanelProvider extends PanelProvider
 
             ->navigationGroups([
                 'Data Referensi',
-                'Data Pendidikan',
+                'Data Master',
                 'Manajemen Konten Web',
                 'Manajemen Pengguna',
                 'Pengaturan',

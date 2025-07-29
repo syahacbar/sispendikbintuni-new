@@ -17,7 +17,12 @@ class RefSemesterResource extends Resource
 {
     protected static ?string $model = RefSemester::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
+    protected static ?string $navigationGroup = 'Data Referensi';
+    protected static ?string $navigationLabel = 'Semester';
+    protected static ?string $pluralLabel = 'Semester';
+    protected static ?string $slug = 'data-referensi-semester';
+
 
     public static function form(Form $form): Form
     {
