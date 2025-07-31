@@ -20,7 +20,7 @@ class InformasiController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(6);
 
-        return view('frontend.pages.berita', compact(
+        return view('frontend.pages.informasi_berita', compact(
             'berita',
             'title',
             'subtitle'
@@ -36,7 +36,7 @@ class InformasiController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(6);
 
-        return view('frontend.pages.pengumuman', compact(
+        return view('frontend.pages.informasi_pengumuman', compact(
             'pengumuman',
             'title',
             'subtitle'
@@ -53,7 +53,7 @@ class InformasiController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(6);
 
-        return view('frontend.pages.kegiatan', compact('kegiatan', 'title', 'subtitle'));
+        return view('frontend.pages.informasi_kegiatan', compact('kegiatan', 'title', 'subtitle'));
     }
 
 
@@ -72,10 +72,8 @@ class InformasiController extends Controller
             ->take(5)
             ->get();
 
-        return view('frontend.pages.detail_berita', compact('berita', 'list_berita', 'title', 'subtitle'));
+        return view('frontend.pages.informasi_berita_detail', compact('berita', 'list_berita', 'title', 'subtitle'));
     }
-
-
 
     public function show_pengumuman($slug)
     {
@@ -91,7 +89,7 @@ class InformasiController extends Controller
             ->take(5)
             ->get();
 
-        return view('frontend.pages.detail_pengumuman', compact('pengumuman', 'list_pengumuman', 'title', 'subtitle'));
+        return view('frontend.pages.informasi_pengumuman_detail', compact('pengumuman', 'list_pengumuman', 'title', 'subtitle'));
     }
 
     public function show_kegiatan($slug)
@@ -108,19 +106,6 @@ class InformasiController extends Controller
             ->take(5)
             ->get();
 
-        return view('frontend.pages.detail_kegiatan', compact('kegiatan', 'list_kegiatan', 'title', 'subtitle'));
-    }
-
-    public function getByDate(Request $request)
-    {
-        $title = 'Berita';
-        $subtitle = 'Berita';
-        $date = $request->get('date');
-
-        $kegiatan = ExtInformasi::where('kategori', 'Kegiatan')
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
-
-        return view('frontend.pages.kegiatan-list', compact('kegiatan', 'title', 'subtitle'));
+        return view('frontend.pages.informasi_kegiatan_detail', compact('kegiatan', 'list_kegiatan', 'title', 'subtitle'));
     }
 }

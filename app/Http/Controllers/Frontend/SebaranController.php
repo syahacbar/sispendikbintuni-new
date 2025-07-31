@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\MstSekolah;
-use App\Models\SysSetting;
 
 class SebaranController extends Controller
 {
@@ -14,15 +12,8 @@ class SebaranController extends Controller
         $title = 'Peta Sebaran Sekolah';
         $subtitle = 'Visualisasi lokasi sekolah di wilayah Kabupaten Teluk Bintuni.';
 
-
-        $sekolah = MstSekolah::select(
-            'nama',
-            'npsn',
-            'kode_jenjang',
-            'status',
-            'latitude',
-            'longitude'
-        )
+        $sekolah = MstSekolah::with(['rombonganBelajars.kurikulum'])
+            ->select('id', 'nama', 'npsn', 'kode_jenjang', 'status', 'latitude', 'longitude')
             ->whereNotNull('latitude')
             ->whereNotNull('longitude')
             ->get();

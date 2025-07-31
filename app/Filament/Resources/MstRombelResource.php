@@ -90,11 +90,11 @@ class MstRombelResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAcion::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -110,8 +110,8 @@ class MstRombelResource extends Resource
     {
         return [
             'index' => Pages\ListMstRombels::route('/'),
-            'create' => Pages\CreateMstRombel::route('/create'),
-            'edit' => Pages\EditMstRombel::route('/{record}/edit'),
+            // 'create' => Pages\CreateMstRombel::route('/create'),
+            // 'edit' => Pages\EditMstRombel::route('/{record}/edit'),
         ];
     }
 }

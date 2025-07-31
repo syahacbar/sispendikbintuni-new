@@ -75,11 +75,11 @@ class MstSarprasSekolahResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -95,8 +95,8 @@ class MstSarprasSekolahResource extends Resource
     {
         return [
             'index' => Pages\ListMstSarprasSekolahs::route('/'),
-            'create' => Pages\CreateMstSarprasSekolah::route('/create'),
-            'edit' => Pages\EditMstSarprasSekolah::route('/{record}/edit'),
+            // 'create' => Pages\CreateMstSarprasSekolah::route('/create'),
+            // 'edit' => Pages\EditMstSarprasSekolah::route('/{record}/edit'),
         ];
     }
 }

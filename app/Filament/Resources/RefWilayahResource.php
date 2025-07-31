@@ -54,11 +54,11 @@ class RefWilayahResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -74,8 +74,8 @@ class RefWilayahResource extends Resource
     {
         return [
             'index' => Pages\ListRefWilayahs::route('/'),
-            'create' => Pages\CreateRefWilayah::route('/create'),
-            'edit' => Pages\EditRefWilayah::route('/{record}/edit'),
+            // 'create' => Pages\CreateRefWilayah::route('/create'),
+            // 'edit' => Pages\EditRefWilayah::route('/{record}/edit'),
         ];
     }
 }

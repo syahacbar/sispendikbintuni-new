@@ -44,12 +44,18 @@
                         Informasi
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownInformasi">
-                        <li><a class="dropdown-item {{ Request::is('informasi/berita') ? 'active' : '' }}"
-                                href="/informasi/berita">Berita</a></li>
-                        <li><a class="dropdown-item {{ Request::is('informasi/pengumuman') ? 'active' : '' }}"
-                                href="/informasi/pengumuman">Pengumuman</a></li>
-                        <li><a class="dropdown-item {{ Request::is('informasi/kegiatan') ? 'active' : '' }}"
-                                href="/informasi/kegiatan">Kegiatan</a></li>
+                        <li>
+                            <a class="dropdown-item {{ Request::is('informasi/berita*') ? 'active' : '' }}"
+                                href="/informasi/berita">Berita</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item {{ Request::is('informasi/pengumuman*') ? 'active' : '' }}"
+                                href="/informasi/pengumuman">Pengumuman</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item {{ Request::is('informasi/kegiatan*') ? 'active' : '' }}"
+                                href="/informasi/kegiatan">Kegiatan</a>
+                        </li>
                     </ul>
                 </li>
 

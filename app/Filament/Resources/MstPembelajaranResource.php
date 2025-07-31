@@ -109,11 +109,11 @@ class MstPembelajaranResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -129,8 +129,8 @@ class MstPembelajaranResource extends Resource
     {
         return [
             'index' => Pages\ListMstPembelajarans::route('/'),
-            'create' => Pages\CreateMstPembelajaran::route('/create'),
-            'edit' => Pages\EditMstPembelajaran::route('/{record}/edit'),
+            // 'create' => Pages\CreateMstPembelajaran::route('/create'),
+            // 'edit' => Pages\EditMstPembelajaran::route('/{record}/edit'),
         ];
     }
 }

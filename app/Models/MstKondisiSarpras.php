@@ -13,9 +13,6 @@ class MstKondisiSarpras extends Model
 
     protected $table = 'mst_kondisi_sarpras';
 
-    // protected $keyType = 'string';
-    // public $incrementing = false;
-
     protected $fillable = [
         'id',
         'id_mst_sarpras',

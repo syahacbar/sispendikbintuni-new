@@ -67,11 +67,11 @@ class RefSemesterResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -87,8 +87,8 @@ class RefSemesterResource extends Resource
     {
         return [
             'index' => Pages\ListRefSemesters::route('/'),
-            'create' => Pages\CreateRefSemester::route('/create'),
-            'edit' => Pages\EditRefSemester::route('/{record}/edit'),
+            // 'create' => Pages\CreateRefSemester::route('/create'),
+            // 'edit' => Pages\EditRefSemester::route('/{record}/edit'),
         ];
     }
 }

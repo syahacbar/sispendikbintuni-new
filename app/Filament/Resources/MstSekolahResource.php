@@ -123,11 +123,11 @@ class MstSekolahResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -143,8 +143,8 @@ class MstSekolahResource extends Resource
     {
         return [
             'index' => Pages\ListMstSekolahs::route('/'),
-            'create' => Pages\CreateMstSekolah::route('/create'),
-            'edit' => Pages\EditMstSekolah::route('/{record}/edit'),
+            // 'create' => Pages\CreateMstSekolah::route('/create'),
+            // 'edit' => Pages\EditMstSekolah::route('/{record}/edit'),
         ];
     }
 }

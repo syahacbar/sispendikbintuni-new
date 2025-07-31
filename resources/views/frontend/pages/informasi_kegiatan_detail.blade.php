@@ -3,6 +3,26 @@
 @section('content')
     <section class="py-5 bg-light">
         <div class="container">
+            <div class="row mb-3">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb m-0">
+                                    <li class="breadcrumb-item">
+                                        <a class="text-decoration-none" href="{{ url('/informasi/kegiatan') }}">
+                                            List Kegiatan
+                                        </a>
+                                    </li>
+                                    <li class="breadcrumb-item active" aria-current="page">
+                                        {{ $kegiatan->judul }}
+                                    </li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-lg-8">
                     <div class="mb-4">
@@ -10,6 +30,7 @@
                             ? asset('storage/' . $kegiatan->gambar)
                             : asset('themes/frontend/informasi/kegiatan/default.png') }}"
                             class="card-img-top w-100 h-50 d-inline-block object-fit-cover" alt="{{ $kegiatan->judul }}">
+
                         <h3 class="text-success fw-bold mt-4">
                             {{ $kegiatan->judul }}
                         </h3>

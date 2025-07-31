@@ -49,15 +49,15 @@ class Kalenders extends Page implements HasTable, HasActions, HasForms
 
     public $events;
 
-    // public static function canAccess(): bool
-    // {
-    //     return auth()->user()?->hasRole('super_admin');
-    // }
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->hasRole('super_admin');
+    }
 
-    // public static function shouldRegisterNavigation(): bool
-    // {
-    //     return auth()->user()?->hasRole('super_admin');
-    // }
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()?->hasRole('super_admin');
+    }
 
 
     public function createAction(): Action

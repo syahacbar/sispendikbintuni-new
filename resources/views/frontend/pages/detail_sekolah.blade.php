@@ -288,7 +288,7 @@
                                                     <tr>
                                                         <th>No</th>
                                                         <th>Nama Rombel</th>
-                                                        <th class="text-center">Tingkat</th>
+                                                        <th class="text-center">Kelas</th>
                                                         <th class="text-center">Jumlah Siswa</th>
                                                         <th class="text-center">Wali Kelas</th>
                                                     </tr>
@@ -297,8 +297,8 @@
                                                     @foreach ($sekolah->rombonganBelajars ?? [] as $index => $rombel)
                                                         <tr>
                                                             <td>{{ $index + 1 }}</td>
-                                                            <td>{{ $rombel->nama_rombel }}</td>
-                                                            <td class="text-center">{{ $rombel->tingkat_kelas }}</td>
+                                                            <td>{{ $rombel->nama }}</td>
+                                                            <td class="text-center">{{ $rombel->tingkat }}</td>
                                                             <td class="text-center">
                                                                 {{ $rombel->peserta_didiks_count ?? 0 }}
                                                             </td>
@@ -320,25 +320,57 @@
                                             <table id="dataSarpras" class="display responsive nowrap" style="width:100%">
                                                 <thead>
                                                     <tr>
-                                                        <th>No</th>
-                                                        <th>Jenis Sarpras</th>
-                                                        <th class="text-center">Jumlah Ideal</th>
-                                                        <th class="text-center">Jumlah Saat Ini</th>
-                                                        <th class="text-center">Kondisi</th>
-                                                        <th class="text-center">Kurang/Lebih</th>
-                                                        <th class="text-center">Keterangan</th>
+                                                        <th rowspan="2">No</th>
+                                                        <th rowspan="2">Nama Prasarana</th>
+                                                        <th rowspan="2" class="text-center">Jumlah Ideal</th>
+                                                        <th rowspan="2" class="text-center">Jumlah Saat Ini</th>
+                                                        <th rowspan="2" class="text-center">Selisih</th>
+                                                        <th class="text-center" colspan="4">Kondisi</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="text-center">Baik</th>
+                                                        <th class="text-center">RR</th>
+                                                        <th class="text-center">RS</th>
+                                                        <th class="text-center">RB</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($sekolah->sarpras as $index => $sarpras)
+                                                    @php $no = 1; @endphp
+                                                    @foreach ($sekolah->mstSarprasSekolah as $sarpras)
+                                                        @php
+                                                            $selisih =
+                                                                $sarpras->jumlah_saat_ini - $sarpras->jumlah_ideal;
+                                                            $baik = $sarpras->kondisiSarpras
+                                                                ->where('kondisi', 'Baik')
+                                                                ->sum('jumlah');
+                                                            $rr = $sarpras->kondisiSarpras
+                                                                ->where('kondisi', 'Rusak Ringan')
+                                                                ->sum('jumlah');
+                                                            $rs = $sarpras->kondisiSarpras
+                                                                ->where('kondisi', 'Rusak Sedang')
+                                                                ->sum('jumlah');
+                                                            $rb = $sarpras->kondisiSarpras
+                                                                ->where('kondisi', 'Rusak Berat')
+                                                                ->sum('jumlah');
+                                                        @endphp
                                                         <tr>
-                                                            <td>{{ $index + 1 }}</td>
-                                                            <td>{{ $sarpras->jenisSarpras->nama ?? '-' }}</td>
-                                                            <td class="text-center">{{ $sarpras->jumlah_saat_ini }}</td>
+                                                            <td>{{ $no++ }}</td>
+                                                            <td>{{ $sarpras->nama ?? '-' }}</td>
                                                             <td class="text-center">{{ $sarpras->jumlah_ideal }}</td>
-                                                            <td class="text-center">{{ $sarpras->kondisi }}</td>
-                                                            <td class="text-center">{{ $sarpras->kurang_lebih }}</td>
-                                                            <td class="text-center">{{ $sarpras->keterangan }}</td>
+                                                            <td class="text-center">{{ $sarpras->jumlah_saat_ini }}</td>
+                                                            <td class="text-center">
+                                                                @if ($selisih > 0)
+                                                                    <span class="text-success">+{{ $selisih }}</span>
+                                                                @elseif ($selisih < 0)
+                                                                    <span class="text-danger">{{ $selisih }}</span>
+                                                                @else
+                                                                    <span class="text-muted">0</span>
+                                                                @endif
+                                                            </td>
+                                                            <td class="text-center">{{ $baik }}</td>
+                                                            <td class="text-center">{{ $rr }}</td>
+                                                            <td class="text-center">{{ $rs }}</td>
+                                                            <td class="text-center">{{ $rb }}</td>
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
@@ -371,8 +403,8 @@
                                                             <td>{{ $index + 1 }}</td>
                                                             <td>{{ $ptk->nama }}</td>
                                                             <td>{{ $ptk->nik }}</td>
-                                                            <td>{{ $ptk->status }}</td>
-                                                            <td>{{ $ptk->jabatan }}</td>
+                                                            <td>{{ $ptk->status_kepegawaian }}</td>
+                                                            <td>{{ $ptk->jenisGtk->nama }}</td>
                                                         </tr>
                                                     @endforeach
                                                 </tbody>

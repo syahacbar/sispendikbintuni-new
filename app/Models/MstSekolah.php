@@ -37,12 +37,15 @@ class MstSekolah extends Model
         'users_id',
     ];
 
-
     public function sekolah()
     {
         return $this->belongsTo(MstSekolah::class, 'id_sekolah');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'users_id');
+    }
 
     // Relasi ke jenjang
     public function jenjang()
@@ -78,7 +81,7 @@ class MstSekolah extends Model
             'id',                 // Foreign key di mst_gtk yang dicari berdasarkan wali_kelas_ptk_id
             'id',                 // Primary key di mst_sekolah
             'wali_kelas_ptk_id'   // Foreign key di mst_rombel yang mengarah ke mst_gtk
-        )->whereHas('jenis', function ($q) {
+        )->whereHas('jenisGtk', function ($q) {
             $q->where('nama', 'Guru');
         });
     }
@@ -93,7 +96,7 @@ class MstSekolah extends Model
             'id',
             'id',
             'wali_kelas_ptk_id'
-        )->whereHas('jenis', function ($q) {
+        )->whereHas('jenisGtk', function ($q) {
             $q->where('nama', '!=', 'Guru');
         });
     }
@@ -150,7 +153,7 @@ class MstSekolah extends Model
             'id',                 // PK di mst_sekolah
             'wali_kelas_ptk_id'   // FK di mst_rombel → mst_gtk.id
         )
-            ->whereHas('jenis', fn($q) => $q->where('nama', 'Kepala Sekolah'));
+            ->whereHas('jenisGtk', fn($q) => $q->where('nama', 'Kepala Sekolah'));
     }
 
     public function anggotaRombels()
@@ -179,6 +182,21 @@ class MstSekolah extends Model
 
                 $sekolah->slug = $slug;
             }
+        });
+    }
+
+    public function getSarprasAttribute()
+    {
+        return $this->mstSarprasSekolah->map(function ($item) {
+            $kondisi = $item->kondisiSarpras->first(); // ambil 1 data kondisi (jika hanya 1)
+            return (object)[
+                'jenisSarpras'   => $item->jenisSarpras,
+                'jumlah_saat_ini' => $kondisi->jumlah ?? 0,
+                'jumlah_ideal'    => $item->jumlah_ideal ?? 0,
+                'kondisi'         => $kondisi->kondisi ?? '-',
+                'kurang_lebih'    => ($kondisi->jumlah ?? 0) - ($item->jumlah_ideal ?? 0),
+                'keterangan'      => $kondisi->keterangan ?? '-',
+            ];
         });
     }
 }

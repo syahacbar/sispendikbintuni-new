@@ -71,23 +71,23 @@ class MstAnggotaRombelResource extends Resource
 
                 TextColumn::make('created_at')
                     ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->sortable(),
+                // ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('updated_at')
                     ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->sortable(),
+                // ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -104,8 +104,8 @@ class MstAnggotaRombelResource extends Resource
     {
         return [
             'index' => Pages\ListMstAnggotaRombels::route('/'),
-            'create' => Pages\CreateMstAnggotaRombel::route('/create'),
-            'edit' => Pages\EditMstAnggotaRombel::route('/{record}/edit'),
+            // 'create' => Pages\CreateMstAnggotaRombel::route('/create'),
+            // 'edit' => Pages\EditMstAnggotaRombel::route('/{record}/edit'),
         ];
     }
 }

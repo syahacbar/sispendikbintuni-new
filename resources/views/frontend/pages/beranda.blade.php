@@ -203,7 +203,7 @@
                             <h6>Kondisi Sarpras</h6>
                         </div>
                         <div class="card-body">
-                            <canvas style="height: 300px" id="chartKondisiSarpras"></canvas>
+                            <canvas style="height: 300px" id="kondisiSarprasChart"></canvas>
                         </div>
                     </div>
                 </div>
@@ -256,8 +256,7 @@
                         <h5 class="mb-0 text-success fw-bold mx-2">Informasi Pendidikan</h5>
                     </div>
                     <p class="text-dark">
-                        Berikut adalah data jumlah sekolah berdasarkan jenjang pendidikan di Kabupaten Teluk Bintuni per 15
-                        Desember 2024.
+                        Berikut adalah informasi terbaru seputar dunia pendidikan.
                     </p>
                 </div>
             </div>
@@ -283,7 +282,7 @@
                             </div>
                         </div>
                     @endforeach
-                    <a class="btn btn-success" href="">Kegiatan Lainnya</a>
+                    <a class="btn btn-success" href="">Berita Lainnya</a>
                 </div>
                 <div class="col-lg-4 mt-3" data-aos="fade-right">
                     <h6 class="text-success fw-semibold mb-3">Pengumuman Terbaru</h6>
@@ -306,10 +305,10 @@
                             </div>
                         </div>
                     @endforeach
-                    <a class="btn btn-success" href="">Kegiatan Lainnya</a>
+                    <a class="btn btn-success" href="">Pengumuman Lainnya</a>
                 </div>
                 <div class="col-lg-4 mt-3" data-aos="fade-right">
-                    <h6 class="text-success fw-semibold mb-3">Agenda Terbaru</h6>
+                    <h6 class="text-success fw-semibold mb-3">Kegiatan Terbaru</h6>
                     @foreach ($kegiatan as $item)
                         <div class="d-flex justify-content-between align-items-center border rounded-3 p-2 mb-4">
                             <div class="d-flex align-items-start">
@@ -444,6 +443,47 @@
                     title: {
                         display: true,
                         text: 'GTK Berdasarkan Status Kepegawaian per Jenjang'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.dataset.label} di ${context.label}: ${context.parsed.y}`;
+                            }
+                        }
+                    }
+                },
+                interaction: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    x: {
+                        stacked: true
+                    },
+                    y: {
+                        stacked: true,
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        new Chart(document.getElementById('kondisiSarprasChart'), {
+            type: 'bar',
+            data: {
+                labels: @json($kondisiJenjangLabels),
+                datasets: @json($kondisiSarprasDatasets)
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Kondisi Sarpras per Jenjang'
                     },
                     tooltip: {
                         callbacks: {

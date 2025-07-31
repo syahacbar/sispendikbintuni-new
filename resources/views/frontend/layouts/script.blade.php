@@ -141,24 +141,28 @@
         const lat = parseFloat(school.latitude);
         const lng = parseFloat(school.longitude);
 
+        // Ambil kurikulum pertama, jika ada
+        const firstKurikulum = school.rombongan_belajars?.[0]?.kurikulum?.kode || '-';
+
         if (!isNaN(lat) && !isNaN(lng)) {
-            const icon = icons[school.jenjang] || icons.DEFAULT;
+            const icon = icons[school.kode_jenjang] || icons.DEFAULT;
 
             const popupContent = `
-                <strong>${school.nama}</strong><br>
-                <b>NPSN:</b> ${school.npsn}<br>
-                <b>Bentuk Pendidikan:</b> ${school.jenjang}<br>
-                <b>Status:</b> ${school.status_sekolah}<br>
-                <b>Kurikulum:</b> <br>
-                <b>Koordinat:</b> ${school.latitude}, ${school.longitude}
-            `;
+            <strong>${school.nama}</strong><br>
+            <b>NPSN:</b> ${school.npsn}<br>
+            <b>Bentuk Pendidikan:</b> ${school.kode_jenjang}<br>
+            <b>Status:</b> ${school.status}<br>
+            <b>Kurikulum:</b> ${firstKurikulum} <br>
+            <b>Koordinat:</b> ${school.latitude}, ${school.longitude}
+        `;
 
-            var marker = L.marker([lat, lng], {
+            const marker = L.marker([lat, lng], {
                 icon: icon
             }).bindPopup(popupContent);
             markers.addLayer(marker);
         }
     });
+
 
     map.addLayer(markers);
 

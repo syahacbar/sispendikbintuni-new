@@ -70,11 +70,11 @@ class RefKurikulumResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -90,8 +90,8 @@ class RefKurikulumResource extends Resource
     {
         return [
             'index' => Pages\ListRefKurikulums::route('/'),
-            'create' => Pages\CreateRefKurikulum::route('/create'),
-            'edit' => Pages\EditRefKurikulum::route('/{record}/edit'),
+            // 'create' => Pages\CreateRefKurikulum::route('/create'),
+            // 'edit' => Pages\EditRefKurikulum::route('/{record}/edit'),
         ];
     }
 }

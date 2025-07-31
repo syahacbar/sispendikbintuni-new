@@ -17,6 +17,8 @@ class MstSarprasSekolah extends Model
         'nama',
         'jumlah_saat_ini',
         'jumlah_ideal',
+        'kondisi',
+        'keterangan',
     ];
 
     public function sekolah()
@@ -32,5 +34,10 @@ class MstSarprasSekolah extends Model
     public function sarpras()
     {
         return $this->belongsTo(RefSarpras::class, 'sarpras_id');
+    }
+
+    public function kondisiSarpras()
+    {
+        return $this->hasMany(MstKondisiSarpras::class, 'id_mst_sarpras');
     }
 }

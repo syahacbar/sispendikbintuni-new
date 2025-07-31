@@ -15,6 +15,17 @@ class MstPesertaDidikSeeder extends Seeder
         $agamaList = ['Islam', 'Kristen', 'Hindu', 'Buddha', 'Konghucu'];
         $jkList = ['L', 'P'];
 
+        // Ambil semua kode wilayah kelurahan (12 digit)
+        $kodeWilayahList = DB::table('ref_wilayah')
+            ->where('kode', 'LIKE', '__.__.__.____')
+            ->pluck('kode')
+            ->toArray();
+
+        if (empty($kodeWilayahList)) {
+            echo "⚠️ Tidak ditemukan kode wilayah 12 digit di tabel ref_wilayah.\n";
+            return;
+        }
+
         $batchSize = 100;
         $total = 20000;
 
@@ -27,8 +38,8 @@ class MstPesertaDidikSeeder extends Seeder
                 $nisn = $faker->unique()->numerify('##########'); // 10 digit
                 $nik = $faker->numerify('3276############'); // 16 digit
                 $tempatLahir = substr($faker->city(), 0, 100);
-                $alamat = substr($faker->address(), 0, 255); // cukup untuk text
-                $kodeWilayah = substr($faker->numerify('92.06.##.####'), 0, 100);
+                $alamat = substr($faker->address(), 0, 255);
+                $kodeWilayah = $faker->randomElement($kodeWilayahList);
                 $kodePos = substr($faker->postcode(), 0, 10);
 
                 $batchData[] = [
@@ -52,6 +63,6 @@ class MstPesertaDidikSeeder extends Seeder
             echo "Batch " . ($i + 1) . " inserted.\n";
         }
 
-        echo "✅ 1000 data peserta didik berhasil dimasukkan sesuai panjang kolom.\n";
+        echo "✅ $total data peserta didik berhasil dimasukkan menggunakan kode wilayah 12 digit.\n";
     }
 }

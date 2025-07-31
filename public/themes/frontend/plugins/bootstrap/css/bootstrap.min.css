@@ -3545,6 +3545,7 @@ fieldset:disabled .btn {
 ul.dropdown-menu.show a.dropdown-item.active {
     color: #0093dd !important;
 }
+
 .dropdown-item.active,
 .dropdown-item:active {
     color: #0093dd !important;

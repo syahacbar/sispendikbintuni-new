@@ -287,6 +287,50 @@ class BerandaController extends Controller
             ->paginate(1);
 
 
+        // Kondisi Sarpras per Jenjang Sekolah
+        $kondisiLabels = ['Baik', 'Rusak Ringan', 'Rusak Sedang', 'Rusak Berat'];
+        $kondisiColors = [
+            'Baik' => '#28a745',
+            'Rusak Ringan' => '#ffc107',
+            'Rusak Sedang' => '#fd7e14',
+            'Rusak Berat' => '#dc3545',
+        ];
+
+        $kondisiSarprasByJenjang = [];
+
+        foreach ($kondisiLabels as $kondisi) {
+            foreach ($jenjangList as $kode_jenjang => $nama_jenjang) {
+                $jumlah = DB::table('mst_kondisi_sarpras as ks')
+                    ->join('mst_sarpras_sekolah as ss', 'ks.id_mst_sarpras', '=', 'ss.id')
+                    ->join('mst_sekolah as s', 'ss.sekolah_id', '=', 's.id')
+                    ->where('ks.kondisi', $kondisi)
+                    ->where('s.kode_jenjang', $kode_jenjang)
+                    ->sum(DB::raw('CAST(ks.jumlah AS INTEGER)'));
+
+                $kondisiSarprasByJenjang[$kondisi][$nama_jenjang] = $jumlah;
+            }
+        }
+
+        // Siapkan dataset untuk Chart.js
+        $kondisiSarprasDatasets = [];
+
+        foreach ($kondisiLabels as $kondisi) {
+            $data = [];
+            foreach ($jenjangList as $kode_jenjang => $nama_jenjang) {
+                $data[] = $kondisiSarprasByJenjang[$kondisi][$nama_jenjang] ?? 0;
+            }
+
+            $kondisiSarprasDatasets[] = [
+                'label' => $kondisi,
+                'data' => $data,
+                'backgroundColor' => $kondisiColors[$kondisi],
+                'stack' => 'Stack 0',
+            ];
+        }
+
+        $kondisiJenjangLabels = array_values($jenjangList);
+
+
         return view('frontend.pages.beranda', compact(
             'statistik',
             'jenjangList',
@@ -294,7 +338,6 @@ class BerandaController extends Controller
             'total_peserta_didik',
             'jumlah_guru',
             'total_guru',
-
 
             'akreditasiLabels',
             'akreditasiDatasets',
@@ -313,6 +356,9 @@ class BerandaController extends Controller
             'kegiatan',
             'berita',
             'pengumuman',
+
+            'kondisiSarprasDatasets',
+            'kondisiJenjangLabels',
         ));
     }
 }

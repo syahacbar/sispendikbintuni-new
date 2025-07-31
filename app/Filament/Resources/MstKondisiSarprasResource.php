@@ -62,11 +62,11 @@ class MstKondisiSarprasResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -82,8 +82,8 @@ class MstKondisiSarprasResource extends Resource
     {
         return [
             'index' => Pages\ListMstKondisiSarpras::route('/'),
-            'create' => Pages\CreateMstKondisiSarpras::route('/create'),
-            'edit' => Pages\EditMstKondisiSarpras::route('/{record}/edit'),
+            // 'create' => Pages\CreateMstKondisiSarpras::route('/create'),
+            // 'edit' => Pages\EditMstKondisiSarpras::route('/{record}/edit'),
         ];
     }
 }

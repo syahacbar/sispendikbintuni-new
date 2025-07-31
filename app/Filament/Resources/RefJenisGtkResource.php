@@ -52,11 +52,11 @@ class RefJenisGtkResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -72,8 +72,8 @@ class RefJenisGtkResource extends Resource
     {
         return [
             'index' => Pages\ListRefJenisGtks::route('/'),
-            'create' => Pages\CreateRefJenisGtk::route('/create'),
-            'edit' => Pages\EditRefJenisGtk::route('/{record}/edit'),
+            // 'create' => Pages\CreateRefJenisGtk::route('/create'),
+            // 'edit' => Pages\EditRefJenisGtk::route('/{record}/edit'),
         ];
     }
 }

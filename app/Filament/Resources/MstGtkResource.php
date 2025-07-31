@@ -58,12 +58,16 @@ class MstGtkResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('nama')
+                    ->label('Nama Lengkap')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nik')
+                    ->label('NIK')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nip')
+                    ->label('NIP')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nuptk')
+                    ->label('NUPTK')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('tempat_lahir')
                     ->searchable(),
@@ -94,11 +98,11 @@ class MstGtkResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -114,8 +118,8 @@ class MstGtkResource extends Resource
     {
         return [
             'index' => Pages\ListMstGtks::route('/'),
-            'create' => Pages\CreateMstGtk::route('/create'),
-            'edit' => Pages\EditMstGtk::route('/{record}/edit'),
+            // 'create' => Pages\CreateMstGtk::route('/create'),
+            // 'edit' => Pages\EditMstGtk::route('/{record}/edit'),
         ];
     }
 }

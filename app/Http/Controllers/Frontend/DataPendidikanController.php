@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\MstSekolah;
-use App\Models\Wilayah;
+use App\Models\RefWilayah;
 use App\Models\MstGtk;
 use App\Models\SysSetting;
 use Illuminate\Support\Facades\DB;
@@ -27,7 +27,7 @@ class DataPendidikanController extends Controller
         $jenjangList = ['TK', 'KB', 'TPA', 'SPS', 'PKBM', 'SKB', 'SD', 'SMP', 'SMA', 'SMK', 'SLB'];
 
 
-        $wilayahMap = Wilayah::pluck('nama', 'kode');
+        $wilayahMap = RefWilayah::pluck('nama', 'kode');
 
         $kecamatans = MstSekolah::selectRaw('LEFT(kode_wilayah, 8) as kode_kecamatan')
             ->distinct()
@@ -72,7 +72,7 @@ class DataPendidikanController extends Controller
 
         $kodeKecamatan = optional($kecamatans->first())['kecamatan'];
         $kodeKabupaten = substr($kodeKecamatan, 0, 5);
-        $namaKabupaten = Wilayah::getNamaByKode($kodeKabupaten);
+        $namaKabupaten = RefWilayah::getNamaByKode($kodeKabupaten);
 
         return view('frontend.pages.kecamatan', compact(
             'title',
@@ -90,10 +90,10 @@ class DataPendidikanController extends Controller
     //     $title = 'Data Pendidikan';
     //     $subtitle = 'Rekapitulasi data pendidikan berdasarkan sekolah.';
 
-    //     $namaKecamatan = Wilayah::getNamaByKode($kecamatan);
+    //     $namaKecamatan = RefWilayah::getNamaByKode($kecamatan);
     //     $kodeKabupaten = substr(preg_replace('/[^0-9]/', '', $kecamatan), 0, 4);
     //     $kodeKabupaten = substr($kodeKabupaten, 0, 2) . '.' . substr($kodeKabupaten, 2, 2);
-    //     $namaKabupaten = Wilayah::getNamaByKode($kodeKabupaten);
+    //     $namaKabupaten = RefWilayah::getNamaByKode($kodeKabupaten);
 
     //     $sekolahs = MstSekolah::with([
     //         'jenjang', // relasi ke ref_jenjang_pendidikan
@@ -124,10 +124,10 @@ class DataPendidikanController extends Controller
         $title = 'Data Pendidikan';
         $subtitle = 'Rekapitulasi data pendidikan berdasarkan sekolah.';
 
-        $namaKecamatan = Wilayah::getNamaByKode($kecamatan);
+        $namaKecamatan = RefWilayah::getNamaByKode($kecamatan);
         $kodeKabupaten = substr(preg_replace('/[^0-9]/', '', $kecamatan), 0, 4);
         $kodeKabupaten = substr($kodeKabupaten, 0, 2) . '.' . substr($kodeKabupaten, 2, 2);
-        $namaKabupaten = Wilayah::getNamaByKode($kodeKabupaten);
+        $namaKabupaten = RefWilayah::getNamaByKode($kodeKabupaten);
 
         $sekolahs = MstSekolah::with('jenjang')
             ->withCount([
@@ -167,7 +167,8 @@ class DataPendidikanController extends Controller
             'rombonganBelajars.waliKelas',
             'rombonganBelajars.pesertaDidiks',
             'rombonganBelajars.kurikulum',
-            'kepalaSekolahDetail.jenis',    // ← pastikan eager‐load jenis GTK
+            'kepalaSekolahDetail.jenisGtk',
+            'mstSarprasSekolah.kondisiSarpras',
         ])
             ->with(['rombonganBelajars' => fn($q) => $q->withCount('pesertaDidiks')])
             ->where('npsn', $npsn)
@@ -176,11 +177,11 @@ class DataPendidikanController extends Controller
         // 2. Proses wilayah (tidak berubah)
         $kodeKecamatan  = $sekolah->kode_wilayah ? substr($sekolah->kode_wilayah, 0, 8) : null;
         $kodeKelurahan  = $sekolah->kode_wilayah;
-        $namaKecamatan  = Wilayah::getNamaByKode($kodeKecamatan);
-        $namaKelurahan  = Wilayah::getNamaByKode($kodeKelurahan);
+        $namaKecamatan  = RefWilayah::getNamaByKode($kodeKecamatan);
+        $namaKelurahan  = RefWilayah::getNamaByKode($kodeKelurahan);
         $kodeKabupaten  = substr(preg_replace('/[^0-9]/', '', $kodeKecamatan), 0, 4);
         $kodeKabupaten  = substr($kodeKabupaten, 0, 2) . '.' . substr($kodeKabupaten, 2, 2);
-        $namaKabupaten  = Wilayah::getNamaByKode($kodeKabupaten);
+        $namaKabupaten  = RefWilayah::getNamaByKode($kodeKabupaten);
 
         // 3. Ambil satu kode kurikulum dari rombel yang tersedia
         $kurikulum = $sekolah->rombonganBelajars
@@ -213,6 +214,7 @@ class DataPendidikanController extends Controller
             ->flatMap(fn($rombel) => $rombel->anggotaRombels)
             ->map(fn($anggota) => $anggota->pesertaDidik)
             ->filter(); // buang null
+
 
         // 6. Render view
         return view('frontend.pages.detail_sekolah', compact(

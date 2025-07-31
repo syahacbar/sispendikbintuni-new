@@ -37,8 +37,8 @@ class DatabaseSeeder extends Seeder
             MstAnggotaRombelSeeder::class,
 
             SysSettingsSeeder::class,
-            ExtBannerMobileSeeder::class,
             MstKondisiSarprasSeeder::class,
+            RoleSeeder::class,
         ]);
     }
 }

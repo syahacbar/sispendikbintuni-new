@@ -90,11 +90,11 @@ class MstPesertaDidikResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -110,8 +110,8 @@ class MstPesertaDidikResource extends Resource
     {
         return [
             'index' => Pages\ListMstPesertaDidiks::route('/'),
-            'create' => Pages\CreateMstPesertaDidik::route('/create'),
-            'edit' => Pages\EditMstPesertaDidik::route('/{record}/edit'),
+            // 'create' => Pages\CreateMstPesertaDidik::route('/create'),
+            // 'edit' => Pages\EditMstPesertaDidik::route('/{record}/edit'),
         ];
     }
 }

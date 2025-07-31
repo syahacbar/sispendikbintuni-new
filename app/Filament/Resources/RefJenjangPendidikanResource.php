@@ -57,11 +57,11 @@ class RefJenjangPendidikanResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -77,8 +77,8 @@ class RefJenjangPendidikanResource extends Resource
     {
         return [
             'index' => Pages\ListRefJenjangPendidikans::route('/'),
-            'create' => Pages\CreateRefJenjangPendidikan::route('/create'),
-            'edit' => Pages\EditRefJenjangPendidikan::route('/{record}/edit'),
+            // 'create' => Pages\CreateRefJenjangPendidikan::route('/create'),
+            // 'edit' => Pages\EditRefJenjangPendidikan::route('/{record}/edit'),
         ];
     }
 }

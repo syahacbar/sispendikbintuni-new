@@ -2,8 +2,10 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\MstPesertaDidik;
+use data;
+use App\Models\RefWilayah;
 use App\Models\PesertaDidik;
+use App\Models\MstPesertaDidik;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Facades\DB;
 
@@ -19,26 +21,24 @@ class PesertaDidikChart extends ChartWidget
 
     protected function getData(): array
     {
-        $data = MstPesertaDidik::select('kode_wilayah', DB::raw('count(*) as total'))
-            ->groupBy('kode_wilayah')
-            ->orderBy('kode_wilayah')
+        // Join ke ref_wilayah untuk ambil nama kecamatan
+        $data = DB::table('mst_peserta_didik')
+            ->select('ref_wilayah.nama', DB::raw('count(*) as total'))
+            ->join('ref_wilayah', 'mst_peserta_didik.kode_wilayah', '=', 'ref_wilayah.kode')
+            ->whereRaw("LENGTH(REPLACE(mst_peserta_didik.kode_wilayah, '.', '')) = 6") // hanya kecamatan
+            ->groupBy('ref_wilayah.nama')
+            ->orderBy('ref_wilayah.nama')
             ->get();
-
 
         return [
             'datasets' => [
                 [
                     'label' => 'Jumlah Peserta Didik',
                     'data' => $data->pluck('total'),
-                    'backgroundColor' => [
-                        '#3b82f6',
-                        '#10b981',
-                        '#f59e0b',
-                        '#ef4444',
-                    ],
+                    'backgroundColor' => '#3b82f6',
                 ],
             ],
-            'labels' => $data->pluck('kode_wilayah'),
+            'labels' => $data->pluck('nama'),
         ];
     }
 }

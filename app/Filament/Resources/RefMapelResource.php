@@ -58,11 +58,11 @@ class RefMapelResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -78,8 +78,8 @@ class RefMapelResource extends Resource
     {
         return [
             'index' => Pages\ListRefMapels::route('/'),
-            'create' => Pages\CreateRefMapel::route('/create'),
-            'edit' => Pages\EditRefMapel::route('/{record}/edit'),
+            // 'create' => Pages\CreateRefMapel::route('/create'),
+            // 'edit' => Pages\EditRefMapel::route('/{record}/edit'),
         ];
     }
 }

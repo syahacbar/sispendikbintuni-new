@@ -99,8 +99,8 @@ class PaneladminPanelProvider extends PanelProvider
                             background-color: #0093dd;
                         }
 
-                        li.fi-sidebar-item.fi-active.fi-sidebar-item-active a svg,
-                        li.fi-sidebar-item.fi-active.fi-sidebar-item-active a span {
+                        /* li.fi-sidebar-item.fi-active.fi-sidebar-item-active a span { */
+                        li.fi-sidebar-item.fi-active.fi-sidebar-item-active a svg {
                             color: #fff !important;
                         }
 
