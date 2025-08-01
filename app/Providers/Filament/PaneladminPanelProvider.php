@@ -30,6 +30,7 @@ class PaneladminPanelProvider extends PanelProvider
             ->path('paneladmin')
             ->brandName('Sispendik Bintuni')
             ->login()
+            ->breadcrumbs(false)
             ->font('Segoe UI')
             ->colors([
                 'primary' => Color::hex('#0093dd'),

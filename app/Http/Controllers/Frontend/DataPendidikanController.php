@@ -192,10 +192,10 @@ class DataPendidikanController extends Controller
 
         // 4. Data chart guru
         $kualifikasiGuru = $sekolah->ptks
-            ->groupBy('kualifikasi')
+            ->groupBy('pend_terakhir')
             ->map(fn($g) => $g->count());
         $statusGuru = $sekolah->ptks
-            ->groupBy('status')
+            ->groupBy('status_kepegawaian')
             ->map(fn($g) => $g->count());
 
         $kualifikasiLabels = $kualifikasiGuru->keys();
@@ -214,6 +214,7 @@ class DataPendidikanController extends Controller
             ->flatMap(fn($rombel) => $rombel->anggotaRombels)
             ->map(fn($anggota) => $anggota->pesertaDidik)
             ->filter(); // buang null
+
 
 
         // 6. Render view

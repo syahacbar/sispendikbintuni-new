@@ -40,14 +40,13 @@ class TentangWeb extends Page implements HasForms
 
     public static function canAccess(): bool
     {
-        return auth()->user()?->hasRole('super_admin');
+        return auth()->user()?->hasRole('super_admin', 'admin_sekolah');
     }
 
     public static function shouldRegisterNavigation(): bool
     {
-        return auth()->user()?->hasRole('super_admin');
+        return auth()->user()?->hasRole('super_admin', 'admin_sekolah');
     }
-
 
     public function mount(): void
     {

@@ -36,6 +36,12 @@ class ExtBannerMobileResource extends Resource
                     ->image()
                     ->previewable(true)
                     ->openable()
+                    ->imageEditor()
+                    ->imageEditorAspectRatios([
+                        '16:9',
+                        '4:3',
+                        '1:1',
+                    ])
                     ->maxSize(1024),
                 Forms\Components\Textarea::make('deskripsi')
                     ->required(),

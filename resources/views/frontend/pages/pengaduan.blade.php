@@ -63,9 +63,6 @@
                         <div class="mb-3">
                             <label for="dok_lampiran" class="form-label">Dokumen Lampiran</label>
                             <input type="file" class="form-control" id="dok_lampiran" name="dok_lampiran">
-                            {{-- <small class="form-text text-muted">Lampiran bersifat opsional. Maks. 2MB, format: jpg, jpeg,
-                                png, pdf, docx.</small> --}}
-
                         </div>
                     </div>
                     <div class="col-md-12">

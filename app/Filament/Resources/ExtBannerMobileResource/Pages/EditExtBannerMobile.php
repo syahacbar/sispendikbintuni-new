@@ -10,6 +10,8 @@ class EditExtBannerMobile extends EditRecord
 {
     protected static string $resource = ExtBannerMobileResource::class;
 
+    protected static ?string $title = 'Ubah Data Banner';
+
     protected function getHeaderActions(): array
     {
         return [

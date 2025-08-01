@@ -9,7 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateExtBannerMobile extends CreateRecord
 {
     protected static string $resource = ExtBannerMobileResource::class;
-
+    protected static ?string $title = 'Tambah Data Banner';
 
     protected function getRedirectUrl(): string
     {
