@@ -13,7 +13,7 @@
     }
 </style>
 @section('content')
-    <section class="hero w-100 container-fluid d-flex align-items-start justify-content-start text-start">
+    <section class="hero w-100 container-fluid d-flex align-items-start justify-content-start text-start" style="height: 70vh; !important">
         <div class="container">
             <div class="hero-content" data-aos="fade-up">
                 <p>{{ $pengaturan['welcome_text'] ?? '' }}</p>
