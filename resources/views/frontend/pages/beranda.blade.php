@@ -25,7 +25,7 @@
         <div class="container">
             <div class="hero-content" data-aos="fade-up">
                 <p>Selamat Datang di</p>
-                <h1>Tata Kelola Pendidikan Dengan Sistem Perencanaan Terintegrasi (SERASI)</h1>
+                <h1>Tata Kelola Pendidikan Dengan Sistem Perencanaan Terintegrasi (SERASI) Kabupaten Teluk Bintuni</h1>
                 <!-- <p>Tata Kelola Pendidikan Dengan Sistem Perencanaan Terintegrasi</p> -->
             </div>
         </div>
