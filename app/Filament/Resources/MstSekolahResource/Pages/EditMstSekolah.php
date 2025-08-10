@@ -16,4 +16,14 @@ class EditMstSekolah extends EditRecord
             // Actions\DeleteAction::make(),
         ];
     }
+
+    public function getTitle(): string
+    {
+        return 'Ubah Data Sekolah';
+    }
+
+    public function getHeading(): string
+    {
+        return 'Data Sekolah';
+    }
 }
