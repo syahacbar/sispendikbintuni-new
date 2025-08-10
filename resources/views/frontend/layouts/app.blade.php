@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Sispendik Kabupaten Bintuni</title>
+    <title>SERASI | Sistem Perencanaan Terintegrasi Kab. Teluk Bintuni</title>
     <!-- Favicon 16x16 (Browser) -->
     <link rel="icon" sizes="16x16" href="{{ asset('favicon-16x16.ico') }}">
 

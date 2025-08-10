@@ -24,8 +24,8 @@
     <section class="hero w-100 container-fluid d-flex align-items-start justify-content-start text-start">
         <div class="container">
             <div class="hero-content" data-aos="fade-up">
-                <p>{{ $teks_selamat_datang }}</p>
-                <h1>{{ $deskripsi }}<br />{{ $nama_instansi }}</h1>
+                <p>Selamat Datang di</p>
+                <h1>Tata Kelola Pendidikan Dengan Sistem Perencanaan Terintegrasi (SERASI)<br />Kabupaten Teluk Bintuni</h1>
                 <p>{{ $slogan }}</p>
             </div>
         </div>
