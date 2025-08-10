@@ -35,4 +35,21 @@ class MstGtk extends Model
     {
         return $this->belongsTo(RefJenisGtk::class, 'jenis_gtk', 'id');
     }
+
+    public function rombels()
+    {
+        return $this->hasMany(MstRombel::class, 'wali_kelas_ptk_id', 'id');
+    }
+
+    public function sekolahMelaluiRombel()
+    {
+        return $this->hasManyThrough(
+            MstSekolah::class,
+            MstRombel::class,
+            'wali_kelas_ptk_id', // Foreign key di mst_rombel yang mengacu ke mst_gtk
+            'id',                // Foreign key di mst_sekolah
+            'id',                // Local key di mst_gtk
+            'sekolah_id'         // Local key di mst_rombel
+        );
+    }
 }

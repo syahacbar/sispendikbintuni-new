@@ -3,13 +3,16 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Support\Str;
+use Filament\Models\Contracts\FilamentUser;
 
-class User extends Authenticatable
+
+class User extends Authenticatable implements FilamentUser
 {
     use HasFactory, Notifiable, HasRoles;
 
@@ -27,7 +30,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'sekolah_id',
     ];
 
     /**
@@ -53,8 +55,28 @@ class User extends Authenticatable
         ];
     }
 
+    // public function sekolah()
+    // {
+    //     return $this->hasOne(MstSekolah::class, 'users_id');
+    // }
+
+    // public function sekolah()
+    // {
+    //     return $this->belongsTo(MstSekolah::class, 'sekolah_id');
+    // }
+
     public function sekolah()
     {
-        return $this->hasOne(MstSekolah::class, 'users_id');
+        return $this->hasOne(MstSekolah::class, 'users_id', 'id');
+    }
+
+    // public function canAccessPanel(Panel $panel): bool
+    // {
+    //     return str_ends_with($this->email, '@animaproperty.id') && $this->hasVerifiedEmail();
+    // }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return $this->hasRole(['super_admin', 'admin_dinas', 'admin_sekolah']);
     }
 }

@@ -23,54 +23,76 @@ class MstSekolahResource extends Resource
     protected static ?string $pluralLabel = 'Sekolah';
     protected static ?string $slug = 'data-sekolah';
 
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+
+        if (auth()->user()->hasRole('admin_sekolah')) {
+            $query->where('users_id', auth()->id());
+        }
+
+        return $query;
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('npsn')
-                    ->required()
-                    ->maxLength(10),
-                Forms\Components\TextInput::make('nama')
-                    ->required()
-                    ->maxLength(100),
-                Forms\Components\Textarea::make('alamat')
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('kode_wilayah')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('kode_pos')
-                    ->maxLength(10),
-                Forms\Components\TextInput::make('status')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('kode_jenjang')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('akreditasi')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('email')
-                    ->email()
-                    ->required()
-                    ->maxLength(100),
-                Forms\Components\TextInput::make('telepon')
-                    ->tel()
-                    ->maxLength(20),
-                Forms\Components\TextInput::make('kepemilikan')
-                    ->maxLength(100),
-                Forms\Components\TextInput::make('sk_pendirian')
-                    ->maxLength(100),
-                Forms\Components\DatePicker::make('tanggal_sk_pendirian'),
-                Forms\Components\TextInput::make('sk_izin_operasional')
-                    ->maxLength(100),
-                Forms\Components\DatePicker::make('tanggal_sk_izin_operasional'),
-                Forms\Components\TextInput::make('latitude')
-                    ->maxLength(100),
-                Forms\Components\TextInput::make('longitude')
-                    ->maxLength(100),
-                Forms\Components\TextInput::make('users_id')
-                    ->numeric(),
+                Forms\Components\Grid::make(3)
+                    ->schema([
+                        Forms\Components\TextInput::make('npsn')
+                            ->required()
+                            ->maxLength(10),
+                        Forms\Components\TextInput::make('nama')
+                            ->required()
+                            ->maxLength(100),
+                        Forms\Components\TextInput::make('kode_jenjang')
+                            ->label('Jenjang Pendidikan')
+                            ->maxLength(255),
+                        Forms\Components\Textarea::make('alamat')
+                            ->columnSpanFull(), // tetap full width
+                        // Forms\Components\TextInput::make('kode_wilayah')
+                        //     ->maxLength(255),
+                        Forms\Components\TextInput::make('kode_pos')
+                            ->maxLength(10),
+                        Forms\Components\TextInput::make('status')
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('akreditasi')
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('email')
+                            ->email()
+                            ->required()
+                            ->maxLength(100),
+                        Forms\Components\TextInput::make('telepon')
+                            ->tel()
+                            ->maxLength(20),
+                        Forms\Components\TextInput::make('kepemilikan')
+                            ->maxLength(100),
+                        Forms\Components\TextInput::make('sk_pendirian')
+                            ->maxLength(100),
+                        Forms\Components\DatePicker::make('tanggal_sk_pendirian')
+                            ->native(false),
+                        Forms\Components\TextInput::make('sk_izin_operasional')
+                            ->maxLength(100),
+                        Forms\Components\DatePicker::make('tanggal_sk_izin_operasional')
+                            ->native(false),
+                        Forms\Components\TextInput::make('latitude')
+                            ->maxLength(100),
+                        Forms\Components\TextInput::make('longitude')
+                            ->maxLength(100),
+                        Forms\Components\TextInput::make('users_id')
+                            ->numeric(),
+                    ]),
             ]);
     }
 
+
     public static function table(Table $table): Table
     {
+        if (auth()->user()->hasRole('admin_sekolah')) {
+            return $table->columns([]);
+        }
+
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('npsn')
@@ -143,8 +165,8 @@ class MstSekolahResource extends Resource
     {
         return [
             'index' => Pages\ListMstSekolahs::route('/'),
-            // 'create' => Pages\CreateMstSekolah::route('/create'),
-            // 'edit' => Pages\EditMstSekolah::route('/{record}/edit'),
+            'create' => Pages\CreateMstSekolah::route('/create'),
+            'edit' => Pages\EditMstSekolah::route('/{record}/edit'),
         ];
     }
 }

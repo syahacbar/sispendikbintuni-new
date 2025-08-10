@@ -39,6 +39,7 @@ class DatabaseSeeder extends Seeder
             SysSettingsSeeder::class,
             MstKondisiSarprasSeeder::class,
             RoleSeeder::class,
+            UserSeeder::class,
         ]);
     }
 }

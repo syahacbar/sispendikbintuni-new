@@ -11,9 +11,12 @@ use App\Filament\Widgets\DashboardStats;
 use App\Filament\Widgets\LatestPengaduan;
 use App\Filament\Widgets\PesertaDidikChart;
 use App\Filament\Widgets\CustomDashboardStats;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 
 class Dasbor extends Page
 {
+    use HasPageShield;
+
     protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
     protected static string $view = 'filament.pages.dashboard';
     protected static ?string $title = 'Dashboard';

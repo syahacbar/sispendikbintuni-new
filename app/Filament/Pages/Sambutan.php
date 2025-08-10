@@ -23,10 +23,11 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Components\RichEditor;
 
 use Filament\Infolists\Components\TextEntry;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 
 class Sambutan extends Page implements HasForms
 {
-    use InteractsWithForms;
+    use InteractsWithForms, HasPageShield;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
     protected static ?string $navigationLabel = 'Sambutan';
@@ -36,17 +37,6 @@ class Sambutan extends Page implements HasForms
     protected static string $view = 'filament.pages.tentang';
 
     public ?array $data = [];
-
-    public static function canAccess(): bool
-    {
-        return auth()->user()?->hasRole('super_admin');
-    }
-
-    public static function shouldRegisterNavigation(): bool
-    {
-        return auth()->user()?->hasRole('super_admin');
-    }
-
 
 
     public function mount(): void

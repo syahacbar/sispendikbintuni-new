@@ -6,9 +6,12 @@ use App\Models\MstSekolah;
 use App\Models\Sekolah;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Facades\DB;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 
 class SekolahChart extends ChartWidget
 {
+    // use HasPageShield;
+
     protected static ?string $heading = 'Perbandingan Sekolah per Jenjang';
     protected static ?int $sort = 2;
 

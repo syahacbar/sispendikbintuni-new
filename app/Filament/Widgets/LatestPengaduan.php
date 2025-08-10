@@ -8,9 +8,12 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Widgets\TableWidget as BaseWidget;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 
 class LatestPengaduan extends BaseWidget
 {
+    // use HasPageShield;
+
     protected static ?string $heading = '5 Pengaduan Terbaru';
     protected static ?int $sort = 4;
 

@@ -6,9 +6,12 @@ use App\Models\MstGtk;
 use App\Models\Ptk;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Facades\DB;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 
 class PtkChart extends ChartWidget
 {
+    // use HasPageShield;
+
     protected static ?string $heading = 'Grafik GTK by Status';
     protected static ?int $sort = 2;
 

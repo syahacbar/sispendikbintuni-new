@@ -21,7 +21,7 @@ class RefWilayahResource extends Resource
     protected static ?string $navigationGroup = 'Data Referensi';
     protected static ?string $navigationLabel = 'Wilayah Indonesia';
     protected static ?string $pluralLabel = 'Wilayah Indonesia';
-    protected static ?string $slug = 'data-mata-pelajaran';
+    protected static ?string $slug = 'data-wilayah-indonesia';
 
     public static function form(Form $form): Form
     {

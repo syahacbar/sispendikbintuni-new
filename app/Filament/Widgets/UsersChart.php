@@ -6,9 +6,12 @@ use App\Models\User;
 use Carbon\Carbon;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Facades\DB;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 
 class UsersChart extends ChartWidget
 {
+    // use HasPageShield;
+
     protected static ?string $heading = 'User Baru';
     protected static ?int $sort = 3;
 

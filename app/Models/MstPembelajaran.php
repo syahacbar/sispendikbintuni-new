@@ -24,16 +24,16 @@ class MstPembelajaran extends Model
         'keterangan',
     ];
 
-    public function sekolah()
-    {
-        return $this->belongsTo(MstSekolah::class, 'id_sekolah');
-    }
+    // public function sekolah()
+    // {
+    //     return $this->belongsTo(MstSekolah::class, 'id_sekolah');
+    // }
 
 
-    public function rombel()
-    {
-        return $this->belongsTo(MstRombel::class, 'rombongan_belajar_id');
-    }
+    // public function rombel()
+    // {
+    //     return $this->belongsTo(MstRombel::class, 'rombongan_belajar_id');
+    // }
 
     public function mapel()
     {
@@ -48,5 +48,24 @@ class MstPembelajaran extends Model
     public function semester()
     {
         return $this->belongsTo(RefSemester::class, 'semester_id');
+    }
+
+
+    public function rombel()
+    {
+        return $this->belongsTo(MstRombel::class, 'rombongan_belajar_id');
+    }
+
+    public function sekolah()
+    {
+        // akses sekolah lewat rombel
+        return $this->hasOneThrough(
+            MstSekolah::class,
+            MstRombel::class,
+            'id',               // Foreign key on mst_rombel table...
+            'id',               // Foreign key on mst_sekolah table...
+            'rombongan_belajar_id', // Local key on mst_pembelajaran table...
+            'sekolah_id'        // Local key on mst_rombel table...
+        );
     }
 }

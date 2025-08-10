@@ -31,6 +31,10 @@ return [
         'enabled' => true,
         'name' => 'panel_user',
     ],
+    'sekolah_user' => [
+        'enabled' => true,
+        'name' => 'sekolah_user',
+    ],
 
     'permission_prefixes' => [
         'resource' => [

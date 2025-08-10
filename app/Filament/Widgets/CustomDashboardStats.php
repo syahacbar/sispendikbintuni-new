@@ -19,11 +19,13 @@ use Filament\Widgets\Widget;
 use App\Models\MstPesertaDidik;
 use App\Models\RombonganBelajar;
 use App\Models\MstSarprasSekolah;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 
 class CustomDashboardStats extends Widget
 {
+    // use HasPageShield;
+
     protected static string $view = 'filament.widgets.custom-dashboard-stats';
-    // protected int | string | array $columnSpan = 'full';
 
     public function getViewData(): array
     {

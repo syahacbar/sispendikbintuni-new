@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\MstSekolahResource\Pages;
 
 use App\Filament\Resources\MstSekolahResource;
-use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
 class ListMstSekolahs extends ListRecords
@@ -15,5 +14,23 @@ class ListMstSekolahs extends ListRecords
         return [
             // Actions\CreateAction::make(),
         ];
+    }
+
+    public function mount(): void
+    {
+        parent::mount();
+
+        if (auth()->user()->hasRole('admin_sekolah')) {
+            $record = auth()->user()->sekolah;
+
+            if ($record) {
+                $this->redirect(
+                    route(
+                        'filament.paneladmin.resources.data-sekolah.edit',
+                        ['record' => $record->getKey()]
+                    )
+                );
+            }
+        }
     }
 }

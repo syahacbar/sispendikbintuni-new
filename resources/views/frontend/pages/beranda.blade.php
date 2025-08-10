@@ -17,7 +17,7 @@
         <div class="container">
             <div class="hero-content" data-aos="fade-up">
                 <p>{{ $pengaturan['welcome_text'] ?? '' }}</p>
-                <h1>{{ $pengaturan['site_description'] ?? '' }}<br />{{ $pengaturan['site_name'] ?? '' }}</h1>
+                <h1>{{ $pengaturan['site_description'] ?? '' }}</h1>
                 <p>{{ $pengaturan['site_tagline'] ?? '' }}</p>
             </div>
         </div>

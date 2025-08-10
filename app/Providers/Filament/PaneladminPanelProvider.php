@@ -2,23 +2,26 @@
 
 namespace App\Providers\Filament;
 
-use Filament\Http\Middleware\Authenticate;
-use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
-use Filament\Http\Middleware\AuthenticateSession;
-use Filament\Http\Middleware\DisableBladeIconComponents;
-use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages;
 use Filament\Panel;
-use Filament\PanelProvider;
-use Filament\Support\Colors\Color;
 use Filament\Widgets;
-use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
-use Illuminate\Cookie\Middleware\EncryptCookies;
-use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
-use Illuminate\Routing\Middleware\SubstituteBindings;
+use App\Models\SysSetting;
+use Filament\PanelProvider;
+use Filament\Enums\ThemeMode;
+use Filament\Navigation\MenuItem;
+use Filament\Support\Colors\Color;
+use Filament\Http\Middleware\Authenticate;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Cookie\Middleware\EncryptCookies;
+use Filament\Http\Middleware\AuthenticateSession;
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
+use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Filament\Http\Middleware\DisableBladeIconComponents;
+use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin;
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 
 class PaneladminPanelProvider extends PanelProvider
 {
@@ -35,8 +38,25 @@ class PaneladminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::hex('#0093dd'),
             ])
-            ->sidebarCollapsibleOnDesktop()
-            ->sidebarWidth('15rem')
+            ->userMenuItems([
+                MenuItem::make()
+                    ->label('Kunjungi Web')
+                    ->url('/')
+                    ->openUrlInNewTab()
+                    ->icon('heroicon-o-globe-alt'),
+            ])
+            ->sidebarFullyCollapsibleOnDesktop()
+            ->defaultThemeMode(ThemeMode::Light)
+            ->favicon(function () {
+                $favicon = SysSetting::where('key', 'favicon')->value('value');
+
+                return $favicon
+                    ? asset('storage/' . $favicon)
+                    : asset('themes/frontend/logoserasi.png');
+            })
+            ->brandLogo(fn() => view('filament.admin.logo'))
+            ->brandLogoHeight('3rem')
+
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
@@ -109,7 +129,6 @@ class PaneladminPanelProvider extends PanelProvider
                             color: #fff;
                             max-width: 100% !important;
                             text-align: center;
-                            width: 100%;
                             display: flex;
                             justify-content: center;
                         }

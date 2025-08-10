@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\MstGtkResource\Pages;
-use App\Filament\Resources\MstGtkResource\RelationManagers;
 use App\Models\MstGtk;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -11,7 +10,6 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class MstGtkResource extends Resource
 {
@@ -106,6 +104,17 @@ class MstGtkResource extends Resource
                 ]),
             ]);
     }
+
+    // public static function getEloquentQuery(): Builder
+    // {
+    //     $query = parent::getEloquentQuery();
+
+    //     if (auth()->check() && auth()->user()->hasRole('admin_sekolah')) {
+    //         $query->where('sekolah_id', auth()->user()->sekolah_id);
+    //     }
+
+    //     return $query;
+    // }
 
     public static function getRelations(): array
     {

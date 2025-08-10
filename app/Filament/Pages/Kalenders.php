@@ -32,10 +32,11 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\DeleteAction;
 use Filament\Tables\Actions\DeleteBulkAction;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 
 class Kalenders extends Page implements HasTable, HasActions, HasForms
 {
-    use InteractsWithTable, InteractsWithForms, InteractsWithActions;
+    use InteractsWithTable, InteractsWithForms, InteractsWithActions, HasPageShield;
 
     protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
     protected static ?string $navigationLabel = 'Kalender Pendidikan';
@@ -48,17 +49,6 @@ class Kalenders extends Page implements HasTable, HasActions, HasForms
     public ?string $endDate = null;
 
     public $events;
-
-    public static function canAccess(): bool
-    {
-        return auth()->user()?->hasRole('super_admin');
-    }
-
-    public static function shouldRegisterNavigation(): bool
-    {
-        return auth()->user()?->hasRole('super_admin');
-    }
-
 
     public function createAction(): Action
     {

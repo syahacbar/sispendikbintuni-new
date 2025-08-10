@@ -43,9 +43,9 @@ class UserResource extends Resource
                     ->relationship('roles', 'name')
                     ->preload(),
 
-                Select::make('sekolah')
+                Select::make('sekolah_id')
+                    ->label('Sekolah')
                     ->relationship('sekolah', 'nama')
-                    ->preload()
                     ->searchable()
                     ->preload(),
 

@@ -8,9 +8,13 @@ use Filament\Tables;
 use Illuminate\Support\Facades\DB;
 use Filament\Widgets\TableWidget as BaseWidget;
 use Illuminate\Database\Eloquent\Builder;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 
 class ActiveUsers extends BaseWidget
 {
+
+    // use HasPageShield;
+
     protected static ?string $heading = 'Pengguna Aktif Saat Ini';
     protected static ?int $sort = 6;
     protected int $pollInterval = 10;
@@ -40,11 +44,6 @@ class ActiveUsers extends BaseWidget
     public function isTablePaginationEnabled(): bool
     {
         return false;
-    }
-
-    public static function canView(): bool
-    {
-        return auth()->user()?->hasRole('super_admin');
     }
 
     protected function getTableColumns(): array

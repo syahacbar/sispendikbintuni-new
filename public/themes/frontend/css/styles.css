@@ -9,15 +9,9 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    /* padding-left: 0 !important; */
 }
 
 /* Main Navbar */
-
-/* .col-lg-5 {
-    width: 100%;
-} */
-
 .main-navbar .nav-link.active {
     color: #0093dd !important;
     font-weight: 700;
@@ -46,47 +40,16 @@ li.nav-item.dropdown ul li a {
     color: #006633 !important;
     width: 100%;
 }
-/* .main-navbar .nav-link:hover {
-    background: linear-gradient(to right, #006633, #00cc99);
-    color: white !important;
-    transition: color 0.3s ease, background 0.3s ease;
-    border-radius: 5px;
-    padding: 0.3rem 0.6rem;
-} */
-
 .logo {
     height: 50px;
 }
-/* 
-@media (max-width: 668px) {
-    .main-navbar {
-        display: none !important;
-    }
-
-    .main-navbar.show-navbar {
-        top: 0;
-        left: 0;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-        background-color: white;
-        padding: 0.5rem 1rem;
-        border-bottom: 1px solid #ccc;
-        animation: slideDown 0.3s ease forwards;
-    }
-
-    .main-navbar .nav-link:hover {
-        background: transparent;
-        color: #006633 !important;
-        width: 100%;
-    }
-} */
-
 /* Hero */
 
 .hero {
     position: relative;
-    background: url("/themes/frontend/bg.png");
-    background-position: center;
-    background-size: contain;
+    background: url("/themes/frontend/logoserasi.png");
+    background-position: right 20% center;
+    background-size: 25%;
     background-repeat: no-repeat;
     width: 100%;
     height: 100vh;
@@ -95,7 +58,6 @@ li.nav-item.dropdown ul li a {
     justify-content: flex-start;
     padding: 9rem 2rem 2rem 2rem;
     color: white;
-    /* margin-bottom: 2rem; */
     overflow: hidden;
 }
 
@@ -118,7 +80,6 @@ li.nav-item.dropdown ul li a {
 .hero-content {
     position: relative;
     z-index: 2;
-    /* max-width: 600px; */
     max-width: 100%;
     margin-top: 4rem;
 }
@@ -202,10 +163,7 @@ li.nav-item.dropdown ul li a {
         background-position: center;
         padding-top: 60px !important;
     }
-    /*     
-    .main-navbar {
-        display: none !important;
-    } */
+
     .main-navbar.show-navbar {
         display: block !important;
         position: fixed;
@@ -253,7 +211,6 @@ li.nav-item.dropdown ul li a {
 }
 
 /* Liputan */
-
 .col-md-6 .card {
     position: relative;
     overflow: hidden;
@@ -270,32 +227,13 @@ li.nav-item.dropdown ul li a {
 /* Efek terang pada gambar saat hover */
 .col-md-6 .card:hover .card-img {
     transform: scale(1.05) translateY(-10px);
-    filter: brightness(1.2); /* lebih terang */
+    filter: brightness(1.2);
 }
 
 /* Shadow hijau saat hover */
 .col-md-6 .card:hover {
     box-shadow: 0 12px 24px #ecf0f6;
 }
-
-/* .col-md-6 .card-img-overlay {
-    background: linear-gradient(
-        to right,
-        rgba(0, 102, 51, 0.068),
-        rgba(0, 128, 0, 0.6)
-    );
-    transition: background 0.3s ease;
-    color: #ccc;
-} */
-
-/* Saat hover overlay jadi lebih transparan/cerah */
-/* .col-md-6 .card:hover .card-img-overlay {
-    background: linear-gradient(
-        to right,
-        rgba(0, 102, 51, 0.03),
-        rgba(184, 202, 193, 0.5)
-    );
-} */
 
 .badge {
     background: #006633;
@@ -307,16 +245,10 @@ li.nav-item.dropdown ul li a {
 }
 
 .col-md-3 .card {
-    /* transition: background-color 0.3s ease, color 0.3s ease; */
     overflow: hidden;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
 }
-
-/* .col-md-3 .card:hover {
-    background-color: #198754;
-    color: white;
-} */
 
 .col-md-3 .card:hover .card-text {
     color: white !important;
@@ -611,7 +543,7 @@ li.nav-item.dropdown ul li a {
 
 /* CARD SECTION STYLE */
 .status-section {
-    background: #f8f9fa; /* Light background */
+    background: #f8f9fa;
 }
 
 .status-section .card {
@@ -632,12 +564,12 @@ li.nav-item.dropdown ul li a {
 .status-section h3 {
     font-weight: 700;
     font-size: 1.5rem;
-    color: #198754; /* Bootstrap 'success' green */
+    color: #198754;
 }
 
 .status-section p {
     font-size: 1rem;
-    color: #6c757d; /* Bootstrap 'muted' gray */
+    color: #6c757d;
     line-height: 1.6;
 }
 
@@ -685,6 +617,7 @@ li.nav-item.dropdown ul li a {
     color: white;
     padding: 3rem 2rem 2rem 2rem;
 }
+
 .header-penelitian::before {
     content: "";
     position: absolute;
@@ -700,6 +633,7 @@ li.nav-item.dropdown ul li a {
     );
     z-index: 1;
 }
+
 @media (min-width: 576px) {
     .header-penelitian {
         height: 22rem;

@@ -8,9 +8,12 @@ use App\Models\PesertaDidik;
 use App\Models\MstPesertaDidik;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Facades\DB;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 
 class PesertaDidikChart extends ChartWidget
 {
+
+    // use HasPageShield;
     protected static ?string $heading = 'Grafik Peserta Didik per Jenjang';
     protected static ?int $sort = 2;
 

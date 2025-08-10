@@ -30,7 +30,6 @@ return new class extends Migration
             $table->date('tanggal_sk_izin_operasional')->nullable();
             $table->string('latitude', 100)->nullable();
             $table->string('longitude', 100)->nullable();
-            // $table->uuid('users_id')->nullable();
             $table->unsignedBigInteger('users_id')->nullable();
             $table->timestamps();
         });

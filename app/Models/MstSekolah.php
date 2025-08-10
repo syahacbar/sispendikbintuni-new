@@ -168,22 +168,22 @@ class MstSekolah extends Model
         );
     }
 
-    protected static function booted()
-    {
-        static::saving(function ($sekolah) {
-            if (empty($sekolah->slug) && $sekolah->nama && $sekolah->npsn) {
-                $slug = Str::slug($sekolah->nama . '-' . $sekolah->npsn);
+    // protected static function booted()
+    // {
+    //     static::saving(function ($sekolah) {
+    //         if (empty($sekolah->slug) && $sekolah->nama && $sekolah->npsn) {
+    //             $slug = Str::slug($sekolah->nama . '-' . $sekolah->npsn);
 
-                $original = $slug;
-                $counter = 1;
-                while (MstSekolah::where('slug', $slug)->where('id', '!=', $sekolah->id)->exists()) {
-                    $slug = $original . '-' . $counter++;
-                }
+    //             $original = $slug;
+    //             $counter = 1;
+    //             while (MstSekolah::where('slug', $slug)->where('id', '!=', $sekolah->id)->exists()) {
+    //                 $slug = $original . '-' . $counter++;
+    //             }
 
-                $sekolah->slug = $slug;
-            }
-        });
-    }
+    //             $sekolah->slug = $slug;
+    //         }
+    //     });
+    // }
 
     public function getSarprasAttribute()
     {

@@ -18,14 +18,14 @@ class SysSettingsSeeder extends Seeder
             [
                 'group' => 'site',
                 'key' => 'site_name',
-                'value' => 'Sispendik Bintuni',
+                'value' => 'Sistem Perencanaan Terintegrasi',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'group' => 'site',
                 'key' => 'site_description',
-                'value' => 'Sistem Informasi Pendidikan',
+                'value' => 'Tata Kelola Pendidikan Dengan Sistem Perencanaan Terintegrasi (SERASI) Kabupaten Teluk Bintuni',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -103,7 +103,7 @@ class SysSettingsSeeder extends Seeder
             [
                 'group' => 'site',
                 'key' => 'site_logo',
-                'value' => '/storage/settings/logo.png',
+                'value' => 'settings/logoserasi.png',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

@@ -6,15 +6,17 @@ use App\Models\User;
 use Filament\Tables;
 use Filament\Widgets\TableWidget as BaseWidget;
 use Illuminate\Database\Eloquent\Builder;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 
 class LatestUsers extends BaseWidget
 {
+    // use HasPageShield;
+
     protected static ?string $heading = '5 Pengguna Terbaru';
     protected static ?int $sort = 5;
 
     protected function getTableQuery(): Builder
     {
-        // return User::query()->latest();
         return User::query()->latest()->limit(5);
     }
 
