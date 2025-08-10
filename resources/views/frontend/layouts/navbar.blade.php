@@ -10,7 +10,7 @@
         <a class="w-15 navbar-brand d-flex align-items-center" href="{{ url('/') }}">
             <img class="w-25 mr-3" src="{{ asset('themes/frontend/logoserasi.png') }}" alt="Logo">
             {{-- <img class="w-25 mr-3" src="{{ asset('storage/' . $logo) }}" alt="Logo"> --}}
-            <h5 class="mb-0 text-white fw-bold mx-2">SERASI</h5>
+            <h5 class="mb-0 text-white fw-bold mx-2">Sistem Perencanaan Terintegrasi</h5>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSispendikBintuni"
             aria-controls="navbarSispendikBintuni" aria-expanded="false" aria-label="Toggle navigation">
