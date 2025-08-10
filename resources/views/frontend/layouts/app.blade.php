@@ -4,19 +4,21 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Sispendik Kabupaten Bintuni</title>
-    <!-- Favicon 16x16 (Browser) -->
-    <link rel="icon" sizes="16x16" href="{{ asset('favicon-16x16.ico') }}">
-
-    <!-- Favicon 32x32 (Browser) -->
-    <link rel="icon" sizes="32x32" href="{{ asset('favicon-32x32.ico') }}">
-
-    <!-- Favicon untuk Apple (iOS) -->
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
-
-    <!-- Favicon untuk Android -->
-    <link rel="icon" sizes="192x192" href="{{ asset('android-chrome-192x192.png') }}">
-    <link rel="icon" sizes="512x512" href="{{ asset('android-chrome-512x512.png') }}">
+    <title>{{ $pengaturan['site_name'] ?? 'Sistem Perencanaan Terintegrasi' }}</title>
+    <meta name="description"
+        content="{{ $pengaturan['site_description'] ?? 'Tata Kelola Pendidikan Dengan Sistem Perencanaan Terintegrasi (SERASI) Kabupaten Teluk Bintuni' }}">
+    <meta name="author" content="{{ $pengaturan['author'] ?? 'Admin' }}">
+    <meta name="keywords" content="{{ $pengaturan['keywords'] ?? 'sekolah, pendidikan, bintuni' }}">
+    <link rel="icon" sizes="16x16"
+        href="{{ asset($pengaturan['favicon_16'] ?? 'themes/frontend/logoserasi.png') }}">
+    <link rel="icon" sizes="32x32"
+        href="{{ asset($pengaturan['favicon_32'] ?? 'themes/frontend/logoserasi.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180"
+        href="{{ asset($pengaturan['favicon_apple'] ?? 'themes/frontend/logoserasi.png') }}">
+    <link rel="icon" sizes="192x192"
+        href="{{ asset($pengaturan['favicon_android_192'] ?? 'themes/frontend/logoserasi.png') }}">
+    <link rel="icon" sizes="512x512"
+        href="{{ asset($pengaturan['favicon_android_512'] ?? 'themes/frontend/logoserasi.png') }}">
 
     @include('frontend.layouts.style')
     @livewireStyles

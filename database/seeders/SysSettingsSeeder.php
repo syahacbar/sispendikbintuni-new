@@ -103,7 +103,7 @@ class SysSettingsSeeder extends Seeder
             [
                 'group' => 'site',
                 'key' => 'site_logo',
-                'value' => 'settings/logoserasi.png',
+                'value' => '',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

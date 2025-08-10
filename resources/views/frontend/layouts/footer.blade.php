@@ -3,7 +3,7 @@
         <div class="row align-items-start mb-4">
             <div class="col-sm-5">
                 <div class="mb-3 d-flex gap-2 justify-content-start align-items-center">
-                    <img class="w-25 mr-3" src="{{ asset('themes/frontend/logoserasi.png') }}"
+                    <img class="w-25 mr-3" src="{{ asset($pengaturan['logo'] ?? 'themes/frontend/logoserasi.png') }}"
                         alt="{{ $pengaturan['site_name'] ?? 'SERASI' }}">
                     <strong class="text-success fw-bold">{{ $pengaturan['site_description'] ?? '' }}</strong>
                 </div>
@@ -75,12 +75,10 @@
                         </ul>
                     </div>
                 </div>
-
             </div>
         </div>
 
         <div class="d-flex justify-content-between align-items-center border-top border-secondary pt-3 mt-3 mb-4">
-            {{-- <div class="small"> {{ $hak_cipta }} </div> --}}
             <i class="fas fa-university fa-2x text-success me-2"></i>
         </div>
     </div>
