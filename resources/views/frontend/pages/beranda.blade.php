@@ -33,7 +33,7 @@
                         $imagePath =
                             $sambutanFoto && file_exists(public_path('storage/' . $sambutanFoto))
                                 ? asset('storage/' . $sambutanFoto)
-                                : asset('themes/frontend/sambutan/default.png');
+                                : asset('themes/frontend/sambutan/kadinaspendidikanbintuni.png');
                     @endphp
 
                     <img src="{{ $imagePath }}" alt="Kepala Dinas Kabupaten Teluk Bintuni" class="img-fluid quote-img"
