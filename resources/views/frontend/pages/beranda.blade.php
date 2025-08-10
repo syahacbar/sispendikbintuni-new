@@ -46,7 +46,7 @@
                     </h5>
                     @php
                         $fullContent = $pengaturan['isi_sambutan'] ?? '';
-                        $shortContent = Str::limit(strip_tags($fullContent), 1000);
+                        $shortContent = Str::limit($fullContent, 1000);
                         $isExpandable = !empty($fullContent) && strlen(strip_tags($fullContent)) > 1000;
                     @endphp
 
