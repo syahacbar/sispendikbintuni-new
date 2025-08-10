@@ -497,9 +497,9 @@ li.nav-item.dropdown ul li a {
     height: 13rem;
     max-height: 288px;
     overflow: hidden;
-    background: url(/themes/frontend/bg.png);
-    background-position: bottom -12px right 20%;
-    background-size: contain;
+    background: url(/themes/frontend/logoserasi.png);
+    background-position: right 20% center;
+    background-size: 150px;
     background-repeat: no-repeat;
     color: white;
     padding: 3rem 2rem 2rem 2rem;

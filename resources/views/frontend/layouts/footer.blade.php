@@ -3,7 +3,8 @@
         <div class="row align-items-start mb-4">
             <div class="col-sm-5">
                 <div class="mb-3 d-flex gap-2 justify-content-start align-items-center">
-                    <img class="mr-3" src="{{ asset('themes/frontend/logo.png') }}" alt="Logo Kab Bintuni">
+                    <img class="w-25 mr-3" src="{{ asset('themes/frontend/logoserasi.png') }}"
+                        alt="{{ $pengaturan['site_name'] ?? 'SERASI' }}">
                     <strong class="text-success fw-bold">{{ $pengaturan['site_description'] ?? '' }}</strong>
                 </div>
                 <p class="small mb-1">
