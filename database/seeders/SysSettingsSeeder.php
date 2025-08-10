@@ -32,7 +32,7 @@ class SysSettingsSeeder extends Seeder
             [
                 'group' => 'site',
                 'key' => 'site_tagline',
-                'value' => 'Membangun Pendidikan Cerdas, Terhubung, dan Transparan',
+                'value' => ' ',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -145,7 +145,7 @@ class SysSettingsSeeder extends Seeder
             [
                 'group' => 'sambutan',
                 'key' => 'isi_sambutan',
-                'value' => 'Assalamu’alaikum warahmatullahi wabarakatuh',
+                'value' => '<p>Puji syukur kita panjatkan ke hadirat Tuhan Yang Maha Esa, karena atas rahmat dan karunia-Nya, Kepala Dinas Pendidikan, Kebudayaan, Pemuda dan Olahraga Kabupaten Teluk Bintuni dapat meluncurkan website <em>"Tata Kelola Pendidikan dengan Sistem Perencanaan Terintegrasi"</em> ini.</p><p>Peluncuran sistem ini merupakan langkah strategis dalam mewujudkan tata kelola pendidikan yang lebih transparan, akuntabel, serta berorientasi pada data dan kebutuhan riil di lapangan. Kami menyadari bahwa kualitas pendidikan yang merata dan berkeadilan hanya dapat dicapai melalui perencanaan yang tepat, terukur, dan melibatkan semua pemangku kepentingan.</p><p>Melalui platform ini, kami berharap proses perencanaan, penganggaran, pelaksanaan, hingga evaluasi program pendidikan dapat berjalan lebih efektif dan efisien. Selain itu, sistem ini juga menjadi bentuk komitmen kami dalam meningkatkan mutu layanan pendidikan di Kabupaten Teluk Bintuni.</p><p>Kami mengajak seluruh jajaran satuan pendidikan, pengelola data, tenaga pendidik, serta masyarakat untuk bersama-sama memanfaatkan sistem ini dengan sebaik-baiknya. Semoga inovasi ini dapat menjadi salah satu pondasi penting dalam membangun generasi Teluk Bintuni yang cerdas, berkarakter, dan berdaya saing.</p><p>Terima kasih.</p><p>Kepala Dinas Pendidikan, Kebudayaan, Pemuda dan Olahraga Kabupaten Teluk Bintuni<br><strong>Dr. Henry Donald Kapuangan, S.Pd., MM.</strong></p>',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
