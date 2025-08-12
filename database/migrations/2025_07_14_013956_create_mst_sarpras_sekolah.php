@@ -22,7 +22,6 @@ return new class extends Migration
             $table->integer('kondisi_rusak_ringan')->nullable();
             $table->integer('kondisi_rusak_sedang')->nullable();
             $table->integer('kondisi_rusak_berat')->nullable();
-            $table->integer('jumlah')->nullable();
             $table->text('keterangan')->nullable();
             $table->timestamps();
         });

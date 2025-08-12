@@ -22,7 +22,6 @@ class MstSarprasSekolah extends Model
         'kondisi_rusak_ringan',
         'kondisi_rusak_sedang',
         'kondisi_rusak_berat',
-        'jumlah',
         'keterangan',
     ];
 

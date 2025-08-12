@@ -48,26 +48,82 @@ class MstSarprasSekolahResource extends Resource
                 ->label('Kondisi Baik')
                 ->numeric()
                 ->required()
-                ->maxLength(255),
+                ->maxLength(255)
+                ->reactive()
+                ->afterStateUpdated(
+                    fn($state, callable $set, $get) =>
+                    $set(
+                        'jumlah_saat_ini',
+                        ($get('kondisi_baik') ?? 0) +
+                            ($get('kondisi_rusak_ringan') ?? 0) +
+                            ($get('kondisi_rusak_sedang') ?? 0) +
+                            ($get('kondisi_rusak_berat') ?? 0)
+                    )
+                ),
+
             Forms\Components\TextInput::make('kondisi_rusak_ringan')
                 ->label('Rusak Ringan')
                 ->numeric()
                 ->required()
-                ->maxLength(255),
+                ->maxLength(255)
+                ->reactive()
+                ->afterStateUpdated(
+                    fn($state, callable $set, $get) =>
+                    $set(
+                        'jumlah_saat_ini',
+                        ($get('kondisi_baik') ?? 0) +
+                            ($get('kondisi_rusak_ringan') ?? 0) +
+                            ($get('kondisi_rusak_sedang') ?? 0) +
+                            ($get('kondisi_rusak_berat') ?? 0)
+                    )
+                ),
+
             Forms\Components\TextInput::make('kondisi_rusak_sedang')
                 ->label('Rusak Sedang')
                 ->numeric()
                 ->required()
-                ->maxLength(255),
+                ->maxLength(255)
+                ->reactive()
+                ->afterStateUpdated(
+                    fn($state, callable $set, $get) =>
+                    $set(
+                        'jumlah_saat_ini',
+                        ($get('kondisi_baik') ?? 0) +
+                            ($get('kondisi_rusak_ringan') ?? 0) +
+                            ($get('kondisi_rusak_sedang') ?? 0) +
+                            ($get('kondisi_rusak_berat') ?? 0)
+                    )
+                ),
+
             Forms\Components\TextInput::make('kondisi_rusak_berat')
                 ->label('Rusak Berat')
                 ->numeric()
                 ->required()
-                ->maxLength(255),
+                ->maxLength(255)
+                ->reactive()
+                ->afterStateUpdated(
+                    fn($state, callable $set, $get) =>
+                    $set(
+                        'jumlah_saat_ini',
+                        ($get('kondisi_baik') ?? 0) +
+                            ($get('kondisi_rusak_ringan') ?? 0) +
+                            ($get('kondisi_rusak_sedang') ?? 0) +
+                            ($get('kondisi_rusak_berat') ?? 0)
+                    )
+                ),
+
             Forms\Components\TextInput::make('jumlah_saat_ini')
+                ->label('Jumlah Saat Ini')
                 ->numeric()
-                ->required()
-                ->default(0),
+                ->default(0)
+                ->disabled() // readonly di UI
+                ->dehydrateStateUsing(
+                    fn($state, callable $get) => ($get('kondisi_baik') ?? 0) +
+                        ($get('kondisi_rusak_ringan') ?? 0) +
+                        ($get('kondisi_rusak_sedang') ?? 0) +
+                        ($get('kondisi_rusak_berat') ?? 0)
+                ),
+
             Forms\Components\TextInput::make('jumlah_ideal')
                 ->numeric()
                 ->required()
@@ -127,11 +183,6 @@ class MstSarprasSekolahResource extends Resource
                 ->searchable(),
             Tables\Columns\TextColumn::make('kondisi_rusak_berat')
                 ->label('Rusak Berat')
-                ->sortable()
-                ->searchable(),
-            Tables\Columns\TextColumn::make('jumlah')
-                ->label('Jumlah')
-                ->numeric()
                 ->sortable()
                 ->searchable(),
             Tables\Columns\TextColumn::make('keterangan')
