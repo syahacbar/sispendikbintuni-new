@@ -27,8 +27,8 @@ class DatabaseSeeder extends Seeder
             ExtInformasiSeeder::class,
             ExtKalenderSeeder::class,
 
-            // MstSekolahSeeder::class,
-            // MstGtkSeeder::class,
+            MstSekolahSeeder::class,
+            MstGtkSeeder::class,
             // MstPesertaDidikSeeder::class,
             // MstRombelSeeder::class,
             // MstSarprasSekolahSeeder::class,

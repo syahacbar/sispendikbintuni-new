@@ -5,43 +5,66 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use Faker\Factory;
 
 class MstGtkSeeder extends Seeder
 {
     public function run(): void
     {
-        $faker = Factory::create('id_ID'); // Faker lokal Indonesia
+        $csvFile = database_path('seeders/data/mst_gtk.csv');
 
-        $agama = ['Islam', 'Kristen', 'Hindu', 'Buddha', 'Konghucu'];
-        $jk = ['L', 'P'];
-        $statusKepegawaian = ['PNS', 'PPPK', 'Honorer Daerah', 'Honorer Sekolah', 'GTY/PTY', 'Lainnya'];
-        $pendidikan = ['SD', 'SMP', 'SMA', 'D3', 'S1', 'S2', 'S3'];
-        $statusKeaktifan = ['Aktif', 'Tidak Aktif'];
+        if (!file_exists($csvFile)) {
+            $this->command->error("CSV file not found: $csvFile");
+            return;
+        }
 
-        // Ambil UUID dari jenis GTK yang sudah ada (pastikan data ref_jenis_gtk sudah ada)
-        $jenisGtkIds = DB::table('ref_jenis_gtk')->pluck('id')->toArray();
+        $file = fopen($csvFile, 'r');
 
-        foreach (range(1, 50) as $i) {
-            $jenisKelamin = $faker->randomElement($jk);
+        // Lewati header
+        fgetcsv($file, 0, ';');
+
+        while (($row = fgetcsv($file, 0, ';')) !== false) {
+            // Validasi jumlah kolom minimal 12
+            if (count($row) < 12) {
+                $this->command->warn("Baris dilewati: kolom kurang dari 12 → " . json_encode($row));
+                continue;
+            }
+
+            // Coba parsing tgl_lahir jika valid
+            $tanggal = null;
+            try {
+                $tanggal = Carbon::createFromFormat('d/m/Y', trim($row[6]))->format('Y-m-d');
+            } catch (\Exception $e) {
+                $this->command->warn("Format tanggal tidak valid untuk nama: {$row[0]}, value: {$row[6]}");
+            }
 
             DB::table('mst_gtk')->insert([
                 'id' => Str::uuid(),
-                'nama' => $faker->name($jenisKelamin == 'L' ? 'male' : 'female'),
-                'nik' => $faker->nik(),
-                'nip' => $faker->optional()->numerify('1975############'),
-                'nuptk' => $faker->optional()->numerify('##########'),
-                'tempat_lahir' => $faker->city(),
-                'tgl_lahir' => $faker->date('Y-m-d', '2000-01-01'),
-                'jenis_kelamin' => $jenisKelamin,
-                'agama' => $faker->randomElement($agama),
-                'status_kepegawaian' => $faker->randomElement($statusKepegawaian),
-                'jenis_gtk' => $faker->randomElement($jenisGtkIds),
-                'pend_terakhir' => $faker->randomElement($pendidikan),
-                'status_keaktifan' => $faker->randomElement($statusKeaktifan),
+                'nama' => trim($row[0]),
+                'nik' => $this->toNull($row[1]),
+                'nip' => $this->toNull($row[2]),
+                'nuptk' => $this->toNull($row[3]),
+                'tempat_tugas' => trim($row[5]),
+                'tempat_lahir' => trim($row[4]),
+                'tgl_lahir' => $tanggal,
+                'jenis_kelamin' => trim($row[7]),
+                'status_kepegawaian' => trim($row[8]),
+                'jenis_gtk' => trim($row[9]),
+                'pend_terakhir' => trim($row[10]),
+                'status_keaktifan' => trim($row[11]),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
         }
+
+        fclose($file);
+    }
+
+    // Fungsi bantu untuk ubah 'null' string menjadi nilai null
+    private function toNull($value)
+    {
+        $val = trim($value);
+        return ($val === '' || strtolower($val) === 'null') ? null : $val;
     }
 }

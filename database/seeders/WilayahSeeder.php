@@ -12,22 +12,20 @@ class WilayahSeeder extends Seeder
     {
         $csvFile = database_path('seeders/data/tbl_wilayahs.csv');
 
-        if (!file_exists($csvFile)) {
-            $this->command->error("CSV file not found: $csvFile");
-            return;
-        }
-
         $file = fopen($csvFile, 'r');
 
-        // Skip header
-        fgetcsv($file);
+        // Lewati header
+        fgetcsv($file, 0, ';');
 
-        while (($row = fgetcsv($file)) !== false) {
+        while (($row = fgetcsv($file, 0, ';')) !== false) {
+            // Cek minimal ada 2 kolom (kode dan nama)
+            if (count($row) < 2) continue;
+
             DB::table('ref_wilayah')->insert([
-                'kode' => $row[0],
-                'nama' => $row[1],
-                'created_at' => $row[2],
-                'updated_at' => $row[3],
+                'kode' => trim($row[0]),
+                'nama' => trim($row[1]),
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
         }
 
