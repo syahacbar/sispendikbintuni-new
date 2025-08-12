@@ -3,7 +3,7 @@ name: Deploy to VPS
 on:
   push:
     branches:
-      - main  # ganti jika kamu pakai branch lain
+      - newdb  # ganti jika kamu pakai branch lain
 
 jobs:
   deploy:
