@@ -75,12 +75,12 @@
                                                 <td>
                                                     <a class="text-decoration-none"
                                                         href="{{ url('/data-pendidikan/sekolah/' . $sekolah->npsn) }}">
-                                                        {{ ucwords(strtolower($sekolah->nama)) }}
+                                                        {{ $sekolah->nama }}
                                                     </a>
                                                 </td>
                                                 <td class="text-center">{{ $sekolah->npsn }}</td>
                                                 <td class="text-center">
-                                                    {{ $sekolah->jenjang->kode_jenjang }}</td>
+                                                    {{ $sekolah->jenjang->kode }}</td>
                                                 <td class="text-center">{{ $sekolah->status }}</td>
                                                 <td class="text-center">{{ $sekolah->peserta_count }}</td>
                                                 <td class="text-center">{{ $sekolah->rombongan_belajars_count }}</td>
