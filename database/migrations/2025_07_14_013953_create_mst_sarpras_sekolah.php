@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('mst_sarpras_sekolah', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('sekolah_id');
-            $table->uuid('sarpras_id');
+            $table->uuid('sekolah_id')->nullable();
+            $table->uuid('sarpras_id')->nullable();
             $table->string('nama')->nullable();
             $table->integer('jumlah_saat_ini')->default(0);
             $table->string('jumlah_ideal')->nullable();

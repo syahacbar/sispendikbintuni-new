@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('mst_pembelajaran', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('rombongan_belajar_id');
-            $table->uuid('mata_pelajaran_id');
+            $table->uuid('rombongan_belajar_id')->nullable();
+            $table->uuid('mata_pelajaran_id')->nullable();
             $table->uuid('gtk_id')->nullable();
-            $table->uuid('semester_id');
+            $table->uuid('semester_id')->nullable();
             $table->integer('jam_mengajar_per_minggu')->nullable();
             $table->string('jenis_pembelajaran', 50)->nullable();
             $table->boolean('status_aktif')->default(true);

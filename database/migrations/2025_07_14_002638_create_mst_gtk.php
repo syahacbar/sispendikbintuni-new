@@ -18,12 +18,13 @@ return new class extends Migration
             $table->string('nip', 20)->nullable();
             $table->string('nuptk', 20)->nullable();
             $table->string('tempat_lahir')->nullable();
+            $table->string('tempat_tugas')->nullable();
             $table->date('tgl_lahir')->nullable();
             $table->enum('jenis_kelamin', ['L', 'P'])->nullable();
-            $table->enum('agama', ['Islam', 'Kristen', 'Hindu', 'Buddha', 'Konghucu'])->nullable();
-            $table->enum('status_kepegawaian', ['PNS', 'PPPK', 'Honorer Daerah', 'Honorer Sekolah', 'GTY/PTY', 'Lainnya'])->nullable();
+            $table->enum('agama', ['Islam', 'Katolik', 'Kristen', 'Hindu', 'Buddha', 'Konghucu'])->nullable();
+            $table->string('status_kepegawaian')->nullable();
             $table->uuid('jenis_gtk')->nullable();
-            $table->enum('pend_terakhir', ['SD', 'SMP', 'SMA', 'D3', 'S1', 'S2', 'S3'])->nullable();
+            $table->string('pend_terakhir')->nullable();
             $table->enum('status_keaktifan', ['Aktif', 'Tidak Aktif'])->nullable();
             $table->timestamps();
         });

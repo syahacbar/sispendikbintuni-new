@@ -19,7 +19,9 @@ return new class extends Migration
 
         Schema::table('mst_gtk', function (Blueprint $table) {
             $table->foreign('jenis_gtk')->references('id')->on('ref_jenis_gtk')->nullOnDelete();
+            $table->foreign('tempat_tugas')->references('npsn')->on('mst_sekolah')->nullOnDelete();
         });
+
 
         Schema::table('mst_rombel', function (Blueprint $table) {
 
@@ -46,6 +48,10 @@ return new class extends Migration
             $table->foreign('sarpras_id')->references('id')->on('ref_sarpras')->nullOnDelete();
         });
 
+        Schema::table('mst_kondisi_sarpras', function (Blueprint $table) {
+            $table->foreign('id_mst_sarpras')->references('id')->on('mst_sarpras_sekolah')->nullOnDelete();
+        });
+
         Schema::table('ext_informasi', function (Blueprint $table) {
             $table->foreign('users_id')->references('id')->on('sys_users')->nullOnDelete();
         });
@@ -60,6 +66,7 @@ return new class extends Migration
 
         Schema::table('mst_gtk', function (Blueprint $table) {
             $table->dropForeign(['jenis_gtk']);
+            $table->dropForeign(['tempat_tugas']);
         });
 
         Schema::table('mst_rombel', function (Blueprint $table) {
@@ -89,6 +96,10 @@ return new class extends Migration
 
         Schema::table('ext_informasi', function (Blueprint $table) {
             $table->dropForeign(['users_id']);
+        });
+
+        Schema::table('mst_kondisi_sarpras', function (Blueprint $table) {
+            $table->dropForeign(['id_mst_sarpras']);
         });
     }
 };

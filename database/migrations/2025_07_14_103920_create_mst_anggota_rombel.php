@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('mst_anggota_rombel', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('rombel_id');
-            $table->uuid('peserta_didik_id');
+            $table->uuid('rombel_id')->nullable();
+            $table->uuid('peserta_didik_id')->nullable();
             $table->boolean('status_keaktifan')->default(true);
             $table->date('tanggal_masuk')->nullable();
             $table->date('tanggal_keluar')->nullable();

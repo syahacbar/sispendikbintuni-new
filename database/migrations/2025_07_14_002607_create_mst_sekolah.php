@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('mst_sekolah', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('npsn', 10)->unique();
-            $table->string('nama', 100);
+            $table->string('nama', 100)->nullable();
             $table->text('alamat')->nullable();
             $table->string('kode_wilayah')->nullable();
             $table->string('kode_pos', 10)->nullable();

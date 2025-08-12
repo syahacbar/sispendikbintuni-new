@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('nik', 20)->nullable();
             $table->string('tempat_lahir', 100)->nullable();
             $table->date('tgl_lahir')->nullable();
-            $table->enum('jenis_kelamin', ['L', 'P']);
-            $table->enum('agama', ['Islam', 'Kristen', 'Hindu', 'Buddha', 'Konghucu']);
+            $table->enum('jenis_kelamin', ['L', 'P'])->nullable();
+            $table->enum('agama', ['Islam', 'Kristen', 'Hindu', 'Buddha', 'Konghucu'])->nullable();
             $table->text('alamat')->nullable();
             $table->string('kode_wilayah', 100)->nullable();
             $table->string('kode_pos', 10)->nullable();
