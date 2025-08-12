@@ -57,18 +57,6 @@ class MstGtkResource extends Resource
                     ])
                     ->required(),
 
-                Forms\Components\Select::make('agama')
-                    ->label('Agama')
-                    ->options([
-                        'Islam'     => 'Islam',
-                        'Kristen'   => 'Kristen',
-                        'Katolik'   => 'Katolik',
-                        'Hindu'     => 'Hindu',
-                        'Buddha'    => 'Buddha',
-                        'Konghucu'  => 'Konghucu',
-                    ])
-                    ->required(),
-
                 Forms\Components\Select::make('status_kepegawaian')
                     ->label('Status Pegawai')
                     ->options([
@@ -117,15 +105,15 @@ class MstGtkResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('sekolahMelaluiRombel.nama')
-                    ->label('Sekolah')
-                    ->visible(fn() => auth()->user()->hasRole('super_admin'))
-                    ->formatStateUsing(function ($state) {
-                        if (is_iterable($state)) {
-                            return collect($state)->pluck('nama')->implode(', ');
-                        }
-                        return $state;
-                    }),
+                // Tables\Columns\TextColumn::make('tempat_tugas')
+                //     ->label('Sekolah')
+                //     ->visible(fn() => auth()->user()->hasRole('super_admin'))
+                //     ->formatStateUsing(function ($state) {
+                //         if (is_iterable($state)) {
+                //             return collect($state)->pluck('nama')->implode(', ');
+                //         }
+                //         return $state;
+                //     }),
 
                 TextColumn::make('index')
                     ->label('No. ')
@@ -151,9 +139,6 @@ class MstGtkResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('jenis_kelamin')
                     ->label('JK')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('agama')
-                    ->label('Agama')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('status_kepegawaian')
                     ->label('Status Pegawai')
@@ -200,30 +185,26 @@ class MstGtkResource extends Resource
     {
         $user = auth()->user();
 
-        // super_admin: tampilkan semua + eager load sekolah
         if ($user->hasRole('super_admin')) {
-            return parent::getEloquentQuery()
-                ->with('sekolahMelaluiRombel');
+            return parent::getEloquentQuery()->with('sekolah');
         }
 
-        // admin_sekolah: filter sesuai sekolah
         if ($user->hasRole('admin_sekolah')) {
             $sekolah = \App\Models\MstSekolah::where('users_id', $user->id)->first();
 
             if (! $sekolah) {
-                return parent::getEloquentQuery()->whereRaw('1=0'); // tidak ada data
+                return parent::getEloquentQuery()->whereRaw('1=0');
             }
 
             return parent::getEloquentQuery()
-                ->with('sekolahMelaluiRombel')
-                ->whereHas('rombels', function ($query) use ($sekolah) {
-                    $query->where('sekolah_id', $sekolah->id);
-                });
+                ->with('sekolah')
+                ->where('tempat_tugas', $sekolah->npsn);
         }
 
-        // role lain: kosongkan
         return parent::getEloquentQuery()->whereRaw('1=0');
     }
+
+
 
 
     public static function getRelations(): array

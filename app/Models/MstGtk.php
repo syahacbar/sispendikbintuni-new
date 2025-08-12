@@ -19,32 +19,35 @@ class MstGtk extends Model
         'tempat_lahir',
         'tgl_lahir',
         'jenis_kelamin',
-        'agama',
+        'tempat_tugas',
         'status_kepegawaian',
         'jenis_gtk',
         'pend_terakhir',
         'status_keaktifan',
     ];
 
-    public function sekolah()
-    {
-        return $this->belongsTo(MstSekolah::class, 'sekolah_id'); // sesuaikan jika beda kolom
-    }
+    // public function sekolah()
+    // {
+    //     return $this->belongsTo(MstSekolah::class, 'sekolah_id'); // sesuaikan jika beda kolom
+    // }
+
+    // public function tempat_tugas()
+    // {
+    //     return $this->belongsTo(MstSekolah::class, 'tempat_tugas', 'npsn');
+    // }
+
+    // public function sekolah()
+    // {
+    //     return $this->belongsTo(MstSekolah::class, 'tempat_tugas', 'npsn');
+    // }
 
     public function rombels()
     {
         return $this->hasMany(MstRombel::class, 'wali_kelas_ptk_id', 'id');
     }
 
-    public function sekolahMelaluiRombel()
+    public function sekolah()
     {
-        return $this->hasManyThrough(
-            MstSekolah::class,
-            MstRombel::class,
-            'wali_kelas_ptk_id', // Foreign key di mst_rombel yang mengacu ke mst_gtk
-            'id',                // Foreign key di mst_sekolah
-            'id',                // Local key di mst_gtk
-            'sekolah_id'         // Local key di mst_rombel
-        );
+        return $this->belongsTo(MstSekolah::class, 'tempat_tugas', 'npsn');
     }
 }
