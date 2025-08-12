@@ -39,6 +39,8 @@ jobs:
             echo "🛠 Jalankan migrasi database..."
             # php artisan migrate:fresh --seed
             # php artisan shield:generate --all
+            # php artisan shield:generate --all
+            # php artisan shield:super-admin
 
             echo "tambahan"
             # composer dump-autoload
