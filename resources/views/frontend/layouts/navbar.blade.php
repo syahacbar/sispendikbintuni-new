@@ -29,7 +29,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" target="_blank"
-                        href="https://drive.google.com/file/d/1lIznhAg-6nTblW-ND0F9DyLshqjJe76j/view?usp=sharing">Renstra</a>
+                        href="https://drive.google.com/file/d/10ya5XxmKHoiZ2_fHbsQDxZ11yfnMgh2e/view?usp=sharing">Renstra</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle {{ Request::is('informasi*') ? 'active' : '' }}" href="#"

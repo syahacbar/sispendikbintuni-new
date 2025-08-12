@@ -299,18 +299,25 @@ class BerandaController extends Controller
 
         $kondisiSarprasByJenjang = [];
 
-        // foreach ($kondisiLabels as $kondisi) {
-        //     foreach ($jenjangList as $kode_jenjang => $nama_jenjang) {
-        //         $jumlah = DB::table('mst_kondisi_sarpras as ks')
-        //             ->join('mst_sarpras_sekolah as ss', 'ks.id_mst_sarpras', '=', 'ss.id')
-        //             ->join('mst_sekolah as s', 'ss.sekolah_id', '=', 's.id')
-        //             ->where('ks.kondisi', $kondisi)
-        //             ->where('s.kode_jenjang', $kode_jenjang)
-        //             ->sum(DB::raw('CAST(ks.jumlah AS INTEGER)'));
+        $kondisiMap = [
+            'Baik' => 'kondisi_baik',
+            'Rusak Ringan' => 'kondisi_rusak_ringan',
+            'Rusak Sedang' => 'kondisi_rusak_sedang',
+            'Rusak Berat' => 'kondisi_rusak_berat',
+        ];
 
-        //         $kondisiSarprasByJenjang[$kondisi][$nama_jenjang] = $jumlah;
-        //     }
-        // }
+        $kondisiSarprasByJenjang = [];
+
+        foreach ($kondisiMap as $label => $kolomKondisi) {
+            foreach ($jenjangList as $kode_jenjang => $nama_jenjang) {
+                $jumlah = DB::table('mst_sarpras_sekolah as ss')
+                    ->join('mst_sekolah as s', 'ss.sekolah_id', '=', 's.id')
+                    ->where('s.kode_jenjang', $kode_jenjang)
+                    ->sum(DB::raw("CAST(ss.{$kolomKondisi} AS INTEGER)"));
+
+                $kondisiSarprasByJenjang[$label][$nama_jenjang] = $jumlah;
+            }
+        }
 
         // Siapkan dataset untuk Chart.js
         $kondisiSarprasDatasets = [];
