@@ -21,9 +21,8 @@ return new class extends Migration
             $table->string('tempat_tugas')->nullable();
             $table->date('tgl_lahir')->nullable();
             $table->enum('jenis_kelamin', ['L', 'P'])->nullable();
-            $table->enum('agama', ['Islam', 'Katolik', 'Kristen', 'Hindu', 'Buddha', 'Konghucu'])->nullable();
             $table->string('status_kepegawaian')->nullable();
-            $table->string('jenis_gtk')->nullable();
+            $table->enum('jenis_gtk', ['Guru', 'Kepala Sekolah', 'Tenaga Kependidikan'])->nullable();
             $table->string('pend_terakhir')->nullable();
             $table->enum('status_keaktifan', ['Aktif', 'Tidak Aktif'])->nullable();
             $table->timestamps();

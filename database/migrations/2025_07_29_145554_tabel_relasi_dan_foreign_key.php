@@ -18,7 +18,6 @@ return new class extends Migration
         });
 
         Schema::table('mst_gtk', function (Blueprint $table) {
-            $table->foreign('jenis_gtk')->references('nama')->on('ref_jenis_gtk')->nullOnDelete();
             $table->foreign('tempat_tugas')->references('npsn')->on('mst_sekolah')->nullOnDelete();
         });
 
@@ -65,7 +64,6 @@ return new class extends Migration
         });
 
         Schema::table('mst_gtk', function (Blueprint $table) {
-            $table->dropForeign(['jenis_gtk']);
             $table->dropForeign(['tempat_tugas']);
         });
 
