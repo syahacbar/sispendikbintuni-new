@@ -19,7 +19,6 @@ class DatabaseSeeder extends Seeder
             WilayahSeeder::class,
             RefSarprasSeeder::class,
             RefMapelSeeder::class,
-            RefJenisGtkSeeder::class,
             RefJenjangPendidikanSeeder::class,
             RefKurikulumSeeder::class,
             RefSemesterSeeder::class,
