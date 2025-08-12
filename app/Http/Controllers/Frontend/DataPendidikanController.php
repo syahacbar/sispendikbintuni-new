@@ -92,7 +92,7 @@ class DataPendidikanController extends Controller
         $sekolahs = MstSekolah::with('jenjang')
             ->withCount([
                 'rombonganBelajars',
-                'anggotaRombels as peserta_count',    // jumlah peserta
+                'anggotaRombels as peserta_count',
                 'gtkGuru as guru_count',
                 'gtkPegawai as pegawai_count',
             ])
