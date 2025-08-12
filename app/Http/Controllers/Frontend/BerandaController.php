@@ -299,18 +299,18 @@ class BerandaController extends Controller
 
         $kondisiSarprasByJenjang = [];
 
-        foreach ($kondisiLabels as $kondisi) {
-            foreach ($jenjangList as $kode_jenjang => $nama_jenjang) {
-                $jumlah = DB::table('mst_kondisi_sarpras as ks')
-                    ->join('mst_sarpras_sekolah as ss', 'ks.id_mst_sarpras', '=', 'ss.id')
-                    ->join('mst_sekolah as s', 'ss.sekolah_id', '=', 's.id')
-                    ->where('ks.kondisi', $kondisi)
-                    ->where('s.kode_jenjang', $kode_jenjang)
-                    ->sum(DB::raw('CAST(ks.jumlah AS INTEGER)'));
+        // foreach ($kondisiLabels as $kondisi) {
+        //     foreach ($jenjangList as $kode_jenjang => $nama_jenjang) {
+        //         $jumlah = DB::table('mst_kondisi_sarpras as ks')
+        //             ->join('mst_sarpras_sekolah as ss', 'ks.id_mst_sarpras', '=', 'ss.id')
+        //             ->join('mst_sekolah as s', 'ss.sekolah_id', '=', 's.id')
+        //             ->where('ks.kondisi', $kondisi)
+        //             ->where('s.kode_jenjang', $kode_jenjang)
+        //             ->sum(DB::raw('CAST(ks.jumlah AS INTEGER)'));
 
-                $kondisiSarprasByJenjang[$kondisi][$nama_jenjang] = $jumlah;
-            }
-        }
+        //         $kondisiSarprasByJenjang[$kondisi][$nama_jenjang] = $jumlah;
+        //     }
+        // }
 
         // Siapkan dataset untuk Chart.js
         $kondisiSarprasDatasets = [];
