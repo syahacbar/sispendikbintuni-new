@@ -18,7 +18,7 @@ return new class extends Migration
         });
 
         Schema::table('mst_gtk', function (Blueprint $table) {
-            $table->foreign('jenis_gtk')->references('id')->on('ref_jenis_gtk')->nullOnDelete();
+            $table->foreign('jenis_gtk')->references('nama')->on('ref_jenis_gtk')->nullOnDelete();
             $table->foreign('tempat_tugas')->references('npsn')->on('mst_sekolah')->nullOnDelete();
         });
 

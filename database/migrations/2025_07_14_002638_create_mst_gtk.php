@@ -23,7 +23,7 @@ return new class extends Migration
             $table->enum('jenis_kelamin', ['L', 'P'])->nullable();
             $table->enum('agama', ['Islam', 'Katolik', 'Kristen', 'Hindu', 'Buddha', 'Konghucu'])->nullable();
             $table->string('status_kepegawaian')->nullable();
-            $table->uuid('jenis_gtk')->nullable();
+            $table->string('jenis_gtk')->nullable();
             $table->string('pend_terakhir')->nullable();
             $table->enum('status_keaktifan', ['Aktif', 'Tidak Aktif'])->nullable();
             $table->timestamps();
