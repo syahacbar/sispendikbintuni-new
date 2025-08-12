@@ -31,9 +31,9 @@ class PaneladminPanelProvider extends PanelProvider
             ->default()
             ->id('paneladmin')
             ->path('paneladmin')
-            ->brandName('Sispendik Bintuni')
+            ->brandName('Sistem Perencanaan Terintegrasi')
             ->login()
-            ->breadcrumbs(false)
+            // ->breadcrumbs(false)
             ->font('Segoe UI')
             ->colors([
                 'primary' => Color::hex('#0093dd'),

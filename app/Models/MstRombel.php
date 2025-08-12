@@ -25,11 +25,11 @@ class MstRombel extends Model
         'keterangan',
     ];
 
+
     public function sekolah()
     {
         return $this->belongsTo(MstSekolah::class, 'sekolah_id');
     }
-
 
     public function pesertaDidiks(): HasMany
     {

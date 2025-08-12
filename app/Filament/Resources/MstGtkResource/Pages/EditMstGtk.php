@@ -9,11 +9,22 @@ use Filament\Resources\Pages\EditRecord;
 class EditMstGtk extends EditRecord
 {
     protected static string $resource = MstGtkResource::class;
+    protected static ?string $recordTitleAttribute = 'name';
 
     protected function getHeaderActions(): array
     {
         return [
             // Actions\DeleteAction::make(),
         ];
+    }
+
+    public function getHeading(): string
+    {
+        return 'Ubah Data';
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
     }
 }

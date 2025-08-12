@@ -2,14 +2,15 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\MstSarprasSekolahResource\Pages;
-use App\Models\MstSarprasSekolah;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Forms\Form;
+use App\Models\MstSekolah;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use App\Models\MstSarprasSekolah;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\MstSarprasSekolahResource\Pages;
 
 class MstSarprasSekolahResource extends Resource
 {
@@ -23,16 +24,32 @@ class MstSarprasSekolahResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $user = auth()->user();
+
         return $form->schema([
-            Forms\Components\TextInput::make('sekolah_id')->required(),
-            Forms\Components\TextInput::make('sarpras_id')->required(),
-            Forms\Components\TextInput::make('nama')->maxLength(255),
-            Forms\Components\TextInput::make('jumlah_saat_ini')
+            Forms\Components\Hidden::make('sekolah_id')
+                ->default(function () use ($user) {
+                    if ($user->hasRole('admin_sekolah')) {
+                        return \App\Models\MstSekolah::where('users_id', $user->id)->value('id');
+                    }
+                    return null;
+                }),
+
+            Forms\Components\Select::make('sarpras_id')
+                ->relationship('sarpras', 'nama')
+                ->label('Jenis Sarpras')
+                ->required(),
+
+            Forms\Components\TextInput::make('nama')
+                ->label('Nama Sarpras')
                 ->required()
+                ->maxLength(255),
+            Forms\Components\TextInput::make('jumlah_saat_ini')
                 ->numeric()
+                ->required()
                 ->default(0),
             Forms\Components\TextInput::make('jumlah_ideal')->maxLength(255),
-        ]);
+        ])->columns(4);
     }
 
     public static function table(Table $table): Table
@@ -41,7 +58,6 @@ class MstSarprasSekolahResource extends Resource
 
         $columns = [];
 
-        // Hanya tampilkan kolom Nama Sekolah kalau bukan admin sekolah
         if (!$user->hasRole('admin_sekolah')) {
             $columns[] = Tables\Columns\TextColumn::make('sekolah.nama')
                 ->label('Nama Sekolah')
@@ -50,15 +66,26 @@ class MstSarprasSekolahResource extends Resource
         }
 
         $columns = array_merge($columns, [
-            Tables\Columns\TextColumn::make('sarpras.nama')
+            Tables\Columns\TextColumn::make('index')
+                ->label('No. ')
+                ->rowIndex(),
+            Tables\Columns\TextColumn::make('nama')
                 ->label('Nama Sarpras')
                 ->searchable()
                 ->sortable(),
-            Tables\Columns\TextColumn::make('nama')->searchable(),
+            Tables\Columns\TextColumn::make('sarpras.nama')
+                ->label('Jenis Sarpras')
+                ->searchable()
+                ->sortable(),
             Tables\Columns\TextColumn::make('jumlah_saat_ini')
+                ->label('Jumlah Saat Ini')
                 ->numeric()
                 ->sortable(),
-            Tables\Columns\TextColumn::make('jumlah_ideal')->searchable(),
+            Tables\Columns\TextColumn::make('jumlah_ideal')
+                ->label('Jumlah Ideal')
+                ->numeric()
+                ->sortable()
+                ->searchable(),
             Tables\Columns\TextColumn::make('created_at')
                 ->dateTime()
                 ->sortable()
@@ -72,7 +99,9 @@ class MstSarprasSekolahResource extends Resource
         return $table
             ->columns($columns)
             ->filters([])
-            ->actions([])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+            ])
             ->bulkActions([]);
     }
 
@@ -81,9 +110,10 @@ class MstSarprasSekolahResource extends Resource
         $query = parent::getEloquentQuery();
         $user = auth()->user();
 
-        // Filter data kalau admin sekolah
         if ($user->hasRole('admin_sekolah')) {
-            $query->where('sekolah_id', $user->sekolah_id);
+            $sekolahId = MstSekolah::where('users_id', $user->id)->value('id');
+
+            $query->where('sekolah_id', $sekolahId);
         }
 
         return $query;
@@ -98,6 +128,8 @@ class MstSarprasSekolahResource extends Resource
     {
         return [
             'index' => Pages\ListMstSarprasSekolahs::route('/'),
+            'create' => Pages\CreateMstSarprasSekolah::route('/create'),
+            'edit' => Pages\EditMstSarprasSekolah::route('/{record}/edit'),
         ];
     }
 }

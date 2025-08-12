@@ -3,17 +3,21 @@
 namespace App\Filament\Resources\MstSarprasSekolahResource\Pages;
 
 use App\Filament\Resources\MstSarprasSekolahResource;
-use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
 class EditMstSarprasSekolah extends EditRecord
 {
     protected static string $resource = MstSarprasSekolahResource::class;
+    protected static ?string $modelLabel = ' University';
+    protected static ?string $pluralModelLabel = 'Universities';
 
-    protected function getHeaderActions(): array
+    protected function getRedirectUrl(): string
     {
-        return [
-            // Actions\DeleteAction::make(),
-        ];
+        return $this->getResource()::getUrl('index');
+    }
+
+    public function getHeading(): string
+    {
+        return 'Ubah Data';
     }
 }

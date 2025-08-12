@@ -46,15 +46,16 @@ class MstSekolahResource extends Resource
                         Forms\Components\TextInput::make('nama')
                             ->required()
                             ->maxLength(100),
-                        Forms\Components\TextInput::make('kode_jenjang')
+                        Forms\Components\Select::make('jenjang.kode_jenjang')
                             ->label('Jenjang Pendidikan')
-                            ->maxLength(255),
+                            ->required()
+                            ->relationship('jenjang', 'kode')
+                            ->searchable()
+                            ->preload(true),
                         Forms\Components\Textarea::make('alamat')
-                            ->columnSpanFull(), // tetap full width
+                            ->columnSpanFull(),
                         // Forms\Components\TextInput::make('kode_wilayah')
                         //     ->maxLength(255),
-                        Forms\Components\TextInput::make('kode_pos')
-                            ->maxLength(10),
                         Forms\Components\TextInput::make('status')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('akreditasi')
@@ -71,17 +72,25 @@ class MstSekolahResource extends Resource
                         Forms\Components\TextInput::make('sk_pendirian')
                             ->maxLength(100),
                         Forms\Components\DatePicker::make('tanggal_sk_pendirian')
-                            ->native(false),
+                            ->native(false)
+                            ->displayFormat('d/m/Y') // tampil di form
+                            ->format('Y-m-d'),       // simpan di DB
+
                         Forms\Components\TextInput::make('sk_izin_operasional')
                             ->maxLength(100),
+
                         Forms\Components\DatePicker::make('tanggal_sk_izin_operasional')
-                            ->native(false),
+                            ->native(false)
+                            ->displayFormat('d/m/Y')
+                            ->format('Y-m-d'),
+                        Forms\Components\Textarea::make('alamat')
+                            ->columnSpanFull(),
+                        Forms\Components\TextInput::make('kode_pos')
+                            ->maxLength(10),
                         Forms\Components\TextInput::make('latitude')
                             ->maxLength(100),
                         Forms\Components\TextInput::make('longitude')
                             ->maxLength(100),
-                        Forms\Components\TextInput::make('users_id')
-                            ->numeric(),
                     ]),
             ]);
     }

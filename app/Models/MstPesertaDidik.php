@@ -24,16 +24,10 @@ class MstPesertaDidik extends Model
         'kode_pos',
     ];
 
-    public function sekolah()
-    {
-        return $this->belongsTo(MstSekolah::class, 'id_sekolah');
-    }
-
     public function wilayah()
     {
         return $this->belongsTo(RefWilayah::class, 'kode_wilayah', 'kode');
     }
-
 
     public function anggotaRombel()
     {

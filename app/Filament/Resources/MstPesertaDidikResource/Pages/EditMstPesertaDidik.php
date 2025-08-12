@@ -16,4 +16,14 @@ class EditMstPesertaDidik extends EditRecord
             // Actions\DeleteAction::make(),
         ];
     }
+
+    public function getHeading(): string
+    {
+        return 'Ubah Data';
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

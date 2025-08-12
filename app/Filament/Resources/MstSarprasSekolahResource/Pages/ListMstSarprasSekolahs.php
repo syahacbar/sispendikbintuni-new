@@ -14,18 +14,9 @@ class ListMstSarprasSekolahs extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            // Actions\CreateAction::make(),
+            Actions\CreateAction::make()->label('Tambah Sarpras')
+                ->icon('heroicon-o-plus')
+                ->color('primary'),
         ];
-    }
-
-    protected function getTableQuery(): Builder
-    {
-        $query = parent::getTableQuery();
-
-        if (auth()->user()->hasRole('admin_sekolah')) {
-            $query->where('sekolah_id', auth()->user()->sekolah_id);
-        }
-
-        return $query;
     }
 }
