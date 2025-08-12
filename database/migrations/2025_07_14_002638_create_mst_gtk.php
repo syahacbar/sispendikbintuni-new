@@ -23,7 +23,7 @@ return new class extends Migration
             $table->date('tgl_lahir')->nullable();
             $table->enum('jenis_kelamin', ['L', 'P'])->nullable();
             $table->string('status_kepegawaian')->nullable();
-            $table->enum('jenis_gtk', ['Guru', 'Kepala Sekolah', 'Tenaga Kependidikan'])->nullable();
+            $table->string('jenis_gtk')->nullable();
             $table->string('pend_terakhir')->nullable();
             $table->enum('status_keaktifan', ['Aktif', 'Tidak Aktif'])->nullable();
             $table->timestamps();
