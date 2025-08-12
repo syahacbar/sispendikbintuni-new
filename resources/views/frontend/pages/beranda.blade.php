@@ -13,7 +13,8 @@
     }
 </style>
 @section('content')
-    <section class="hero w-100 container-fluid d-flex align-items-start justify-content-start text-start">
+    <section class="hero w-100 container-fluid d-flex align-items-start justify-content-start text-start"
+        style="height: 70vh; !important">
         <div class="container">
             <div class="hero-content" data-aos="fade-up">
                 <p>{{ $pengaturan['welcome_text'] ?? '' }}</p>
@@ -33,7 +34,7 @@
                         $imagePath =
                             $sambutanFoto && file_exists(public_path('storage/' . $sambutanFoto))
                                 ? asset('storage/' . $sambutanFoto)
-                                : asset('themes/frontend/sambutan/default.png');
+                                : asset('themes/frontend/sambutan/kadisdikbudporabintuni.png');
                     @endphp
 
                     <img src="{{ $imagePath }}" alt="Kepala Dinas Kabupaten Teluk Bintuni" class="img-fluid quote-img"
@@ -46,7 +47,7 @@
                     </h5>
                     @php
                         $fullContent = $pengaturan['isi_sambutan'] ?? '';
-                        $shortContent = Str::limit(strip_tags($fullContent), 1000);
+                        $shortContent = Str::limit($fullContent, 1000);
                         $isExpandable = !empty($fullContent) && strlen(strip_tags($fullContent)) > 1000;
                     @endphp
 
@@ -219,16 +220,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4 mt-3">
-                    <div class="card shadow-sm">
-                        <div class="card-header">
-                            <h6>Status PTK</h6>
-                        </div>
-                        <div class="card-body">
-                            <canvas style="height: 300px" id="chartGtkKepegawaian"></canvas>
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </div>
     </section>

@@ -28,8 +28,8 @@
                         href="/peta-sebaran">Sebaran</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('kalender-pendidikan*') ? 'active' : '' }}"
-                        href="/kalender-pendidikan">Kalender</a>
+                    <a class="nav-link" target="_blank"
+                        href="https://drive.google.com/file/d/1lIznhAg-6nTblW-ND0F9DyLshqjJe76j/view?usp=sharing">Renstra</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle {{ Request::is('informasi*') ? 'active' : '' }}" href="#"
@@ -48,6 +48,10 @@
                         <li>
                             <a class="dropdown-item {{ Request::is('informasi/kegiatan*') ? 'active' : '' }}"
                                 href="/informasi/kegiatan">Kegiatan</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item {{ Request::is('kalender-pendidikan*') ? 'active' : '' }}"
+                                href="/kalender-pendidikan">Kalender Pendidikan</a>
                         </li>
                     </ul>
                 </li>

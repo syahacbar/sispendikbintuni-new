@@ -14,7 +14,7 @@ class InformasiController extends Controller
     {
 
         $title = 'Berita';
-        $subtitle = 'Informasi terkini dan terpercaya.';
+        $subtitle = 'Informasi seputar dunia pendidikan.';
 
         $berita = ExtInformasi::where('kategori', 'Berita')
             ->orderBy('created_at', 'desc')

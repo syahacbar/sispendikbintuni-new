@@ -20,6 +20,8 @@ class BerandaController extends Controller
 {
     public function index()
     {
+        $title = 'Beranda';
+        // $subtitle = 'Tata Kelola Pendidikan Dengan Sistem Perencanaan Terintegrasi (SERASI) Kabupaten Teluk Bintuni';
         // Tampilkan data statistik jenjang sekolah (semua, negeri dan swasra) halaman beranda
         $jenjangList = ['TK', 'KB', 'TPA', 'SPS', 'PKBM', 'SKB', 'SD', 'SMP', 'SMA', 'SMK', 'SLB'];
         $statistik = [
@@ -332,6 +334,7 @@ class BerandaController extends Controller
 
 
         return view('frontend.pages.beranda', compact(
+            'title',
             'statistik',
             'jenjangList',
             'jumlah_peserta_didik',

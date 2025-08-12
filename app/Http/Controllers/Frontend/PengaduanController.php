@@ -12,7 +12,7 @@ class PengaduanController extends Controller
     public function index()
     {
         $title = 'Form Pengaduan';
-        $subtitle = 'Setiap pengaduan akan ditindaklanjuti sesuai prosedur yang berlaku.';
+        $subtitle = 'Saluran Resmi Penyampaian Aspirasi, Saran, Keluhan dan Laporan Terkait Layanan Pendidikan di Kab. Teluk Bintuni';
 
         return view('frontend.pages.pengaduan', compact('title', 'subtitle'));
     }

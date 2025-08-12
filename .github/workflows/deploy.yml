@@ -3,7 +3,7 @@ name: Deploy to VPS
 on:
   push:
     branches:
-      - main  # ganti jika kamu pakai branch lain
+      - newdb  # ganti jika kamu pakai branch lain
 
 jobs:
   deploy:
@@ -20,7 +20,7 @@ jobs:
             echo "🚀 Mulai deploy Laravel ke VPS..."
             cd /var/www/sispendik  # ganti sesuai direktori di VPS
             echo "📥 Pull code dari repo..."
-            git pull origin main
+            git pull origin newdb
 
             echo "📦 Install Composer dependencies..."
             # composer install --no-interaction --prefer-dist --optimize-autoloader
@@ -39,6 +39,7 @@ jobs:
             echo "🛠 Jalankan migrasi database..."
             # php artisan migrate:fresh --seed
             # php artisan shield:generate --all
+            # php artisan shield:super-admin
 
             echo "tambahan"
             # composer dump-autoload

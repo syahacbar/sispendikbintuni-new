@@ -3,9 +3,9 @@
         <div class="row align-items-start mb-4">
             <div class="col-sm-5">
                 <div class="mb-3 d-flex gap-2 justify-content-start align-items-center">
-                    <img class="w-25 mr-3" src="{{ asset($pengaturan['logo'] ?? 'themes/frontend/logoserasi.png') }}"
-                        alt="{{ $pengaturan['site_name'] ?? 'SERASI' }}">
-                    <strong class="text-success fw-bold">{{ $pengaturan['site_description'] ?? '' }}</strong>
+                    <img class="w-25 mr-3" src="themes/frontend/logo.png" alt="{{ $pengaturan['site_name'] ?? 'SERASI' }}">
+                    <h5><strong class="text-success fw-bold">Dinas Pendidikan, Kebudayaan, Pemuda dan Olahraga Kabupaten
+                            Teluk Bintuni</strong></h5>
                 </div>
                 <p class="small mb-1">
                     {{ $pengaturan['address'] ?? '' }}, {{ $pengaturan['postal_code'] ?? '' }} <br />

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{{ $pengaturan['site_name'] ?? 'Sistem Perencanaan Terintegrasi' }}</title>
+    <title>{{ $title ?? '' }} | SERASI - Sistem Perencanaan Terintegrasi</title>
     <meta name="description"
         content="{{ $pengaturan['site_description'] ?? 'Tata Kelola Pendidikan Dengan Sistem Perencanaan Terintegrasi (SERASI) Kabupaten Teluk Bintuni' }}">
     <meta name="author" content="{{ $pengaturan['author'] ?? 'Admin' }}">

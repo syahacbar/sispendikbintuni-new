@@ -10,8 +10,8 @@ class TentangController extends Controller
 {
     public function index()
     {
-        $title = 'Tentang Sispendik ';
-        $subtitle = 'Sistem Informasi Pendidikan Kabupaten Teluk Bintuni.';
+        $title = 'Tentang';
+        $subtitle = 'Tata Kelola Pendidikan Dengan Sistem Perencanaan Terintegrasi (SERASI) Kabupaten Teluk Bintuni';
 
         // $tentang = SysSetting::where('group', 'tentang')->get()->pluck('value', 'key');
         $tentang = SysSetting::where('group', 'tentang')->get();
