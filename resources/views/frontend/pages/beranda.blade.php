@@ -13,7 +13,8 @@
     }
 </style>
 @section('content')
-    <section class="hero w-100 container-fluid d-flex align-items-start justify-content-start text-start" style="height: 70vh; !important">
+    <section class="hero w-100 container-fluid d-flex align-items-start justify-content-start text-start"
+        style="height: 70vh; !important">
         <div class="container">
             <div class="hero-content" data-aos="fade-up">
                 <p>{{ $pengaturan['welcome_text'] ?? '' }}</p>
@@ -33,7 +34,7 @@
                         $imagePath =
                             $sambutanFoto && file_exists(public_path('storage/' . $sambutanFoto))
                                 ? asset('storage/' . $sambutanFoto)
-                                : asset('themes/frontend/sambutan/kadinaspendidikanbintuni.png');
+                                : asset('themes/frontend/sambutan/kadisdikbudporabintuni.png');
                     @endphp
 
                     <img src="{{ $imagePath }}" alt="Kepala Dinas Kabupaten Teluk Bintuni" class="img-fluid quote-img"
