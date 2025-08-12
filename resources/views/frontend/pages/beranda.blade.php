@@ -220,16 +220,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4 mt-3">
-                    <div class="card shadow-sm">
-                        <div class="card-header">
-                            <h6>Status PTK</h6>
-                        </div>
-                        <div class="card-body">
-                            <canvas style="height: 300px" id="chartGtkKepegawaian"></canvas>
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </div>
     </section>
