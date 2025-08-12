@@ -9,7 +9,6 @@ use App\Models\RefWilayah;
 use App\Models\ExtInformasi;
 use App\Models\MstSekolah;
 use App\Models\SysSetting;
-use App\Models\RefJenisGtk;
 use App\Models\PesertaDidik;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -155,7 +154,7 @@ class BerandaController extends Controller
 
         // ==================================
         // Kualifikasi Guru
-        $guruJenisId = RefJenisGtk::where('nama', 'Guru')->value('id');
+        $guruJenisId = 'Guru';
         $pendidikanLabels = ['SMA', 'D3', 'S1', 'S2', 'S3'];
 
         $colors = [

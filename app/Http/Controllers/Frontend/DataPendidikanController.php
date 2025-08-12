@@ -19,11 +19,6 @@ class DataPendidikanController extends Controller
         $title = 'Data Pendidikan';
         $subtitle = 'Rekapitulasi data pendidikan Berdasarkan Kecamatan.';
 
-        // $jenjangList = Sekolah::select('jenjang')->distinct()->pluck('jenjang')->sortBy(function ($jenjang) {
-        //     $order = ['TK', 'KB', 'TPA', 'SPS', 'PKBM', 'SKB', 'SD', 'SMP', 'SMA', 'SMK', 'SLB'];
-        //     return array_search($jenjang, $order) !== false ? array_search($jenjang, $order) : 999;
-        // })->values()->all();
-
         $jenjangList = ['TK', 'KB', 'TPA', 'SPS', 'PKBM', 'SKB', 'SD', 'SMP', 'SMA', 'SMK', 'SLB'];
 
 
@@ -84,41 +79,6 @@ class DataPendidikanController extends Controller
         ));
     }
 
-    // Halaman daftar sekolah berdasarkan kecamatan
-    // public function sekolahByKecamatan($kecamatan)
-    // {
-    //     $title = 'Data Pendidikan';
-    //     $subtitle = 'Rekapitulasi data pendidikan berdasarkan sekolah.';
-
-    //     $namaKecamatan = RefWilayah::getNamaByKode($kecamatan);
-    //     $kodeKabupaten = substr(preg_replace('/[^0-9]/', '', $kecamatan), 0, 4);
-    //     $kodeKabupaten = substr($kodeKabupaten, 0, 2) . '.' . substr($kodeKabupaten, 2, 2);
-    //     $namaKabupaten = RefWilayah::getNamaByKode($kodeKabupaten);
-
-    //     $sekolahs = MstSekolah::with([
-    //         'jenjang', // relasi ke ref_jenjang_pendidikan
-    //     ])
-    //         ->withCount([
-    //             'rombonganBelajars',
-    //             'pesertaDidiks as peserta_didiks_count', // total peserta didik
-    //             'gtkGuru as ptks_count',                 // total guru
-    //             'gtkPegawai as pegawai_count',           // total pegawai
-    //         ])
-    //         ->where('kode_wilayah', 'like', $kecamatan . '%')
-    //         ->orderBy('kode_jenjang')
-    //         ->orderBy('nama')
-    //         ->get();
-
-    //     return view('frontend.pages.sekolah_by_kecamatan', compact(
-    //         'title',
-    //         'subtitle',
-    //         'sekolahs',
-    //         'kecamatan',
-    //         'namaKecamatan',
-    //         'namaKabupaten'
-    //     ));
-    // }
-
     public function sekolahByKecamatan($kecamatan)
     {
         $title = 'Data Pendidikan';
@@ -151,8 +111,6 @@ class DataPendidikanController extends Controller
         ));
     }
 
-
-
     // Halaman detail sekolah
     public function detail($npsn)
     {
@@ -167,7 +125,7 @@ class DataPendidikanController extends Controller
             'rombonganBelajars.waliKelas',
             'rombonganBelajars.pesertaDidiks',
             'rombonganBelajars.kurikulum',
-            'kepalaSekolahDetail.jenisGtk',
+            'kepalaSekolahDetail',
             'mstSarprasSekolah.kondisiSarpras',
         ])
             ->with(['rombonganBelajars' => fn($q) => $q->withCount('pesertaDidiks')])

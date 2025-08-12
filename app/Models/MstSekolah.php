@@ -77,16 +77,13 @@ class MstSekolah extends Model
         return $this->hasManyThrough(
             MstGtk::class,
             MstRombel::class,
-            'sekolah_id',         // Foreign key di mst_rombel yang mengarah ke mst_sekolah
-            'id',                 // Foreign key di mst_gtk yang dicari berdasarkan wali_kelas_ptk_id
-            'id',                 // Primary key di mst_sekolah
-            'wali_kelas_ptk_id'   // Foreign key di mst_rombel yang mengarah ke mst_gtk
-        )->whereHas('jenisGtk', function ($q) {
-            $q->where('nama', 'Guru');
-        });
+            'sekolah_id',        // Foreign key di mst_rombel yang mengarah ke mst_sekolah
+            'id',                // Foreign key di mst_gtk
+            'id',                // Primary key di mst_sekolah
+            'wali_kelas_ptk_id'  // Foreign key di mst_rombel yang mengarah ke mst_gtk
+        )->where('mst_gtk.jenis_gtk', 'Guru');
     }
 
-    // Relasi ke GTK (jenis Pegawai)
     public function gtkPegawai()
     {
         return $this->hasManyThrough(
@@ -96,9 +93,7 @@ class MstSekolah extends Model
             'id',
             'id',
             'wali_kelas_ptk_id'
-        )->whereHas('jenisGtk', function ($q) {
-            $q->where('nama', '!=', 'Guru');
-        });
+        )->where('mst_gtk.jenis_gtk', '!=', 'Guru');
     }
 
     // Relasi tidak langsung ke GTK (via rombel)
@@ -130,19 +125,6 @@ class MstSekolah extends Model
         return $this->hasMany(MstSarprasSekolah::class, 'sekolah_id');
     }
 
-    // public function kurikulums()
-    // {
-    //     return $this->hasManyThrough(
-    //         RefKurikulum::class,
-    //         MstRombel::class,
-    //         'sekolah_id',
-    //         'id',
-    //         'id',
-    //         'kurikulum_id'
-    //     );
-    // }
-
-
     public function kepalaSekolahDetail()
     {
         return $this->hasOneThrough(
@@ -153,7 +135,7 @@ class MstSekolah extends Model
             'id',                 // PK di mst_sekolah
             'wali_kelas_ptk_id'   // FK di mst_rombel → mst_gtk.id
         )
-            ->whereHas('jenisGtk', fn($q) => $q->where('nama', 'Kepala Sekolah'));
+            ->where('mst_gtk.jenis_gtk', 'Kepala Sekolah');
     }
 
     public function anggotaRombels()
@@ -167,23 +149,6 @@ class MstSekolah extends Model
             'id'             // PK di mst_rombel
         );
     }
-
-    // protected static function booted()
-    // {
-    //     static::saving(function ($sekolah) {
-    //         if (empty($sekolah->slug) && $sekolah->nama && $sekolah->npsn) {
-    //             $slug = Str::slug($sekolah->nama . '-' . $sekolah->npsn);
-
-    //             $original = $slug;
-    //             $counter = 1;
-    //             while (MstSekolah::where('slug', $slug)->where('id', '!=', $sekolah->id)->exists()) {
-    //                 $slug = $original . '-' . $counter++;
-    //             }
-
-    //             $sekolah->slug = $slug;
-    //         }
-    //     });
-    // }
 
     public function getSarprasAttribute()
     {

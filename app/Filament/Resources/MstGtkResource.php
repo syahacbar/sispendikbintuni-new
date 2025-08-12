@@ -62,6 +62,7 @@ class MstGtkResource extends Resource
                     ->options([
                         'Islam'     => 'Islam',
                         'Kristen'   => 'Kristen',
+                        'Katolik'   => 'Katolik',
                         'Hindu'     => 'Hindu',
                         'Buddha'    => 'Buddha',
                         'Konghucu'  => 'Konghucu',
@@ -81,10 +82,12 @@ class MstGtkResource extends Resource
                     ->required(),
                 Forms\Components\Select::make('jenis_gtk')
                     ->label('Jenis GTK')
-                    ->required()
-                    ->relationship('jenisGtk', 'nama')
-                    ->searchable()
-                    ->preload(true),
+                    ->options([
+                        'Guru'  => 'Guru',
+                        'Kepala Sekolah' => 'Kepala Sekolah',
+                        'Tenaga Kependidikan' => 'Tenaga Kependidikan',
+                    ])
+                    ->required(),
                 Forms\Components\Select::make('pend_terakhir')
                     ->label('Pendidikan Terakhir')
                     ->options([
@@ -155,7 +158,7 @@ class MstGtkResource extends Resource
                 Tables\Columns\TextColumn::make('status_kepegawaian')
                     ->label('Status Pegawai')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('jenisGtk.nama')
+                Tables\Columns\TextColumn::make('jenis_gtk')
                     ->label('Jenis GTK')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('pend_terakhir')

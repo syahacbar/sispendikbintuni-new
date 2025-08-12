@@ -182,7 +182,7 @@
                                     <button class="nav-link" id="nav-direktoriPTK-tab" data-bs-toggle="tab"
                                         data-bs-target="#nav-direktoriPTK" type="button" role="tab"
                                         aria-controls="nav-direktoriPTK" aria-selected="false">Direktori
-                                        PTK</button>
+                                        Guru</button>
                                     <button class="nav-link" id="nav-direktoriPesertaDidik-tab" data-bs-toggle="tab"
                                         data-bs-target="#nav-direktoriPesertaDidik" type="button" role="tab"
                                         aria-controls="nav-direktoriPesertaDidik" aria-selected="false">Direktori Pesrta
@@ -195,7 +195,7 @@
                                     aria-labelledby="nav-kondisiSekolah-tab" tabindex="0">
                                     <div class="row mt-3">
                                         <div>
-                                            <h4 class="bg-success p-2 mb-3 text-light">Data Guru</h4>
+                                            <h4 class="bg-success p-2 mb-3 text-light">Data Kebutuhan Guru</h4>
                                         </div>
                                         <div class="table-responsive">
                                             <table id="dataKondisiGuru" class="display responsive nowrap"
@@ -242,7 +242,7 @@
 
                                     </div>
                                     <hr>
-                                    <div class="row mt-4 mb4">
+                                    {{-- <div class="row mt-4 mb4">
                                         <div>
                                             <h4 class="bg-success p-2 mb-3 text-light">Data Tenaga Pendidik</h4>
                                         </div>
@@ -276,7 +276,7 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <hr>
                                     <div class="row mt-4 mb4">
                                         <div>
@@ -383,7 +383,7 @@
                                     aria-labelledby="nav-direktoriPTK-tab" tabindex="0">
                                     <div class="row mt-3">
                                         <div>
-                                            <h4 class="bg-success p-2 mb-3 text-light">Direktori PTK</h4>
+                                            <h4 class="bg-success p-2 mb-3 text-light">Direktori Guru</h4>
                                         </div>
                                         <div class="table-responsive">
                                             <table id="DirektoriPTK" class="display responsive nowrap"
@@ -404,7 +404,7 @@
                                                             <td>{{ $ptk->nama }}</td>
                                                             <td>{{ $ptk->nik }}</td>
                                                             <td>{{ $ptk->status_kepegawaian }}</td>
-                                                            <td>{{ $ptk->jenisGtk->nama }}</td>
+                                                            <td>{{ $ptk->jenis_gtk }}</td>
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
