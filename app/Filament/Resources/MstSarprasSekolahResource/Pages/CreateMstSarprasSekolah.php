@@ -5,6 +5,7 @@ namespace App\Filament\Resources\MstSarprasSekolahResource\Pages;
 use App\Filament\Resources\MstSarprasSekolahResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Validation\ValidationException;
 
 class CreateMstSarprasSekolah extends CreateRecord
 {

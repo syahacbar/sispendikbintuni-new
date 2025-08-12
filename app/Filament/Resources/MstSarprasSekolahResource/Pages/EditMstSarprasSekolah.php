@@ -4,6 +4,7 @@ namespace App\Filament\Resources\MstSarprasSekolahResource\Pages;
 
 use App\Filament\Resources\MstSarprasSekolahResource;
 use Filament\Resources\Pages\EditRecord;
+use Illuminate\Validation\ValidationException;
 
 class EditMstSarprasSekolah extends EditRecord
 {

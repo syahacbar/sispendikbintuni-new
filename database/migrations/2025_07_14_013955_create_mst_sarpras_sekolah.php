@@ -17,7 +17,13 @@ return new class extends Migration
             $table->uuid('sarpras_id')->nullable();
             $table->string('nama')->nullable();
             $table->integer('jumlah_saat_ini')->default(0);
-            $table->string('jumlah_ideal')->nullable();
+            $table->integer('jumlah_ideal')->nullable();
+            $table->integer('kondisi_baik')->nullable();
+            $table->integer('kondisi_rusak_ringan')->nullable();
+            $table->integer('kondisi_rusak_sedang')->nullable();
+            $table->integer('kondisi_rusak_berat')->nullable();
+            $table->integer('jumlah')->nullable();
+            $table->text('keterangan')->nullable();
             $table->timestamps();
         });
     }

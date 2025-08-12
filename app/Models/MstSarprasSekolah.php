@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -17,7 +18,11 @@ class MstSarprasSekolah extends Model
         'nama',
         'jumlah_saat_ini',
         'jumlah_ideal',
-        'kondisi',
+        'kondisi_baik',
+        'kondisi_rusak_ringan',
+        'kondisi_rusak_sedang',
+        'kondisi_rusak_berat',
+        'jumlah',
         'keterangan',
     ];
 
@@ -34,10 +39,5 @@ class MstSarprasSekolah extends Model
     public function sarpras()
     {
         return $this->belongsTo(RefSarpras::class, 'sarpras_id');
-    }
-
-    public function kondisiSarpras()
-    {
-        return $this->hasMany(MstKondisiSarpras::class, 'id_mst_sarpras');
     }
 }

@@ -44,11 +44,38 @@ class MstSarprasSekolahResource extends Resource
                 ->label('Nama Sarpras')
                 ->required()
                 ->maxLength(255),
+            Forms\Components\TextInput::make('kondisi_baik')
+                ->label('Kondisi Baik')
+                ->numeric()
+                ->required()
+                ->maxLength(255),
+            Forms\Components\TextInput::make('kondisi_rusak_ringan')
+                ->label('Rusak Ringan')
+                ->numeric()
+                ->required()
+                ->maxLength(255),
+            Forms\Components\TextInput::make('kondisi_rusak_sedang')
+                ->label('Rusak Sedang')
+                ->numeric()
+                ->required()
+                ->maxLength(255),
+            Forms\Components\TextInput::make('kondisi_rusak_berat')
+                ->label('Rusak Berat')
+                ->numeric()
+                ->required()
+                ->maxLength(255),
             Forms\Components\TextInput::make('jumlah_saat_ini')
                 ->numeric()
                 ->required()
                 ->default(0),
-            Forms\Components\TextInput::make('jumlah_ideal')->maxLength(255),
+            Forms\Components\TextInput::make('jumlah_ideal')
+                ->numeric()
+                ->required()
+                ->maxLength(255),
+            Forms\Components\TextArea::make('keterangan')
+                ->label('Keterangan')
+                ->required()
+                ->maxLength(255),
         ])->columns(4);
     }
 
@@ -84,6 +111,31 @@ class MstSarprasSekolahResource extends Resource
             Tables\Columns\TextColumn::make('jumlah_ideal')
                 ->label('Jumlah Ideal')
                 ->numeric()
+                ->sortable()
+                ->searchable(),
+            Tables\Columns\TextColumn::make('kondisi_baik')
+                ->label('Kondisi Baik')
+                ->sortable()
+                ->searchable(),
+            Tables\Columns\TextColumn::make('kondisi_rusak_ringan')
+                ->label('Rusak Ringan')
+                ->sortable()
+                ->searchable(),
+            Tables\Columns\TextColumn::make('kondisi_rusak_sedang')
+                ->label('Rusak Sedang')
+                ->sortable()
+                ->searchable(),
+            Tables\Columns\TextColumn::make('kondisi_rusak_berat')
+                ->label('Rusak Berat')
+                ->sortable()
+                ->searchable(),
+            Tables\Columns\TextColumn::make('jumlah')
+                ->label('Jumlah')
+                ->numeric()
+                ->sortable()
+                ->searchable(),
+            Tables\Columns\TextColumn::make('keterangan')
+                ->label('Keterangan')
                 ->sortable()
                 ->searchable(),
             Tables\Columns\TextColumn::make('created_at')
