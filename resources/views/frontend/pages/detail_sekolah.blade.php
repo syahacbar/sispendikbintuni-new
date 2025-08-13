@@ -444,6 +444,35 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+        const noDataPlugin = {
+            id: 'noData',
+            afterDraw: (chart) => {
+                const datasets = chart.data.datasets;
+                const hasData = datasets.some(dataset =>
+                    dataset.data.some(value => value > 0)
+                );
+
+                if (!hasData) {
+                    const {
+                        ctx,
+                        chartArea: {
+                            left,
+                            top,
+                            width,
+                            height
+                        }
+                    } = chart;
+                    ctx.save();
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.font = '16px sans-serif';
+                    ctx.fillStyle = '#666';
+                    ctx.fillText('Data tidak tersedia', left + width / 2, top + height / 2);
+                    ctx.restore();
+                }
+            }
+        };
+
         new Chart(document.getElementById('chartKualifikasiGuru'), {
             type: 'bar',
             data: {
@@ -469,9 +498,9 @@
                         precision: 0
                     }
                 }
-            }
+            },
+            plugins: [noDataPlugin] // ← ditambahkan di sini
         });
-
 
         new Chart(document.getElementById('chartStatusGuru'), {
             type: 'bar',
@@ -498,7 +527,8 @@
                         precision: 0
                     }
                 }
-            }
+            },
+            plugins: [noDataPlugin] // ← juga ditambahkan di sini
         });
     </script>
 @endsection
