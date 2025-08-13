@@ -41,10 +41,6 @@
                                         <a class="text-decoration-none" href="{{ url('/data-pendidikan') }}">Data
                                             Pendidikan</a>
                                     </li>
-                                    <li class="breadcrumb-item">
-                                        <a class="text-decoration-none"
-                                            href="{{ url('/data-pendidikan') }}">{{ $namaKabupaten }}</a>
-                                    </li>
                                     <li class="breadcrumb-item active" aria-current="page">Kec. {{ $namaKecamatan }}</li>
                                 </ol>
                             </nav>
@@ -73,7 +69,7 @@
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
                                                 <td>
-                                                    <a class="text-decoration-none"
+                                                    <a class="text-decoration-none text-uppercase"
                                                         href="{{ url('/data-pendidikan/sekolah/' . $sekolah->npsn) }}">
                                                         {{ $sekolah->nama }}
                                                     </a>
@@ -89,10 +85,8 @@
                                             </tr>
                                         @endforeach
                                     </tbody>
-
                                 </table>
                             </div>
-
                         </div>
                     </div>
                 </div>

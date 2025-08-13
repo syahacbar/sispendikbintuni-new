@@ -149,10 +149,17 @@ class DataPendidikanController extends Controller
             ->first();               // ambil yang pertama (atau null)
 
         // 4. Data chart guru
-        $kualifikasiGuru = $sekolah->ptks
+        $guruList = MstGtk::where('tempat_tugas', $npsn)
+            ->where('jenis_gtk', 'Guru')
+            ->get();
+
+        // Kualifikasi pendidikan terakhir
+        $kualifikasiGuru = $guruList
             ->groupBy('pend_terakhir')
             ->map(fn($g) => $g->count());
-        $statusGuru = $sekolah->ptks
+
+        // Status kepegawaian
+        $statusGuru = $guruList
             ->groupBy('status_kepegawaian')
             ->map(fn($g) => $g->count());
 
@@ -173,7 +180,15 @@ class DataPendidikanController extends Controller
             ->map(fn($anggota) => $anggota->pesertaDidik)
             ->filter(); // buang null
 
+        $guruSekolah = MstGtk::where('tempat_tugas', $npsn)
+            ->where('jenis_gtk', 'Guru')   // filter hanya guru
+            ->orderBy('nama', 'asc')       // urutkan berdasarkan nama
+            ->get();
 
+        // $pegawaiSekolah = MstGtk::where('tempat_tugas', $npsn)
+        //     ->where('jenis_gtk', '!=', 'Guru')
+        //     ->orderBy('nama')
+        //     ->get();
 
         // 6. Render view
         return view('frontend.pages.detail_sekolah', compact(
@@ -192,7 +207,9 @@ class DataPendidikanController extends Controller
             'statusLabels',
             'statusData',
             'kurikulum',
-            'pesertaDidiks'
+            'pesertaDidiks',
+            'guruSekolah',
+            // 'pegawaiSekolah'
         ));
     }
 }

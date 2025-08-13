@@ -31,16 +31,6 @@ class MstGtk extends Model
         return $this->belongsTo(MstSekolah::class, 'sekolah_id'); // sesuaikan jika beda kolom
     }
 
-    // public function tempat_tugas()
-    // {
-    //     return $this->belongsTo(MstSekolah::class, 'tempat_tugas', 'npsn');
-    // }
-
-    // public function sekolah()
-    // {
-    //     return $this->belongsTo(MstSekolah::class, 'tempat_tugas', 'npsn');
-    // }
-
     public function rombels()
     {
         return $this->hasMany(MstRombel::class, 'wali_kelas_ptk_id', 'id');

@@ -74,28 +74,14 @@ class MstSekolah extends Model
 
     public function gtkGuru()
     {
-        // return $this->hasManyThrough(
-        //     MstGtk::class,
-        //     MstRombel::class,
-        //     'sekolah_id',        // Foreign key di mst_rombel yang mengarah ke mst_sekolah
-        //     'id',                // Foreign key di mst_gtk
-        //     'id',                // Primary key di mst_sekolah
-        //     'wali_kelas_ptk_id'  // Foreign key di mst_rombel yang mengarah ke mst_gtk
-        // )->where('mst_gtk.jenis_gtk', 'Guru');
         return $this->hasMany(MstGtk::class, 'tempat_tugas', 'npsn')
             ->where('jenis_gtk', 'Guru');
     }
 
     public function gtkPegawai()
     {
-        return $this->hasManyThrough(
-            MstGtk::class,
-            MstRombel::class,
-            'sekolah_id',
-            'id',
-            'id',
-            'wali_kelas_ptk_id'
-        )->where('mst_gtk.jenis_gtk', '!=', 'Guru');
+        return $this->hasMany(MstGtk::class, 'tempat_tugas', 'npsn')
+            ->where('jenis_gtk', '!=', 'Guru');
     }
 
     // Relasi tidak langsung ke GTK (via rombel)

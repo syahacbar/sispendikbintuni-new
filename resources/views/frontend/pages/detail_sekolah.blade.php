@@ -54,11 +54,6 @@
                                                 </a>
                                             </li>
                                             <li class="breadcrumb-item">
-                                                <a class="text-decoration-none" href="{{ url('/data-pendidikan') }}">
-                                                    {{ $namaKabupaten }}
-                                                </a>
-                                            </li>
-                                            <li class="breadcrumb-item">
                                                 <a class="text-decoration-none"
                                                     href="{{ url('/data-pendidikan/kecamatan/' . urlencode($kodeKecamatan) . '/sekolah') }}">
                                                     Kec. {{ $namaKecamatan }}
@@ -398,7 +393,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($sekolah->ptks as $index => $ptk)
+                                                    @foreach ($guruSekolah as $index => $ptk)
                                                         <tr>
                                                             <td>{{ $index + 1 }}</td>
                                                             <td>{{ $ptk->nama }}</td>
