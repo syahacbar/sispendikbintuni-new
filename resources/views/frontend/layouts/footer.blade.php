@@ -48,12 +48,16 @@
                         </ul>
                     </div>
                     <div class="col-lg-4 mt-md-0">
-                        <h6 class="text-success fw-bold">PEMDA</h6>
+                        <h6 class="text-success fw-bold">LINK</h6>
                         <ul class="list-unstyled small">
-                            <li class="mb-2"><a href="https://papuabaratprov.go.id/"
-                                    class="text-white text-decoration-none">Pemprov Papua Barat</a></li>
-                            <li class="mb-2"><a href="https://telukbintuni.go.id/"
-                                    class="text-white text-decoration-none">Kab. Teluk Bintuni</a></li>
+                            <li class="mb-2"><a href="https://ijazah.data.kemendikdasmen.go.id/"
+                                    class="text-white text-decoration-none">E-Ijazah</a></li>
+                            <li class="mb-2"><a href="https://anbk.kemdikbud.go.id/"
+                                    class="text-white text-decoration-none">ANBK</a></li>
+                            <li class="mb-2"><a href="https://bosp.kemendikdasmen.go.id/portal/welcome"
+                                    class="text-white text-decoration-none">BOSP</a></li>
+                            <li class="mb-2"><a href="https://raporpendidikan.kemendikdasmen.go.id/login"
+                                    class="text-white text-decoration-none">Rapor</a></li>
                         </ul>
                     </div>
 
