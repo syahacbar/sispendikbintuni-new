@@ -1,4 +1,7 @@
 @extends('frontend.layouts.app')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <style>
     @media (min-width: 991px) {
         .berandaInformasi .d-flex.align-items-start {
@@ -11,43 +14,78 @@
             object-fit: cover;
         }
     }
+
+    ul {
+        padding-left: 2rem !important;
+    }
+
+    .swiper {
+        width: 100%;
+        height: auto;
+    }
+
+    .sliderSection {
+        padding: 4rem 0 0 0 !important;
+    }
+
+    .sectionSambutan {
+        padding-top: .5rem;
+    }
+
+    span.swiper-pagination-bullet {
+        width: 15px;
+        border-radius: 5px;
+    }
+
+    span.swiper-pagination-bullet.swiper-pagination-bullet-active {
+        width: 30px;
+        border-radius: 5px;
+    }
 </style>
 @section('content')
-    <section class="hero w-100 container-fluid d-flex align-items-start justify-content-start text-start"
-        style="height: 70vh; !important">
-        <div class="container">
-            <div class="hero-content" data-aos="fade-up">
-                <p>{{ $pengaturan['welcome_text'] ?? '' }}</p>
-                <h1>{{ $pengaturan['site_description'] ?? '' }}</h1>
-                <p>{{ $pengaturan['site_tagline'] ?? '' }}</p>
+    <section class="w-100 container-fluid d-flex align-items-start justify-content-start text-start sliderSection">
+        <div class="swiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img class="w-100" src="{{ asset('themes/frontend/slider/sliderserasi3.png') }}" alt="Bupati & Wakil">
+                </div>
+                <div class="swiper-slide">
+                    <img class="w-100" src="{{ asset('themes/frontend/slider/sliderserasi4.png') }}" alt="Bupati & Wakil">
+                </div>
             </div>
+            <div class="swiper-pagination"></div>
+            {{-- <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div> --}}
         </div>
     </section>
 
-
-    <section class="bg-white">
+    <section class="bg-white sectionSambutan">
         <div class="container pb-3">
-            <div class="row align-items-center">
-                <div class="col-lg-5 text-center mb-4 mb-lg-0 d-flex justify-content-center mt-3" data-aos="fade-right">
+            <div class="row align-items-start mt-4">
+                <div class="col-lg-3 text-center mb-lg-0 d-flex align-items-start justify-content-center"
+                    data-aos="fade-right">
                     @php
                         $sambutanFoto = $pengaturan['sambutan_foto'] ?? null;
                         $imagePath =
                             $sambutanFoto && file_exists(public_path('storage/' . $sambutanFoto))
                                 ? asset('storage/' . $sambutanFoto)
-                                : asset('themes/frontend/sambutan/kadisdikbudporabintuni.png');
+                                : asset('themes/frontend/sambutan/kadisdikbudporabintuni2.png');
                     @endphp
 
-                    <img src="{{ $imagePath }}" alt="Kepala Dinas Kabupaten Teluk Bintuni" class="img-fluid quote-img"
+                    <img src="{{ asset('themes/frontend/sambutan/kadisdikbudporabintuni2.png') }}"
+                        alt="Kepala Dinas Kabupaten Teluk Bintuni" class="img-fluid quote-img"
                         style="max-height: 450px; object-fit: cover;">
 
                 </div>
-                <div class="col-lg-7 mt-4" data-aos="fade-left">
+                <div class="col-lg-9" data-aos="fade-left">
                     <h5 class="fw-bold text-teal mb-4">
-                        {{ $pengaturan['judul_sambutan'] ?? 'Judul sambutan belum tersedia.' }}
+                        Selamat Datang di Website Tata Kelola Pendidikan Dengan Sistem Perencanaan Terintegrasi (SERASI)
+                        Kabupaten Teluk Bintuni
+                        {{-- {{ $pengaturan['judul_sambutan'] ?? 'Selamat Datang di Website Tata Kelola Pendidikan Dengan Sistem Perencanaan Terintegrasi (SERASI) Kabupaten Teluk Bintuni' }} --}}
                     </h5>
                     @php
                         $fullContent = $pengaturan['isi_sambutan'] ?? '';
-                        $shortContent = Str::limit($fullContent, 1000);
+                        $shortContent = Str::limit($fullContent, 900);
                         $isExpandable = !empty($fullContent) && strlen(strip_tags($fullContent)) > 1000;
                     @endphp
 
@@ -663,6 +701,30 @@
                 }
                 expanded = !expanded;
             });
+        });
+
+        const swiper = new Swiper('.swiper', {
+            direction: 'horizontal',
+            loop: true,
+
+            pagination: {
+                el: '.swiper-pagination',
+            },
+
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+
+            autoplay: {
+                delay: 5000,
+            },
+
+            scrollbar: {
+                el: '.swiper-scrollbar',
+                draggable: false,
+            },
+
         });
     </script>
 @endsection
