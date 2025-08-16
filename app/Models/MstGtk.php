@@ -17,9 +17,9 @@ class MstGtk extends Model
         'nip',
         'nuptk',
         'tempat_lahir',
+        'tempat_tugas',
         'tgl_lahir',
         'jenis_kelamin',
-        'tempat_tugas',
         'status_kepegawaian',
         'jenis_gtk',
         'pend_terakhir',
@@ -28,7 +28,7 @@ class MstGtk extends Model
 
     public function sekolah()
     {
-        return $this->belongsTo(MstSekolah::class, 'sekolah_id'); // sesuaikan jika beda kolom
+        return $this->belongsTo(MstSekolah::class, 'sekolah_id');
     }
 
     public function rombels()

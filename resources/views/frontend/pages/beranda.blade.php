@@ -15,10 +15,6 @@
         }
     }
 
-    ul {
-        padding-left: 2rem !important;
-    }
-
     .swiper {
         width: 100%;
         height: auto;
@@ -226,7 +222,7 @@
             </div>
 
             <div class="row mt-4">
-                <div class="col-lg-4 mt-3">
+                <div class="col-lg-6 mt-3">
                     <div class="card shadow-sm">
                         <div class="card-header">
                             <h6>Akreditasi Sekolah</h6>
@@ -236,7 +232,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 mt-3">
+                <div class="col-lg-6 mt-3">
                     <div class="card shadow-sm">
                         <div class="card-header">
                             <h6>Kondisi Sarpras</h6>
@@ -247,18 +243,16 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4 mt-3">
+                <div class="col-lg-12 mt-3">
                     <div class="card shadow-sm">
                         <div class="card-header">
-                            <h6>Kualifikasi Guru</h6>
+                            <h6>Kualifikasi Pendidikan Guru</h6>
                         </div>
                         <div class="card-body">
                             <canvas style="height: 300px" id="chartGtkKualifikasi"></canvas>
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
     </section>
@@ -411,88 +405,6 @@
             }
         });
 
-        new Chart(document.getElementById('chartGtkKualifikasi'), {
-            type: 'bar',
-            data: {
-                labels: @json($kualifikasiJenjangLabels),
-                datasets: @json($gtkKualifikasiDatasets)
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    },
-                    title: {
-                        display: true,
-                        text: 'Kualifikasi Pendidikan Guru per Jenjang'
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return `${context.dataset.label} di ${context.label}: ${context.parsed.y}`;
-                            }
-                        }
-                    }
-                },
-                interaction: {
-                    mode: 'nearest',
-                    intersect: true
-                },
-                scales: {
-                    x: {
-                        stacked: true
-                    },
-                    y: {
-                        stacked: true,
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-
-        new Chart(document.getElementById('chartGtkKepegawaian'), {
-            type: 'bar',
-            data: {
-                labels: @json($jenjangLabelsKepegawaian),
-                datasets: @json($gtkKepegawaianDatasets)
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    },
-                    title: {
-                        display: true,
-                        text: 'GTK Berdasarkan Status Kepegawaian per Jenjang'
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return `${context.dataset.label} di ${context.label}: ${context.parsed.y}`;
-                            }
-                        }
-                    }
-                },
-                interaction: {
-                    mode: 'nearest',
-                    intersect: true
-                },
-                scales: {
-                    x: {
-                        stacked: true
-                    },
-                    y: {
-                        stacked: true,
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-
         new Chart(document.getElementById('kondisiSarprasChart'), {
             type: 'bar',
             data: {
@@ -509,6 +421,47 @@
                     title: {
                         display: true,
                         text: 'Kondisi Sarpras per Jenjang'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.dataset.label} di ${context.label}: ${context.parsed.y}`;
+                            }
+                        }
+                    }
+                },
+                interaction: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    x: {
+                        stacked: true
+                    },
+                    y: {
+                        stacked: true,
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        new Chart(document.getElementById('chartGtkKualifikasi'), {
+            type: 'bar',
+            data: {
+                labels: @json($kualifikasiJenjangLabels),
+                datasets: @json($gtkKualifikasiDatasets)
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Kualifikasi Pendidikan Guru per Jenjang'
                     },
                     tooltip: {
                         callbacks: {

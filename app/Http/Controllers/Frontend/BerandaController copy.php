@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\MstSekolah;
-use App\Models\MstGtk;
 use App\Models\ExtInformasi;
 use App\Models\ExtBannerMobile;
 use App\Models\RefJenjangPendidikan;
@@ -16,11 +15,6 @@ class BerandaController extends Controller
     {
         $title = 'Beranda';
 
-        //=== Start bagian slider ====//
-        $banners = ExtBannerMobile::where('is_active', true)->get();
-        //=== Akhir bagian slider ====//
-
-        //=== Start bagian chart Jumlah Sekolah ====//
         $jenjangList = RefJenjangPendidikan::orderBy('kode')->pluck('kode', 'kode')->toArray();
 
         $statistik = [
@@ -35,6 +29,7 @@ class BerandaController extends Controller
             $statistik['Swasta'][$jenjang] = MstSekolah::where('kode_jenjang', $jenjang)->where('status', 'Swasta')->count();
         }
 
+        // Jumlah Peserta didik seluruh jenjang dan per jenjang
         $jumlah_peserta_didik = DB::table('mst_peserta_didik as pd')
             ->join('mst_anggota_rombel as ar', 'ar.peserta_didik_id', '=', 'pd.id')
             ->join('mst_rombel as r', 'r.id', '=', 'ar.rombel_id')
@@ -44,10 +39,13 @@ class BerandaController extends Controller
             ->pluck('total', 's.kode_jenjang')
             ->toArray();
 
+
         $total_peserta_didik = DB::table('mst_peserta_didik as pd')
             ->join('mst_anggota_rombel as ar', 'ar.peserta_didik_id', '=', 'pd.id')
             ->count(DB::raw('DISTINCT pd.id'));
 
+
+        // Total GTK semua jenjang dan per jenjang
         $gtk_wali_kelas = DB::table('mst_rombel as r')
             ->join('mst_sekolah as s', 's.id', '=', 'r.sekolah_id')
             ->join('mst_gtk as g', 'g.id', '=', 'r.wali_kelas_ptk_id')
@@ -59,19 +57,23 @@ class BerandaController extends Controller
             ->join('mst_gtk as g', 'g.id', '=', 'pb.gtk_id')
             ->select('s.kode_jenjang', 'g.id');
 
+        // Gabungkan keduanya
         $gtk_union = $gtk_wali_kelas->unionAll($gtk_pembelajaran);
 
+        // Ambil semua data hasil union
         $gtk_data = DB::query()->fromSub($gtk_union, 'gtk_data')->get();
 
+        // Ambil unik berdasarkan id GTK
         $gtk_unique = $gtk_data->unique('id');
 
+        // Hitung per jenjang
         $jumlah_guru = $gtk_unique->groupBy('kode_jenjang')
             ->map(fn($group) => $group->count())
             ->toArray();
 
+        // Total keseluruhan
         $total_guru = $gtk_unique->count();
 
-        //=== Start bagian chart Sebaran Sekolah per Kecamatan ====//
         $sebaranSekolahKecamatan = DB::table('mst_sekolah')
             ->join('ref_wilayah', DB::raw("LEFT(mst_sekolah.kode_wilayah, 8)"), '=', 'ref_wilayah.kode')
             ->select('ref_wilayah.nama as kecamatan', DB::raw('COUNT(*) as jumlah'))
@@ -82,9 +84,9 @@ class BerandaController extends Controller
 
         $kecamatanLabels = $sebaranSekolahKecamatan->pluck('kecamatan');
         $jumlahSekolahData = $sebaranSekolahKecamatan->pluck('jumlah');
-        //=== Akhir bagian chart Sebaran Sekolah per Kecamatan ====//
 
-        //=== Start bagian Akreditasi Sekolah ====//
+
+        // Akreditasi Sekolah per jenjang
         $akreditasiLabels = ['A', 'B', 'C', 'Belum Terakreditasi'];
 
         $colors = [
@@ -94,6 +96,7 @@ class BerandaController extends Controller
             'Belum Terakreditasi' => '#6c757d',
         ];
 
+        // Inisialisasi data
         $akreditasiByJenjang = [];
 
         foreach ($akreditasiLabels as $akreditasi) {
@@ -104,6 +107,7 @@ class BerandaController extends Controller
             }
         }
 
+        // Susun dataset untuk ChartJS
         $akreditasiDatasets = [];
 
         foreach ($akreditasiLabels as $akreditasi) {
@@ -120,63 +124,139 @@ class BerandaController extends Controller
             ];
         }
 
-        $akreditasiJenjangLabels = array_values($jenjangList);
-        //=== Akhir bagian Akreditasi Sekolah ====//
+        // Label jenjang di chart di halaman beranda
+        $akreditasiJenjangLabels = array_values($jenjangList); // untuk chart akreditasi
+        $kualifikasiJenjangLabels = array_values($jenjangList); // untuk chart kualifikasi guru
 
-        //=== Start bagian Kualifikasi Pendidikan Guru ====//
-        $pendidikanLabels = MstGtk::where('jenis_gtk', 'Guru')
-            ->select('pend_terakhir')
-            ->distinct()
-            ->pluck('pend_terakhir')
-            ->toArray();
+
+        // ==================================
+        // Kualifikasi Guru
+        $guruJenisId = 'Guru';
+        $pendidikanLabels = ['SMA', 'D3', 'S1', 'S2', 'S3'];
+
+        $colors = [
+            'SMA' => '#ffc107',
+            'D3' => '#fd7e14',
+            'S1' => '#28a745',
+            'S2' => '#007bff',
+            'S3' => '#6f42c1',
+        ];
+
+        $gtk_wali_kelas = DB::table('mst_rombel as r')
+            ->join('mst_sekolah as s', 's.id', '=', 'r.sekolah_id')
+            ->join('mst_gtk as g', 'g.id', '=', 'r.wali_kelas_ptk_id')
+            ->select('s.kode_jenjang', 'g.id', 'g.pend_terakhir', 'g.status_keaktifan', 'g.jenis_gtk');
+
+        $gtk_pembelajaran = DB::table('mst_pembelajaran as pb')
+            ->join('mst_rombel as r', 'r.id', '=', 'pb.rombongan_belajar_id')
+            ->join('mst_sekolah as s', 's.id', '=', 'r.sekolah_id')
+            ->join('mst_gtk as g', 'g.id', '=', 'pb.gtk_id')
+            ->select('s.kode_jenjang', 'g.id', 'g.pend_terakhir', 'g.status_keaktifan', 'g.jenis_gtk');
+
+        // UNION ALL keduanya
+        $gtk_union = $gtk_wali_kelas->unionAll($gtk_pembelajaran);
+
+        // Hasil union
+        $gtk_data = DB::query()->fromSub($gtk_union, 'gtk_data')
+            ->where('status_keaktifan', 'Aktif')
+            ->where('jenis_gtk', $guruJenisId)
+            ->get();
+
 
         $gtkKualifikasiByJenjang = [];
 
         foreach ($pendidikanLabels as $pendidikan) {
-            foreach ($jenjangList as $kode_jenjang => $nama_jenjang) {
-                $gtkKualifikasiByJenjang[$pendidikan][$nama_jenjang] = MstGtk::where('jenis_gtk', 'Guru')
-                    ->where('pend_terakhir', $pendidikan)
-                    ->whereHas('sekolah_tempat_tugas', function ($q) use ($kode_jenjang) {
-                        $q->where('kode_jenjang', $kode_jenjang);
-                    })
-                    ->count();
+            foreach ($jenjangList as $kode_jenjang => $labelJenjang) {
+                $gtkKualifikasiByJenjang[$pendidikan][$labelJenjang] = $gtk_data->filter(function ($item) use ($pendidikan, $kode_jenjang) {
+                    return $item->pend_terakhir === $pendidikan && $item->kode_jenjang === $kode_jenjang;
+                })->unique('id')->count();
             }
         }
 
-        // === Buat warna dinamis sesuai jumlah pendidikan === //
-        function generateColors($count)
-        {
-            $colors = [];
-            for ($i = 0; $i < $count; $i++) {
-                // Generate warna HSL supaya selalu beda
-                $hue = ($i * 360 / $count); // bagi rata lingkaran warna
-                $colors[] = "hsl($hue, 70%, 50%)";
-            }
-            return $colors;
-        }
 
-        $colorsList = generateColors(count($pendidikanLabels));
+        // $jenjangLabels = array_values($jenjangList);
+        $jenjangLabels = array_keys($jenjangList);
+
+        $jenjangLabels = array_keys($jenjangList); // gunakan kode untuk loop data
+        $kualifikasiJenjangLabels = array_values($jenjangList); // untuk label chart
 
         $gtkKualifikasiDatasets = [];
-        foreach ($pendidikanLabels as $i => $pendidikan) {
+
+        foreach ($pendidikanLabels as $pendidikan) {
             $data = [];
-            foreach ($jenjangList as $kode_jenjang => $nama_jenjang) {
-                $data[] = $gtkKualifikasiByJenjang[$pendidikan][$nama_jenjang] ?? 0;
+            foreach ($jenjangLabels as $kode_jenjang) {
+                $data[] = $gtkKualifikasiByJenjang[$pendidikan][$kode_jenjang] ?? 0;
             }
 
             $gtkKualifikasiDatasets[] = [
                 'label' => $pendidikan,
                 'data' => $data,
-                'backgroundColor' => $colorsList[$i],
-                'stack' => 'Stack 0'
+                'backgroundColor' => $colors[$pendidikan],
+                'stack' => 'Stack 0',
             ];
         }
 
-        $kualifikasiJenjangLabels = array_values($jenjangList);
-        //=== Akhir bagian Kualifikasi Pendidikan Guru ====//
+        // ================================== Gtk by Status Kepegawaian
+        $statusKepegawaianLabels = ['PNS', 'PPPK', 'Honorer Daerah', 'Honorer Sekolah', 'GTY/PTY', 'Lainnya'];
+
+        $statusKepegawaianColors = [
+            'PNS' => '#007bff',
+            'PPPK' => '#28a745',
+            'Honorer Daerah' => '#ffc107',
+            'Honorer Sekolah' => '#fd7e14',
+            'GTY/PTY' => '#6f42c1',
+            'Lainnya' => '#6c757d',
+        ];
 
 
-        //=== Start bagian informasi di beranda (berita, pengumuman, kegiatan) ====//
+        $gtk_wali_kelas = DB::table('mst_rombel as r')
+            ->join('mst_sekolah as s', 's.id', '=', 'r.sekolah_id')
+            ->join('mst_gtk as g', 'g.id', '=', 'r.wali_kelas_ptk_id')
+            ->select('s.kode_jenjang', 'g.id', 'g.status_kepegawaian', 'g.status_keaktifan', 'g.jenis_gtk');
+
+        $gtk_pembelajaran = DB::table('mst_pembelajaran as pb')
+            ->join('mst_rombel as r', 'r.id', '=', 'pb.rombongan_belajar_id')
+            ->join('mst_sekolah as s', 's.id', '=', 'r.sekolah_id')
+            ->join('mst_gtk as g', 'g.id', '=', 'pb.gtk_id')
+            ->select('s.kode_jenjang', 'g.id', 'g.status_kepegawaian', 'g.status_keaktifan', 'g.jenis_gtk');
+
+        $gtk_union = $gtk_wali_kelas->unionAll($gtk_pembelajaran);
+
+        $gtk_data = DB::query()->fromSub($gtk_union, 'gtk_data')
+            ->where('status_keaktifan', 'Aktif')
+            ->where('jenis_gtk', $guruJenisId) // ambil yang guru saja
+            ->get();
+
+
+        $gtkKepegawaianByJenjang = [];
+
+        foreach ($statusKepegawaianLabels as $status) {
+            foreach ($jenjangList as $kode_jenjang => $labelJenjang) {
+                $gtkKepegawaianByJenjang[$status][$labelJenjang] = $gtk_data->filter(function ($item) use ($status, $kode_jenjang) {
+                    return $item->status_kepegawaian === $status && $item->kode_jenjang === $kode_jenjang;
+                })->unique('id')->count();
+            }
+        }
+
+        $gtkKepegawaianDatasets = [];
+
+        $jenjangLabelsKepegawaian = array_values($jenjangList);
+
+        foreach ($statusKepegawaianLabels as $status) {
+            $data = [];
+            foreach ($jenjangLabelsKepegawaian as $labelJenjang) {
+                $data[] = $gtkKepegawaianByJenjang[$status][$labelJenjang] ?? 0;
+            }
+
+            $gtkKepegawaianDatasets[] = [
+                'label' => $status,
+                'data' => $data,
+                'backgroundColor' => $statusKepegawaianColors[$status],
+                'stack' => 'Stack 0',
+            ];
+        }
+
+        // Menampilkan Kegiatan di halaman beranda
         $berita = ExtInformasi::where('kategori', 'Berita')
             ->orderBy('created_at', 'desc')
             ->paginate(1);
@@ -186,24 +266,9 @@ class BerandaController extends Controller
         $kegiatan = ExtInformasi::where('kategori', 'Kegiatan')
             ->orderBy('created_at', 'desc')
             ->paginate(1);
-        //=== Akhir bagian informasi di beranda (berita, pengumuman, kegiatan) ====//
-
-        //=== Start bagian Jumlah PTK ====//
-        $gtk_all = DB::table('mst_gtk as g')
-            ->join('mst_sekolah as s', 's.npsn', '=', 'g.tempat_tugas')
-            ->select('s.kode_jenjang', 'g.id')
-            ->where('g.status_keaktifan', 'Aktif')
-            ->get();
-
-        $jumlah_ptk = $gtk_all->groupBy('kode_jenjang')
-            ->map(fn($group) => $group->count())
-            ->toArray();
-
-        $total_ptk = $gtk_all->count();
-        //=== Akhir bagian Jumlah PTK ====//
 
 
-        //=== Start bagian Kondisi Sarpras per Jenjang ====//
+        // Kondisi Sarpras per Jenjang Sekolah
         $kondisiLabels = ['Baik', 'Rusak Ringan', 'Rusak Sedang', 'Rusak Berat'];
         $kondisiColors = [
             'Baik' => '#28a745',
@@ -234,7 +299,7 @@ class BerandaController extends Controller
             }
         }
 
-        // Siapkan dataset untuk
+        // Siapkan dataset untuk Chart.js
         $kondisiSarprasDatasets = [];
 
         foreach ($kondisiLabels as $kondisi) {
@@ -252,14 +317,29 @@ class BerandaController extends Controller
         }
 
         $kondisiJenjangLabels = array_values($jenjangList);
-        //=== Akhir bagian Kondisi Sarpras per Jenjang ====//
 
+
+        // Slider
+        $banners = ExtBannerMobile::where('is_active', true)->get();
+
+
+        // ==================== Jumlah Semua GTK (PTK) ====================
+        $gtk_all = DB::table('mst_gtk as g')
+            ->join('mst_sekolah as s', 's.npsn', '=', 'g.tempat_tugas')
+            ->select('s.kode_jenjang', 'g.id')
+            ->where('g.status_keaktifan', 'Aktif')
+            ->get();
+
+        // Hitung per jenjang
+        $jumlah_ptk = $gtk_all->groupBy('kode_jenjang')
+            ->map(fn($group) => $group->count())
+            ->toArray();
+
+        // Total semua GTK
+        $total_ptk = $gtk_all->count();
 
         return view('frontend.pages.beranda', compact(
             'title',
-            'banners',
-            'kecamatanLabels',
-            'jumlahSekolahData',
             'statistik',
             'jenjangList',
             'jumlah_peserta_didik',
@@ -269,18 +349,20 @@ class BerandaController extends Controller
             'akreditasiLabels',
             'akreditasiDatasets',
             'akreditasiJenjangLabels',
+            'kecamatanLabels',
+            'jumlahSekolahData',
             'gtkKualifikasiDatasets',
             'kualifikasiJenjangLabels',
-            'jumlah_ptk',
-            'total_ptk',
-            'kondisiJenjangLabels',
-            'kondisiSarprasDatasets',
-            'kondisiLabels',
+            'jenjangLabelsKepegawaian',
+            'gtkKepegawaianDatasets',
             'kegiatan',
             'berita',
             'pengumuman',
-
-
+            'kondisiSarprasDatasets',
+            'kondisiJenjangLabels',
+            'banners',
+            'jumlah_ptk',
+            'total_ptk',
         ));
     }
 }
