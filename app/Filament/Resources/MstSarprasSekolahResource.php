@@ -18,9 +18,9 @@ class MstSarprasSekolahResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-computer-desktop';
     protected static ?string $navigationGroup = 'Data Master';
-    protected static ?string $navigationLabel = 'Sarpras';
-    protected static ?string $pluralLabel = 'Sarpras';
-    protected static ?string $slug = 'data-sarana-prasarana';
+    protected static ?string $navigationLabel = 'Sarpras Sekolah';
+    protected static ?string $pluralLabel = 'Sarpras Sekolah';
+    protected static ?string $slug = 'data-sarana-prasarana-sekolah';
 
     public static function form(Form $form): Form
     {

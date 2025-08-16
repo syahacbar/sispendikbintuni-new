@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\SysSetting;
 
@@ -13,9 +12,7 @@ class TentangController extends Controller
         $title = 'Tentang';
         $subtitle = 'Tata Kelola Pendidikan Dengan Sistem Perencanaan Terintegrasi (SERASI) Kabupaten Teluk Bintuni';
 
-        // $tentang = SysSetting::where('group', 'tentang')->get()->pluck('value', 'key');
         $tentang = SysSetting::where('group', 'tentang')->get();
-
 
         return view('frontend.pages.tentang', compact(
             'title',

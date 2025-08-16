@@ -19,9 +19,9 @@ class RefWilayahResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-globe-alt';
     protected static ?string $navigationGroup = 'Data Referensi';
-    protected static ?string $navigationLabel = 'Wilayah Indonesia';
-    protected static ?string $pluralLabel = 'Wilayah Indonesia';
-    protected static ?string $slug = 'data-wilayah-indonesia';
+    protected static ?string $navigationLabel = 'Wilayah Bintuni';
+    protected static ?string $pluralLabel = 'Wilayah Bintuni';
+    protected static ?string $slug = 'data-wilayah-bintuni';
 
     public static function form(Form $form): Form
     {

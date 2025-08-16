@@ -33,54 +33,56 @@
 
             <div class="col-lg-7 mt-4 mt-md-0">
                 <div class="row mt-4">
-                    <div class="col-lg-4">
-                        <h6 class="text-success fw-bold">NAVIGASI</h6>
-                        <ul class="list-unstyled small">
-                            <li class="mb-2"><a href="/data-pendidikan" class="text-white text-decoration-none">Data
-                                    Pendidikan</a>
-                            </li>
-                            <li class="mb-2"><a href="/peta-sebaran" class="text-white text-decoration-none">Peta
-                                    Sebaran</a></li>
-                            <li class="mb-2"><a href="/informasi/pengumuman"
-                                    class="text-white text-decoration-none">Pengumuman</a></li>
-                            <li class="mb-2"><a href="/informasi/berita"
-                                    class="text-white text-decoration-none">Berita</a></li>
-                            <li class="mb-2"><a href="/kalender-pendidikan"
-                                    class="text-white text-decoration-none">Kalender Pendidikan</a></li>
-                            <li class="mb-2"><a href="/form-pengaduan" class="text-white text-decoration-none">Form
-                                    Pengaduan</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-4 mt-md-0">
-                        <h6 class="text-success fw-bold">LINK</h6>
-                        <ul class="list-unstyled small">
-                            <li class="mb-2"><a href="https://ijazah.data.kemendikdasmen.go.id/"
-                                    class="text-white text-decoration-none">E-Ijazah</a></li>
-                            <li class="mb-2"><a href="https://anbk.kemdikbud.go.id/"
-                                    class="text-white text-decoration-none">ANBK</a></li>
-                            <li class="mb-2"><a href="https://bosp.kemendikdasmen.go.id/portal/welcome"
-                                    class="text-white text-decoration-none">BOSP</a></li>
-                            <li class="mb-2"><a href="https://raporpendidikan.kemendikdasmen.go.id/login"
-                                    class="text-white text-decoration-none">Rapor</a></li>
-                        </ul>
-                    </div>
+                    @php
+                        $footerNavigasi =
+                            json_decode(\App\Models\SysSetting::getValue('footer_navigasi', '[]'), true) ?? [];
+                        $footerLink = json_decode(\App\Models\SysSetting::getValue('footer_link', '[]'), true) ?? [];
+                        $footerKemendikdasmen =
+                            json_decode(\App\Models\SysSetting::getValue('footer_kemendikdasmen', '[]'), true) ?? [];
+                    @endphp
 
-                    <div class="col-lg-4 mt-md-0">
-                        <h6 class="text-success fw-bold">KEMENDIKDASMEN</h6>
-                        <ul class="list-unstyled small">
-                            <li class="mb-2"><a href="https://pdm.dikdasmen.go.id/"
-                                    class="text-white text-decoration-none">Dirjen PAUD & Dikdasmen
-                                </a></li>
-                            <li class="mb-2"><a href="https://vokasi.kemendikdasmen.go.id/"
-                                    class="text-white text-decoration-none">Dirjen Pendidikan Vokasi, Khusus, &
-                                    Layanan
-                                    Khusus
-                                </a></li>
-                            <li class="mb-2"><a href="https://gtk.dikdasmen.go.id/"
-                                    class="text-white text-decoration-none">Dirjen Guru, Tendik,
-                                    & Pendidikan Guru</a>
-                            </li>
-                        </ul>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <h6 class="text-success fw-bold">NAVIGASI</h6>
+                            <ul class="list-unstyled small">
+                                @forelse($footerNavigasi ?? [] as $item)
+                                    <li>
+                                        <a href="{{ $item['url'] ?? '#' }}"
+                                            class="text-white text-decoration-none">{{ $item['label'] ?? 'Tidak ada label' }}</a>
+                                    </li>
+                                @empty
+                                    <li class="text-white-50">Belum ada data navigasi</li>
+                                @endforelse
+                            </ul>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <h6 class="text-success fw-bold">LINK UMUM</h6>
+                            <ul class="list-unstyled small">
+                                @forelse($footerLink ?? [] as $item)
+                                    <li>
+                                        <a href="{{ $item['url'] ?? '#' }}"
+                                            class="text-white text-decoration-none">{{ $item['label'] ?? 'Tidak ada label' }}</a>
+                                    </li>
+                                @empty
+                                    <li class="text-white-50">Belum ada data link umum</li>
+                                @endforelse
+                            </ul>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <h6 class="text-success fw-bold">KEMENDIKDASMEN</h6>
+                            <ul class="list-unstyled small">
+                                @forelse($footerKemendikdasmen ?? [] as $item)
+                                    <li>
+                                        <a href="{{ $item['url'] ?? '#' }}"
+                                            class="text-white text-decoration-none">{{ $item['label'] ?? 'Tidak ada label' }}</a>
+                                    </li>
+                                @empty
+                                    <li class="text-white-50">Belum ada data Kemendikdasmen</li>
+                                @endforelse
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>

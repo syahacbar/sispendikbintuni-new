@@ -7,7 +7,6 @@ use App\Filament\Widgets\PtkChart;
 use App\Filament\Widgets\ActiveUsers;
 use App\Filament\Widgets\LatestUsers;
 use App\Filament\Widgets\SekolahChart;
-use App\Filament\Widgets\DashboardStats;
 use App\Filament\Widgets\LatestPengaduan;
 use App\Filament\Widgets\PesertaDidikChart;
 use App\Filament\Widgets\CustomDashboardStats;

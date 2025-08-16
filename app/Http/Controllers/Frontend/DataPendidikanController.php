@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Frontend;
 use App\Models\MstSekolah;
 use App\Models\RefWilayah;
 use App\Models\MstGtk;
-use App\Models\SysSetting;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 

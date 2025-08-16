@@ -19,9 +19,9 @@ class RefSarprasResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-pencil-square';
     protected static ?string $navigationGroup = 'Data Referensi';
-    protected static ?string $navigationLabel = 'Sarana Prasarana';
-    protected static ?string $pluralLabel = 'Sarana Prasarana';
-    protected static ?string $slug = 'data-referensi-sarana-prasarana';
+    protected static ?string $navigationLabel = 'Kategori Sarpras';
+    protected static ?string $pluralLabel = 'Kategori Sarpras';
+    protected static ?string $slug = 'data-kategori-sarana-prasarana';
 
     public static function form(Form $form): Form
     {

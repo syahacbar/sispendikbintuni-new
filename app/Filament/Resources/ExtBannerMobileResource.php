@@ -58,8 +58,7 @@ class ExtBannerMobileResource extends Resource
             ->columns([
                 ImageColumn::make('nama')
                     ->label('Gambar')
-                    ->disk('public')
-                    ->circular(),
+                    ->disk('public'),
 
                 Tables\Columns\TextColumn::make('deskripsi')
                     ->sortable(),

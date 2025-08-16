@@ -3,24 +3,24 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-// use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class SysSetting extends Model
 {
-    // use HasUuids;
-
     protected $table = 'sys_settings';
     protected $fillable = ['group', 'key', 'value'];
 
-
-    // public static function getAllAsArray(): array
-    // {
-    //     return static::all()->pluck('value', 'key')->toArray();
-    // }
-
     public static function getAllAsArray(): array
     {
-        return static::all()->pluck('value', 'key')->toArray();
+        return static::all()
+            ->pluck('value', 'key')
+            ->map(function ($value) {
+                $decoded = json_decode($value, true);
+
+                return (json_last_error() === JSON_ERROR_NONE && is_array($decoded))
+                    ? $decoded
+                    : $value;
+            })
+            ->toArray();
     }
 
     public static function setBulk(array $data): void

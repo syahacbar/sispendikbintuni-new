@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Pengaduan;
-
+use App\Models\ExtPengaduan;
 
 class PengaduanController extends Controller
 {
@@ -33,11 +32,11 @@ class PengaduanController extends Controller
             $validated['dok_lampiran'] = $request->file('dok_lampiran')->store('pengaduan_lampiran', 'public');
         }
 
-        $pengaduan = Pengaduan::create($validated);
+        $pengaduan = ExtPengaduan::create($validated);
 
         $tahunBulan = now()->format('Ym');
 
-        $countInThisMonth = Pengaduan::whereYear('created_at', now()->year)
+        $countInThisMonth = ExtPengaduan::whereYear('created_at', now()->year)
             ->whereMonth('created_at', now()->month)
             ->count();
 

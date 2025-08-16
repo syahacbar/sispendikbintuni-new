@@ -25,7 +25,7 @@
     }
 
     .sliderSection {
-        padding: 4rem 0 0 0 !important;
+        padding: 3.5rem 0 0 0 !important;
     }
 
     .sectionSambutan {
@@ -46,16 +46,19 @@
     <section class="w-100 container-fluid d-flex align-items-start justify-content-start text-start sliderSection">
         <div class="swiper">
             <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <img class="w-100" src="{{ asset('themes/frontend/slider/sliderserasi3.png') }}" alt="Bupati & Wakil">
-                </div>
-                <div class="swiper-slide">
-                    <img class="w-100" src="{{ asset('themes/frontend/slider/sliderserasi4.png') }}" alt="Bupati & Wakil">
-                </div>
+                @forelse($banners as $banner)
+                    <div class="swiper-slide">
+                        <img class="w-100" src="{{ asset('storage/' . $banner->nama) }}"
+                            alt="{{ $banner->deskripsi ?? $banner->nama }}">
+                    </div>
+                @empty
+                    <div class="swiper-slide">
+                        <img class="w-100" src="{{ asset('themes/frontend/slider/sliderserasi3.png') }}"
+                            alt="Default Banner">
+                    </div>
+                @endforelse
             </div>
             <div class="swiper-pagination"></div>
-            {{-- <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div> --}}
         </div>
     </section>
 
@@ -79,9 +82,7 @@
                 </div>
                 <div class="col-lg-9" data-aos="fade-left">
                     <h5 class="fw-bold text-teal mb-4">
-                        Selamat Datang di Website Tata Kelola Pendidikan Dengan Sistem Perencanaan Terintegrasi (SERASI)
-                        Kabupaten Teluk Bintuni
-                        {{-- {{ $pengaturan['judul_sambutan'] ?? 'Selamat Datang di Website Tata Kelola Pendidikan Dengan Sistem Perencanaan Terintegrasi (SERASI) Kabupaten Teluk Bintuni' }} --}}
+                        {{ $pengaturan['judul_sambutan'] ?? 'Selamat Datang di Website Tata Kelola Pendidikan Dengan Sistem Perencanaan Terintegrasi (SERASI) Kabupaten Teluk Bintuni' }}
                     </h5>
                     @php
                         $fullContent = $pengaturan['isi_sambutan'] ?? '';
@@ -109,7 +110,6 @@
             </div>
         </div>
     </section>
-
 
     <section class="pt-5 bg-light">
         <div class="container">
@@ -210,13 +210,13 @@
 
                             <h6 class="text-muted mt-4">
                                 PTK
-                                <span class="float-end text-primary">{{ number_format($total_guru) }}</span>
+                                <span class="float-end text-primary">{{ number_format($total_ptk) }}</span>
                             </h6>
                             <hr class="mt-1 mb-2">
                             @foreach ($jenjangList as $jenjang)
                                 <div class="d-flex justify-content-between">
                                     <span>{{ $jenjang }}</span>
-                                    <span>{{ number_format($jumlah_guru[$jenjang] ?? 0) }}</span>
+                                    <span>{{ number_format($jumlah_ptk[$jenjang] ?? 0) }}</span>
                                 </div>
                             @endforeach
 
@@ -364,8 +364,6 @@
         </div>
     </section>
 
-
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 
@@ -413,8 +411,6 @@
             }
         });
 
-
-        // // Kualifikasi Guru
         new Chart(document.getElementById('chartGtkKualifikasi'), {
             type: 'bar',
             data: {
@@ -456,7 +452,6 @@
             }
         });
 
-        // Status Kepegawaian
         new Chart(document.getElementById('chartGtkKepegawaian'), {
             type: 'bar',
             data: {
@@ -587,7 +582,7 @@
                     }
                 }
             },
-            plugins: [ChartDataLabels] // <- aktifkan plugin
+            plugins: [ChartDataLabels]
         });
     </script>
 
@@ -598,7 +593,6 @@
 
         const labelsJenjang = ['TK', 'KB', 'TPA', 'SPS', 'PKBM', 'SKB', 'SD', 'SMP', 'SMA', 'SMK', 'SLB'];
 
-        // Semua Sekolah
         new Chart(document.getElementById('semuaSekolahChart'), {
             type: 'bar',
             data: {
@@ -625,7 +619,6 @@
             }
         });
 
-        // Sekolah Swasta
         new Chart(document.getElementById('sekolahSwastaChart'), {
             type: 'bar',
             data: {
@@ -652,7 +645,6 @@
             }
         });
 
-        // Sekolah Negeri
         new Chart(document.getElementById('sekolahNegeriChart'), {
             type: 'bar',
             data: {

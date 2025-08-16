@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\ExtInformasi;
-use App\Models\SysSetting;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class InformasiController extends Controller

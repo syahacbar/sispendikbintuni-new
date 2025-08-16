@@ -2,24 +2,17 @@
 
 namespace App\Filament\Pages;
 
-use App\Models\Pengaturan;
 use App\Models\SysSetting;
-use Filament\Forms\Get;
 use Filament\Forms\Form;
 use Filament\Pages\Page;
 use Filament\Forms\Components\Tabs;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Fieldset;
-use Filament\Forms\Components\Tabs\Tab;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Notifications\Notification;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Components\RichEditor;
-use Illuminate\Support\Facades\Storage;
+use Filament\Forms\Components\Repeater;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 
 class SystemSetting extends Page
@@ -160,6 +153,70 @@ class SystemSetting extends Page
                                     ->directory('favicons')
                                     ->openable(),
                             ])->columns(4),
+
+                        Tabs\Tab::make('Footer')
+                            ->icon('heroicon-m-link')
+                            ->schema([
+                                Section::make('Navigasi')
+                                    ->description('Atur daftar navigasi footer')
+                                    ->schema([
+                                        Repeater::make('footer_navigasi')
+                                            ->deletable(false)
+                                            ->reorderable(false)
+                                            ->label('Navigasi')
+                                            ->grid(2)
+                                            ->schema([
+                                                TextInput::make('label')
+                                                    ->label('Nama Link')
+                                                    ->required(),
+                                                TextInput::make('url')
+                                                    ->label('URL')
+                                                    ->required(),
+                                            ])
+                                            ->default(fn() => json_decode(SysSetting::getValue('footer_navigasi', '[]'), true))
+                                            ->columns(2),
+                                    ]),
+
+                                Section::make('Link Umum')
+                                    ->description('Atur daftar link umum di footer')
+                                    ->schema([
+                                        Repeater::make('footer_link')
+                                            ->deletable(false)
+                                            ->reorderable(false)
+                                            ->label('Link Umum')
+                                            ->grid(2)
+                                            ->schema([
+                                                TextInput::make('label')
+                                                    ->label('Nama Link')
+                                                    ->required(),
+                                                TextInput::make('url')
+                                                    ->label('URL')
+                                                    ->required(),
+                                            ])
+                                            ->default(fn() => json_decode(SysSetting::getValue('footer_link', '[]'), true))
+                                            ->columns(2),
+                                    ]),
+
+                                Section::make('Kemendikdasmen')
+                                    ->description('Atur daftar link Kemendikdasmen di footer')
+                                    ->schema([
+                                        Repeater::make('footer_kemendikdasmen')
+                                            ->deletable(false)
+                                            ->reorderable(false)
+                                            ->label('Kemendikdasmen')
+                                            ->grid(2)
+                                            ->schema([
+                                                TextInput::make('label')
+                                                    ->label('Nama Link')
+                                                    ->required(),
+                                                TextInput::make('url')
+                                                    ->label('URL')
+                                                    ->required(),
+                                            ])
+                                            ->default(fn() => json_decode(SysSetting::getValue('footer_kemendikdasmen', '[]'), true))
+                                            ->columns(2),
+                                    ]),
+                            ]),
                     ])
             ])
             ->statePath('data');
@@ -168,6 +225,12 @@ class SystemSetting extends Page
     public function save()
     {
         $data = $this->form->getState();
+
+        // Encode array repeater ke JSON sebelum disimpan
+        $data['footer_navigasi'] = json_encode($data['footer_navigasi']);
+        $data['footer_link'] = json_encode($data['footer_link']);
+        $data['footer_kemendikdasmen'] = json_encode($data['footer_kemendikdasmen']);
+
         SysSetting::setBulk($data);
 
         Notification::make()
