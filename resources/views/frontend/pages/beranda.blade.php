@@ -238,7 +238,13 @@
                             <h6>Kondisi Sarpras</h6>
                         </div>
                         <div class="card-body">
-                            <canvas style="height: 300px" id="kondisiSarprasChart"></canvas>
+                            @if (!$hasKondisiSarprasData)
+                                <div class="text-center text-muted py-5">
+                                    <em>Belum ada data kondisi sarpras untuk ditampilkan</em>
+                                </div>
+                            @else
+                                <canvas style="height: 300px" id="kondisiSarprasChart"></canvas>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -361,6 +367,51 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 
+    @if ($hasKondisiSarprasData)
+        <script>
+            new Chart(document.getElementById('kondisiSarprasChart'), {
+                type: 'bar',
+                data: {
+                    labels: @json($kondisiJenjangLabels),
+                    datasets: @json($kondisiSarprasDatasets)
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        },
+                        title: {
+                            display: true,
+                            text: 'Kondisi Sarpras per Jenjang'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label} di ${context.label}: ${context.parsed.y}`;
+                                }
+                            }
+                        }
+                    },
+                    interaction: {
+                        mode: 'nearest',
+                        intersect: true
+                    },
+                    scales: {
+                        x: {
+                            stacked: true
+                        },
+                        y: {
+                            stacked: true,
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
+    @endif
+
     <script>
         new Chart(document.getElementById('chartAkreditasi'), {
             type: 'bar',
@@ -382,47 +433,6 @@
                     tooltip: {
                         mode: 'nearest',
                         intersect: true,
-                        callbacks: {
-                            label: function(context) {
-                                return `${context.dataset.label} di ${context.label}: ${context.parsed.y}`;
-                            }
-                        }
-                    }
-                },
-                interaction: {
-                    mode: 'nearest',
-                    intersect: true
-                },
-                scales: {
-                    x: {
-                        stacked: true
-                    },
-                    y: {
-                        stacked: true,
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-
-        new Chart(document.getElementById('kondisiSarprasChart'), {
-            type: 'bar',
-            data: {
-                labels: @json($kondisiJenjangLabels),
-                datasets: @json($kondisiSarprasDatasets)
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    },
-                    title: {
-                        display: true,
-                        text: 'Kondisi Sarpras per Jenjang'
-                    },
-                    tooltip: {
                         callbacks: {
                             label: function(context) {
                                 return `${context.dataset.label} di ${context.label}: ${context.parsed.y}`;

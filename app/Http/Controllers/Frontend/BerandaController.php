@@ -144,18 +144,16 @@ class BerandaController extends Controller
         }
 
         // === Buat warna dinamis sesuai jumlah pendidikan === //
-        function generateColors($count)
-        {
+        $generateColors = function ($count) {
             $colors = [];
             for ($i = 0; $i < $count; $i++) {
-                // Generate warna HSL supaya selalu beda
-                $hue = ($i * 360 / $count); // bagi rata lingkaran warna
+                $hue = ($i * 360 / max(1, $count));
                 $colors[] = "hsl($hue, 70%, 50%)";
             }
             return $colors;
-        }
+        };
 
-        $colorsList = generateColors(count($pendidikanLabels));
+        $colorsList = $generateColors(count($pendidikanLabels));
 
         $gtkKualifikasiDatasets = [];
         foreach ($pendidikanLabels as $i => $pendidikan) {
@@ -252,6 +250,11 @@ class BerandaController extends Controller
         }
 
         $kondisiJenjangLabels = array_values($jenjangList);
+
+        $hasKondisiSarprasData = collect($kondisiSarprasDatasets)
+            ->pluck('data')
+            ->flatten()
+            ->sum() > 0;
         //=== Akhir bagian Kondisi Sarpras per Jenjang ====//
 
 
@@ -276,6 +279,7 @@ class BerandaController extends Controller
             'kondisiJenjangLabels',
             'kondisiSarprasDatasets',
             'kondisiLabels',
+            'hasKondisiSarprasData',
             'kegiatan',
             'berita',
             'pengumuman',
