@@ -283,8 +283,6 @@ class BerandaController extends Controller
             'kegiatan',
             'berita',
             'pengumuman',
-
-
         ));
     }
 }

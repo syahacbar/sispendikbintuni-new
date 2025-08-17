@@ -27,21 +27,104 @@ class CustomDashboardStats extends Widget
 
     protected static string $view = 'filament.widgets.custom-dashboard-stats';
 
+    // public function getViewData(): array
+    // {
+    //     return [
+    //         'cards' => [
+    //             [
+    //                 'title' => 'Total Sekolah',
+    //                 'value' => MstSekolah::count(),
+    //             ],
+    //             [
+    //                 'title' => 'Total Peserta Didk',
+    //                 'value' => MstPesertaDidik::count(),
+    //             ],
+    //             [
+    //                 'title' => 'Total PTK',
+    //                 'value' => MstGtk::count(),
+    //             ],
+    //             [
+    //                 'title' => 'Total Users',
+    //                 'value' => User::count(),
+    //             ],
+    //             [
+    //                 'title' => 'Active Users',
+    //                 'value' => User::role(['super_admin', 'admin_dinas', 'admin_sekolah'])
+    //                     ->whereIn('id', function ($query) {
+    //                         $query->select('user_id')->from('sessions')->whereNotNull('user_id');
+    //                     })->count(),
+    //             ],
+    //             [
+    //                 'title' => 'Total Pengaduan',
+    //                 'value' => ExtPengaduan::count(),
+    //             ],
+    //             [
+    //                 'title' => 'Total Rombel',
+    //                 'value' => MstRombel::count(),
+    //             ],
+    //             [
+    //                 'title' => 'Total Sarana',
+    //                 'value' => RefSarpras::count(),
+    //             ],
+    //             [
+    //                 'title' => 'Total Prasarana',
+    //                 'value' => MstSarprasSekolah::count(),
+    //             ],
+    //             [
+    //                 'title' => 'Total Kurikulum',
+    //                 'value' => RefKurikulum::count(),
+    //             ],
+    //             [
+    //                 'title' => 'Total Mata pelajaran',
+    //                 'value' => RefMapel::count(),
+    //             ],
+    //             [
+    //                 'title' => 'Total Informasi',
+    //                 'value' => ExtInformasi::count(),
+    //             ],
+    //         ],
+    //     ];
+    // }
+
     public function getViewData(): array
     {
+        $user = auth()->user();
+
+        // Default (global count)
+        $totalSekolah = MstSekolah::count();
+        $totalPesertaDidik = MstPesertaDidik::count();
+        $totalGtk = MstGtk::count();
+        $totalSarpras = MstSarprasSekolah::count();
+
+        // Kalau role admin_sekolah → filter
+        if ($user->hasRole('admin_sekolah') && $user->sekolah) {
+            $sekolah = $user->sekolah;
+
+            // GTK → filter by tempat_tugas = npsn
+            $totalGtk = MstGtk::where('tempat_tugas', $sekolah->npsn)->count();
+
+            // Peserta didik → filter lewat rombel yang punya sekolah_id = sekolah.id
+            $totalPesertaDidik = MstPesertaDidik::whereHas('rombels', function ($q) use ($sekolah) {
+                $q->where('sekolah_id', $sekolah->id);
+            })->count();
+
+            // Sarpras → filter by sekolah_id
+            $totalSarpras = MstSarprasSekolah::where('sekolah_id', $sekolah->id)->count();
+        }
+
         return [
             'cards' => [
                 [
                     'title' => 'Total Sekolah',
-                    'value' => MstSekolah::count(),
+                    'value' => $totalSekolah,
                 ],
                 [
-                    'title' => 'Total Peserta Didk',
-                    'value' => MstPesertaDidik::count(),
+                    'title' => 'Total Peserta Didik',
+                    'value' => $totalPesertaDidik,
                 ],
                 [
                     'title' => 'Total PTK',
-                    'value' => MstGtk::count(),
+                    'value' => $totalGtk,
                 ],
                 [
                     'title' => 'Total Users',
@@ -68,7 +151,7 @@ class CustomDashboardStats extends Widget
                 ],
                 [
                     'title' => 'Total Prasarana',
-                    'value' => MstSarprasSekolah::count(),
+                    'value' => $totalSarpras,
                 ],
                 [
                     'title' => 'Total Kurikulum',

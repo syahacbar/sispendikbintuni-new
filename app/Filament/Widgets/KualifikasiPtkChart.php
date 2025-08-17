@@ -6,7 +6,7 @@ use App\Models\MstGtk;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Facades\DB;
 
-class PtkChart extends ChartWidget
+class KualifikasiPtkChart extends ChartWidget
 {
     protected static ?string $heading = 'Grafik GTK by Status Kepegawaian';
     protected static ?int $sort = 2;
@@ -28,15 +28,15 @@ class PtkChart extends ChartWidget
         }
 
         $data = $query
-            ->select('status_kepegawaian', DB::raw('count(*) as total'))
-            ->groupBy('status_kepegawaian')
-            ->orderBy('status_kepegawaian')
+            ->select('pend_terakhir', DB::raw('count(*) as total'))
+            ->groupBy('pend_terakhir')
+            ->orderBy('pend_terakhir')
             ->get();
 
         return [
             'datasets' => [
                 [
-                    'label' => 'Jumlah GTK',
+                    'label' => 'Grafik Pendidikan GTK',
                     'data' => $data->pluck('total'),
                     'backgroundColor' => [
                         '#3b82f6',
@@ -46,7 +46,7 @@ class PtkChart extends ChartWidget
                     ],
                 ],
             ],
-            'labels' => $data->pluck('status_kepegawaian'),
+            'labels' => $data->pluck('pend_terakhir'),
         ];
     }
 }
