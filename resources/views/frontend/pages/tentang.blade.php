@@ -9,7 +9,11 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12">
-                                    {!! $pengaturan['tentang_web'] ?? '' !!}
+                                    @if (!empty($pengaturan['tentang_web']))
+                                        {!! $pengaturan['tentang_web'] !!}
+                                    @else
+                                        <p class="text-muted fst-italic">Belum ada data yang ditambahkan.</p>
+                                    @endif
                                 </div>
                             </div>
                         </div>
