@@ -11,16 +11,9 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
 
 <style>
-    .w-5 {
-        width: 5%
-    }
-
-    .w-15 {
-        width: 15%
-    }
-
-    .w-85 {
-        width: 85%
+    img.gbrHeader {
+        width: 50px;
+        height: auto;
     }
 
     .btnLogin {

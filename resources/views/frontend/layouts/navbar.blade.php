@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-success fixed-top" aria-label="Sispendik Navbar">
     <div class="container d-flex justify-content-between">
-        <a class="w-15 navbar-brand d-flex align-items-center" href="{{ url('/') }}">
-            <img class="w-25 mr-3" src="{{ asset('themes/frontend/logoserasi.png') }}"
+        <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
+            <img class="gbrHeader mr-3" src="{{ asset('themes/frontend/logoserasi.png') }}"
                 alt="{{ $pengaturan['site_name'] ?? 'SERASI' }}">
             {{-- <img class="w-25 mr-3" src="{{ asset($pengaturan['logo'] ?? 'themes/frontend/logoserasi.png') }}"
                 alt="{{ $pengaturan['site_name'] ?? 'SERASI' }}"> --}}
@@ -12,7 +12,7 @@
             <i class="bi bi-list fs-2"></i>
         </button>
 
-        <div class="w-85 collapse navbar-collapse" id="navbarSispendikBintuni">
+        <div class="collapse navbar-collapse" id="navbarSispendikBintuni">
             <ul class="navbar-nav ms-auto flex-md-row">
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('/') ? 'active' : '' }}" href="/">Beranda</a>

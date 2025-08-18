@@ -37,19 +37,10 @@ class TentangWeb extends Page implements HasForms
             ->schema([
                 Fieldset::make('')
                     ->schema([
-                        RichEditor::make('deskripsi')
-                            ->label('Deskripsi Web')
+                        RichEditor::make('tentang_web')
+                            ->label('Tentang Web')
                             ->columnSpanFull()
                             ->required(),
-
-                        RichEditor::make('visi')
-                            ->label('Visi'),
-
-                        RichEditor::make('misi')
-                            ->label('Misi'),
-
-                        RichEditor::make('tujuan')
-                            ->label('Tujuan'),
                     ])->columns(3),
             ])
             ->statePath('data');
@@ -62,7 +53,7 @@ class TentangWeb extends Page implements HasForms
         SysSetting::setBulk($data);
 
         Notification::make()
-            ->title('Tentang Diperbarui')
+            ->title('Tentang Web Diperbarui')
             ->body('Konten halaman Tentang berhasil diperbarui.')
             ->success()
             ->send();

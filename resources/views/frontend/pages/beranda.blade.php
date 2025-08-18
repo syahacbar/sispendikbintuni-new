@@ -292,7 +292,12 @@
             </div>
             <div class="row">
                 <div class="col-lg-4 mt-3" data-aos="fade-left">
-                    <h6 class="text-success fw-semibold mb-3">Berita Terbaru</h6>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="text-success fw-semibold mb-0">Berita Terbaru</h6>
+                        <a href="{{ url('informasi/berita') }}" class="btn btn-success btn-sm d-block d-sm-none">
+                            Lainnya
+                        </a>
+                    </div>
                     @foreach ($berita as $item)
                         <div class="d-flex justify-content-between align-items-center border rounded-3 p-2 mb-4">
                             <div class="d-flex align-items-start">
@@ -312,10 +317,18 @@
                             </div>
                         </div>
                     @endforeach
-                    <a class="btn btn-success" href="">Berita Lainnya</a>
+                    <a href="{{ url('informasi/berita') }}" class="btn btn-success mt-2 d-none d-lg-inline-block">
+                        Lainnya
+                    </a>
                 </div>
+
                 <div class="col-lg-4 mt-3" data-aos="fade-right">
-                    <h6 class="text-success fw-semibold mb-3">Pengumuman Terbaru</h6>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="text-success fw-semibold mb-0">Pengumuman Terbaru</h6>
+                        <a href="{{ url('informasi/pengumuman') }}" class="btn btn-success btn-sm d-block d-sm-none">
+                            Lainnya
+                        </a>
+                    </div>
                     @foreach ($pengumuman as $item)
                         <div class="d-flex justify-content-between align-items-center border rounded-3 p-2 mb-4">
                             <div class="d-flex align-items-start">
@@ -335,10 +348,17 @@
                             </div>
                         </div>
                     @endforeach
-                    <a class="btn btn-success" href="">Pengumuman Lainnya</a>
+                    <a href="{{ url('informasi/pengumuman') }}" class="btn btn-success mt-2 d-none d-lg-inline-block">
+                        Lainnya
+                    </a>
                 </div>
                 <div class="col-lg-4 mt-3" data-aos="fade-right">
-                    <h6 class="text-success fw-semibold mb-3">Kegiatan Terbaru</h6>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="text-success fw-semibold mb-0">Kegiatan Terbaru</h6>
+                        <a href="{{ url('informasi/kegiatan') }}" class="btn btn-success btn-sm d-block d-sm-none">
+                            Lainnya
+                        </a>
+                    </div>
                     @foreach ($kegiatan as $item)
                         <div class="d-flex justify-content-between align-items-center border rounded-3 p-2 mb-4">
                             <div class="d-flex align-items-start">
@@ -358,7 +378,9 @@
                             </div>
                         </div>
                     @endforeach
-                    <a class="btn btn-success" href="">Kegiatan Lainnya</a>
+                    <a href="{{ url('informasi/kegiatan') }}" class="btn btn-success mt-2 d-none d-lg-inline-block">
+                        Lainnya
+                    </a>
                 </div>
             </div>
         </div>

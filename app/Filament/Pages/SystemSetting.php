@@ -44,7 +44,7 @@ class SystemSetting extends Page
             ->schema([
                 Tabs::make('Tabs')
                     ->tabs([
-                        Tabs\Tab::make('Pengaturan Web')
+                        Tabs\Tab::make('Deskripsi Web')
                             ->icon('heroicon-m-globe-alt')
                             ->schema([
 
@@ -71,10 +71,6 @@ class SystemSetting extends Page
                                 TextInput::make('design_by')
                                     ->label('Didesain Oleh')
                                     ->required(),
-                                TextInput::make('welcome_text')
-                                    ->label('Welcom Text')
-                                    ->required(),
-
                             ])->columns(3),
                         Tabs\Tab::make('Google Integration')
                             ->icon('heroicon-m-cog-6-tooth')

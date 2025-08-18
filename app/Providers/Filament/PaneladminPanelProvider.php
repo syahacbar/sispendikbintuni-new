@@ -30,6 +30,7 @@ class PaneladminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('paneladmin')
+            ->darkMode(false)
             ->path('paneladmin')
             ->brandName('Sistem Perencanaan Terintegrasi')
             ->login()

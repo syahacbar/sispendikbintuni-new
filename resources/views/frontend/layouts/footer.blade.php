@@ -1,15 +1,15 @@
 <footer class="bg-dark text-white pt-5 pb-3 mb-4">
     <div class="container">
         <div class="row align-items-start mb-4">
-            <div class="col-sm-5">
+            <div class="col-lg-5">
                 <div class="mb-3 d-flex gap-2 justify-content-start align-items-center">
-                    <img class="w-25 mr-3" src="{{ asset('themes/frontend/logo.png') }}"
+                    <img class="logoFooter mr-3" src="{{ asset('themes/frontend/logo.png') }}"
                         alt="{{ $pengaturan['site_name'] ?? 'SERASI' }}">
-                    <h5>
+                    <h6>
                         <strong class="text-success fw-bold">
-                            Dinas Pendidikan, Kebudayaan, Pemuda dan Olahraga Kabupaten Teluk Bintuni
+                            {{ $pengaturan['author'] ?? 'Dinas Pendidikan, Kebudayaan, Pemuda dan Olahraga Kabupaten Teluk Bintuni' }}
                         </strong>
-                    </h5>
+                    </h6>
                 </div>
                 <p class="small mb-1">
                     {{ $pengaturan['address'] ?? '' }}, {{ $pengaturan['postal_code'] ?? '' }} <br />
@@ -88,8 +88,9 @@
             </div>
         </div>
 
-        <div class="d-flex justify-content-between align-items-center border-top border-secondary pt-3 mt-3 mb-4">
-            <i class="fas fa-university fa-2x text-success me-2"></i>
+        <div class="d-flex justify-content-center align-items-center border-top border-secondary pt-3 mt-3 mb-4">
+            <span
+                class="small">{{ $pengaturan['copyright'] ?? 'Hak Cipta SERASI Kabupaten Teluk Bintuni © 2025' }}</span>
         </div>
     </div>
 </footer>

@@ -12,12 +12,12 @@ class TentangController extends Controller
         $title = 'Tentang';
         $subtitle = 'Tata Kelola Pendidikan Dengan Sistem Perencanaan Terintegrasi (SERASI) Kabupaten Teluk Bintuni';
 
-        $tentang = SysSetting::where('group', 'tentang')->get();
+        $pengaturan = SysSetting::pluck('value', 'key');
 
         return view('frontend.pages.tentang', compact(
             'title',
             'subtitle',
-            'tentang'
+            'pengaturan'
         ));
     }
 }
