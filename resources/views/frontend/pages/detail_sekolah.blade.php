@@ -180,7 +180,7 @@
                                         Guru</button>
                                     <button class="nav-link" id="nav-direktoriPesertaDidik-tab" data-bs-toggle="tab"
                                         data-bs-target="#nav-direktoriPesertaDidik" type="button" role="tab"
-                                        aria-controls="nav-direktoriPesertaDidik" aria-selected="false">Direktori Pesrta
+                                        aria-controls="nav-direktoriPesertaDidik" aria-selected="false">Direktori Peserta
                                         Didik</button>
 
                                 </div>

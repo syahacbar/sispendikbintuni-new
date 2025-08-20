@@ -45,9 +45,11 @@ class UserResource extends Resource
 
                 Select::make('sekolah_id')
                     ->label('Sekolah')
-                    ->relationship('sekolah', 'nama')
+                    ->options(\App\Models\MstSekolah::pluck('nama', 'id'))
                     ->searchable()
-                    ->preload(),
+                    ->preload()
+                    ->dehydrated(false)
+                    ->formatStateUsing(fn($record) => $record?->sekolah?->id),
 
                 DateTimePicker::make('email_verified_at')
                     ->native(false),

@@ -30,6 +30,7 @@ class User extends Authenticatable implements FilamentUser
         'name',
         'email',
         'password',
+        'email_verified_at',
     ];
 
     /**
@@ -54,16 +55,6 @@ class User extends Authenticatable implements FilamentUser
             'password' => 'hashed',
         ];
     }
-
-    // public function sekolah()
-    // {
-    //     return $this->hasOne(MstSekolah::class, 'users_id');
-    // }
-
-    // public function sekolah()
-    // {
-    //     return $this->belongsTo(MstSekolah::class, 'sekolah_id');
-    // }
 
     public function sekolah()
     {
