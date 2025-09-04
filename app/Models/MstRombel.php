@@ -31,11 +31,14 @@ class MstRombel extends Model
         return $this->belongsTo(MstSekolah::class, 'sekolah_id');
     }
 
-    public function pesertaDidiks(): HasMany
+    public function pesertaDidiks()
     {
-        return $this->hasMany(MstAnggotaRombel::class, 'rombel_id')
-            ->join('mst_peserta_didik', 'mst_anggota_rombel.peserta_didik_id', '=', 'mst_peserta_didik.id')
-            ->select('mst_peserta_didik.*');
+        return $this->belongsToMany(
+            MstPesertaDidik::class,
+            'mst_anggota_rombel',
+            'rombel_id',
+            'peserta_didik_id'
+        );
     }
 
     public function kurikulum()

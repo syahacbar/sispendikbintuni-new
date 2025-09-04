@@ -173,10 +173,11 @@ class MstGtkResource extends Resource
 
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    // Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -197,15 +198,13 @@ class MstGtkResource extends Resource
             }
 
             return parent::getEloquentQuery()
-                ->with('sekolah')
-                ->where('tempat_tugas', $sekolah->npsn);
+                ->with('sekolah_tempat_tugas')
+                ->where('tempat_tugas', $sekolah->npsn)
+                ->distinct();
         }
 
         return parent::getEloquentQuery()->whereRaw('1=0');
     }
-
-
-
 
     public static function getRelations(): array
     {

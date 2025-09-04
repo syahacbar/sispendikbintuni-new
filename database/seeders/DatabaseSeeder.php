@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
 
             MstSekolahSeeder::class,
             MstGtkSeeder::class,
-            // MstPesertaDidikSeeder::class,
+            MstPesertaDidikSeeder::class,
             // MstRombelSeeder::class,
             // MstSarprasSekolahSeeder::class,
             // MstPembelajaranSeeder::class,

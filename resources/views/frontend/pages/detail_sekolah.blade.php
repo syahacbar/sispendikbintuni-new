@@ -335,18 +335,10 @@
                                                         @php
                                                             $selisih =
                                                                 $sarpras->jumlah_saat_ini - $sarpras->jumlah_ideal;
-                                                            $baik = $sarpras->kondisiSarpras
-                                                                ->where('kondisi', 'Baik')
-                                                                ->sum('jumlah');
-                                                            $rr = $sarpras->kondisiSarpras
-                                                                ->where('kondisi', 'Rusak Ringan')
-                                                                ->sum('jumlah');
-                                                            $rs = $sarpras->kondisiSarpras
-                                                                ->where('kondisi', 'Rusak Sedang')
-                                                                ->sum('jumlah');
-                                                            $rb = $sarpras->kondisiSarpras
-                                                                ->where('kondisi', 'Rusak Berat')
-                                                                ->sum('jumlah');
+                                                            $baik = $sarpras->kondisi_baik ?? 0;
+                                                            $rr = $sarpras->kondisi_rusak_ringan ?? 0;
+                                                            $rs = $sarpras->kondisi_rusak_sedang ?? 0;
+                                                            $rb = $sarpras->kondisi_rusak_berat ?? 0;
                                                         @endphp
                                                         <tr>
                                                             <td>{{ $no++ }}</td>
@@ -369,6 +361,7 @@
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
+
                                             </table>
                                         </div>
                                     </div>
@@ -423,6 +416,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                {{-- {{ dd($pesertaDidiks->take(5)) }} --}}
                                                 @foreach ($pesertaDidiks as $index => $pd)
                                                     <tr>
                                                         <td class="w-5">{{ $index + 1 }}</td>

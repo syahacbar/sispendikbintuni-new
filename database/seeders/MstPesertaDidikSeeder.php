@@ -5,64 +5,70 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
-use Faker\Factory;
+use Carbon\Carbon;
 
 class MstPesertaDidikSeeder extends Seeder
 {
     public function run(): void
     {
-        $faker = Factory::create('id_ID');
-        $agamaList = ['Islam', 'Kristen', 'Hindu', 'Buddha', 'Konghucu'];
-        $jkList = ['L', 'P'];
+        $csvFile = database_path('seeders/data/mst_peserta_didik.csv');
 
-        // Ambil semua kode wilayah kelurahan (12 digit)
-        $kodeWilayahList = DB::table('ref_wilayah')
-            ->where('kode', 'LIKE', '__.__.__.____')
-            ->pluck('kode')
-            ->toArray();
-
-        if (empty($kodeWilayahList)) {
-            echo "⚠️ Tidak ditemukan kode wilayah 12 digit di tabel ref_wilayah.\n";
+        if (!file_exists($csvFile)) {
+            $this->command->error("CSV file not found: $csvFile");
             return;
         }
 
-        $batchSize = 100;
-        $total = 20000;
+        $file = fopen($csvFile, 'r');
 
-        for ($i = 0; $i < $total / $batchSize; $i++) {
-            $batchData = [];
+        // Lewati header
+        fgetcsv($file, 0, ';');
 
-            for ($j = 0; $j < $batchSize; $j++) {
-                $jenisKelamin = $faker->randomElement($jkList);
-                $nama = substr($faker->name($jenisKelamin === 'L' ? 'male' : 'female'), 0, 100);
-                $nisn = $faker->unique()->numerify('##########'); // 10 digit
-                $nik = $faker->numerify('3276############'); // 16 digit
-                $tempatLahir = substr($faker->city(), 0, 100);
-                $alamat = substr($faker->address(), 0, 255);
-                $kodeWilayah = $faker->randomElement($kodeWilayahList);
-                $kodePos = substr($faker->postcode(), 0, 10);
-
-                $batchData[] = [
-                    'id' => Str::uuid(),
-                    'nama' => $nama,
-                    'nisn' => $nisn,
-                    'nik' => $nik,
-                    'tempat_lahir' => $tempatLahir,
-                    'tgl_lahir' => $faker->date('Y-m-d', '-6 years'),
-                    'jenis_kelamin' => $jenisKelamin,
-                    'agama' => $faker->randomElement($agamaList),
-                    'alamat' => $alamat,
-                    'kode_wilayah' => $kodeWilayah,
-                    'kode_pos' => $kodePos,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ];
+        while (($row = fgetcsv($file, 0, ';')) !== false) {
+            // Validasi jumlah kolom minimal 11
+            if (count($row) < 11) {
+                $this->command->warn("Baris dilewati: kolom kurang dari 11 → " . json_encode($row));
+                continue;
             }
 
-            DB::table('mst_peserta_didik')->insert($batchData);
-            echo "Batch " . ($i + 1) . " inserted.\n";
+            // Parsing tgl_lahir (format: dd/mm/YYYY atau YYYY-mm-dd)
+            $tanggal = null;
+            if (!empty(trim($row[5]))) {
+                try {
+                    if (preg_match('/\d{2}\/\d{2}\/\d{4}/', $row[5])) {
+                        $tanggal = Carbon::createFromFormat('d/m/Y', trim($row[5]))->format('Y-m-d');
+                    } else {
+                        $tanggal = Carbon::parse(trim($row[5]))->format('Y-m-d');
+                    }
+                } catch (\Exception $e) {
+                    $this->command->warn("Format tanggal tidak valid untuk nama: {$row[0]}, value: {$row[5]}");
+                }
+            }
+
+            DB::table('mst_peserta_didik')->insert([
+                'id'            => Str::uuid(),
+                'nama'          => trim($row[0]),
+                'nipd'          => trim($row[1]),
+                'nisn'          => $this->toNull($row[2]),
+                'nik'           => $this->toNull($row[3]),
+                'tempat_lahir'  => $this->toNull($row[4]),
+                'tgl_lahir'     => $tanggal,
+                'jenis_kelamin' => trim($row[6]),
+                'agama'         => trim($row[7]),
+                'alamat'        => trim($row[8]),
+                'kode_wilayah'  => $this->toNull($row[9]),
+                'kode_pos'      => trim($row[10]),
+                'created_at'    => now(),
+                'updated_at'    => now(),
+            ]);
         }
 
-        echo "✅ $total data peserta didik berhasil dimasukkan menggunakan kode wilayah 12 digit.\n";
+        fclose($file);
+    }
+
+    // Fungsi bantu untuk ubah 'null' string atau kosong jadi null
+    private function toNull($value)
+    {
+        $val = trim($value);
+        return ($val === '' || strtolower($val) === 'null') ? null : $val;
     }
 }

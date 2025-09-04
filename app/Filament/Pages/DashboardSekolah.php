@@ -31,4 +31,9 @@ class DashboardSekolah extends Page
             KualifikasiPtkChart::class,
         ];
     }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->check() && auth()->user()->hasRole('admin_sekolah');
+    }
 }

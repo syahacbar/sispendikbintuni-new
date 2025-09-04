@@ -14,12 +14,13 @@ return new class extends Migration
         Schema::create('mst_peserta_didik', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('nama', 100);
+            $table->string('nipd', 6);
             $table->string('nisn', 10)->nullable();
             $table->string('nik', 20)->nullable();
             $table->string('tempat_lahir', 100)->nullable();
             $table->date('tgl_lahir')->nullable();
             $table->enum('jenis_kelamin', ['L', 'P'])->nullable();
-            $table->enum('agama', ['Islam', 'Kristen', 'Hindu', 'Buddha', 'Konghucu'])->nullable();
+            $table->enum('agama', ['Islam', 'Kristen', 'Hindu', 'Buddha', 'Konghucu', 'Katholik'])->nullable();
             $table->text('alamat')->nullable();
             $table->string('kode_wilayah', 100)->nullable();
             $table->string('kode_pos', 10)->nullable();

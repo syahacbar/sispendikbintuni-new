@@ -107,7 +107,7 @@ class KirimPesanMassal extends Page implements Forms\Contracts\HasForms
 
         // Tambahkan footer otomatis
         $finalMessage = $data['message']
-            . "\n\n---\nPesan ini dikirim otomatis oleh sistem. Mohon tidak membalas (No Reply).";
+            . "*\n\n---\nPesan ini dikirim otomatis oleh sistem. Mohon tidak membalas (No Reply).*";
 
         foreach ($numbers as $number) {
             $outbox = MessageOutbox::create([

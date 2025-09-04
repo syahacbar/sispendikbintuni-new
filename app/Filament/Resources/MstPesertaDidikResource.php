@@ -9,10 +9,7 @@ use Filament\Tables\Table;
 use App\Models\MstPesertaDidik;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\MstPesertaDidikResource\Pages;
-use App\Filament\Resources\MstPesertaDidikResource\RelationManagers;
-use Illuminate\Support\Facades\Auth;
 use App\Models\MstSekolah;
 
 class MstPesertaDidikResource extends Resource
@@ -32,6 +29,9 @@ class MstPesertaDidikResource extends Resource
                 Forms\Components\TextInput::make('nama')
                     ->required()
                     ->maxLength(100),
+                Forms\Components\TextInput::make('nipd')
+                    ->label('NIPD')
+                    ->maxLength(6),
                 Forms\Components\TextInput::make('nisn')
                     ->label('NISN')
                     ->maxLength(10),
@@ -77,6 +77,7 @@ class MstPesertaDidikResource extends Resource
 
         $columns = [];
 
+        // Kalau bukan admin_sekolah, tampilkan kolom sekolah
         if (!$user->hasRole('admin_sekolah')) {
             $columns[] = Tables\Columns\TextColumn::make('rombels.0.sekolah.nama')
                 ->label('Nama Sekolah')
@@ -103,7 +104,7 @@ class MstPesertaDidikResource extends Resource
                 ->searchable(),
             Tables\Columns\TextColumn::make('tgl_lahir')
                 ->label('Tanggal Lahir')
-                ->date('d F Y') // Format Indonesia
+                ->date('d F Y')
                 ->sortable(),
             Tables\Columns\TextColumn::make('jenis_kelamin')
                 ->label('JK')
@@ -131,17 +132,17 @@ class MstPesertaDidikResource extends Resource
     {
         $user = auth()->user();
 
-        // Kalau role super_admin, tampilkan semua data tanpa filter
+        // Role super_admin: semua data
         if ($user->hasRole('super_admin')) {
             return parent::getEloquentQuery();
         }
 
-        // Kalau role admin_sekolah, filter berdasarkan sekolah_id
+        // Role admin_sekolah: hanya data sekolahnya
         if ($user->hasRole('admin_sekolah')) {
             $sekolah = MstSekolah::where('users_id', $user->id)->first();
 
             if (! $sekolah) {
-                return parent::getEloquentQuery()->whereRaw('1=0'); // Tidak ada data
+                return parent::getEloquentQuery()->whereRaw('1=0');
             }
 
             return parent::getEloquentQuery()
@@ -150,16 +151,13 @@ class MstPesertaDidikResource extends Resource
                 });
         }
 
-        // Role lain (misal guru, operator, dll) bisa diatur di sini
+        // Role lain: tidak ada data
         return parent::getEloquentQuery()->whereRaw('1=0');
     }
 
-
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array

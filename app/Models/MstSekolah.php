@@ -53,23 +53,22 @@ class MstSekolah extends Model
         return $this->belongsTo(RefJenjangPendidikan::class, 'kode_jenjang', 'kode');
     }
 
-    // Relasi ke rombel
     public function rombonganBelajars()
     {
-        return $this->hasMany(MstRombel::class, 'sekolah_id');
+        return $this->hasMany(MstRombel::class, 'sekolah_id', 'id');
     }
 
     // Relasi ke anggota rombel → peserta didik
     public function pesertaDidiks()
     {
-        return $this->hasManyThrough(
+        return $this->belongsToMany(
             MstPesertaDidik::class,
-            MstAnggotaRombel::class,
-            'rombel_id', // foreign key di MstAnggotaRombel
-            'id', // foreign key di MstPesertaDidik
-            'id', // local key di MstSekolah (via rombel)
-            'peserta_didik_id' // foreign key di MstAnggotaRombel
-        );
+            'mst_anggota_rombel',
+            'rombel_id',
+            'peserta_didik_id'
+        )
+            ->join('mst_rombel', 'mst_rombel.id', '=', 'mst_anggota_rombel.rombel_id')
+            ->where('mst_rombel.sekolah_id', $this->id);
     }
 
     public function gtkGuru()

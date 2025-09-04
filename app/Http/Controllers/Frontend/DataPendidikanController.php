@@ -125,7 +125,7 @@ class DataPendidikanController extends Controller
             'rombonganBelajars.pesertaDidiks',
             'rombonganBelajars.kurikulum',
             'kepalaSekolahDetail',
-            'mstSarprasSekolah.kondisiSarpras',
+            // 'mstSarprasSekolah.kondisiSarpras',
         ])
             ->with(['rombonganBelajars' => fn($q) => $q->withCount('pesertaDidiks')])
             ->where('npsn', $npsn)
@@ -178,6 +178,12 @@ class DataPendidikanController extends Controller
             ->flatMap(fn($rombel) => $rombel->anggotaRombels)
             ->map(fn($anggota) => $anggota->pesertaDidik)
             ->filter(); // buang null
+
+        // $pesertaDidiks = $sekolah->rombonganBelajars
+        //     ->flatMap(fn($rombel) => $rombel->anggotaRombels->map->pesertaDidik)
+        //     ->filter()
+        //     ->unique('id')
+        //     ->values();
 
         $guruSekolah = MstGtk::where('tempat_tugas', $npsn)
             ->where('jenis_gtk', 'Guru')   // filter hanya guru
