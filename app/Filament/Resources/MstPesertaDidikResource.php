@@ -137,7 +137,6 @@ class MstPesertaDidikResource extends Resource
             return parent::getEloquentQuery();
         }
 
-        // Role admin_sekolah: hanya data sekolahnya
         if ($user->hasRole('admin_sekolah')) {
             $sekolah = MstSekolah::where('users_id', $user->id)->first();
 
@@ -151,7 +150,6 @@ class MstPesertaDidikResource extends Resource
                 });
         }
 
-        // Role lain: tidak ada data
         return parent::getEloquentQuery()->whereRaw('1=0');
     }
 

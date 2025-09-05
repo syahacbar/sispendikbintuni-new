@@ -411,20 +411,22 @@
                                             <thead>
                                                 <tr>
                                                     <th class="w-5">No</th>
-                                                    <th class="w-75">Nama</th>
-                                                    <th class="text-center w-25">NISN</th>
+                                                    <th class="w-50">Nama</th>
+                                                    <th class="text-center w-20">NISN</th>
+                                                    <th class="text-center w-25">Rombel</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {{-- {{ dd($pesertaDidiks->take(5)) }} --}}
                                                 @foreach ($pesertaDidiks as $index => $pd)
                                                     <tr>
-                                                        <td class="w-5">{{ $index + 1 }}</td>
-                                                        <td class="w-75">{{ $pd->nama }}</td>
-                                                        <td class="text-center w-25">{{ $pd->nisn }}</td>
+                                                        <td>{{ $index + 1 }}</td>
+                                                        <td>{{ $pd->nama }}</td>
+                                                        <td class="text-center">{{ $pd->nisn }}</td>
+                                                        <td class="text-center">{{ $pd->rombel_nama ?? '-' }}</td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
+
                                         </table>
                                     </div>
                                 </div>

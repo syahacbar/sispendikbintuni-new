@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Models\MstGtk;
+use App\Models\MstRombel;
 use App\Models\MstSekolah;
 use App\Models\RefWilayah;
-use App\Models\MstGtk;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
@@ -122,7 +123,8 @@ class DataPendidikanController extends Controller
             'pesertaDidiks',
             'mstSarprasSekolah.jenisSarpras',
             'rombonganBelajars.waliKelas',
-            'rombonganBelajars.pesertaDidiks',
+            // 'rombonganBelajars.pesertaDidiks',
+            'rombonganBelajars.anggotaRombels.pesertaDidik',
             'rombonganBelajars.kurikulum',
             'kepalaSekolahDetail',
             // 'mstSarprasSekolah.kondisiSarpras',
@@ -175,15 +177,18 @@ class DataPendidikanController extends Controller
         $ptks   = MstGtk::whereIn('id', $gtkIds)->get();
 
         $pesertaDidiks = $sekolah->rombonganBelajars
-            ->flatMap(fn($rombel) => $rombel->anggotaRombels)
-            ->map(fn($anggota) => $anggota->pesertaDidik)
-            ->filter(); // buang null
-
-        // $pesertaDidiks = $sekolah->rombonganBelajars
-        //     ->flatMap(fn($rombel) => $rombel->anggotaRombels->map->pesertaDidik)
-        //     ->filter()
-        //     ->unique('id')
-        //     ->values();
+            ->flatMap(function ($rombel) {
+                return $rombel->anggotaRombels->map(function ($anggota) use ($rombel) {
+                    $peserta = $anggota->pesertaDidik;
+                    if ($peserta) {
+                        $peserta->rombel_nama = $rombel->nama; // tambahkan properti sementara
+                    }
+                    return $peserta;
+                });
+            })
+            ->filter()
+            ->unique('id')
+            ->values();
 
         $guruSekolah = MstGtk::where('tempat_tugas', $npsn)
             ->where('jenis_gtk', 'Guru')   // filter hanya guru
@@ -194,6 +199,26 @@ class DataPendidikanController extends Controller
         //     ->where('jenis_gtk', '!=', 'Guru')
         //     ->orderBy('nama')
         //     ->get();
+
+        // dd([
+        //     'sekolah_id' => $sekolah->id,
+        //     'total_rombel' => $sekolah->rombonganBelajars->count(),
+        //     'rombel_details' => $sekolah->rombonganBelajars->map(function ($rombel) {
+        //         return [
+        //             'rombel_id' => $rombel->id,
+        //             'rombel_nama' => $rombel->nama,
+        //             'jumlah_anggota' => $rombel->anggotaRombels->count(),
+        //             'anggota_details' => $rombel->anggotaRombels->map(function ($anggota) {
+        //                 return [
+        //                     'anggota_id' => $anggota->id,
+        //                     'peserta_didik_id' => $anggota->peserta_didik_id,
+        //                     'peserta_didik' => $anggota->pesertaDidik ? $anggota->pesertaDidik->nama : null
+        //                 ];
+        //             })
+        //         ];
+        //     }),
+        //     'total_peserta_didik' => $pesertaDidiks->count()
+        // ]);
 
         // 6. Render view
         return view('frontend.pages.detail_sekolah', compact(

@@ -34,10 +34,12 @@ class MstRombel extends Model
     public function pesertaDidiks()
     {
         return $this->belongsToMany(
-            MstPesertaDidik::class,
-            'mst_anggota_rombel',
-            'rombel_id',
-            'peserta_didik_id'
+            MstPesertaDidik::class,   // model tujuan
+            'mst_anggota_rombel',     // nama pivot
+            'rombel_id',              // FK di pivot ke rombel
+            'peserta_didik_id',       // FK di pivot ke peserta didik
+            'id',                     // local key rombel
+            'id'                      // local key peserta didik
         );
     }
 
