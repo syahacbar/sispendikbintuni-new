@@ -35,6 +35,16 @@
     div#nav-tab button.active {
         color: #000 !important;
     }
+
+    #nav-tab {
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;
+    }
+
+    #nav-tab .nav-link {
+        flex: 0 0 auto;
+        /* jangan dipaksa wrap */
+    }
 </style>
 
 @section('content')
@@ -170,21 +180,25 @@
                     <div class="card mb-4">
                         <div class="card-body">
                             <nav>
-                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <div class="nav nav-tabs flex-nowrap overflow-auto" id="nav-tab" role="tablist">
                                     <button class="nav-link active" id="nav-kondisiSekolah-tab" data-bs-toggle="tab"
                                         data-bs-target="#nav-kondisiSekolah" type="button" role="tab"
-                                        aria-controls="nav-kondisiSekolah" aria-selected="true">Kondisi Sekolah</button>
+                                        aria-controls="nav-kondisiSekolah" aria-selected="true">
+                                        Kondisi Sekolah
+                                    </button>
                                     <button class="nav-link" id="nav-direktoriPTK-tab" data-bs-toggle="tab"
                                         data-bs-target="#nav-direktoriPTK" type="button" role="tab"
-                                        aria-controls="nav-direktoriPTK" aria-selected="false">Direktori
-                                        Guru</button>
+                                        aria-controls="nav-direktoriPTK" aria-selected="false">
+                                        Direktori Guru
+                                    </button>
                                     <button class="nav-link" id="nav-direktoriPesertaDidik-tab" data-bs-toggle="tab"
                                         data-bs-target="#nav-direktoriPesertaDidik" type="button" role="tab"
-                                        aria-controls="nav-direktoriPesertaDidik" aria-selected="false">Direktori Peserta
-                                        Didik</button>
-
+                                        aria-controls="nav-direktoriPesertaDidik" aria-selected="false">
+                                        Direktori Peserta Didik
+                                    </button>
                                 </div>
                             </nav>
+
                             <div class="tab-content navigasiKondisiSekolah" id="nav-tabContent">
                                 <div class="tab-pane fade show active" id="nav-kondisiSekolah" role="tabpanel"
                                     aria-labelledby="nav-kondisiSekolah-tab" tabindex="0">
