@@ -5,47 +5,56 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use Faker\Factory;
 
 class MstSarprasSekolahSeeder extends Seeder
 {
     public function run(): void
     {
-        $faker = Factory::create('id_ID');
+        $csvFile = database_path('seeders/data/mst_sarpras_sekolah.csv');
 
-        $sekolahIds = DB::table('mst_sekolah')->pluck('id')->toArray();
-        $sarprasItems = DB::table('ref_sarpras')->get();
-
-        if (empty($sekolahIds) || $sarprasItems->isEmpty()) {
-            echo "⚠️ Data sekolah atau sarpras tidak ditemukan. Seeder dibatalkan.\n";
+        if (!file_exists($csvFile)) {
+            $this->command->error("CSV file not found: $csvFile");
             return;
         }
 
-        $data = [];
+        $file = fopen($csvFile, 'r');
 
-        foreach ($sekolahIds as $sekolahId) {
-            // Ambil 5–10 sarpras secara acak untuk tiap sekolah
-            $jumlahSarpras = rand(5, 10);
-            $sampleSarpras = $sarprasItems->random($jumlahSarpras);
+        // Lewati header
+        fgetcsv($file, 0, ';');
 
-            foreach ($sampleSarpras as $sarpras) {
-                $jumlahSaatIni = rand(0, 10);
-                $jumlahIdeal = rand($jumlahSaatIni, $jumlahSaatIni + 5);
+        $count = 0;
 
-                $data[] = [
-                    'id' => Str::uuid(),
-                    'sekolah_id' => $sekolahId,
-                    'sarpras_id' => $sarpras->id,
-                    'nama' => $sarpras->nama ?? $faker->words(2, true),
-                    'jumlah_saat_ini' => $jumlahSaatIni,
-                    'jumlah_ideal' => $jumlahIdeal,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ];
+        while (($row = fgetcsv($file, 0, ';')) !== false) {
+            // Validasi jumlah kolom minimal 6 (disesuaikan dengan struktur tabel)
+            if (count($row) < 6) {
+                $this->command->warn("Baris dilewati: kolom kurang dari 6 → " . json_encode($row));
+                continue;
             }
+
+            DB::table('mst_sarpras_sekolah')->insert([
+                'id'              => Str::uuid(),
+                'sekolah_id'      => $this->toNull($row[0]),
+                'sarpras_id'      => $this->toNull($row[1]),
+                'nama'            => trim($row[2]),
+                'jumlah_saat_ini' => $this->toNull($row[3]),
+                'jumlah_ideal'    => $this->toNull($row[4]),
+                'keterangan'      => $this->toNull($row[5] ?? null),
+                'created_at'      => now(),
+                'updated_at'      => now(),
+            ]);
+
+            $count++;
         }
 
-        DB::table('mst_sarpras_sekolah')->insert($data);
-        echo "✅ Seeder mst_sarpras_sekolah berhasil dijalankan (" . count($data) . " records).\n";
+        fclose($file);
+
+        $this->command->info("✅ Seeder mst_sarpras_sekolah berhasil dijalankan ($count records).");
+    }
+
+    private function toNull($value)
+    {
+        if ($value === null) return null;
+        $val = trim($value);
+        return ($val === '' || strtolower($val) === 'null') ? null : $val;
     }
 }
