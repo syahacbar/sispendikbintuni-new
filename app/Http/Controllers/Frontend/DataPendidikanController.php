@@ -200,25 +200,6 @@ class DataPendidikanController extends Controller
         //     ->orderBy('nama')
         //     ->get();
 
-        // dd([
-        //     'sekolah_id' => $sekolah->id,
-        //     'total_rombel' => $sekolah->rombonganBelajars->count(),
-        //     'rombel_details' => $sekolah->rombonganBelajars->map(function ($rombel) {
-        //         return [
-        //             'rombel_id' => $rombel->id,
-        //             'rombel_nama' => $rombel->nama,
-        //             'jumlah_anggota' => $rombel->anggotaRombels->count(),
-        //             'anggota_details' => $rombel->anggotaRombels->map(function ($anggota) {
-        //                 return [
-        //                     'anggota_id' => $anggota->id,
-        //                     'peserta_didik_id' => $anggota->peserta_didik_id,
-        //                     'peserta_didik' => $anggota->pesertaDidik ? $anggota->pesertaDidik->nama : null
-        //                 ];
-        //             })
-        //         ];
-        //     }),
-        //     'total_peserta_didik' => $pesertaDidiks->count()
-        // ]);
 
         // 6. Render view
         return view('frontend.pages.detail_sekolah', compact(

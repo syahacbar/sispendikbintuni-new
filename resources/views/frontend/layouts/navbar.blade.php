@@ -3,10 +3,18 @@
         <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
             <img class="gbrHeader mr-3" src="{{ asset('themes/frontend/logoserasi.png') }}"
                 alt="{{ $pengaturan['site_name'] ?? 'SERASI' }}">
-            {{-- <img class="w-25 mr-3" src="{{ asset($pengaturan['logo'] ?? 'themes/frontend/logoserasi.png') }}"
-                alt="{{ $pengaturan['site_name'] ?? 'SERASI' }}"> --}}
-            <h5 class="mb-0 text-white fw-bold mx-2">{{ $pengaturan['site_name'] ?? 'SERASI' }}</h5>
+
+            {{-- Versi desktop --}}
+            <h5 class="mb-0 text-white fw-bold mx-2 d-none d-sm-block">
+                {{ $pengaturan['site_name'] ?? 'SERASI' }}
+            </h5>
+
+            {{-- Versi mobile --}}
+            <h5 class="mb-0 text-white fw-bold mx-2 d-block d-sm-none">
+                SERASI BINTUNI
+            </h5>
         </a>
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSispendikBintuni"
             aria-controls="navbarSispendikBintuni" aria-expanded="false" aria-label="Toggle navigation">
             <i class="bi bi-list fs-2"></i>

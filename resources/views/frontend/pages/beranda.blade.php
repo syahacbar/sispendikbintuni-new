@@ -20,9 +20,9 @@
         height: auto;
     }
 
-    .sliderSection {
+    /* .sliderSection {
         padding: 3.5rem 0 0 0 !important;
-    }
+    } */
 
     .sectionSambutan {
         padding-top: .5rem;
@@ -37,9 +37,22 @@
         width: 30px;
         border-radius: 5px;
     }
+
+    /* Default untuk small device */
+    .custom-padding {
+        padding: 4.3rem 0 0 0 !important;
+    }
+
+    /* Large device (>= 992px, sesuai Bootstrap breakpoint lg) */
+    @media (min-width: 992px) {
+        .custom-padding {
+            padding-top: 3.5rem;
+        }
+    }
 </style>
 @section('content')
-    <section class="w-100 container-fluid d-flex align-items-start justify-content-start text-start sliderSection">
+    <section
+        class="w-100 container-fluid d-flex align-items-start justify-content-start text-start sliderSection custom-padding">
         <div class="swiper">
             <div class="swiper-wrapper">
                 @forelse($banners as $banner)
@@ -57,6 +70,7 @@
             <div class="swiper-pagination"></div>
         </div>
     </section>
+
 
     <section class="bg-white sectionSambutan">
         <div class="container pb-3">

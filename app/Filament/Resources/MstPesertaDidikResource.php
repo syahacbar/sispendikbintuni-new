@@ -90,6 +90,9 @@ class MstPesertaDidikResource extends Resource
         }
 
         $columns = array_merge($columns, [
+            Tables\Columns\TextColumn::make('index')
+                ->label('No. ')
+                ->rowIndex(),
             Tables\Columns\TextColumn::make('nama')
                 ->label('Nama Lengkap')
                 ->searchable(),
