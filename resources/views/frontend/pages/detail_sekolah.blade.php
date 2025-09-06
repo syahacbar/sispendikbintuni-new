@@ -121,11 +121,11 @@
                                             <td>:</td>
                                             <td>{{ $sekolah->telepon }}</td>
                                         </tr>
-                                        <tr>
+                                        {{-- <tr>
                                             <td>Kepala Sekolah</td>
                                             <td>:</td>
                                             <td>{{ optional($sekolah->kepalaSekolahDetail)->nama ?? '-' }}</td>
-                                        </tr>
+                                        </tr> --}}
                                         <tr>
                                             <td>Status Kepemilikan</td>
                                             <td>:</td>
