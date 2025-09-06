@@ -1,8 +1,12 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-success fixed-top" aria-label="Sispendik Navbar">
     <div class="container d-flex justify-content-between">
         <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
-            <img class="gbrHeader mr-3" src="{{ asset('themes/frontend/logoserasi.png') }}"
-                alt="{{ $pengaturan['site_name'] ?? 'SERASI' }}">
+            @php
+                $logo = $pengaturan['logo'] ?? null;
+                $logoPath = $logo ? asset('storage/' . $logo) : asset('themes/frontend/logoserasi.png');
+            @endphp
+
+            <img class="gbrHeader mr-3" src="{{ $logoPath }}" alt="{{ $pengaturan['site_name'] ?? 'SERASI' }}">
 
             {{-- Versi desktop --}}
             <h5 class="mb-0 text-white fw-bold mx-2 d-none d-sm-block">
