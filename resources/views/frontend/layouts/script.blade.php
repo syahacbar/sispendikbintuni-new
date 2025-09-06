@@ -153,7 +153,7 @@
             <b>Bentuk Pendidikan:</b> ${school.kode_jenjang}<br>
             <b>Status:</b> ${school.status}<br>
             <b>Kurikulum:</b> ${firstKurikulum} <br>
-            <b>Koordinat:</b> ${school.latitude}, ${school.longitude}
+            <b>Koordinat:</b><br> ${school.latitude}, ${school.longitude}
             <a href="https://www.google.com/maps/search/?api=1&query=${school.latitude},${school.longitude}" 
             target="_blank" 
             class="btn text-light btn-sm btn-primary mt-2">
