@@ -43,7 +43,6 @@
 
     #nav-tab .nav-link {
         flex: 0 0 auto;
-        /* jangan dipaksa wrap */
     }
 </style>
 
