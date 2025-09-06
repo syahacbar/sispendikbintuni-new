@@ -367,10 +367,10 @@
                                                                     <span class="text-muted">0</span>
                                                                 @endif
                                                             </td>
-                                                            <td class="text-center">{{ $baik }}</td>
-                                                            <td class="text-center">{{ $rr }}</td>
-                                                            <td class="text-center">{{ $rs }}</td>
-                                                            <td class="text-center">{{ $rb }}</td>
+                                                            <td class="text-center">{{ $kondisi_baik }}</td>
+                                                            <td class="text-center">{{ $kondisi_rusak_ringan }}</td>
+                                                            <td class="text-center">{{ $kondisi_rusak_sedang }}</td>
+                                                            <td class="text-center">{{ $kondisi_rusak_berat }}</td>
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
