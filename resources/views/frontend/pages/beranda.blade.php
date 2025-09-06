@@ -85,11 +85,10 @@
                                 : asset('themes/frontend/sambutan/kadisdikbudporabintuni2.png');
                     @endphp
 
-                    <img src="{{ asset('themes/frontend/sambutan/kadisdikbudporabintuni2.png') }}"
-                        alt="Kepala Dinas Kabupaten Teluk Bintuni" class="img-fluid quote-img"
+                    <img src="{{ $imagePath }}" alt="Kepala Dinas Kabupaten Teluk Bintuni" class="img-fluid quote-img"
                         style="max-height: 450px; object-fit: cover;">
-
                 </div>
+
                 <div class="col-lg-9" data-aos="fade-left">
                     <h5 class="fw-bold text-teal mb-4">
                         {{ $pengaturan['judul_sambutan'] ?? 'Selamat Datang di Website Tata Kelola Pendidikan Dengan Sistem Perencanaan Terintegrasi (SERASI) Kabupaten Teluk Bintuni' }}
