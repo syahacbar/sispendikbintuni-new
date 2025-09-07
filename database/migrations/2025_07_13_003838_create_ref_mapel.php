@@ -15,6 +15,9 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('kode');
             $table->string('nama');
+            $table->string('kode_jenjang_pendidikan');
+            $table->string('jjp');
+            $table->string('tingkat');
             $table->timestamps();
         });
     }

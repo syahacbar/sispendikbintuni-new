@@ -2,66 +2,63 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class RefSarprasSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $now = now();
+        $filePath = database_path('seeders/data/ref_sarpras.csv');
 
-        $items = [
-            // Prasarana
-            ['nama' => 'Ruang Kelas', 'kategori' => 'Prasarana'],
-            ['nama' => 'Ruang Guru', 'kategori' => 'Prasarana'],
-            ['nama' => 'Laboratorium IPA', 'kategori' => 'Prasarana'],
-            ['nama' => 'Laboratorium Komputer', 'kategori' => 'Prasarana'],
-            ['nama' => 'Perpustakaan', 'kategori' => 'Prasarana'],
-            ['nama' => 'WC Siswa', 'kategori' => 'Prasarana'],
-            ['nama' => 'WC Guru', 'kategori' => 'Prasarana'],
-            ['nama' => 'Kantor Kepala Sekolah', 'kategori' => 'Prasarana'],
-            ['nama' => 'Ruang UKS', 'kategori' => 'Prasarana'],
-            ['nama' => 'Lapangan Olahraga', 'kategori' => 'Prasarana'],
-            ['nama' => 'Gudang', 'kategori' => 'Prasarana'],
-            ['nama' => 'Ruang Ibadah', 'kategori' => 'Prasarana'],
-            ['nama' => 'Tempat Parkir', 'kategori' => 'Prasarana'],
-            ['nama' => 'Ruang Tata Usaha', 'kategori' => 'Prasarana'],
-            ['nama' => 'Laboratorium Bahasa', 'kategori' => 'Prasarana'],
+        if (!file_exists($filePath)) {
+            $this->command->error("File CSV tidak ditemukan: {$filePath}");
+            return;
+        }
 
-            // Sarana
-            ['nama' => 'Meja Siswa', 'kategori' => 'Sarana'],
-            ['nama' => 'Kursi Siswa', 'kategori' => 'Sarana'],
-            ['nama' => 'Meja Guru', 'kategori' => 'Sarana'],
-            ['nama' => 'Kursi Guru', 'kategori' => 'Sarana'],
-            ['nama' => 'Papan Tulis', 'kategori' => 'Sarana'],
-            ['nama' => 'Komputer', 'kategori' => 'Sarana'],
-            ['nama' => 'Proyektor', 'kategori' => 'Sarana'],
-            ['nama' => 'Lemari', 'kategori' => 'Sarana'],
-            ['nama' => 'Alat Laboratorium IPA', 'kategori' => 'Sarana'],
-            ['nama' => 'Alat Laboratorium Komputer', 'kategori' => 'Sarana'],
-            ['nama' => 'Buku Teks', 'kategori' => 'Sarana'],
-            ['nama' => 'Buku Referensi', 'kategori' => 'Sarana'],
-            ['nama' => 'Alat Musik', 'kategori' => 'Sarana'],
-            ['nama' => 'Bola Sepak', 'kategori' => 'Sarana'],
-            ['nama' => 'Net Voli', 'kategori' => 'Sarana'],
-            ['nama' => 'Alat Kebersihan', 'kategori' => 'Sarana'],
-            ['nama' => 'Printer', 'kategori' => 'Sarana'],
-        ];
+        if (($handle = fopen($filePath, 'r')) !== false) {
+            $firstLine = fgets($handle);
+            rewind($handle);
+            $delimiter = str_contains($firstLine, ';') ? ';' : ',';
 
-        foreach ($items as $item) {
-            DB::table('ref_sarpras')->insert([
-                'id'         => Str::uuid(),
-                'nama'       => $item['nama'],
-                'kategori'   => $item['kategori'],
-                'created_at' => $now,
-                'updated_at' => $now,
-            ]);
+            $header = fgetcsv($handle, 1000, $delimiter);
+            $header = array_map(fn($h) => strtolower(trim($h, "\xEF\xBB\xBF \t\n\r\0\x0B")), $header);
+
+            while (($row = fgetcsv($handle, 1000, $delimiter)) !== false) {
+                $data = array_combine($header, $row);
+                $nama     = $data['nama'] ?? null;
+                $kategori = $data['kategori'] ?? null;
+
+                // Normalisasi kategori agar sesuai constraint DB
+                $kategori = ucfirst(strtolower($kategori));
+
+                if (!$nama || !$kategori) {
+                    continue; // skip kalau ada kolom kosong
+                }
+
+                // Cek duplikat berdasarkan nama + kategori
+                $exists = DB::table('ref_sarpras')
+                    ->where('nama', $nama)
+                    ->where('kategori', $kategori)
+                    ->exists();
+
+                if ($exists) {
+                    $this->command->warn("Skip duplikat: {$nama} - {$kategori}");
+                    continue;
+                }
+
+                DB::table('ref_sarpras')->insert([
+                    'id'         => Str::uuid(),
+                    'nama'       => $nama,
+                    'kategori'   => $kategori,
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ]);
+            }
+
+            fclose($handle);
         }
     }
 }

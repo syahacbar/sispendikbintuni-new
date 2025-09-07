@@ -329,10 +329,10 @@
                                                 <thead>
                                                     <tr>
                                                         <th rowspan="2">No</th>
-                                                        <th rowspan="2">Nama Prasarana</th>
+                                                        <th rowspan="2">Nama Sarana & Prasarana</th>
                                                         <th rowspan="2" class="text-center">Jumlah Ideal</th>
                                                         <th rowspan="2" class="text-center">Jumlah Saat Ini</th>
-                                                        <th rowspan="2" class="text-center">Selisih</th>
+                                                        {{-- <th rowspan="2" class="text-center">Selisih</th> --}}
                                                         <th class="text-center" colspan="4">Kondisi</th>
                                                     </tr>
                                                     <tr>
@@ -358,7 +358,7 @@
                                                             <td>{{ $sarpras->nama ?? '-' }}</td>
                                                             <td class="text-center">{{ $sarpras->jumlah_ideal }}</td>
                                                             <td class="text-center">{{ $sarpras->jumlah_saat_ini }}</td>
-                                                            <td class="text-center">
+                                                            {{-- <td class="text-center">
                                                                 @if ($selisih > 0)
                                                                     <span class="text-success">+{{ $selisih }}</span>
                                                                 @elseif ($selisih < 0)
@@ -366,7 +366,7 @@
                                                                 @else
                                                                     <span class="text-muted">0</span>
                                                                 @endif
-                                                            </td>
+                                                            </td> --}}
                                                             <td class="text-center">{{ $baik }}</td>
                                                             <td class="text-center">{{ $rr }}</td>
                                                             <td class="text-center">{{ $rs }}</td>
