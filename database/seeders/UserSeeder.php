@@ -13,7 +13,7 @@ class UserSeeder extends Seeder
     {
         // Super Admin
         $super = User::updateOrCreate(
-            ['email' => 'superadmin@sispendikbintuni.cloud'],
+            ['email' => 'superadmin@serasibintuni.com'],
             [
                 'name' => 'Super Admin',
                 'password' => Hash::make('password'),
@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
 
         // Admin Dinas
         $dinas = User::updateOrCreate(
-            ['email' => 'admindinas@sispendikbintuni.cloud'],
+            ['email' => 'admindinas@serasibintuni.com'],
             [
                 'name' => 'Admin Dinas',
                 'password' => Hash::make('password'),
@@ -49,7 +49,7 @@ class UserSeeder extends Seeder
             $sekolah = MstSekolah::where('npsn', $npsn)->first();
 
             if ($sekolah) {
-                $email = $npsn . '@sispendikbintuni.cloud';
+                $email = $npsn . '@serasibintuni.com';
 
                 $user = User::updateOrCreate(
                     ['email' => $email],

@@ -20,102 +20,117 @@ class MstPembelajaranResource extends Resource
     protected static ?string $model = MstPembelajaran::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-book-open';
-    protected static ?string $navigationGroup = 'Data Master';
-    protected static ?string $navigationLabel = 'Pembelajaran';
+    public static function getNavigationGroup(): ?string
+    {
+        $user = auth()->user();
+
+        if ($user?->hasRole('admin_sekolah')) {
+            return null; // TANPA GROUP
+        }
+
+        return 'Data Master';
+    }
+
+    protected static ?string $navigationLabel = 'Data Pembelajaran';
     protected static ?string $pluralLabel = 'Pembelajaran';
     protected static ?string $slug = 'data-pembelajaran';
+
+    public static function getNavigationSort(): ?int
+    {
+        return auth()->user()?->hasRole('admin_sekolah') ? 50 : 50;
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('rombongan_belajar_id')
-                    ->required(),
-                Forms\Components\TextInput::make('mata_pelajaran_id')
-                    ->required(),
-                Forms\Components\TextInput::make('gtk_id'),
-                Forms\Components\TextInput::make('semester_id')
-                    ->required(),
-                Forms\Components\TextInput::make('jam_mengajar_per_minggu')
-                    ->numeric(),
-                Forms\Components\TextInput::make('jenis_pembelajaran')
-                    ->maxLength(50),
-                Forms\Components\Toggle::make('status_aktif')
-                    ->required(),
-                Forms\Components\DatePicker::make('tgl_mulai'),
-                Forms\Components\DatePicker::make('tgl_selesai'),
-                Forms\Components\Textarea::make('keterangan')
-                    ->columnSpanFull(),
-            ]);
+                    Forms\Components\TextInput::make('rombongan_belajar_id')
+                        ->required(),
+                    Forms\Components\TextInput::make('mata_pelajaran_id')
+                        ->required(),
+                    Forms\Components\TextInput::make('gtk_id'),
+                    Forms\Components\TextInput::make('semester_id')
+                        ->required(),
+                    Forms\Components\TextInput::make('jam_mengajar_per_minggu')
+                        ->numeric(),
+                    Forms\Components\TextInput::make('jenis_pembelajaran')
+                        ->maxLength(50),
+                    Forms\Components\Toggle::make('status_aktif')
+                        ->required(),
+                    Forms\Components\DatePicker::make('tgl_mulai'),
+                    Forms\Components\DatePicker::make('tgl_selesai'),
+                    Forms\Components\Textarea::make('keterangan')
+                        ->columnSpanFull(),
+                ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                TextColumn::make('rombel.nama')
-                    ->label('Rombel')
-                    ->searchable()
-                    ->sortable(),
+                    TextColumn::make('rombel.nama')
+                        ->label('Rombel')
+                        ->searchable()
+                        ->sortable(),
 
-                TextColumn::make('mapel.nama')
-                    ->label('Mata Pelajaran')
-                    ->searchable()
-                    ->sortable(),
+                    TextColumn::make('mapel.nama')
+                        ->label('Mata Pelajaran')
+                        ->searchable()
+                        ->sortable(),
 
-                TextColumn::make('gtk.nama')
-                    ->label('GTK')
-                    ->searchable()
-                    ->sortable(),
+                    TextColumn::make('gtk.nama')
+                        ->label('GTK')
+                        ->searchable()
+                        ->sortable(),
 
-                TextColumn::make('semester.nama_semester')
-                    ->label('Semester')
-                    ->sortable(),
+                    TextColumn::make('semester.nama_semester')
+                        ->label('Semester')
+                        ->sortable(),
 
-                TextColumn::make('jam_mengajar_per_minggu')
-                    ->numeric()
-                    ->label('Jam/Minggu')
-                    ->sortable(),
+                    TextColumn::make('jam_mengajar_per_minggu')
+                        ->numeric()
+                        ->label('Jam/Minggu')
+                        ->sortable(),
 
-                TextColumn::make('jenis_pembelajaran')
-                    ->label('Jenis')
-                    ->searchable(),
+                    TextColumn::make('jenis_pembelajaran')
+                        ->label('Jenis')
+                        ->searchable(),
 
-                IconColumn::make('status_aktif')
-                    ->boolean()
-                    ->label('Aktif?'),
+                    IconColumn::make('status_aktif')
+                        ->boolean()
+                        ->label('Aktif?'),
 
-                TextColumn::make('tgl_mulai')
-                    ->date()
-                    ->label('Mulai')
-                    ->sortable(),
+                    TextColumn::make('tgl_mulai')
+                        ->date()
+                        ->label('Mulai')
+                        ->sortable(),
 
-                TextColumn::make('tgl_selesai')
-                    ->date()
-                    ->label('Selesai')
-                    ->sortable(),
+                    TextColumn::make('tgl_selesai')
+                        ->date()
+                        ->label('Selesai')
+                        ->sortable(),
 
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    TextColumn::make('created_at')
+                        ->dateTime()
+                        ->sortable()
+                        ->toggleable(isToggledHiddenByDefault: true),
 
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-            ])
+                    TextColumn::make('updated_at')
+                        ->dateTime()
+                        ->sortable()
+                        ->toggleable(isToggledHiddenByDefault: true),
+                ])
             ->filters([
-                //
-            ])
+                    //
+                ])
             ->actions([
-                // Tables\Actions\EditAction::make(),
-            ])
+                    // Tables\Actions\EditAction::make(),
+                ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    // Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+                    Tables\Actions\BulkActionGroup::make([
+                        // Tables\Actions\DeleteBulkAction::make(),
+                    ]),
+                ]);
     }
 
     public static function getRelations(): array

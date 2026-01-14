@@ -48,17 +48,20 @@ class CreateMstGtk extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        $sekolah = DB::table('mst_sekolah')
-            ->where('users_id', Auth::id())
-            ->first();
+        $user = auth()->user();
 
-        if ($sekolah) {
-            $data['sekolah_id'] = $sekolah->id;
+        if ($user->hasRole('admin_sekolah')) {
+            $sekolah = MstSekolah::where('users_id', $user->id)->first();
+
+            if ($sekolah) {
+                // isi otomatis NPSN sekolah
+                $data['tempat_tugas'] = $sekolah->npsn;
+            }
         }
 
-        // Pastikan status keaktifan default Aktif
         $data['status_keaktifan'] = 'Aktif';
 
         return $data;
     }
+
 }

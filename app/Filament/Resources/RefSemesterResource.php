@@ -28,52 +28,53 @@ class RefSemesterResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('kode_semester')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('tahun_ajaran')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('nama_semester')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Toggle::make('is_aktif')
-                    ->required(),
-            ]);
+                    Forms\Components\TextInput::make('kode_semester')
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('tahun_ajaran')
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('nama_semester')
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\Toggle::make('is_aktif')
+                        ->required(),
+                ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('kode_semester')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('tahun_ajaran')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('nama_semester')
-                    ->searchable(),
-                Tables\Columns\IconColumn::make('is_aktif')
-                    ->boolean(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable(),
-                // ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable(),
-                // ->toggleable(isToggledHiddenByDefault: true),
-            ])
+                    Tables\Columns\TextColumn::make('kode_semester')
+                        ->searchable(),
+                    Tables\Columns\TextColumn::make('tahun_ajaran')
+                        ->searchable(),
+                    Tables\Columns\TextColumn::make('nama_semester')
+                        ->searchable(),
+                    Tables\Columns\IconColumn::make('is_aktif')
+                        ->boolean(),
+                    Tables\Columns\TextColumn::make('created_at')
+                        ->dateTime()
+                        ->sortable(),
+                    // ->toggleable(isToggledHiddenByDefault: true),
+                    Tables\Columns\TextColumn::make('updated_at')
+                        ->dateTime()
+                        ->sortable(),
+                    // ->toggleable(isToggledHiddenByDefault: true),
+                ])
             ->filters([
-                //
-            ])
+                    //
+                ])
             ->actions([
-                // Tables\Actions\EditAction::make(),
-            ])
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    // Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+                    Tables\Actions\BulkActionGroup::make([
+                        // Tables\Actions\DeleteBulkAction::make(),
+                    ]),
+                ]);
     }
 
     public static function getRelations(): array

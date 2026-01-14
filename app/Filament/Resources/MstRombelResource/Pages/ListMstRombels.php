@@ -11,10 +11,19 @@ class ListMstRombels extends ListRecords
 {
     protected static string $resource = MstRombelResource::class;
 
+    // protected function getHeaderActions(): array
+    // {
+    //     return [
+    //         Actions\CreateAction::make(),
+    //     ];
+    // }
+
     protected function getHeaderActions(): array
     {
         return [
-            // Actions\CreateAction::make(),
+            Actions\CreateAction::make()->label('Tambah Data Rombel')
+                ->icon('heroicon-o-plus')
+                ->color('primary'),
         ];
     }
 

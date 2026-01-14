@@ -19,6 +19,11 @@ class CreateMstPesertaDidik extends CreateRecord
         return 'Tambah Data Peserta Didik';
     }
 
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
+
     protected function afterCreate(): void
     {
         $user = auth()->user();
@@ -26,16 +31,21 @@ class CreateMstPesertaDidik extends CreateRecord
         if ($user->hasRole('admin_sekolah')) {
             $sekolah = MstSekolah::where('users_id', $user->id)->first();
 
-            if ($sekolah) {
-                $rombel = MstRombel::where('sekolah_id', $sekolah->id)->first();
+            if (!$sekolah) {
+                return;
+            }
 
-                if ($rombel) {
-                    MstAnggotaRombel::create([
-                        'rombel_id' => $rombel->id,
-                        'peserta_didik_id' => $this->record->id,
-                    ]);
-                }
+            $rombel = MstRombel::where('sekolah_id', $sekolah->id)
+                ->latest()
+                ->first();
+
+            if ($rombel) {
+                MstAnggotaRombel::create([
+                    'rombel_id' => $rombel->id,
+                    'peserta_didik_id' => $this->record->id,
+                ]);
             }
         }
     }
+
 }

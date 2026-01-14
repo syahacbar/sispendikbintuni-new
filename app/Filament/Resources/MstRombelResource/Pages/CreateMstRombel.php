@@ -9,4 +9,12 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateMstRombel extends CreateRecord
 {
     protected static string $resource = MstRombelResource::class;
+
+
+    public function getHeading(): string
+    {
+        return 'Tambah Data Rombel';
+    }
+
 }
+

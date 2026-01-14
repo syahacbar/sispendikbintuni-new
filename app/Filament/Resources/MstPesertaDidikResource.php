@@ -17,58 +17,73 @@ class MstPesertaDidikResource extends Resource
     protected static ?string $model = MstPesertaDidik::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
-    protected static ?string $navigationGroup = 'Data Master';
-    protected static ?string $navigationLabel = 'Peserta Didik';
+    public static function getNavigationGroup(): ?string
+    {
+        $user = auth()->user();
+
+        if ($user?->hasRole('admin_sekolah')) {
+            return null; // TANPA GROUP
+        }
+
+        return 'Data Master';
+    }
+
+    protected static ?string $navigationLabel = 'Data Peserta Didik';
     protected static ?string $pluralLabel = 'Peserta Didik';
     protected static ?string $slug = 'data-peserta-didik';
+
+    public static function getNavigationSort(): ?int
+    {
+        return auth()->user()?->hasRole('admin_sekolah') ? 30 : 20;
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('nama')
-                    ->required()
-                    ->maxLength(100),
-                Forms\Components\TextInput::make('nipd')
-                    ->label('NIPD')
-                    ->maxLength(6),
-                Forms\Components\TextInput::make('nisn')
-                    ->label('NISN')
-                    ->maxLength(10),
-                Forms\Components\TextInput::make('nik')
-                    ->label('NIK')
-                    ->maxLength(20),
-                Forms\Components\TextInput::make('tempat_lahir')
-                    ->maxLength(100),
-                Forms\Components\DatePicker::make('tgl_lahir')
-                    ->label('Tanggal Lahir')
-                    ->required()
-                    ->native(false)
-                    ->maxDate(now()),
-                Forms\Components\Select::make('jenis_kelamin')
-                    ->label('Jenis Kelamin')
-                    ->options([
-                        'L' => 'Laki-laki',
-                        'P' => 'Perempuan',
-                    ])
-                    ->required(),
-                Forms\Components\Select::make('agama')
-                    ->label('Agama')
-                    ->options([
-                        'Islam'     => 'Islam',
-                        'Kristen'   => 'Kristen',
-                        'Hindu'     => 'Hindu',
-                        'Buddha'    => 'Buddha',
-                        'Konghucu'  => 'Konghucu',
-                    ])
-                    ->required(),
-                Forms\Components\Textarea::make('alamat')
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('kode_wilayah')
-                    ->maxLength(100),
-                Forms\Components\TextInput::make('kode_pos')
-                    ->maxLength(10),
-            ])->columns(3);
+                    Forms\Components\TextInput::make('nama')
+                        ->required()
+                        ->maxLength(100),
+                    Forms\Components\TextInput::make('nipd')
+                        ->label('NIPD')
+                        ->maxLength(6),
+                    Forms\Components\TextInput::make('nisn')
+                        ->label('NISN')
+                        ->maxLength(10),
+                    Forms\Components\TextInput::make('nik')
+                        ->label('NIK')
+                        ->maxLength(20),
+                    Forms\Components\TextInput::make('tempat_lahir')
+                        ->maxLength(100),
+                    Forms\Components\DatePicker::make('tgl_lahir')
+                        ->label('Tanggal Lahir')
+                        ->required()
+                        ->native(false)
+                        ->maxDate(now()),
+                    Forms\Components\Select::make('jenis_kelamin')
+                        ->label('Jenis Kelamin')
+                        ->options([
+                                'L' => 'Laki-laki',
+                                'P' => 'Perempuan',
+                            ])
+                        ->required(),
+                    Forms\Components\Select::make('agama')
+                        ->label('Agama')
+                        ->options([
+                                'Islam' => 'Islam',
+                                'Kristen' => 'Kristen',
+                                'Hindu' => 'Hindu',
+                                'Buddha' => 'Buddha',
+                                'Konghucu' => 'Konghucu',
+                            ])
+                        ->required(),
+                    Forms\Components\Textarea::make('alamat')
+                        ->columnSpanFull(),
+                    Forms\Components\TextInput::make('kode_wilayah')
+                        ->maxLength(100),
+                    Forms\Components\TextInput::make('kode_pos')
+                        ->maxLength(10),
+                ])->columns(3);
     }
 
     public static function table(Table $table): Table
@@ -95,6 +110,9 @@ class MstPesertaDidikResource extends Resource
                 ->rowIndex(),
             Tables\Columns\TextColumn::make('nama')
                 ->label('Nama Lengkap')
+                ->searchable(),
+            Tables\Columns\TextColumn::make('nipd')
+                ->label('NIPD')
                 ->searchable(),
             Tables\Columns\TextColumn::make('nisn')
                 ->label('NISN')
@@ -126,8 +144,9 @@ class MstPesertaDidikResource extends Resource
             ->columns($columns)
             ->filters([])
             ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ])
             ->bulkActions([]);
     }
 
@@ -135,26 +154,28 @@ class MstPesertaDidikResource extends Resource
     {
         $user = auth()->user();
 
-        // Role super_admin: semua data
+        // Super admin → semua data
         if ($user->hasRole('super_admin')) {
             return parent::getEloquentQuery();
         }
 
+        // Admin sekolah → hanya peserta didik sekolahnya
         if ($user->hasRole('admin_sekolah')) {
             $sekolah = MstSekolah::where('users_id', $user->id)->first();
 
-            if (! $sekolah) {
+            if (!$sekolah) {
                 return parent::getEloquentQuery()->whereRaw('1=0');
             }
 
             return parent::getEloquentQuery()
-                ->whereHas('rombels', function ($query) use ($sekolah) {
-                    $query->where('sekolah_id', $sekolah->id);
+                ->whereHas('rombels', function ($q) use ($sekolah) {
+                    $q->where('sekolah_id', $sekolah->id);
                 });
         }
 
         return parent::getEloquentQuery()->whereRaw('1=0');
     }
+
 
     public static function getRelations(): array
     {

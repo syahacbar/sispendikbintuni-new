@@ -17,10 +17,25 @@ class MstSarprasSekolahResource extends Resource
     protected static ?string $model = MstSarprasSekolah::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-computer-desktop';
-    protected static ?string $navigationGroup = 'Data Master';
-    protected static ?string $navigationLabel = 'Sarpras Sekolah';
+    public static function getNavigationGroup(): ?string
+    {
+        $user = auth()->user();
+
+        if ($user?->hasRole('admin_sekolah')) {
+            return null; // TANPA GROUP
+        }
+
+        return 'Data Master';
+    }
+
+    protected static ?string $navigationLabel = 'Data Sarpras Sekolah';
     protected static ?string $pluralLabel = 'Sarpras Sekolah';
     protected static ?string $slug = 'data-sarana-prasarana-sekolah';
+
+    public static function getNavigationSort(): ?int
+    {
+        return auth()->user()?->hasRole('admin_sekolah') ? 60 : 60;
+    }
 
     public static function form(Form $form): Form
     {
@@ -55,9 +70,9 @@ class MstSarprasSekolahResource extends Resource
                     $set(
                         'jumlah_saat_ini',
                         ($get('kondisi_baik') ?? 0) +
-                            ($get('kondisi_rusak_ringan') ?? 0) +
-                            ($get('kondisi_rusak_sedang') ?? 0) +
-                            ($get('kondisi_rusak_berat') ?? 0)
+                        ($get('kondisi_rusak_ringan') ?? 0) +
+                        ($get('kondisi_rusak_sedang') ?? 0) +
+                        ($get('kondisi_rusak_berat') ?? 0)
                     )
                 ),
 
@@ -72,9 +87,9 @@ class MstSarprasSekolahResource extends Resource
                     $set(
                         'jumlah_saat_ini',
                         ($get('kondisi_baik') ?? 0) +
-                            ($get('kondisi_rusak_ringan') ?? 0) +
-                            ($get('kondisi_rusak_sedang') ?? 0) +
-                            ($get('kondisi_rusak_berat') ?? 0)
+                        ($get('kondisi_rusak_ringan') ?? 0) +
+                        ($get('kondisi_rusak_sedang') ?? 0) +
+                        ($get('kondisi_rusak_berat') ?? 0)
                     )
                 ),
 
@@ -89,9 +104,9 @@ class MstSarprasSekolahResource extends Resource
                     $set(
                         'jumlah_saat_ini',
                         ($get('kondisi_baik') ?? 0) +
-                            ($get('kondisi_rusak_ringan') ?? 0) +
-                            ($get('kondisi_rusak_sedang') ?? 0) +
-                            ($get('kondisi_rusak_berat') ?? 0)
+                        ($get('kondisi_rusak_ringan') ?? 0) +
+                        ($get('kondisi_rusak_sedang') ?? 0) +
+                        ($get('kondisi_rusak_berat') ?? 0)
                     )
                 ),
 
@@ -106,9 +121,9 @@ class MstSarprasSekolahResource extends Resource
                     $set(
                         'jumlah_saat_ini',
                         ($get('kondisi_baik') ?? 0) +
-                            ($get('kondisi_rusak_ringan') ?? 0) +
-                            ($get('kondisi_rusak_sedang') ?? 0) +
-                            ($get('kondisi_rusak_berat') ?? 0)
+                        ($get('kondisi_rusak_ringan') ?? 0) +
+                        ($get('kondisi_rusak_sedang') ?? 0) +
+                        ($get('kondisi_rusak_berat') ?? 0)
                     )
                 ),
 
@@ -119,9 +134,9 @@ class MstSarprasSekolahResource extends Resource
                 ->disabled() // readonly di UI
                 ->dehydrateStateUsing(
                     fn($state, callable $get) => ($get('kondisi_baik') ?? 0) +
-                        ($get('kondisi_rusak_ringan') ?? 0) +
-                        ($get('kondisi_rusak_sedang') ?? 0) +
-                        ($get('kondisi_rusak_berat') ?? 0)
+                    ($get('kondisi_rusak_ringan') ?? 0) +
+                    ($get('kondisi_rusak_sedang') ?? 0) +
+                    ($get('kondisi_rusak_berat') ?? 0)
                 ),
 
             Forms\Components\TextInput::make('jumlah_ideal')
@@ -203,8 +218,8 @@ class MstSarprasSekolahResource extends Resource
             ->columns($columns)
             ->filters([])
             ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
+                    Tables\Actions\EditAction::make(),
+                ])
             ->bulkActions([]);
     }
 

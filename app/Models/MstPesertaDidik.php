@@ -14,6 +14,7 @@ class MstPesertaDidik extends Model
     protected $fillable = [
         'nama',
         'nisn',
+        'nipd',
         'nik',
         'tempat_lahir',
         'tgl_lahir',

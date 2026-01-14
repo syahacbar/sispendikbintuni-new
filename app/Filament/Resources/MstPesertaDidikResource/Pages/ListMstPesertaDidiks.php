@@ -15,7 +15,7 @@ class ListMstPesertaDidiks extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make()->label('Tambah Peserta Didik')
+            Actions\CreateAction::make()->label('Tambah Data Peserta Didik')
                 ->icon('heroicon-o-plus')
                 ->color('primary'),
         ];

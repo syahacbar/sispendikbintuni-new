@@ -22,6 +22,8 @@ use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use App\Filament\Paneladmin\Pages\Register;
+
 
 class PaneladminPanelProvider extends PanelProvider
 {
@@ -34,18 +36,21 @@ class PaneladminPanelProvider extends PanelProvider
             ->path('paneladmin')
             ->brandName('Sistem Perencanaan Terintegrasi')
             ->login()
+            ->registration(Register::class)
+            ->passwordReset()
+            ->emailVerification()
             // ->breadcrumbs(false)
             ->font('Segoe UI')
             ->colors([
-                'primary' => Color::hex('#0093dd'),
-            ])
+                    'primary' => Color::hex('#0093dd'),
+                ])
             ->userMenuItems([
-                MenuItem::make()
-                    ->label('Kunjungi Web')
-                    ->url('/')
-                    ->openUrlInNewTab()
-                    ->icon('heroicon-o-globe-alt'),
-            ])
+                    MenuItem::make()
+                        ->label('Kunjungi Web')
+                        ->url('/')
+                        ->openUrlInNewTab()
+                        ->icon('heroicon-o-globe-alt'),
+                ])
             ->sidebarFullyCollapsibleOnDesktop()
             ->defaultThemeMode(ThemeMode::Light)
             ->favicon(function () {
@@ -59,37 +64,37 @@ class PaneladminPanelProvider extends PanelProvider
             ->brandLogoHeight('3rem')
 
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
-            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
+            // ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
-            ])
+                    Widgets\AccountWidget::class,
+                    Widgets\FilamentInfoWidget::class,
+                ])
             ->middleware([
-                EncryptCookies::class,
-                AddQueuedCookiesToResponse::class,
-                StartSession::class,
-                AuthenticateSession::class,
-                ShareErrorsFromSession::class,
-                VerifyCsrfToken::class,
-                SubstituteBindings::class,
-                DisableBladeIconComponents::class,
-                DispatchServingFilamentEvent::class,
-            ])
+                    EncryptCookies::class,
+                    AddQueuedCookiesToResponse::class,
+                    StartSession::class,
+                    AuthenticateSession::class,
+                    ShareErrorsFromSession::class,
+                    VerifyCsrfToken::class,
+                    SubstituteBindings::class,
+                    DisableBladeIconComponents::class,
+                    DispatchServingFilamentEvent::class,
+                ])
             ->plugins([
-                FilamentShieldPlugin::make(),
-            ])
+                    FilamentShieldPlugin::make(),
+                ])
             ->authMiddleware([
-                Authenticate::class,
-            ])
+                    Authenticate::class,
+                ])
 
             ->navigationGroups([
-                'Data Referensi',
-                'Data Master',
-                'Manajemen Konten Web',
-                'Manajemen Pengguna',
-                'Pengaturan',
-            ])
+                    'Data Referensi',
+                    'Data Master',
+                    'Manajemen Konten Web',
+                    'Manajemen Pengguna',
+                    'Pengaturan',
+                ])
 
             ->renderHook('panels::body.end', function () {
                 return <<<'HTML'

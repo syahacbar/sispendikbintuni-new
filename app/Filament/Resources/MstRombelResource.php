@@ -12,6 +12,10 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\Textarea;
 
 
 class MstRombelResource extends Resource
@@ -19,85 +23,170 @@ class MstRombelResource extends Resource
     protected static ?string $model = MstRombel::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-group';
-    protected static ?string $navigationGroup = 'Data Master';
-    protected static ?string $navigationLabel = 'Rombel';
+    public static function getNavigationGroup(): ?string
+    {
+        $user = auth()->user();
+
+        if ($user?->hasRole('admin_sekolah')) {
+            return null; // TANPA GROUP
+        }
+
+        return 'Data Master';
+    }
+
+    protected static ?string $navigationLabel = 'Data Rombel';
     protected static ?string $pluralLabel = 'Rombel';
     protected static ?string $slug = 'data-rombongan-belajar';
+
+    public static function getNavigationSort(): ?int
+    {
+        return auth()->user()?->hasRole('admin_sekolah') ? 40 : 40;
+    }
+
+
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('sekolah_id'),
-                Forms\Components\TextInput::make('kurikulum_id'),
-                Forms\Components\TextInput::make('nama')
-                    ->maxLength(100),
-                Forms\Components\TextInput::make('tingkat')
-                    ->numeric(),
-                Forms\Components\TextInput::make('jurusan')
-                    ->maxLength(50),
-                Forms\Components\TextInput::make('kapasitas')
-                    ->numeric(),
-                Forms\Components\TextInput::make('wali_kelas_ptk_id'),
-                Forms\Components\TextInput::make('semester_id'),
-                Forms\Components\Toggle::make('status_aktif')
-                    ->required(),
-                Forms\Components\Textarea::make('keterangan')
-                    ->columnSpanFull(),
-            ]);
+                    Select::make('kurikulum_id')
+                        ->label('Kurikulum')
+                        ->relationship('kurikulum', 'nama')
+                        ->searchable()
+                        ->preload()
+                        ->required(),
+
+                    TextInput::make('nama')
+                        ->label('Nama Rombel')
+                        ->maxLength(100)
+                        ->required(),
+
+                    TextInput::make('tingkat')
+                        ->numeric()
+                        ->required(),
+
+                    TextInput::make('jurusan')
+                        ->maxLength(50),
+
+                    TextInput::make('kapasitas')
+                        ->numeric(),
+
+                    Select::make('wali_kelas_ptk_id')
+                        ->label('Wali Kelas')
+                        ->relationship(
+                            'waliKelas',
+                            'nama',
+                            fn($query) => $query
+                                ->where('status_keaktifan', 'Aktif')
+                                ->where(
+                                    'tempat_tugas',
+                                    auth()->user()->sekolah->npsn
+                                )
+                        )
+                        ->searchable()
+                        ->preload()
+                        ->required(),
+
+                    Select::make('semester_id')
+                        ->label('Semester')
+                        ->relationship(
+                            'semester',
+                            'nama_semester',
+                            fn($query) => $query->where('is_aktif', true)
+                        )
+                        ->getOptionLabelFromRecordUsing(
+                            fn($record) => "{$record->nama_semester} {$record->tahun_ajaran}"
+                        )
+                        ->searchable()
+                        ->preload()
+                        ->required(),
+
+
+                    Toggle::make('status_aktif')
+                        ->label('Status Aktif')
+                        ->default(true)
+                        ->required(),
+
+                    Textarea::make('keterangan')
+                        ->columnSpanFull(),
+                ]);
     }
+
+
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('sekolah.nama')
-                    ->label('Sekolah')
-                    ->searchable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('kurikulum.nama')
-                    ->label('Kurikulum')
-                    ->searchable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('nama')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('tingkat')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('jurusan')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('kapasitas')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('waliKelas.nama')
-                    ->label('Wali Kelas')
-                    ->searchable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('semester.nama_semester')
-                    ->label('Semester')
-                    ->searchable()
-                    ->sortable(),
-                Tables\Columns\IconColumn::make('status_aktif')
-                    ->boolean(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-            ])
+                    Tables\Columns\TextColumn::make('sekolah.nama')
+                        ->label('Sekolah')
+                        ->searchable()
+                        ->sortable()
+                        ->visible(fn() => !auth()->user()?->hasRole('admin_sekolah')),
+
+                    Tables\Columns\TextColumn::make('kurikulum.nama')
+                        ->label('Kurikulum')
+                        ->searchable()
+                        ->sortable(),
+
+                    Tables\Columns\TextColumn::make('nama')
+                        ->label('Rombel')
+                        ->searchable(),
+
+                    Tables\Columns\TextColumn::make('tingkat')
+                        ->numeric()
+                        ->sortable(),
+
+                    Tables\Columns\TextColumn::make('jurusan')
+                        ->searchable(),
+
+                    Tables\Columns\TextColumn::make('kapasitas')
+                        ->numeric()
+                        ->sortable(),
+
+                    Tables\Columns\TextColumn::make('waliKelas.nama')
+                        ->label('Wali Kelas')
+                        ->searchable()
+                        ->sortable(),
+
+                    Tables\Columns\TextColumn::make('semester.nama_semester')
+                        ->label('Semester')
+                        ->formatStateUsing(
+                            fn($state, $record) =>
+                            $record->semester
+                            ? "{$record->semester->nama_semester} {$record->semester->tahun_ajaran}"
+                            : '-'
+                        )
+                        ->searchable()
+                        ->sortable(),
+
+                    Tables\Columns\IconColumn::make('status_aktif')
+                        ->label('Aktif')
+                        ->boolean(),
+
+                    Tables\Columns\TextColumn::make('created_at')
+                        ->dateTime()
+                        ->sortable()
+                        ->toggleable(isToggledHiddenByDefault: true),
+
+                    Tables\Columns\TextColumn::make('updated_at')
+                        ->dateTime()
+                        ->sortable()
+                        ->toggleable(isToggledHiddenByDefault: true),
+                ])
+
             ->filters([
-                //
-            ])
+                    //
+                ])
             ->actions([
-                // Tables\Actions\EditAcion::make(),
-            ])
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    // Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+                    Tables\Actions\BulkActionGroup::make([
+                        Tables\Actions\DeleteBulkAction::make(),
+                    ]),
+                ]);
     }
 
     public static function getRelations(): array

@@ -1,0 +1,132 @@
+﻿kode;nama;kode_jenjang_pendidikan;jjp;tingkat
+SD1-1;Pendidikan Agama;SD;4;1
+SD1-2;Pendidikan Pancasila ;SD;5;1
+SD1-3;Bahasa Indonesia;SD;8;1
+SD1-4;Matematika;SD;5;1
+SD1-5;Pendidikan Jasmani Olahraga dan Kesehatan ;SD;4;1
+SD1-6;Seni dan Budaya;SD;4;1
+SD2-1;Pendidikan Agama;SD;4;2
+SD2-2;Pendidikan Pancasila ;SD;5;2
+SD2-3;Bahasa Indonesia;SD;9;2
+SD2-4;Matematika;SD;6;2
+SD2-5;Pendidikan Jasmani Olahraga dan Kesehatan ;SD;4;2
+SD2-6;Seni dan Budaya;SD;4;2
+SD3-1;Pendidikan Agama;SD;4;3
+SD3-2;Pendidikan Pancasila ;SD;5;3
+SD3-3;Bahasa Indonesia;SD;7;3
+SD3-4;Matematika;SD;6;3
+SD3-5;Ilmu Pengetahuan Alam dan Sosial;SD;6;3
+SD3-6;Pendidikan Jasmani Olahraga dan Kesehatan ;SD;4;3
+SD3-7;Seni dan Budaya;SD;4;3
+SD3-8;Bahasa Inggris;SD;2;3
+SD4-1;Pendidikan Agama;SD;4;4
+SD4-2;Pendidikan Pancasila ;SD;5;4
+SD4-3;Bahasa Indonesia;SD;7;4
+SD4-4;Matematika;SD;6;4
+SD4-5;Ilmu Pengetahuan Alam dan Sosial;SD;6;4
+SD4-6;Pendidikan Jasmani Olahraga dan Kesehatan ;SD;4;4
+SD4-7;Seni dan Budaya;SD;4;4
+SD4-8;Bahasa Inggris;SD;2;4
+SD5-1;Pendidikan Agama;SD;4;5
+SD5-2;Pendidikan Pancasila ;SD;5;5
+SD5-3;Bahasa Indonesia;SD;7;5
+SD5-4;Matematika;SD;6;5
+SD5-5;Ilmu Pengetahuan Alam dan Sosial;SD;6;5
+SD5-6;Pendidikan Jasmani Olahraga dan Kesehatan ;SD;4;5
+SD5-7;Seni dan Budaya;SD;4;5
+SD5-8;Bahasa Inggris;SD;2;5
+SD6-1;Pendidikan Agama;SD;4;6
+SD6-2;Pendidikan Pancasila ;SD;5;6
+SD6-3;Bahasa Indonesia;SD;7;6
+SD6-4;Matematika;SD;6;6
+SD6-5;Ilmu Pengetahuan Alam dan Sosial;SD;6;6
+SD6-6;Pendidikan Jasmani Olahraga dan Kesehatan ;SD;4;6
+SD6-7;Seni dan Budaya;SD;4;6
+SD6-8;Bahasa Inggris;SD;2;6
+SMP7-1;Pendidikan Agama;SMP;3;7
+SMP7-2;Pendidikan Pancasila ;SMP;3;7
+SMP7-3;Bahasa Indonesia;SMP;6;7
+SMP7-4;Matematika;SMP;5;7
+SMP7-5;Ilmu Pengetahuan Alam;SMP;5;7
+SMP7-6;Ilmu Pengetahuan Sosial;SMP;4;7
+SMP7-7;Bahasa Inggris;SMP;4;7
+SMP7-8;Pendidikan Jasmani Olahraga dan Kesehatan ;SMP;3;7
+SMP7-9;Informatika;SMP;3;7
+SMP7-10;Seni dan Budaya;SMP;3;7
+SMP8-1;Pendidikan Agama;SMP;3;8
+SMP8-2;Pendidikan Pancasila ;SMP;3;8
+SMP8-3;Bahasa Indonesia;SMP;6;8
+SMP8-4;Matematika;SMP;5;8
+SMP8-5;Ilmu Pengetahuan Alam;SMP;5;8
+SMP8-6;Ilmu Pengetahuan Sosial;SMP;4;8
+SMP8-7;Bahasa Inggris;SMP;4;8
+SMP8-8;Pendidikan Jasmani Olahraga dan Kesehatan ;SMP;3;8
+SMP8-9;Informatika;SMP;3;8
+SMP8-10;Seni dan Budaya;SMP;3;8
+SMP9-1;Pendidikan Agama;SMP;3;9
+SMP9-2;Pendidikan Pancasila ;SMP;3;9
+SMP9-3;Bahasa Indonesia;SMP;6;9
+SMP9-4;Matematika;SMP;5;9
+SMP9-5;Ilmu Pengetahuan Alam;SMP;5;9
+SMP9-6;Ilmu Pengetahuan Sosial;SMP;4;9
+SMP9-7;Bahasa Inggris;SMP;4;9
+SMP9-8;Pendidikan Jasmani Olahraga dan Kesehatan ;SMP;3;9
+SMP9-9;Informatika;SMP;3;9
+SMP9-10;Seni dan Budaya;SMP;3;9
+SMA10-1;Pendidikan Agama;SMA;3;10
+SMA10-2;Pendidikan Pancasila ;SMA;2;10
+SMA10-3;Bahasa Indonesia;SMA;4;10
+SMA10-4;Matematika;SMA;4;10
+SMA10-5;Ilmu Pengetahuan Alam (Fisika, Kimia, Biologi);SMA;9;10
+SMA10-6;Ilmu Pengetahuan Sosial (Sosiologi, Ekonomi, Sejarah, Geografi);SMA;12;10
+SMA10-7;Bahasa Inggris;SMA;3;10
+SMA10-8;Pendidikan Jasmani Olahraga dan Kesehatan ;SMA;3;10
+SMA10-9;Informatika;SMA;2;10
+SMA10-10;Seni dan Budaya;SMA;2;10
+SMA11-1;Pendidikan Agama;SMA;3;11
+SMA11-2;Pendidikan Pancasila ;SMA;2;11
+SMA11-3;Bahasa Indonesia;SMA;4;11
+SMA11-4;Matematika;SMA;4;11
+SMA11-5;Bahasa Inggris;SMA;3;11
+SMA11-6;Pendidikan Jasmani Olahraga dan Kesehatan ;SMA;3;11
+SMA11-7;Sejarah;SMA;2;11
+SMA11-8;Seni dan Budaya;SMA;2;11
+SMA11-9;Mapel Pilihan;SMA;20;11
+SMA12-1;Pendidikan Agama;SMA;3;12
+SMA12-2;Pendidikan Pancasila ;SMA;2;12
+SMA12-3;Bahasa Indonesia;SMA;4;12
+SMA12-4;Matematika;SMA;4;12
+SMA12-5;Bahasa Inggris;SMA;3;12
+SMA12-6;Seni dan Budaya;SMA;2;12
+SMA12-7;Pendidikan Jasmani Olahraga dan Kesehatan ;SMA;3;12
+SMA12-8;Sejarah;SMA;2;12
+SMA12-9;Mapel Pilihan;SMA;20;12
+SMK10-1;Pendidikan Agama;SMK;3;10
+SMK10-2;Pendidikan Pancasila ;SMK;2;10
+SMK10-3;Bahasa Indonesia;SMK;4;10
+SMK10-4;Pendidikan Jasmani Olahraga dan Kesehatan ;SMK;3;10
+SMK10-5;Sejarah;SMK;2;10
+SMK10-6;Seni dan Budaya;SMK;2;10
+SMK10-7;Matematika;SMK;4;10
+SMK10-8;Bahasa Inggris;SMK;4;10
+SMK10-9;Informatika;SMK;4;10
+SMK10-10;Projek Ilmu Pengetahuan Alam dan Sosial;SMK;6;10
+SMK10-11;Dasar-Dasar Program Keahlian;SMK;12;10
+SMK11-1;Pendidikan Agama;SMK;3;11
+SMK11-2;Pendidikan Pancasila ;SMK;2;11
+SMK11-3;Bahasa Indonesia;SMK;4;11
+SMK11-4;Pendidikan Jasmani Olahraga dan Kesehatan ;SMK;2;11
+SMK11-5;Sejarah;SMK;2;11
+SMK11-6;Matematika;SMK;3;11
+SMK11-7;Bahasa Inggris;SMK;4;11
+SMK11-8;Konsentrasi Keahlian;SMK;18;11
+SMK11-9;Kretivitas, Inovasi dan Kewirausahaan;SMK;5;11
+SMK12-1;Pendidikan Agama;SMK;1,5;12
+SMK12-2;Pendidikan Pancasila ;SMK;1;12
+SMK12-3;Bahasa Indonesia;SMK;1,5;12
+SMK12-4;Matematika;SMK;1,5;12
+SMK12-5;Bahasa Inggris;SMK;2;12
+SMK12-6;Konsentrasi Keahlian;SMK;11;12
+SMK12-7;Kretivitas, Inovasi dan Kewirausahaan;SMK;2,5;12
+SMK12-8;Praktek Kerja Lapangan;SMK;23;12
+SMK12-9;Mapel Pilihan;SMK;2;12
