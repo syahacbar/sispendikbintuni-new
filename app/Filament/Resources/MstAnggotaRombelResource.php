@@ -213,7 +213,7 @@ class MstAnggotaRombelResource extends Resource
     {
         return [
             'index' => Pages\ListMstAnggotaRombels::route('/'),
-            // 'create' => Pages\CreateMstAnggotaRombel::route('/create'),
+            'create' => Pages\CreateMstAnggotaRombel::route('/create'),
         ];
     }
 }

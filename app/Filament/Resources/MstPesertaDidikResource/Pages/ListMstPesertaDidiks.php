@@ -7,6 +7,10 @@ use App\Models\MstSekolah;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Actions;
+use App\Filament\Imports\MstPesertaDidikImporter;
+use Filament\Actions\ImportAction;
+use Filament\Forms\Components\Select;
+use App\Models\MstRombel;
 
 class ListMstPesertaDidiks extends ListRecords
 {
@@ -19,6 +23,12 @@ class ListMstPesertaDidiks extends ListRecords
                 ->icon('heroicon-o-plus')
                 ->color('primary')
                 ->createAnother(false),
+            ImportAction::make()
+                ->label('Impor Data Peserta Didik')
+                ->icon('heroicon-o-arrow-up-tray')
+                ->importer(MstPesertaDidikImporter::class)
+                ->color('success')
+                ->visible(fn() => auth()->user()->hasAnyRole(['super_admin', 'admin_sekolah']))
         ];
     }
 }
