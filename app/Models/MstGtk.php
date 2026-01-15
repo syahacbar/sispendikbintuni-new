@@ -10,8 +10,12 @@ class MstGtk extends Model
     use HasUuids;
 
     protected $table = 'mst_gtk';
+    protected $keyType = 'string'; // kunci primary string
+    public $incrementing = false; // non auto-increment
+
 
     protected $fillable = [
+        'id',
         'nama',
         'nik',
         'nip',
@@ -25,6 +29,16 @@ class MstGtk extends Model
         'pend_terakhir',
         'status_keaktifan',
     ];
+
+    protected static function booted()
+    {
+        static::creating(function ($gtk) {
+            if (!$gtk->id) {
+                $gtk->id = (string) \Illuminate\Support\Str::uuid();
+            }
+        });
+    }
+
 
     public function sekolah()
     {

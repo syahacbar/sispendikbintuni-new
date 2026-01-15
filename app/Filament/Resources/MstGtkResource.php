@@ -120,6 +120,9 @@ class MstGtkResource extends Resource
     {
         return $table
             ->columns([
+                    TextColumn::make('index')
+                        ->label('No. ')
+                        ->rowIndex(),
                     Tables\Columns\TextColumn::make('tempat_tugas')
                         ->label('Sekolah')
                         ->visible(fn() => auth()->user()->hasRole('super_admin'))
@@ -130,9 +133,6 @@ class MstGtkResource extends Resource
                             return $state;
                         }),
 
-                    TextColumn::make('index')
-                        ->label('No. ')
-                        ->rowIndex(),
                     Tables\Columns\TextColumn::make('nama')
                         ->label('Nama Lengkap')
                         ->searchable(),
