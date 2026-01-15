@@ -16,21 +16,8 @@ class ListMstAnggotaRombels extends ListRecords
         return [
             Actions\CreateAction::make()->label('Tambah Data Anggota')
                 ->icon('heroicon-o-plus')
-                ->color('primary'),
+                ->color('primary')
+                ->createAnother(false),
         ];
-    }
-
-    protected function getTableQuery(): Builder
-    {
-        $query = parent::getTableQuery();
-
-        if (auth()->user()->hasRole('admin_sekolah')) {
-            // Filter berdasarkan sekolah yang dimiliki user
-            $query->whereHas('rombel', function ($q) {
-                $q->where('sekolah_id', auth()->user()->sekolah_id);
-            });
-        }
-
-        return $query;
     }
 }

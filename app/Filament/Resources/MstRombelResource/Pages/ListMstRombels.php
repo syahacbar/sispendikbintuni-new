@@ -21,20 +21,22 @@ class ListMstRombels extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make()->label('Tambah Data Rombel')
+            Actions\CreateAction::make()
+                ->label('Tambah Data Rombel')
                 ->icon('heroicon-o-plus')
-                ->color('primary'),
+                ->color('primary')
+                ->createAnother(false),
         ];
     }
 
-    protected function getTableQuery(): Builder
-    {
-        $query = parent::getTableQuery();
+    // protected function getTableQuery(): Builder
+    // {
+    //     $query = parent::getTableQuery();
 
-        if (auth()->user()->hasRole('admin_sekolah')) {
-            $query->where('sekolah_id', auth()->user()->sekolah_id);
-        }
+    //     if (auth()->user()->hasRole('admin_sekolah')) {
+    //         $query->where('sekolah_id', auth()->user()->sekolah_id);
+    //     }
 
-        return $query;
-    }
+    //     return $query;
+    // }
 }

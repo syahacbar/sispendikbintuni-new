@@ -94,8 +94,13 @@ class MstPesertaDidikResource extends Resource
 
         // Kalau bukan admin_sekolah, tampilkan kolom sekolah
         if (!$user->hasRole('admin_sekolah')) {
-            $columns[] = Tables\Columns\TextColumn::make('rombels.0.sekolah.nama')
+            $columns[] = Tables\Columns\TextColumn::make('nama_sekolah')
                 ->label('Nama Sekolah')
+                ->getStateUsing(
+                    fn($record) =>
+                    optional($record->rombels->first()?->sekolah)->nama ?? '-'
+                )
+
                 ->sortable()
                 ->searchable(query: function (Builder $query, string $search) {
                     $query->whereHas('rombels.sekolah', function ($q) use ($search) {
@@ -168,9 +173,11 @@ class MstPesertaDidikResource extends Resource
             }
 
             return parent::getEloquentQuery()
+                ->with(['rombels.sekolah'])
                 ->whereHas('rombels', function ($q) use ($sekolah) {
                     $q->where('sekolah_id', $sekolah->id);
                 });
+
         }
 
         return parent::getEloquentQuery()->whereRaw('1=0');

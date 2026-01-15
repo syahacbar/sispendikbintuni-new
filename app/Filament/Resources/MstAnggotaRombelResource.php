@@ -3,15 +3,14 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\MstAnggotaRombelResource\Pages;
-use App\Filament\Resources\MstAnggotaRombelResource\RelationManagers;
 use App\Models\MstAnggotaRombel;
+use App\Models\MstSekolah;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Forms\Components\Select;
@@ -24,15 +23,10 @@ class MstAnggotaRombelResource extends Resource
     protected static ?string $model = MstAnggotaRombel::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
+
     public static function getNavigationGroup(): ?string
     {
-        $user = auth()->user();
-
-        if ($user?->hasRole('admin_sekolah')) {
-            return null; // TANPA GROUP
-        }
-
-        return 'Data Master';
+        return auth()->user()?->hasRole('admin_sekolah') ? null : 'Data Master';
     }
 
     protected static ?string $navigationLabel = 'Data Anggota Rombel';
@@ -41,9 +35,8 @@ class MstAnggotaRombelResource extends Resource
 
     public static function getNavigationSort(): ?int
     {
-        return auth()->user()?->hasRole('admin_sekolah') ? 70 : 70;
+        return 70;
     }
-
 
     public static function form(Form $form): Form
     {
@@ -54,12 +47,22 @@ class MstAnggotaRombelResource extends Resource
                         ->relationship(
                             'rombel',
                             'nama',
-                            fn($query) => $query
-                                ->where('status_aktif', true)
-                                ->when(
-                                    auth()->user()?->sekolah_id,
-                                    fn($q, $sekolahId) => $q->where('sekolah_id', $sekolahId)
-                                )
+                            function ($query) {
+                                $user = auth()->user();
+
+                                if ($user->hasRole('admin_sekolah')) {
+                                    $sekolah = $user->sekolah;
+
+                                    if (!$sekolah) {
+                                        $query->whereRaw('1 = 0');
+                                        return;
+                                    }
+
+                                    $query->where('sekolah_id', $sekolah->id);
+                                }
+
+                                $query->where('status_aktif', true);
+                            }
                         )
                         ->searchable()
                         ->preload()
@@ -67,18 +70,25 @@ class MstAnggotaRombelResource extends Resource
 
                     Select::make('peserta_didik_id')
                         ->label('Peserta Didik')
-                        ->relationship(
-                            'pesertaDidik',
-                            'nama',
-                            fn($query) => $query
-                                ->when(
-                                    auth()->user()?->sekolah_id,
-                                    fn($q, $sekolahId) => $q->where('sekolah_id', $sekolahId)
-                                )
-                        )
                         ->searchable()
                         ->preload()
-                        ->required(),
+                        ->required()
+                        ->relationship(
+                            name: 'pesertaDidik',
+                            titleAttribute: 'nama',
+                            modifyQueryUsing: function (Builder $query) {
+                                // Hanya peserta didik yang BELUM punya rombel
+                                $query->whereDoesntHave('anggotaRombel');
+
+                                // Jika admin sekolah → batasi sekolah
+                                if (auth()->user()->hasRole('admin_sekolah')) {
+                                    $query->whereHas('rombels', function ($q) {
+                                        $q->where('sekolah_id', auth()->user()->sekolah_id);
+                                    });
+                                }
+                            }
+                        ),
+
 
                     DatePicker::make('tanggal_masuk')
                         ->label('Tanggal Masuk')
@@ -88,7 +98,6 @@ class MstAnggotaRombelResource extends Resource
 
                     DatePicker::make('tanggal_keluar')
                         ->label('Tanggal Keluar')
-                        // ->required()
                         ->native(false)
                         ->maxDate(now()),
 
@@ -102,73 +111,109 @@ class MstAnggotaRombelResource extends Resource
                 ]);
     }
 
-
-
     public static function table(Table $table): Table
     {
+        $user = auth()->user();
+
+        $columns = [];
+
+        // 🔹 Kolom Sekolah (HANYA jika bukan admin_sekolah)
+        if (!$user->hasRole('admin_sekolah')) {
+            $columns[] = TextColumn::make('rombel.sekolah.nama')
+                ->label('Sekolah')
+                ->sortable()
+                ->searchable(query: function (Builder $query, string $search) {
+                    $query->whereHas('rombel.sekolah', function ($q) use ($search) {
+                        $q->where('nama', 'ILIKE', "%{$search}%");
+                    });
+                });
+        }
+
+        // 🔹 Kolom lain (selalu tampil)
+        $columns = array_merge($columns, [
+
+            TextColumn::make('rombel.nama')
+                ->label('Rombel')
+                ->searchable()
+                ->sortable(),
+
+            TextColumn::make('pesertaDidik.nama')
+                ->label('Peserta Didik')
+                ->searchable()
+                ->sortable(),
+
+            IconColumn::make('status_keaktifan')
+                ->boolean()
+                ->label('Aktif?'),
+
+            TextColumn::make('tanggal_masuk')
+                ->date()
+                ->sortable(),
+
+            TextColumn::make('tanggal_keluar')
+                ->date()
+                ->sortable(),
+
+            TextColumn::make('created_at')
+                ->dateTime()
+                ->sortable(),
+
+            TextColumn::make('updated_at')
+                ->dateTime()
+                ->sortable(),
+        ]);
+
         return $table
-            ->columns([
-                    TextColumn::make('rombel.nama')
-                        ->label('Rombel')
-                        ->searchable()
-                        ->sortable(),
-
-                    TextColumn::make('pesertaDidik.nama')
-                        ->label('Peserta Didik')
-                        ->searchable()
-                        ->sortable(),
-
-                    IconColumn::make('status_keaktifan')
-                        ->boolean()
-                        ->label('Aktif?'),
-
-                    TextColumn::make('tanggal_masuk')
-                        ->date()
-                        ->sortable(),
-
-                    TextColumn::make('tanggal_keluar')
-                        ->date()
-                        ->sortable(),
-
-                    TextColumn::make('created_at')
-                        ->dateTime()
-                        ->sortable(),
-                    // ->toggleable(isToggledHiddenByDefault: true),
-
-                    TextColumn::make('updated_at')
-                        ->dateTime()
-                        ->sortable(),
-                    // ->toggleable(isToggledHiddenByDefault: true),
-                ])
-            ->filters([
-                    //
-                ])
+            ->columns($columns)
+            ->filters([])
             ->actions([
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make(),
                 ])
-            ->bulkActions([
-                    Tables\Actions\BulkActionGroup::make([
-                        // Tables\Actions\DeleteBulkAction::make(),
-                    ]),
-                ]);
+            ->bulkActions([]);
     }
+
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+        $user = auth()->user();
+
+        // 🔓 Super admin & admin dinas lihat semua
+        if ($user->hasRole(['super_admin', 'admin_dinas'])) {
+            return $query;
+        }
+
+        // 🔒 Admin sekolah → filter via rombel → sekolah
+        if ($user->hasRole('admin_sekolah')) {
+            $sekolah = $user->sekolah;
+
+            if (!$sekolah) {
+                // admin sekolah tapi belum di-assign ke sekolah
+                return $query->whereRaw('1 = 0');
+            }
+
+            return $query->whereHas('rombel', function ($q) use ($sekolah) {
+                $q->where('sekolah_id', $sekolah->id);
+            });
+        }
+
+        // role lain tidak boleh lihat data
+        return $query->whereRaw('1 = 0');
+    }
+
 
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
-
 
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListMstAnggotaRombels::route('/'),
             // 'create' => Pages\CreateMstAnggotaRombel::route('/create'),
-            // 'edit' => Pages\EditMstAnggotaRombel::route('/{record}/edit'),
         ];
     }
 }

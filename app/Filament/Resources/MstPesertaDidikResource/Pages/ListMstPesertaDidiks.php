@@ -17,7 +17,8 @@ class ListMstPesertaDidiks extends ListRecords
         return [
             Actions\CreateAction::make()->label('Tambah Data Peserta Didik')
                 ->icon('heroicon-o-plus')
-                ->color('primary'),
+                ->color('primary')
+                ->createAnother(false),
         ];
     }
 }

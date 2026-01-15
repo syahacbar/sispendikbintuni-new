@@ -16,7 +16,8 @@ class ListMstPembelajarans extends ListRecords
         return [
             Actions\CreateAction::make()->label('Tambah Data Pemebelajaran')
                 ->icon('heroicon-o-plus')
-                ->color('primary'),
+                ->color('primary')
+                ->createAnother(false),
         ];
     }
 

@@ -17,6 +17,7 @@ class CreateMstGtk extends CreateRecord
     protected static ?string $breadcrumb = 'Tambah Data GTK';
     protected static bool $canCreateAnother = false;
 
+
     protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('index');

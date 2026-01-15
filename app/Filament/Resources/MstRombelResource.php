@@ -200,8 +200,9 @@ class MstRombelResource extends Resource
     {
         return [
             'index' => Pages\ListMstRombels::route('/'),
-            // 'create' => Pages\CreateMstRombel::route('/create'),
-            // 'edit' => Pages\EditMstRombel::route('/{record}/edit'),
+            'create' => Pages\CreateMstRombel::route('/create'),
+            'edit' => Pages\EditMstRombel::route('/{record}/edit'),
         ];
     }
+
 }

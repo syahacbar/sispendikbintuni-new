@@ -22,7 +22,8 @@ class ListMstGtks extends ListRecords
         return [
             Actions\CreateAction::make()->label('Tambah Data GTK')
                 ->icon('heroicon-o-plus')
-                ->color('primary'),
+                ->color('primary')
+                ->createAnother(false),
         ];
     }
 }
