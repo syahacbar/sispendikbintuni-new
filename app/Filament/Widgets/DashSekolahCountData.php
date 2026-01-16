@@ -31,57 +31,56 @@ class DashSekolahCountData extends Widget
     {
         $user = auth()->user();
 
-        // Default (global count)
-        $totalSekolah = MstSekolah::count();
-        $totalPesertaDidik = MstPesertaDidik::count();
-        $totalGtk = MstGtk::count();
-        $totalSarpras = MstSarprasSekolah::count();
+        // Initialize counts to 0
+        $totalPesertaDidik = 0;
+        $totalGtk = 0;
+        $totalRombel = 0;
+        $totalSarpras = 0;
 
-        // Kalau role admin_sekolah → filter
+        // Validasi user memiliki sekolah
         if ($user->hasRole('admin_sekolah') && $user->sekolah) {
             $sekolah = $user->sekolah;
 
-            // GTK → filter by tempat_tugas = npsn
+            // GTK: Filter by tempat_tugas = npsn
             $totalGtk = MstGtk::where('tempat_tugas', $sekolah->npsn)->count();
 
-            // Peserta didik → filter lewat rombel yang punya sekolah_id = sekolah.id
+            // Peserta Didik: Filter via Rombel -> Sekolah
             $totalPesertaDidik = MstPesertaDidik::whereHas('rombels', function ($q) use ($sekolah) {
                 $q->where('sekolah_id', $sekolah->id);
             })->count();
 
-            // Sarpras → filter by sekolah_id
+            // Rombel: Filter by sekolah_id
+            $totalRombel = MstRombel::where('sekolah_id', $sekolah->id)->count();
+
+            // Sarpras: Filter by sekolah_id
             $totalSarpras = MstSarprasSekolah::where('sekolah_id', $sekolah->id)->count();
         }
 
         return [
             'cards' => [
                 [
-                    'title' => 'Total Peserta Didik',
+                    'title' => 'Peserta Didik Saya',
                     'value' => $totalPesertaDidik,
+                    'icon' => 'heroicon-o-users',
+                    'color' => 'success',
                 ],
                 [
-                    'title' => 'Total PTK',
+                    'title' => 'Guru & Tenaga Kependidikan',
                     'value' => $totalGtk,
+                    'icon' => 'heroicon-o-user-group',
+                    'color' => 'primary',
                 ],
                 [
-                    'title' => 'Total Rombel',
-                    'value' => MstRombel::count(),
+                    'title' => 'Rombongan Belajar',
+                    'value' => $totalRombel,
+                    'icon' => 'heroicon-o-collection',
+                    'color' => 'warning',
                 ],
                 [
-                    'title' => 'Total Sarana',
-                    'value' => RefSarpras::count(),
-                ],
-                [
-                    'title' => 'Total Prasarana',
+                    'title' => 'Sarana & Prasarana',
                     'value' => $totalSarpras,
-                ],
-                [
-                    'title' => 'Total Kurikulum',
-                    'value' => RefKurikulum::count(),
-                ],
-                [
-                    'title' => 'Total Mata pelajaran',
-                    'value' => RefMapel::count(),
+                    'icon' => 'heroicon-o-office-building',
+                    'color' => 'info',
                 ],
             ],
         ];

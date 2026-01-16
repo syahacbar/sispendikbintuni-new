@@ -222,7 +222,6 @@ class MstRombelResource extends Resource
                     EditAction::make(),
                     DeleteAction::make(),
                 ]),
-                // ...
             ])
 
             ->bulkActions([

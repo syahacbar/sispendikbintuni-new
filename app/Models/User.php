@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 use Filament\Models\Contracts\FilamentUser;
 
 
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 {
     use HasFactory, Notifiable, HasRoles;
 
@@ -61,13 +61,11 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasOne(MstSekolah::class, 'users_id', 'id');
     }
 
-    // public function canAccessPanel(Panel $panel): bool
-    // {
-    //     return str_ends_with($this->email, '@animaproperty.id') && $this->hasVerifiedEmail();
-    // }
-
     public function canAccessPanel(Panel $panel): bool
     {
+        // ⚠️ PENTING: Email verification dihandle oleh middleware EnsureEmailIsVerified
+        // Jangan check hasVerifiedEmail() di sini karena akan return 403 sebelum middleware berfungsi
+        // Middleware akan redirect user ke halaman verifikasi jika belum verified
         return $this->hasRole(['super_admin', 'admin_dinas', 'admin_sekolah']);
     }
 }

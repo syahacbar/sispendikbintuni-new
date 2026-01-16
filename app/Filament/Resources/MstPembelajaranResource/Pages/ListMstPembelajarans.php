@@ -21,6 +21,7 @@ class ListMstPembelajarans extends ListRecords
             Actions\ImportAction::make()
                 ->importer(MstPembelajaranImporter::class)
                 ->label('Import Data Pembelajaran')
+                ->modalHeading('Impor Pembelajaran')
                 ->icon('heroicon-o-arrow-up-tray')
                 ->color('success'),
         ];

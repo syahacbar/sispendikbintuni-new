@@ -80,6 +80,12 @@
                         <a class="nav-link btn btn-primary btn-sm btnLogin {{ Request::is('login*') ? 'active' : '' }}"
                             href="/paneladmin/login">Login</a>
                     </li>
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-success btn-sm btnLogin" href="/paneladmin">
+                            <i class="bi bi-speedometer2 me-1"></i>Kembali ke Panel
+                        </a>
+                    </li>
                 @endguest
             </ul>
         </div>

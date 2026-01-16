@@ -36,6 +36,7 @@ class ListMstGtks extends ListRecords
 
             ImportAction::make()
                 ->label('Impor Data GTK')
+                ->modalHeading('Impor GTK')
                 ->icon('heroicon-o-arrow-up-tray')
                 ->importer(MstGtkImporter::class)
                 ->color('success')

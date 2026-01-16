@@ -14,6 +14,11 @@ class MstSarprasSekolahImporter extends Importer
 {
     protected static ?string $model = MstSarprasSekolah::class;
 
+    public static function getLabel(): string
+    {
+        return 'Sarpras Sekolah';
+    }
+
     public static function getColumns(): array
     {
         return [

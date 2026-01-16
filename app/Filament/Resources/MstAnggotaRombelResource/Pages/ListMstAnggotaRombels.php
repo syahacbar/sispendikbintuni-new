@@ -22,6 +22,7 @@ class ListMstAnggotaRombels extends ListRecords
                 ->createAnother(false),
             ImportAction::make()
                 ->label('Impor Anggota Rombel')
+                ->modalHeading('Impor Anggota Rombel')
                 ->icon('heroicon-o-arrow-up-tray')
                 ->importer(MstAnggotaRombelImporter::class)
                 ->color('success')

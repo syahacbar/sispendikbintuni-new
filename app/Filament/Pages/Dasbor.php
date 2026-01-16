@@ -25,8 +25,8 @@ class Dasbor extends Page
         return [
             CustomDashboardStats::class,
             SekolahChart::class,
-            PtkChart::class,
             PesertaDidikChart::class,
+            PtkChart::class,
             LatestPengaduan::class,
             LatestUsers::class,
             ActiveUsers::class,

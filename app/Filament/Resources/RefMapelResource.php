@@ -11,7 +11,10 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
 
 class RefMapelResource extends Resource
 {
@@ -54,15 +57,22 @@ class RefMapelResource extends Resource
                     ->sortable(),
                 // ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->openRecordUrlInNewTab(false)
+            ->recordUrl(null)
+            ->recordAction(null)
             ->filters([
                 //
             ])
             ->actions([
-                // Tables\Actions\EditAction::make(),
+                ActionGroup::make([
+                    ViewAction::make(),
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    // Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -78,8 +88,8 @@ class RefMapelResource extends Resource
     {
         return [
             'index' => Pages\ListRefMapels::route('/'),
-            // 'create' => Pages\CreateRefMapel::route('/create'),
-            // 'edit' => Pages\EditRefMapel::route('/{record}/edit'),
+            'create' => Pages\CreateRefMapel::route('/create'),
+            'edit' => Pages\EditRefMapel::route('/{record}/edit'),
         ];
     }
 }

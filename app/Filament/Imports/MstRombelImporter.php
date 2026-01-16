@@ -16,6 +16,11 @@ class MstRombelImporter extends Importer
 {
     protected static ?string $model = MstRombel::class;
 
+    public static function getLabel(): string
+    {
+        return 'Rombongan Belajar';
+    }
+
     public static function getColumns(): array
     {
         return [

@@ -8,6 +8,9 @@ use App\Models\SysSetting;
 use Illuminate\Support\ServiceProvider;
 use BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch;
 
+use Livewire\Livewire;
+use Filament\Livewire\DatabaseNotifications;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -23,6 +26,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Livewire::component('filament.livewire.database-notifications', DatabaseNotifications::class);
+
         LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
             $switch
                 ->locales(['id']);

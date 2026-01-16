@@ -17,6 +17,11 @@ class MstPesertaDidikImporter extends Importer
 {
     protected static ?string $model = MstPesertaDidik::class;
 
+    public static function getLabel(): string
+    {
+        return 'Peserta Didik';
+    }
+
     public static function getColumns(): array
     {
         return [

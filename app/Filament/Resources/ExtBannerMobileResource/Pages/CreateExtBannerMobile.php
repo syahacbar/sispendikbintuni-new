@@ -11,6 +11,8 @@ class CreateExtBannerMobile extends CreateRecord
     protected static string $resource = ExtBannerMobileResource::class;
     protected static ?string $title = 'Tambah Data Banner';
 
+    protected static bool $canCreateAnother = false;
+
     protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('index');

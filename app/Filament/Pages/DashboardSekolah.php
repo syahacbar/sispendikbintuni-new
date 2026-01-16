@@ -12,6 +12,7 @@ use App\Filament\Widgets\PesertaDidikChart;
 use App\Filament\Widgets\KualifikasiPtkChart;
 use App\Filament\Widgets\CustomDashboardStats;
 use App\Filament\Widgets\DashSekolahCountData;
+use App\Filament\Widgets\SchoolStudentGenderChart;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 
 class DashboardSekolah extends Page
@@ -27,6 +28,7 @@ class DashboardSekolah extends Page
     {
         return [
             DashSekolahCountData::class,
+            SchoolStudentGenderChart::class,
             PtkChart::class,
             KualifikasiPtkChart::class,
         ];

@@ -14,6 +14,10 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\ExtBannerMobileResource\Pages;
 use App\Filament\Resources\ExtBannerMobileResource\RelationManagers;
 use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
 
 class ExtBannerMobileResource extends Resource
 {
@@ -71,12 +75,26 @@ class ExtBannerMobileResource extends Resource
                     ->dateTime()
                     ->sortable(),
             ])
+            ->openRecordUrlInNewTab(false)
+            ->recordUrl(null)
+            ->recordAction(null)
+
             ->filters([
                 //
             ])
+            // ->actions([
+            //     Tables\Actions\EditAction::make(),
+            //     Tables\Actions\DeleteAction::make(),
+            // ])
+
             ->actions([
-                Tables\Actions\EditAction::make(),
+                ActionGroup::make([
+                    ViewAction::make(),
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ]),
             ])
+
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

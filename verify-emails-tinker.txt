@@ -1,0 +1,43 @@
+// ======================================
+// SCRIPT VERIFY EMAIL VIA TINKER
+// ======================================
+// 
+// Cara pakai:
+// 1. Buka tinker: php artisan tinker
+// 2. Copy paste script di bawah ini
+// 3. Tekan Enter
+// ======================================
+
+$emails = [
+    'superadmin@sispendikbintuni.cloud',
+    'admindinas@sispendikbintuni.cloud',
+    '60403663@sispendikbintuni.cloud',
+    '60401962@sispendikbintuni.cloud',
+    '60401955@sispendikbintuni.cloud',
+    '60401950@sispendikbintuni.cloud',
+    '60401956@sispendikbintuni.cloud',
+    '60401954@sispendikbintuni.cloud',
+    '60401938@sispendikbintuni.cloud',
+    '60401880@sispendikbintuni.cloud',
+    '60401899@sispendikbintuni.cloud',
+    '60401900@sispendikbintuni.cloud'
+];
+
+$updated = \App\Models\User::whereIn('email', $emails)->update(['email_verified_at' => now()]);
+
+echo "✅ {$updated} email telah diverifikasi!\n";
+
+// ======================================
+// SCRIPT UNTUK VERIFY SINGLE EMAIL
+// ======================================
+// Jika hanya ingin verify 1 email:
+
+// \App\Models\User::where('email', 'emailanda@example.com')->update(['email_verified_at' => now()]);
+
+// ======================================
+// CEK STATUS VERIFIKASI
+// ======================================
+// Untuk cek apakah email sudah verified:
+
+// $user = \App\Models\User::where('email', 'emailanda@example.com')->first();
+// echo $user->email_verified_at ? "✅ Sudah verified" : "❌ Belum verified";

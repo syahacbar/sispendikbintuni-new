@@ -12,6 +12,14 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\TextareaColumn;
+use Filament\Forms\Components\Textarea;
+
 
 class RefKurikulumResource extends Resource
 {
@@ -48,6 +56,9 @@ class RefKurikulumResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('index')
+                    ->label('No. ')
+                    ->rowIndex(),
                 Tables\Columns\TextColumn::make('kode')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nama')
@@ -66,15 +77,26 @@ class RefKurikulumResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+
+            ->openRecordUrlInNewTab(false)
+            ->recordUrl(null)
+            ->recordAction(null)
+
             ->filters([
-                //
+                //  filter
             ])
+
             ->actions([
-                // Tables\Actions\EditAction::make(),
+                ActionGroup::make([
+                    ViewAction::make(),
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ]),
             ])
+
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    // Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -90,8 +112,8 @@ class RefKurikulumResource extends Resource
     {
         return [
             'index' => Pages\ListRefKurikulums::route('/'),
-            // 'create' => Pages\CreateRefKurikulum::route('/create'),
-            // 'edit' => Pages\EditRefKurikulum::route('/{record}/edit'),
+            'create' => Pages\CreateRefKurikulum::route('/create'),
+            'edit' => Pages\EditRefKurikulum::route('/{record}/edit'),
         ];
     }
 }

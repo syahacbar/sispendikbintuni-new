@@ -14,6 +14,11 @@ class MstGtkImporter extends Importer
 {
     protected static ?string $model = MstGtk::class;
 
+    public static function getLabel(): string
+    {
+        return 'GTK';
+    }
+
     public static function getColumns(): array
     {
         return [

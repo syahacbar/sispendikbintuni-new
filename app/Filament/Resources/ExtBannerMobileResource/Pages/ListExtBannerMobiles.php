@@ -10,10 +10,19 @@ class ListExtBannerMobiles extends ListRecords
 {
     protected static string $resource = ExtBannerMobileResource::class;
 
+    public function getHeading(): string
+    {
+        return 'Banner Mobile';
+    }
+
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->label('Tambah Banner')
+                ->icon('heroicon-o-plus')
+                ->color('primary')
+                ->createAnother(false),
         ];
     }
 }

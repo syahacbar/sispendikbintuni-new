@@ -23,12 +23,12 @@ class Register extends BaseRegister
             'form' => $this->form(
                 $this->makeForm()
                     ->schema([
-                            $this->getNameFormComponent(),
-                            $this->getEmailFormComponent(),
-                            $this->getPasswordFormComponent(),
-                            $this->getPasswordConfirmationFormComponent(),
-                            $this->getSekolahFormComponent(),
-                        ])
+                        $this->getNameFormComponent(),
+                        $this->getEmailFormComponent(),
+                        $this->getPasswordFormComponent(),
+                        $this->getPasswordConfirmationFormComponent(),
+                        $this->getSekolahFormComponent(),
+                    ])
                     ->statePath('data'),
             ),
         ];
@@ -75,8 +75,8 @@ class Register extends BaseRegister
         // 🔗 Hubungkan user ke sekolah
         MstSekolah::where('id', $sekolahId)
             ->update([
-                    'users_id' => $user->id,
-                ]);
+                'users_id' => $user->id,
+            ]);
 
         // 🔐 Assign role Filament Shield
         $user->assignRole('admin_sekolah');

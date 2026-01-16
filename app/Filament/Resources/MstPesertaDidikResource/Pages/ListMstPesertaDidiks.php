@@ -25,6 +25,7 @@ class ListMstPesertaDidiks extends ListRecords
                 ->createAnother(false),
             ImportAction::make()
                 ->label('Impor Data Peserta Didik')
+                ->modalHeading('Impor Peserta Didik')
                 ->icon('heroicon-o-arrow-up-tray')
                 ->importer(MstPesertaDidikImporter::class)
                 ->color('success')

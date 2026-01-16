@@ -88,82 +88,70 @@ class CustomDashboardStats extends Widget
 
     public function getViewData(): array
     {
-        $user = auth()->user();
-
-        // Default (global count)
         $totalSekolah = MstSekolah::count();
         $totalPesertaDidik = MstPesertaDidik::count();
         $totalGtk = MstGtk::count();
-        $totalSarpras = MstSarprasSekolah::count();
-
-        // Kalau role admin_sekolah → filter
-        if ($user->hasRole('admin_sekolah') && $user->sekolah) {
-            $sekolah = $user->sekolah;
-
-            // GTK → filter by tempat_tugas = npsn
-            $totalGtk = MstGtk::where('tempat_tugas', $sekolah->npsn)->count();
-
-            // Peserta didik → filter lewat rombel yang punya sekolah_id = sekolah.id
-            $totalPesertaDidik = MstPesertaDidik::whereHas('rombels', function ($q) use ($sekolah) {
-                $q->where('sekolah_id', $sekolah->id);
+        $totalUsers = User::count();
+        $activeUsers = User::role(['super_admin', 'admin_dinas', 'admin_sekolah'])
+            ->whereIn('id', function ($query) {
+                $query->select('user_id')->from('sessions')->whereNotNull('user_id');
             })->count();
-
-            // Sarpras → filter by sekolah_id
-            $totalSarpras = MstSarprasSekolah::where('sekolah_id', $sekolah->id)->count();
-        }
 
         return [
             'cards' => [
                 [
                     'title' => 'Total Sekolah',
                     'value' => $totalSekolah,
+                    'icon' => 'heroicon-o-academic-cap',
+                    'color' => 'primary',
                 ],
                 [
                     'title' => 'Total Peserta Didik',
                     'value' => $totalPesertaDidik,
+                    'icon' => 'heroicon-o-users',
+                    'color' => 'success',
                 ],
                 [
-                    'title' => 'Total PTK',
+                    'title' => 'Total GTK',
                     'value' => $totalGtk,
+                    'icon' => 'heroicon-o-user-group',
+                    'color' => 'warning',
                 ],
                 [
                     'title' => 'Total Users',
-                    'value' => User::count(),
+                    'value' => $totalUsers,
+                    'icon' => 'heroicon-o-user',
+                    'color' => 'info',
                 ],
                 [
                     'title' => 'Active Users',
-                    'value' => User::role(['super_admin', 'admin_dinas', 'admin_sekolah'])
-                        ->whereIn('id', function ($query) {
-                            $query->select('user_id')->from('sessions')->whereNotNull('user_id');
-                        })->count(),
+                    'value' => $activeUsers,
+                    'icon' => 'heroicon-o-signal',
+                    'color' => 'success',
                 ],
                 [
                     'title' => 'Total Pengaduan',
                     'value' => ExtPengaduan::count(),
+                    'icon' => 'heroicon-o-chat-alt-2',
+                    'color' => 'danger',
                 ],
                 [
                     'title' => 'Total Rombel',
                     'value' => MstRombel::count(),
+                    'icon' => 'heroicon-o-collection',
+                    'color' => 'success',
                 ],
                 [
                     'title' => 'Total Sarana',
                     'value' => RefSarpras::count(),
+                    'icon' => 'heroicon-o-archive',
+                    'color' => 'primary',
                 ],
                 [
                     'title' => 'Total Prasarana',
-                    'value' => $totalSarpras,
-                ],
-                [
-                    'title' => 'Total Kurikulum',
-                    'value' => RefKurikulum::count(),
-                ],
-                [
-                    'title' => 'Total Mata pelajaran',
-                    'value' => RefMapel::count(),
-                ],
-                [
-                    'title' => 'Total Informasi',
-                    'value' => ExtInformasi::count(),
+                    'value' => MstSarprasSekolah::count(),
+                    'icon' => 'heroicon-o-office-building',
+                    'color' => 'warning',
                 ],
             ],
         ];

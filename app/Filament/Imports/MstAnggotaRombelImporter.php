@@ -16,6 +16,11 @@ class MstAnggotaRombelImporter extends Importer
 {
     protected static ?string $model = MstAnggotaRombel::class;
 
+    public static function getLabel(): string
+    {
+        return 'Anggota Rombel';
+    }
+
     public static function getColumns(): array
     {
         return [

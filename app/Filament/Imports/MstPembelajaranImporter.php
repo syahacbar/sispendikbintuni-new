@@ -20,6 +20,11 @@ class MstPembelajaranImporter extends Importer
 {
     protected static ?string $model = MstPembelajaran::class;
 
+    public static function getLabel(): string
+    {
+        return 'Pembelajaran';
+    }
+
     public static function getColumns(): array
     {
         return [
@@ -68,7 +73,6 @@ class MstPembelajaranImporter extends Importer
     public function resolveRecord(): ?Model
     {
         // Untuk import Pembelajaran, kita buat record baru atau update jika kombinasi Rombel + Mapel + GTK + Semester sama (opsional)
-        // Namun untuk sementara kita selalu buat baru (sesuai contoh GtkImporter)
         return new static::$model();
     }
 

@@ -21,6 +21,7 @@ class ListMstSarprasSekolahs extends ListRecords
                 ->color('primary'),
             ImportAction::make()
                 ->label('Impor Data Sarpras')
+                ->modalHeading('Impor Sarpras Sekolah')
                 ->icon('heroicon-o-arrow-up-tray')
                 ->importer(MstSarprasSekolahImporter::class)
                 ->color('success')
