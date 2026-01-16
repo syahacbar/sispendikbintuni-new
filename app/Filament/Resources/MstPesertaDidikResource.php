@@ -11,6 +11,10 @@ use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\MstPesertaDidikResource\Pages;
 use App\Models\MstSekolah;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
 
 class MstPesertaDidikResource extends Resource
 {
@@ -34,56 +38,56 @@ class MstPesertaDidikResource extends Resource
 
     public static function getNavigationSort(): ?int
     {
-        return auth()->user()?->hasRole('admin_sekolah') ? 30 : 20;
+        return auth()->user()?->hasRole('admin_sekolah') ? 40 : 40;
     }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                    Forms\Components\TextInput::make('nama')
-                        ->required()
-                        ->maxLength(100),
-                    Forms\Components\TextInput::make('nipd')
-                        ->label('NIPD')
-                        ->maxLength(6),
-                    Forms\Components\TextInput::make('nisn')
-                        ->label('NISN')
-                        ->maxLength(10),
-                    Forms\Components\TextInput::make('nik')
-                        ->label('NIK')
-                        ->maxLength(20),
-                    Forms\Components\TextInput::make('tempat_lahir')
-                        ->maxLength(100),
-                    Forms\Components\DatePicker::make('tgl_lahir')
-                        ->label('Tanggal Lahir')
-                        ->required()
-                        ->native(false)
-                        ->maxDate(now()),
-                    Forms\Components\Select::make('jenis_kelamin')
-                        ->label('Jenis Kelamin')
-                        ->options([
-                                'L' => 'Laki-laki',
-                                'P' => 'Perempuan',
-                            ])
-                        ->required(),
-                    Forms\Components\Select::make('agama')
-                        ->label('Agama')
-                        ->options([
-                                'Islam' => 'Islam',
-                                'Kristen' => 'Kristen',
-                                'Hindu' => 'Hindu',
-                                'Buddha' => 'Buddha',
-                                'Konghucu' => 'Konghucu',
-                            ])
-                        ->required(),
-                    Forms\Components\Textarea::make('alamat')
-                        ->columnSpanFull(),
-                    Forms\Components\TextInput::make('kode_wilayah')
-                        ->maxLength(100),
-                    Forms\Components\TextInput::make('kode_pos')
-                        ->maxLength(10),
-                ])->columns(3);
+                Forms\Components\TextInput::make('nama')
+                    ->required()
+                    ->maxLength(100),
+                Forms\Components\TextInput::make('nipd')
+                    ->label('NIPD')
+                    ->maxLength(6),
+                Forms\Components\TextInput::make('nisn')
+                    ->label('NISN')
+                    ->maxLength(10),
+                Forms\Components\TextInput::make('nik')
+                    ->label('NIK')
+                    ->maxLength(20),
+                Forms\Components\TextInput::make('tempat_lahir')
+                    ->maxLength(100),
+                Forms\Components\DatePicker::make('tgl_lahir')
+                    ->label('Tanggal Lahir')
+                    ->required()
+                    ->native(false)
+                    ->maxDate(now()),
+                Forms\Components\Select::make('jenis_kelamin')
+                    ->label('Jenis Kelamin')
+                    ->options([
+                        'L' => 'Laki-laki',
+                        'P' => 'Perempuan',
+                    ])
+                    ->required(),
+                Forms\Components\Select::make('agama')
+                    ->label('Agama')
+                    ->options([
+                        'Islam' => 'Islam',
+                        'Kristen' => 'Kristen',
+                        'Hindu' => 'Hindu',
+                        'Buddha' => 'Buddha',
+                        'Konghucu' => 'Konghucu',
+                    ])
+                    ->required(),
+                Forms\Components\Textarea::make('alamat')
+                    ->columnSpanFull(),
+                Forms\Components\TextInput::make('kode_wilayah')
+                    ->maxLength(100),
+                Forms\Components\TextInput::make('kode_pos')
+                    ->maxLength(10),
+            ])->columns(3);
     }
 
     public static function table(Table $table): Table
@@ -91,6 +95,11 @@ class MstPesertaDidikResource extends Resource
         $user = auth()->user();
 
         $columns = [];
+
+        // Kolom No. untuk semua role
+        $columns[] = Tables\Columns\TextColumn::make('index')
+            ->label('No. ')
+            ->rowIndex();
 
         // Kalau bukan admin_sekolah, tampilkan kolom sekolah
         if (!$user->hasRole('admin_sekolah')) {
@@ -110,9 +119,6 @@ class MstPesertaDidikResource extends Resource
         }
 
         $columns = array_merge($columns, [
-            Tables\Columns\TextColumn::make('index')
-                ->label('No. ')
-                ->rowIndex(),
             Tables\Columns\TextColumn::make('nama')
                 ->label('Nama Lengkap')
                 ->searchable(),
@@ -148,11 +154,27 @@ class MstPesertaDidikResource extends Resource
         return $table
             ->columns($columns)
             ->filters([])
+
+            ->openRecordUrlInNewTab(false)
+            ->recordUrl(null)
+            ->recordAction(null)
             ->actions([
-                    Tables\Actions\EditAction::make(),
-                    Tables\Actions\DeleteAction::make(),
-                ])
-            ->bulkActions([]);
+                ActionGroup::make([
+                    ViewAction::make(),
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ]),
+                // ...
+            ])
+            // ->actions([
+            //     Tables\Actions\EditAction::make(),
+            //     Tables\Actions\DeleteAction::make(),
+            // ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
+            ]);
     }
 
     public static function getEloquentQuery(): Builder

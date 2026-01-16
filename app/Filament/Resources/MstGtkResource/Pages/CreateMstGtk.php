@@ -10,6 +10,7 @@ use App\Filament\Resources\MstGtkResource;
 use Filament\Resources\Pages\CreateRecord;
 use App\Models\RefSemester;
 use App\Models\RefKurikulum;
+use Filament\Notifications\Notification;
 
 class CreateMstGtk extends CreateRecord
 {
@@ -26,6 +27,14 @@ class CreateMstGtk extends CreateRecord
     public function getHeading(): string
     {
         return 'Tambah Data GTK';
+    }
+
+    protected function getCreatedNotification(): ?Notification
+    {
+        return Notification::make()
+            ->success()
+            ->title('GTK Ditambahkan')
+            ->body('Data GTK berhasil ditambahkan.');
     }
 
     protected function afterCreate(): void

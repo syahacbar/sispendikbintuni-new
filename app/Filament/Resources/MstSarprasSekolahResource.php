@@ -11,6 +11,10 @@ use Filament\Resources\Resource;
 use App\Models\MstSarprasSekolah;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\MstSarprasSekolahResource\Pages;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
 
 class MstSarprasSekolahResource extends Resource
 {
@@ -218,10 +222,25 @@ class MstSarprasSekolahResource extends Resource
             ->columns($columns)
             ->filters([])
             ->actions([
-                    Tables\Actions\EditAction::make(),
-                    Tables\Actions\DeleteAction::make(),
-                ])
-            ->bulkActions([]);
+                ActionGroup::make([
+                    ViewAction::make(),
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ]),
+                // ...
+            ])
+            ->openRecordUrlInNewTab(false)
+            ->recordUrl(null)
+            ->recordAction(null)
+            // ->actions([
+            //     Tables\Actions\EditAction::make(),
+            //     Tables\Actions\DeleteAction::make(),
+            // ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
+            ]);
     }
 
     public static function getEloquentQuery(): Builder

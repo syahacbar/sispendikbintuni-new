@@ -12,6 +12,11 @@ use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\MstGtkResource\Pages;
+use Filament\Notifications\Notification;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
 
 class MstGtkResource extends Resource
 {
@@ -42,159 +47,179 @@ class MstGtkResource extends Resource
     {
         return $form
             ->schema([
-                    Forms\Components\TextInput::make('nama')
-                        ->label('Nama Lengkap')
-                        ->required()
-                        ->maxLength(100),
-                    Forms\Components\TextInput::make('nik')
-                        ->label('NIK')
-                        ->maxLength(20),
-                    Forms\Components\TextInput::make('nip')
-                        ->label('NIP')
-                        ->maxLength(20),
-                    Forms\Components\TextInput::make('nuptk')
-                        ->label('NUPTK')
-                        ->maxLength(20),
-                    Forms\Components\TextInput::make('tempat_lahir')
-                        ->label('Tempat Lahir')
-                        ->required()
-                        ->maxLength(255),
-                    Forms\Components\DatePicker::make('tgl_lahir')
-                        ->label('Tanggal Lahir')
-                        ->required()
-                        ->native(false)
-                        ->maxDate(now()),
-                    Forms\Components\Select::make('jenis_kelamin')
-                        ->label('Jenis Kelamin')
-                        ->options([
-                                'L' => 'Laki-laki',
-                                'P' => 'Perempuan',
-                            ])
-                        ->required(),
+                Forms\Components\TextInput::make('nama')
+                    ->label('Nama Lengkap')
+                    ->required()
+                    ->maxLength(100),
+                Forms\Components\TextInput::make('nik')
+                    ->label('NIK')
+                    ->maxLength(20),
+                Forms\Components\TextInput::make('nip')
+                    ->label('NIP')
+                    ->maxLength(20),
+                Forms\Components\TextInput::make('nuptk')
+                    ->label('NUPTK')
+                    ->maxLength(20),
+                Forms\Components\TextInput::make('tempat_lahir')
+                    ->label('Tempat Lahir')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\DatePicker::make('tgl_lahir')
+                    ->label('Tanggal Lahir')
+                    ->required()
+                    ->native(false)
+                    ->maxDate(now()),
+                Forms\Components\Select::make('jenis_kelamin')
+                    ->label('Jenis Kelamin')
+                    ->options([
+                        'L' => 'Laki-laki',
+                        'P' => 'Perempuan',
+                    ])
+                    ->required(),
 
-                    Forms\Components\Select::make('status_kepegawaian')
-                        ->label('Status Pegawai')
-                        ->options([
-                                'PNS' => 'PNS',
-                                'PPPK' => 'PPPK',
-                                'Honorer Daerah' => 'Honorer Daerah',
-                                'Honorer Sekolah' => 'Honorer Sekolah',
-                                'GTY/PTY' => 'GTY/PTY',
-                                'Lainnya' => 'Lainnya',
-                            ])
-                        ->required(),
-                    Forms\Components\Select::make('jenis_gtk')
-                        ->label('Jenis GTK')
-                        ->options([
-                                'Guru' => 'Guru',
-                                'Kepala Sekolah' => 'Kepala Sekolah',
-                                'Tenaga Kependidikan' => 'Tenaga Kependidikan',
-                            ])
-                        ->required(),
-                    Forms\Components\Select::make('pend_terakhir')
-                        ->label('Pendidikan Terakhir')
-                        ->options([
-                                'SD' => 'SD',
-                                'SMP' => 'SMP',
-                                'SMA' => 'SMA',
-                                'D3' => 'Diploma 3 (D3)',
-                                'S1' => 'Sarjana (S1)',
-                                'S2' => 'Magister (S2)',
-                                'S3' => 'Doktor (S3)',
-                            ])
-                        ->required(),
-                    Forms\Components\Select::make('status_keaktifan')
-                        ->label('Status Keaktifan')
-                        ->options([
-                                'Aktif' => 'Aktif',
-                                'Tidak Aktif' => 'Tidak Aktif',
-                            ])
-                        ->default('Aktif')
-                        ->required()
-                        ->visible(fn($livewire) => $livewire instanceof \Filament\Resources\Pages\EditRecord),
+                Forms\Components\Select::make('status_kepegawaian')
+                    ->label('Status Pegawai')
+                    ->options([
+                        'PNS' => 'PNS',
+                        'PPPK' => 'PPPK',
+                        'Honorer Daerah' => 'Honorer Daerah',
+                        'Honorer Sekolah' => 'Honorer Sekolah',
+                        'GTY/PTY' => 'GTY/PTY',
+                        'Lainnya' => 'Lainnya',
+                    ])
+                    ->required(),
+                Forms\Components\Select::make('jenis_gtk')
+                    ->label('Jenis GTK')
+                    ->options([
+                        'Guru' => 'Guru',
+                        'Kepala Sekolah' => 'Kepala Sekolah',
+                        'Tenaga Kependidikan' => 'Tenaga Kependidikan',
+                    ])
+                    ->required(),
+                Forms\Components\Select::make('pend_terakhir')
+                    ->label('Pendidikan Terakhir')
+                    ->options([
+                        'SD' => 'SD',
+                        'SMP' => 'SMP',
+                        'SMA' => 'SMA',
+                        'D3' => 'Diploma 3 (D3)',
+                        'S1' => 'Sarjana (S1)',
+                        'S2' => 'Magister (S2)',
+                        'S3' => 'Doktor (S3)',
+                    ])
+                    ->required(),
+                Forms\Components\Select::make('status_keaktifan')
+                    ->label('Status Keaktifan')
+                    ->options([
+                        'Aktif' => 'Aktif',
+                        'Tidak Aktif' => 'Tidak Aktif',
+                    ])
+                    ->default('Aktif')
+                    ->required()
+                    ->visible(fn($livewire) => $livewire instanceof \Filament\Resources\Pages\EditRecord),
 
-                ])->columns(3);
+            ])->columns(3);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                    TextColumn::make('index')
-                        ->label('No. ')
-                        ->rowIndex(),
-                    Tables\Columns\TextColumn::make('tempat_tugas')
-                        ->label('Sekolah')
-                        ->visible(fn() => auth()->user()->hasRole('super_admin'))
-                        ->formatStateUsing(function ($state) {
-                            if (is_iterable($state)) {
-                                return collect($state)->pluck('nama')->implode(', ');
-                            }
-                            return $state;
-                        }),
+                TextColumn::make('index')
+                    ->label('No. ')
+                    ->rowIndex(),
+                Tables\Columns\TextColumn::make('tempat_tugas')
+                    ->label('Sekolah')
+                    ->visible(fn() => auth()->user()->hasRole('super_admin'))
+                    ->formatStateUsing(function ($state) {
+                        if (is_iterable($state)) {
+                            return collect($state)->pluck('nama')->implode(', ');
+                        }
+                        return $state;
+                    }),
 
-                    Tables\Columns\TextColumn::make('nama')
-                        ->label('Nama Lengkap')
-                        ->searchable(),
-                    Tables\Columns\TextColumn::make('nik')
-                        ->label('NIK')
-                        ->searchable(),
-                    Tables\Columns\TextColumn::make('nip')
-                        ->label('NIP')
-                        ->searchable(),
-                    Tables\Columns\TextColumn::make('nuptk')
-                        ->label('NUPTK')
-                        ->searchable(),
-                    Tables\Columns\TextColumn::make('tempat_lahir')
-                        ->label('Tempat Lahir')
-                        ->searchable(),
-                    Tables\Columns\TextColumn::make('tgl_lahir')
-                        ->label('Tanggal Lahir')
-                        ->date('d/m/Y')
-                        ->sortable(),
-                    Tables\Columns\TextColumn::make('jenis_kelamin')
-                        ->label('JK')
-                        ->searchable(),
-                    Tables\Columns\TextColumn::make('status_kepegawaian')
-                        ->label('Status Pegawai')
-                        ->searchable(),
-                    Tables\Columns\TextColumn::make('jenis_gtk')
-                        ->label('Jenis GTK')
-                        ->searchable(),
-                    Tables\Columns\TextColumn::make('pend_terakhir')
-                        ->label('Pendidikan')
-                        ->searchable(),
-                    Tables\Columns\TextColumn::make('status_keaktifan')
-                        ->label('Status')
-                        ->badge()
-                        ->searchable()
-                        ->color(fn(string $state): string => match (strtolower($state)) {
-                            'aktif' => 'success',
-                            'tidak aktif' => 'danger',
-                            default => 'secondary',
-                        }),
-                    Tables\Columns\TextColumn::make('created_at')
-                        ->dateTime()
-                        ->sortable()
-                        ->toggleable(isToggledHiddenByDefault: true),
-                    Tables\Columns\TextColumn::make('updated_at')
-                        ->dateTime()
-                        ->sortable()
-                        ->toggleable(isToggledHiddenByDefault: true),
-                ])
+                Tables\Columns\TextColumn::make('nama')
+                    ->label('Nama Lengkap')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('nik')
+                    ->label('NIK')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('nip')
+                    ->label('NIP')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('nuptk')
+                    ->label('NUPTK')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('tempat_lahir')
+                    ->label('Tempat Lahir')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('tgl_lahir')
+                    ->label('Tanggal Lahir')
+                    ->date('d/m/Y')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('jenis_kelamin')
+                    ->label('JK')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('status_kepegawaian')
+                    ->label('Status Pegawai')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('jenis_gtk')
+                    ->label('Jenis GTK')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('pend_terakhir')
+                    ->label('Pendidikan')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('status_keaktifan')
+                    ->label('Status')
+                    ->badge()
+                    ->searchable()
+                    ->color(fn(string $state): string => match (strtolower($state)) {
+                        'aktif' => 'success',
+                        'tidak aktif' => 'danger',
+                        default => 'secondary',
+                    }),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+            ])
+            ->openRecordUrlInNewTab(false)
+            ->recordUrl(null)
+            ->recordAction(null)
             ->filters([
-                    //
-                ])
+                //disable clicable pada row untuk membuka detail record
+            ])
 
+            // ->actions([
+            //     Tables\Actions\EditAction::make(),
+            //     Tables\Actions\DeleteAction::make()
+            //         ->successNotification(
+            //             Notification::make()
+            //                 ->success()
+            //                 ->title('GTK Dihapus')
+            //                 ->body('Data GTK berhasil dihapus.')
+            //         ),
+            // ])
             ->actions([
-                    Tables\Actions\EditAction::make(),
-                    Tables\Actions\DeleteAction::make(),
-                ])
+                ActionGroup::make([
+                    ViewAction::make(),
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ]),
+                // ...
+            ])
             ->bulkActions([
-                    Tables\Actions\BulkActionGroup::make([
-                        Tables\Actions\DeleteBulkAction::make(),
-                    ]),
-                ]);
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
+            ]);
     }
 
     public static function getEloquentQuery(): Builder

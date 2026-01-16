@@ -3,9 +3,9 @@
 namespace App\Filament\Resources\MstPembelajaranResource\Pages;
 
 use App\Filament\Resources\MstPembelajaranResource;
+use App\Filament\Imports\MstPembelajaranImporter;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
-use Illuminate\Database\Eloquent\Builder;
 
 class ListMstPembelajarans extends ListRecords
 {
@@ -18,20 +18,11 @@ class ListMstPembelajarans extends ListRecords
                 ->icon('heroicon-o-plus')
                 ->color('primary')
                 ->createAnother(false),
+            Actions\ImportAction::make()
+                ->importer(MstPembelajaranImporter::class)
+                ->label('Import Data Pembelajaran')
+                ->icon('heroicon-o-arrow-up-tray')
+                ->color('success'),
         ];
-    }
-
-
-    protected function getTableQuery(): Builder
-    {
-        $query = parent::getTableQuery();
-
-        if (auth()->user()->hasRole('admin_sekolah')) {
-            $query->whereHas('rombel', function ($q) {
-                $q->where('sekolah_id', auth()->user()->sekolah_id);
-            });
-        }
-
-        return $query;
     }
 }

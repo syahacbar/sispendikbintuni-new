@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Filament\Actions;
 use Filament\Actions\ImportAction;
 use App\Filament\Imports\MstGtkImporter;
-
+use Closure;
 
 class ListMstGtks extends ListRecords
 {
@@ -18,6 +18,11 @@ class ListMstGtks extends ListRecords
     public function getHeading(): string
     {
         return 'Data GTK';
+    }
+
+    protected function getTableRecordUrlUsing(): ?Closure
+    {
+        return null;
     }
 
     protected function getHeaderActions(): array

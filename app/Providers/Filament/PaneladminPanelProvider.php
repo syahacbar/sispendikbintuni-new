@@ -39,18 +39,19 @@ class PaneladminPanelProvider extends PanelProvider
             ->registration(Register::class)
             ->passwordReset()
             ->emailVerification()
+            ->databaseNotifications()
             // ->breadcrumbs(false)
             ->font('Segoe UI')
             ->colors([
-                    'primary' => Color::hex('#0093dd'),
-                ])
+                'primary' => Color::hex('#0093dd'),
+            ])
             ->userMenuItems([
-                    MenuItem::make()
-                        ->label('Kunjungi Web')
-                        ->url('/')
-                        ->openUrlInNewTab()
-                        ->icon('heroicon-o-globe-alt'),
-                ])
+                MenuItem::make()
+                    ->label('Kunjungi Web')
+                    ->url('/')
+                    ->openUrlInNewTab()
+                    ->icon('heroicon-o-globe-alt'),
+            ])
             ->sidebarFullyCollapsibleOnDesktop()
             ->defaultThemeMode(ThemeMode::Light)
             ->favicon(function () {
@@ -67,34 +68,34 @@ class PaneladminPanelProvider extends PanelProvider
             // ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                    Widgets\AccountWidget::class,
-                    Widgets\FilamentInfoWidget::class,
-                ])
+                Widgets\AccountWidget::class,
+                Widgets\FilamentInfoWidget::class,
+            ])
             ->middleware([
-                    EncryptCookies::class,
-                    AddQueuedCookiesToResponse::class,
-                    StartSession::class,
-                    AuthenticateSession::class,
-                    ShareErrorsFromSession::class,
-                    VerifyCsrfToken::class,
-                    SubstituteBindings::class,
-                    DisableBladeIconComponents::class,
-                    DispatchServingFilamentEvent::class,
-                ])
+                EncryptCookies::class,
+                AddQueuedCookiesToResponse::class,
+                StartSession::class,
+                AuthenticateSession::class,
+                ShareErrorsFromSession::class,
+                VerifyCsrfToken::class,
+                SubstituteBindings::class,
+                DisableBladeIconComponents::class,
+                DispatchServingFilamentEvent::class,
+            ])
             ->plugins([
-                    FilamentShieldPlugin::make(),
-                ])
+                FilamentShieldPlugin::make(),
+            ])
             ->authMiddleware([
-                    Authenticate::class,
-                ])
+                Authenticate::class,
+            ])
 
             ->navigationGroups([
-                    'Data Referensi',
-                    'Data Master',
-                    'Manajemen Konten Web',
-                    'Manajemen Pengguna',
-                    'Pengaturan',
-                ])
+                'Data Referensi',
+                'Data Master',
+                'Manajemen Konten Web',
+                'Manajemen Pengguna',
+                'Pengaturan',
+            ])
 
             ->renderHook('panels::body.end', function () {
                 return <<<'HTML'

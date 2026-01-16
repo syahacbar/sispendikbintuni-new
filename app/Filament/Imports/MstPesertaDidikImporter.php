@@ -55,12 +55,12 @@ class MstPesertaDidikImporter extends Importer
                         $sekolah = MstSekolah::where('users_id', $user->id)->first();
                         if ($sekolah) {
                             return MstRombel::where('sekolah_id', $sekolah->id)
-                                ->where('status_aktif', true)
+                                ->orderBy('nama')
                                 ->pluck('nama', 'id');
                         }
                         return [];
                     }
-                    return MstRombel::where('status_aktif', true)->pluck('nama', 'id');
+                    return MstRombel::orderBy('nama')->pluck('nama', 'id');
                 })
                 ->required()
                 ->searchable()

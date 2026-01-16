@@ -5,6 +5,7 @@ namespace App\Filament\Resources\MstGtkResource\Pages;
 use App\Filament\Resources\MstGtkResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
+use Filament\Notifications\Notification;
 
 class EditMstGtk extends EditRecord
 {
@@ -26,5 +27,13 @@ class EditMstGtk extends EditRecord
     protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('index');
+    }
+
+    protected function getSavedNotification(): ?Notification
+    {
+        return Notification::make()
+            ->success()
+            ->title('GTK Diperbarui')
+            ->body('Data GTK berhasil diperbarui.');
     }
 }
