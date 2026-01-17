@@ -10,6 +10,16 @@ class EditMstRombel extends EditRecord
 {
     protected static string $resource = MstRombelResource::class;
 
+    public function getHeading(): string
+    {
+        return 'Ubah Rombel';
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
+
     protected function getHeaderActions(): array
     {
         return [

@@ -230,10 +230,6 @@ class MstRombelResource extends Resource
             ->filters([
                 //
             ])
-            // ->actions([
-            //     Tables\Actions\EditAction::make(),
-            //     Tables\Actions\DeleteAction::make(),
-            // ])
 
             ->actions([
                 ActionGroup::make([
