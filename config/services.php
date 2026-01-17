@@ -32,9 +32,15 @@ return [
     ],
 
     'zenziva' => [
-        'url'     => env('ZENZIVA_URL', 'https://console.zenziva.net/wareguler/api/sendWA/'),
+        'url' => env('ZENZIVA_URL', 'https://console.zenziva.net/wareguler/api/sendWA/'),
         'userkey' => env('ZENZIVA_USERKEY'),
         'passkey' => env('ZENZIVA_PASSKEY'),
+    ],
+
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_REDIRECT_URI'),
     ],
 
 ];

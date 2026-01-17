@@ -1,21 +1,17 @@
 <?php
 
-namespace App\Filament\Pages;
+namespace App\Filament\Pages\Sekolah;
 
 use Filament\Pages\Page;
 use App\Filament\Widgets\PtkChart;
-use App\Filament\Widgets\ActiveUsers;
-use App\Filament\Widgets\LatestUsers;
 use App\Filament\Widgets\SekolahChart;
-use App\Filament\Widgets\LatestPengaduan;
 use App\Filament\Widgets\PesertaDidikChart;
 use App\Filament\Widgets\KualifikasiPtkChart;
-use App\Filament\Widgets\CustomDashboardStats;
 use App\Filament\Widgets\DashSekolahCountData;
 use App\Filament\Widgets\SchoolStudentGenderChart;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 
-class DashboardSekolah extends Page
+class SchoolDashboard extends Page
 {
     use HasPageShield;
 
@@ -23,14 +19,21 @@ class DashboardSekolah extends Page
     protected static ?string $navigationLabel = 'Dasbor';
     protected static string $view = 'filament.pages.dashboard';
     protected static ?string $title = 'Dashboard Sekolah';
+    protected static ?string $slug = 'sekolah/dasbor';
+
+    public function getHeading(): string
+    {
+        return 'Dasbor';
+    }
 
     public function getHeaderWidgets(): array
     {
         return [
-            DashSekolahCountData::class,
-            SchoolStudentGenderChart::class,
-            PtkChart::class,
-            KualifikasiPtkChart::class,
+            \App\Filament\Widgets\SchoolDashboardStats::class,
+            \App\Filament\Widgets\SchoolStudentPerRombelChart::class,
+            \App\Filament\Widgets\SchoolStudentGenderChart::class,
+            \App\Filament\Widgets\SchoolPtkChart::class,
+            \App\Filament\Widgets\SchoolKualifikasiPtkChart::class,
         ];
     }
 

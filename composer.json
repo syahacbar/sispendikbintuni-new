@@ -11,6 +11,7 @@
         "filament/filament": "3.3",
         "filament/support": "*",
         "laravel/framework": "^11.0",
+        "laravel/socialite": "^5.24",
         "laravel/tinker": "^2.9",
         "maatwebsite/excel": "^3.1",
         "staudenmeir/eloquent-has-many-deep": "^1.20",

@@ -25,7 +25,7 @@ Route::get('/informasi/pengumuman/{slug}', [InformasiController::class, 'show_pe
 Route::get('/informasi/kegiatan', [InformasiController::class, 'kegiatan']);
 Route::get('/informasi/kegiatan/{slug}', [InformasiController::class, 'show_kegiatan'])->name('frontend.kegiatan.show_kegiatan');
 Route::get('/get-kegiatan-by-date', [InformasiController::class, 'getByDate']);
-Route::get('/siswa', [SiswaController::class, 'index']);
+// Route::get('/siswa', [SiswaController::class, 'index']); // TODO: Create SiswaController
 Route::get('/peta-sebaran', [SebaranController::class, 'index']);
 Route::get('/kalender-pendidikan', [KalenderController::class, 'index']);
 Route::get('/buat-pengaduan', [PengaduanController::class, 'index'])->name('pengaduan.index');
@@ -38,4 +38,14 @@ Route::get('/data-pendidikan/sekolah/{npsn}', [DataPendidikanController::class, 
     ->name('pendidikan.sekolah.detail');
 
 
-// Route::get('/direktori', [DirektoriController::class, 'index']);
+// Google OAuth Routes
+Route::get('/paneladmin/auth/google', [App\Http\Controllers\Auth\GoogleAuthController::class, 'redirectToGoogle'])
+    ->name('auth.google');
+Route::get('/paneladmin/auth/google/callback', [App\Http\Controllers\Auth\GoogleAuthController::class, 'handleGoogleCallback'])
+    ->name('auth.google.callback');
+
+// School Selection for Google OAuth Users
+Route::middleware(['web', 'auth'])->group(function () {
+    Route::get('/paneladmin/auth/select-school', \App\Filament\Paneladmin\Pages\Auth\SelectSchool::class)
+        ->name('auth.select-school');
+});

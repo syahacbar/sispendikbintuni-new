@@ -1,7 +1,6 @@
 <?php
 
-
-namespace App\Filament\Paneladmin\Pages;
+namespace App\Filament\Paneladmin\Pages\Auth;
 
 use App\Models\MstSekolah;
 use Filament\Forms\Components\Select;
@@ -81,6 +80,19 @@ class Register extends BaseRegister
         // 🔐 Assign role Filament Shield
         $user->assignRole('admin_sekolah');
 
+        // ✅ Auto-verify email jika email verification dinonaktifkan
+        if (!\App\Models\SysSetting::getValue('email_verification_enabled', true)) {
+            $user->markEmailAsVerified();
+        }
+
         return $user;
+    }
+
+    /**
+     * Custom view untuk registration page
+     */
+    public function getView(): string
+    {
+        return 'filament.pages.auth.register';
     }
 }

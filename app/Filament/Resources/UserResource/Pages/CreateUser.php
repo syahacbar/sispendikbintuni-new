@@ -11,6 +11,14 @@ class CreateUser extends CreateRecord
 {
     protected static string $resource = UserResource::class;
 
+    protected static bool $canCreateAnother = false;
+
+
+    public function getHeading(): string
+    {
+        return 'Tambah Pengguna';
+    }
+
     protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('index');

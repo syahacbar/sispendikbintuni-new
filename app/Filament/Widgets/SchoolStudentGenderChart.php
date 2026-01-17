@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class SchoolStudentGenderChart extends ChartWidget
 {
-    protected static ?string $heading = 'Komposisi Siswa Laki-laki vs Perempuan';
+    protected static ?string $heading = 'Grafik Gender Siswa';
     protected static ?int $sort = 3;
     protected static ?string $maxHeight = '300px';
 

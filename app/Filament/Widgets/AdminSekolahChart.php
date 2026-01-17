@@ -8,11 +8,11 @@ use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Facades\DB;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 
-class SekolahChart extends ChartWidget
+class AdminSekolahChart extends ChartWidget
 {
     // use HasPageShield;
 
-    protected static ?string $heading = 'Perbandingan Sekolah per Jenjang';
+    protected static ?string $heading = 'Grafik Sekolah';
     protected static ?int $sort = 2;
 
     protected function getType(): string

@@ -10,6 +10,8 @@ class CreateMstRombel extends CreateRecord
 {
     protected static string $resource = MstRombelResource::class;
 
+    protected static bool $canCreateAnother = false;
+
 
     public function getHeading(): string
     {

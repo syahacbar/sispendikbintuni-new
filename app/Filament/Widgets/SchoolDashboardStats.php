@@ -21,7 +21,7 @@ use App\Models\RombonganBelajar;
 use App\Models\MstSarprasSekolah;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 
-class DashSekolahCountData extends Widget
+class SchoolDashboardStats extends Widget
 {
     // use HasPageShield;
 

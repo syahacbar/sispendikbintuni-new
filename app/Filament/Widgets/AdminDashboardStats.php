@@ -21,7 +21,7 @@ use App\Models\RombonganBelajar;
 use App\Models\MstSarprasSekolah;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 
-class CustomDashboardStats extends Widget
+class AdminDashboardStats extends Widget
 {
     // use HasPageShield;
 

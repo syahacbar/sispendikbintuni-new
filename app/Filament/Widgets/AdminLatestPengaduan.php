@@ -10,11 +10,11 @@ use Illuminate\Database\Eloquent\Builder;
 use Filament\Widgets\TableWidget as BaseWidget;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 
-class LatestPengaduan extends BaseWidget
+class AdminLatestPengaduan extends BaseWidget
 {
     // use HasPageShield;
 
-    protected static ?string $heading = '5 Pengaduan Terbaru';
+    protected static ?string $heading = 'Pengaduan Terbaru';
     protected static ?int $sort = 4;
 
     protected function getTableQuery(): Builder
@@ -45,7 +45,7 @@ class LatestPengaduan extends BaseWidget
         ];
     }
 
-    public function getColumnSpan(): int | string | array
+    public function getColumnSpan(): int|string|array
     {
         return 'full';
     }

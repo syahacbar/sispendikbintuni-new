@@ -23,7 +23,12 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 
 use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
-use App\Filament\Paneladmin\Pages\Register;
+
+// Auth Pages
+use App\Filament\Paneladmin\Pages\Auth\Login;
+use App\Filament\Paneladmin\Pages\Auth\Register;
+use App\Filament\Paneladmin\Pages\Auth\RequestPasswordReset;
+use App\Filament\Paneladmin\Pages\Auth\EditProfile;
 
 
 class PaneladminPanelProvider extends PanelProvider
@@ -36,19 +41,23 @@ class PaneladminPanelProvider extends PanelProvider
             ->darkMode(false)
             ->path('paneladmin')
             ->brandName('Sistem Perencanaan Terintegrasi')
-            ->login()
+            ->login(Login::class)
             ->registration(Register::class)
-            ->passwordReset()
+            ->passwordReset(RequestPasswordReset::class)
             ->emailVerification()
             ->databaseNotifications()
-            // ->profile()
-            ->profile(isSimple: false)
+            // ->profile(EditProfile::class)  // Disabled - using custom MyProfile page
+            // ->profile(isSimple: false)  // Disabled - using custom MyProfile page instead
             // ->breadcrumbs(false)
             ->font('Segoe UI')
             ->colors([
                 'primary' => Color::hex('#0093dd'),
             ])
             ->userMenuItems([
+                'profile' => MenuItem::make()
+                    ->label('Profil Saya')
+                    ->url(fn(): string => \App\Filament\Paneladmin\Pages\MyProfile::getUrl())
+                    ->icon('heroicon-o-user-circle'),
                 MenuItem::make()
                     ->label('Kunjungi Web')
                     ->url('/')
@@ -69,6 +78,9 @@ class PaneladminPanelProvider extends PanelProvider
 
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
+            ->pages([
+                \App\Filament\Paneladmin\Pages\MyProfile::class,
+            ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,

@@ -8,11 +8,11 @@ use Filament\Widgets\TableWidget as BaseWidget;
 use Illuminate\Database\Eloquent\Builder;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 
-class LatestUsers extends BaseWidget
+class AdminLatestUsers extends BaseWidget
 {
     // use HasPageShield;
 
-    protected static ?string $heading = '5 Pengguna Terbaru';
+    protected static ?string $heading = 'Pengguna Terbaru';
     protected static ?int $sort = 5;
 
     protected function getTableQuery(): Builder

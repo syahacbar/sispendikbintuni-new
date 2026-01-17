@@ -12,13 +12,15 @@ class CreateRole extends CreateRecord
 {
     protected static string $resource = RoleResource::class;
 
+    protected static bool $canCreateAnother = false;
+
     public Collection $permissions;
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $this->permissions = collect($data)
             ->filter(function ($permission, $key) {
-                return ! in_array($key, ['name', 'guard_name', 'select_all', Utils::getTenantModelForeignKey()]);
+                return !in_array($key, ['name', 'guard_name', 'select_all', Utils::getTenantModelForeignKey()]);
             })
             ->values()
             ->flatten()

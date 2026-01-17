@@ -75,6 +75,15 @@ class MstRombelResource extends Resource
     {
         return $form
             ->schema([
+                Select::make('sekolah_id')
+                    ->label('Sekolah')
+                    ->options(MstSekolah::all()->pluck('nama', 'id'))
+                    ->searchable()
+                    ->preload()
+                    ->required()
+                    ->live()
+                    ->visible(fn() => !auth()->user()->hasRole('admin_sekolah')),
+
                 Select::make('kurikulum_id')
                     ->label('Kurikulum')
                     ->relationship('kurikulum', 'nama')
@@ -102,11 +111,21 @@ class MstRombelResource extends Resource
                     ->relationship(
                         'waliKelas',
                         'nama',
-                        fn($query) => $query
+                        fn($query, Forms\Get $get) => $query
                             ->where('status_keaktifan', 'Aktif')
-                            ->where(
-                                'tempat_tugas',
-                                auth()->user()->sekolah->npsn
+                            ->when(
+                                auth()->user()->hasRole('admin_sekolah'),
+                                fn($q) => $q->where('tempat_tugas', auth()->user()->sekolah->npsn)
+                            )
+                            ->when(
+                                !auth()->user()->hasRole('admin_sekolah') && $get('sekolah_id'),
+                                function ($q) use ($get) {
+                                    $sekolah = MstSekolah::find($get('sekolah_id'));
+                                    if ($sekolah) {
+                                        return $q->where('tempat_tugas', $sekolah->npsn);
+                                    }
+                                    return $q;
+                                }
                             )
                     )
                     ->searchable()

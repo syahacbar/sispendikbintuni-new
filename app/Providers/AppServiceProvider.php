@@ -27,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Livewire::component('filament.livewire.database-notifications', DatabaseNotifications::class);
+        Livewire::component('app.filament.paneladmin.pages.auth.select-school', \App\Filament\Paneladmin\Pages\Auth\SelectSchool::class);
 
         LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
             $switch
@@ -34,8 +35,43 @@ class AppServiceProvider extends ServiceProvider
         });
 
         View::composer('*', function ($view) {
-            $pengaturan = SysSetting::getAllAsArray();
-            $view->with('pengaturan', $pengaturan);
+            try {
+                if (\Illuminate\Support\Facades\Schema::hasTable('sys_settings')) {
+                    $pengaturan = SysSetting::getAllAsArray();
+                    $view->with('pengaturan', $pengaturan);
+                }
+            } catch (\Exception $e) {
+                // Silently fail during migration
+            }
         });
+
+        // Configure Google OAuth from database settings
+        $this->configureGoogleOAuth();
+    }
+
+    /**
+     * Configure Google OAuth dynamically from database
+     */
+    protected function configureGoogleOAuth(): void
+    {
+        try {
+            // Check if table exists before querying (prevents migration errors)
+            if (!\Illuminate\Support\Facades\Schema::hasTable('sys_settings')) {
+                return;
+            }
+
+            $clientId = SysSetting::getValue('google_client_id');
+            $clientSecret = SysSetting::getValue('google_client_secret');
+
+            if ($clientId && $clientSecret) {
+                config([
+                    'services.google.client_id' => $clientId,
+                    'services.google.client_secret' => $clientSecret,
+                    'services.google.redirect' => url('/paneladmin/auth/google/callback'),
+                ]);
+            }
+        } catch (\Exception $e) {
+            // Silently fail if database not ready (e.g., during migration)
+        }
     }
 }

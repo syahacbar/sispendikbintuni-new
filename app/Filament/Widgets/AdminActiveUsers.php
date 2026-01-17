@@ -10,12 +10,12 @@ use Filament\Widgets\TableWidget as BaseWidget;
 use Illuminate\Database\Eloquent\Builder;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 
-class ActiveUsers extends BaseWidget
+class AdminActiveUsers extends BaseWidget
 {
 
     // use HasPageShield;
 
-    protected static ?string $heading = 'Pengguna Aktif Saat Ini';
+    protected static ?string $heading = 'Pengguna Aktif';
     protected static ?int $sort = 6;
     protected int $pollInterval = 10;
 

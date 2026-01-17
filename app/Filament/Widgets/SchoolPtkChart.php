@@ -6,9 +6,9 @@ use App\Models\MstGtk;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Facades\DB;
 
-class KualifikasiPtkChart extends ChartWidget
+class SchoolPtkChart extends ChartWidget
 {
-    protected static ?string $heading = 'Grafik GTK by Status Kepegawaian';
+    protected static ?string $heading = 'Grafik GTK';
     protected static ?int $sort = 2;
 
     protected function getType(): string
@@ -28,15 +28,15 @@ class KualifikasiPtkChart extends ChartWidget
         }
 
         $data = $query
-            ->select('pend_terakhir', DB::raw('count(*) as total'))
-            ->groupBy('pend_terakhir')
-            ->orderBy('pend_terakhir')
+            ->select('status_kepegawaian', DB::raw('count(*) as total'))
+            ->groupBy('status_kepegawaian')
+            ->orderBy('status_kepegawaian')
             ->get();
 
         return [
             'datasets' => [
                 [
-                    'label' => 'Grafik Pendidikan GTK',
+                    'label' => 'Jumlah GTK',
                     'data' => $data->pluck('total'),
                     'backgroundColor' => [
                         '#3b82f6',
@@ -46,7 +46,7 @@ class KualifikasiPtkChart extends ChartWidget
                     ],
                 ],
             ],
-            'labels' => $data->pluck('pend_terakhir'),
+            'labels' => $data->pluck('status_kepegawaian'),
         ];
     }
 }

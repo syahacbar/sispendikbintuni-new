@@ -16,6 +16,10 @@ use Filament\Forms\Components\DateTimePicker;
 use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\UserResource\RelationManagers;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
 
 class UserResource extends Resource
 {
@@ -80,12 +84,24 @@ class UserResource extends Resource
                     ->sortable(),
                 // ->toggleable(isToggledHiddenByDefault: true),
             ])
+
+            ->openRecordUrlInNewTab(false)
+            ->recordUrl(null)
+            ->recordAction(null)
+
             ->filters([
                 //
             ])
+
+            // Action group untuk setiap baris tabel
             ->actions([
-                Tables\Actions\EditAction::make(),
+                ActionGroup::make([
+                    ViewAction::make(),   // Lihat detail
+                    EditAction::make(),   // Edit data
+                    DeleteAction::make(), // Hapus data
+                ]),
             ])
+
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
