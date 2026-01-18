@@ -63,11 +63,29 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         return $this->hasOne(MstSekolah::class, 'users_id', 'id');
     }
 
+    /**
+     * Send the email verification notification (override untuk bahasa Indonesia)
+     */
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new \App\Notifications\VerifyEmailNotification);
+    }
+
     public function canAccessPanel(Panel $panel): bool
     {
         // ⚠️ PENTING: Email verification dihandle oleh middleware EnsureEmailIsVerified
         // Jangan check hasVerifiedEmail() di sini karena akan return 403 sebelum middleware berfungsi
         // Middleware akan redirect user ke halaman verifikasi jika belum verified
         return $this->hasRole(['super_admin', 'admin_dinas', 'admin_sekolah']);
+    }
+
+    public function canImpersonate(): bool
+    {
+        return $this->hasRole(['super_admin', 'admin_dinas']);
+    }
+
+    public function canBeImpersonated(): bool
+    {
+        return $this->hasRole('admin_sekolah');
     }
 }

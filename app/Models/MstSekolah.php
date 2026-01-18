@@ -107,6 +107,11 @@ class MstSekolah extends Model
         )->withPivot('jumlah_saat_ini', 'jumlah_ideal', 'keterangan');
     }
 
+    public function invitationTokens()
+    {
+        return $this->hasMany(SchoolInvitationToken::class, 'npsn', 'npsn');
+    }
+
     public function mstSarprasSekolah()
     {
         return $this->hasMany(MstSarprasSekolah::class, 'sekolah_id');
@@ -141,13 +146,13 @@ class MstSekolah extends Model
     {
         return $this->mstSarprasSekolah->map(function ($item) {
             $kondisi = $item->kondisiSarpras->first(); // ambil 1 data kondisi (jika hanya 1)
-            return (object)[
-                'jenisSarpras'   => $item->jenisSarpras,
+            return (object) [
+                'jenisSarpras' => $item->jenisSarpras,
                 'jumlah_saat_ini' => $kondisi->jumlah ?? 0,
-                'jumlah_ideal'    => $item->jumlah_ideal ?? 0,
-                'kondisi'         => $kondisi->kondisi ?? '-',
-                'kurang_lebih'    => ($kondisi->jumlah ?? 0) - ($item->jumlah_ideal ?? 0),
-                'keterangan'      => $kondisi->keterangan ?? '-',
+                'jumlah_ideal' => $item->jumlah_ideal ?? 0,
+                'kondisi' => $kondisi->kondisi ?? '-',
+                'kurang_lebih' => ($kondisi->jumlah ?? 0) - ($item->jumlah_ideal ?? 0),
+                'keterangan' => $kondisi->keterangan ?? '-',
             ];
         });
     }

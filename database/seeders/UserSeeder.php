@@ -17,6 +17,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Super Admin',
                 'password' => Hash::make('password'),
+                'email_verified_at' => now(),
             ]
         );
         $super->assignRole('super_admin');
@@ -27,6 +28,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Admin Dinas',
                 'password' => Hash::make('password'),
+                'email_verified_at' => now(),
             ]
         );
         $dinas->assignRole('admin_dinas');
@@ -56,6 +58,7 @@ class UserSeeder extends Seeder
                     [
                         'name' => 'Admin Sekolah ' . $sekolah->nama,
                         'password' => Hash::make('password'),
+                        'email_verified_at' => now(),
                     ]
                 );
 

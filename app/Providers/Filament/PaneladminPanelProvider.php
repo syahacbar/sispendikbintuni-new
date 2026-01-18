@@ -44,7 +44,7 @@ class PaneladminPanelProvider extends PanelProvider
             ->login(Login::class)
             ->registration(Register::class)
             ->passwordReset(RequestPasswordReset::class)
-            ->emailVerification()
+            ->emailVerification(\App\Filament\Paneladmin\Pages\Auth\EmailVerificationPrompt::class)
             ->databaseNotifications()
             // ->profile(EditProfile::class)  // Disabled - using custom MyProfile page
             // ->profile(isSimple: false)  // Disabled - using custom MyProfile page instead

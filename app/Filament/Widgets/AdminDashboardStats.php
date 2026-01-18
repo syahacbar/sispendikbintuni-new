@@ -88,72 +88,74 @@ class AdminDashboardStats extends Widget
 
     public function getViewData(): array
     {
-        $totalSekolah = MstSekolah::count();
-        $totalPesertaDidik = MstPesertaDidik::count();
-        $totalGtk = MstGtk::count();
-        $totalUsers = User::count();
-        $activeUsers = User::role(['super_admin', 'admin_dinas', 'admin_sekolah'])
-            ->whereIn('id', function ($query) {
-                $query->select('user_id')->from('sessions')->whereNotNull('user_id');
-            })->count();
+        return \Illuminate\Support\Facades\Cache::remember('admin_dashboard_stats', 60 * 60, function () {
+            $totalSekolah = MstSekolah::count();
+            $totalPesertaDidik = MstPesertaDidik::count();
+            $totalGtk = MstGtk::count();
+            $totalUsers = User::count();
+            $activeUsers = User::role(['super_admin', 'admin_dinas', 'admin_sekolah'])
+                ->whereIn('id', function ($query) {
+                    $query->select('user_id')->from('sessions')->whereNotNull('user_id');
+                })->count();
 
-        return [
-            'cards' => [
-                [
-                    'title' => 'Total Sekolah',
-                    'value' => $totalSekolah,
-                    'icon' => 'heroicon-o-academic-cap',
-                    'color' => 'primary',
+            return [
+                'cards' => [
+                    [
+                        'title' => 'Total Sekolah',
+                        'value' => $totalSekolah,
+                        'icon' => 'heroicon-o-academic-cap',
+                        'color' => 'primary',
+                    ],
+                    [
+                        'title' => 'Total Peserta Didik',
+                        'value' => $totalPesertaDidik,
+                        'icon' => 'heroicon-o-users',
+                        'color' => 'success',
+                    ],
+                    [
+                        'title' => 'Total GTK',
+                        'value' => $totalGtk,
+                        'icon' => 'heroicon-o-user-group',
+                        'color' => 'warning',
+                    ],
+                    [
+                        'title' => 'Total Users',
+                        'value' => $totalUsers,
+                        'icon' => 'heroicon-o-user',
+                        'color' => 'info',
+                    ],
+                    [
+                        'title' => 'Active Users',
+                        'value' => $activeUsers,
+                        'icon' => 'heroicon-o-signal',
+                        'color' => 'success',
+                    ],
+                    [
+                        'title' => 'Total Pengaduan',
+                        'value' => ExtPengaduan::count(),
+                        'icon' => 'heroicon-o-chat-alt-2',
+                        'color' => 'danger',
+                    ],
+                    [
+                        'title' => 'Total Rombel',
+                        'value' => MstRombel::count(),
+                        'icon' => 'heroicon-o-collection',
+                        'color' => 'success',
+                    ],
+                    [
+                        'title' => 'Total Sarana',
+                        'value' => RefSarpras::count(),
+                        'icon' => 'heroicon-o-archive',
+                        'color' => 'primary',
+                    ],
+                    [
+                        'title' => 'Total Prasarana',
+                        'value' => MstSarprasSekolah::count(),
+                        'icon' => 'heroicon-o-office-building',
+                        'color' => 'warning',
+                    ],
                 ],
-                [
-                    'title' => 'Total Peserta Didik',
-                    'value' => $totalPesertaDidik,
-                    'icon' => 'heroicon-o-users',
-                    'color' => 'success',
-                ],
-                [
-                    'title' => 'Total GTK',
-                    'value' => $totalGtk,
-                    'icon' => 'heroicon-o-user-group',
-                    'color' => 'warning',
-                ],
-                [
-                    'title' => 'Total Users',
-                    'value' => $totalUsers,
-                    'icon' => 'heroicon-o-user',
-                    'color' => 'info',
-                ],
-                [
-                    'title' => 'Active Users',
-                    'value' => $activeUsers,
-                    'icon' => 'heroicon-o-signal',
-                    'color' => 'success',
-                ],
-                [
-                    'title' => 'Total Pengaduan',
-                    'value' => ExtPengaduan::count(),
-                    'icon' => 'heroicon-o-chat-alt-2',
-                    'color' => 'danger',
-                ],
-                [
-                    'title' => 'Total Rombel',
-                    'value' => MstRombel::count(),
-                    'icon' => 'heroicon-o-collection',
-                    'color' => 'success',
-                ],
-                [
-                    'title' => 'Total Sarana',
-                    'value' => RefSarpras::count(),
-                    'icon' => 'heroicon-o-archive',
-                    'color' => 'primary',
-                ],
-                [
-                    'title' => 'Total Prasarana',
-                    'value' => MstSarprasSekolah::count(),
-                    'icon' => 'heroicon-o-office-building',
-                    'color' => 'warning',
-                ],
-            ],
-        ];
+            ];
+        });
     }
 }

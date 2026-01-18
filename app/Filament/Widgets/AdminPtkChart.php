@@ -10,6 +10,7 @@ class AdminPtkChart extends ChartWidget
 {
     protected static ?string $heading = 'Grafik GTK';
     protected static ?int $sort = 2;
+    protected int|string|array $columnSpan = 'full';
 
     protected function getType(): string
     {
@@ -18,35 +19,22 @@ class AdminPtkChart extends ChartWidget
 
     protected function getData(): array
     {
-        $user = auth()->user();
-
-        $query = MstGtk::query();
-
-        // Filter hanya sekolah user login
-        if ($user->hasRole('admin_sekolah') && $user->sekolah) {
-            $query->where('tempat_tugas', $user->sekolah->npsn);
-        }
-
-        $data = $query
-            ->select('status_kepegawaian', DB::raw('count(*) as total'))
-            ->groupBy('status_kepegawaian')
-            ->orderBy('status_kepegawaian')
+        $data = DB::table('mst_gtk')
+            ->select('mst_sekolah.nama', DB::raw('count(*) as total'))
+            ->join('mst_sekolah', 'mst_gtk.tempat_tugas', '=', 'mst_sekolah.npsn')
+            ->groupBy('mst_sekolah.nama')
+            ->orderBy('total', 'desc')
             ->get();
 
         return [
             'datasets' => [
                 [
-                    'label' => 'Jumlah GTK',
+                    'label' => 'Jumlah GTK per Sekolah',
                     'data' => $data->pluck('total'),
-                    'backgroundColor' => [
-                        '#3b82f6',
-                        '#10b981',
-                        '#f59e0b',
-                        '#ef4444',
-                    ],
+                    'backgroundColor' => '#10b981',
                 ],
             ],
-            'labels' => $data->pluck('status_kepegawaian'),
+            'labels' => $data->pluck('nama'),
         ];
     }
 }

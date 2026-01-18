@@ -7,6 +7,29 @@
 
     {{ \Filament\Support\Facades\FilamentView::renderHook('panels::auth.login.form.before') }}
 
+    {{-- Debug: Cek nilai loginError --}}
+    @if ($loginError)
+        <div
+            style="margin-bottom: 1rem; padding: 1rem; border-radius: 0.5rem; background-color: #f8d7da; border: 1px solid #f5c6cb;">
+            <div style="display: flex; align-items: flex-start; gap: 0.75rem;">
+                <svg style="width: 1.25rem; height: 1.25rem; color: #721c24; flex-shrink: 0; margin-top: 0.125rem;"
+                    fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                        clip-rule="evenodd" />
+                </svg>
+                <div style="flex: 1;">
+                    <p style="font-size: 0.875rem; font-weight: normal; color: #721c24; margin: 0;">
+                        {{ $loginError }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    @else
+        {{-- Debug: Alert tidak muncul karena loginError kosong --}}
+        <!-- loginError is empty -->
+    @endif
+
     <x-filament-panels::form wire:submit="authenticate">
         {{ $this->form }}
 
@@ -60,4 +83,16 @@
             </a>
         </div>
     @endif
+
+    {{-- Back to Homepage Link --}}
+    <div class="mt-4 text-center">
+        <a href="{{ url('/') }}"
+            class="text-sm text-gray-600 hover:text-gray-800 transition-colors inline-flex items-center gap-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            <span>Kembali ke Beranda</span>
+        </a>
+    </div>
 </x-filament-panels::page.simple>

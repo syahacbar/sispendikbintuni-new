@@ -37,7 +37,9 @@ class AppServiceProvider extends ServiceProvider
         View::composer('*', function ($view) {
             try {
                 if (\Illuminate\Support\Facades\Schema::hasTable('sys_settings')) {
-                    $pengaturan = SysSetting::getAllAsArray();
+                    $pengaturan = \Illuminate\Support\Facades\Cache::remember('sys_settings_all', 60 * 60, function () {
+                        return SysSetting::getAllAsArray();
+                    });
                     $view->with('pengaturan', $pengaturan);
                 }
             } catch (\Exception $e) {

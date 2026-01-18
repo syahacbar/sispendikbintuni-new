@@ -2,7 +2,10 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "keywords": [
+        "laravel",
+        "framework"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.2",
@@ -15,9 +18,11 @@
         "laravel/tinker": "^2.9",
         "maatwebsite/excel": "^3.1",
         "staudenmeir/eloquent-has-many-deep": "^1.20",
+        "stechstudio/filament-impersonate": "*",
         "vermaysha/laravel-wilayah-indonesia": "^2.2"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.16",
         "fakerphp/faker": "^1.23",
         "laravel/pint": "^1.24",
         "laravel/sail": "^1.26",
@@ -36,7 +41,6 @@
             "app/Helpers/PengaturanHelper.php"
         ]
     },
-
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"

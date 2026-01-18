@@ -12,6 +12,7 @@ use Filament\Forms\Contracts\HasForms;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Filament\Notifications\Notification;
+use Illuminate\Validation\Rules\Password;
 
 class MyProfile extends Page implements HasForms
 {
@@ -78,19 +79,58 @@ class MyProfile extends Page implements HasForms
                     ->schema([
                         TextInput::make('current_password')
                             ->label('Kata sandi saat ini')
+                            ->placeholder('Masukkan kata sandi saat ini')
                             ->password()
-                            ->revealable(),
+                            ->revealable()
+                            ->requiredWith('password')
+                            ->rules([
+                                function () {
+                                    return function (string $attribute, $value, \Closure $fail) {
+                                        if (!empty($value) && !Hash::check($value, Auth::user()->password)) {
+                                            $fail('Kata sandi saat ini tidak sesuai.');
+                                        }
+                                    };
+                                },
+                            ])
+                            ->validationMessages([
+                                'required_with' => 'Kata sandi saat ini wajib diisi jika ingin mengubah kata sandi.',
+                            ])
+                            ->dehydrated(false),
 
                         TextInput::make('password')
                             ->label('Kata sandi baru')
+                            ->placeholder('Minimal 8 karakter, kombinasi huruf besar, kecil, angka & simbol')
                             ->password()
-                            ->revealable(),
+                            ->revealable()
+                            ->requiredWith('current_password')
+                            ->rule(
+                                Password::default()
+                                    ->min(8)
+                                    ->mixedCase()           // Wajib huruf besar & kecil
+                                    ->numbers()             // Wajib ada angka
+                                    ->symbols()             // Wajib ada simbol
+                                    ->uncompromised()       // Check against compromised passwords
+                            )
+                            ->same('password_confirmation')
+                            ->validationMessages([
+                                'required_with' => 'Kata sandi baru wajib diisi jika ingin mengubah kata sandi.',
+                                'min' => 'Kata sandi minimal :min karakter.',
+                                'same' => 'Kata sandi baru dan konfirmasi kata sandi harus sama.',
+                            ])
+                            ->validationAttribute('kata sandi')
+                            ->dehydrated(false),
 
                         TextInput::make('password_confirmation')
                             ->label('Konfirmasi kata sandi baru')
+                            ->placeholder('Ulangi kata sandi baru Anda')
                             ->password()
                             ->revealable()
-                            ->same('password'),
+                            ->requiredWith('password')
+                            ->validationMessages([
+                                'required_with' => 'Konfirmasi kata sandi wajib diisi.',
+                            ])
+                            ->validationAttribute('konfirmasi kata sandi')
+                            ->dehydrated(false),
                     ])
                     ->columns(1),
             ])
@@ -102,24 +142,13 @@ class MyProfile extends Page implements HasForms
         $data = $this->form->getState();
         $user = Auth::user();
 
-        // Update name and email
+        // Update name
         $user->update([
             'name' => $data['name'],
-            'email' => $data['email'],
         ]);
 
-        // Update password if provided
-        if (!empty($data['current_password']) && !empty($data['password'])) {
-            // Validasi password saat ini
-            if (!Hash::check($data['current_password'], $user->password)) {
-                Notification::make()
-                    ->title('Kata sandi saat ini tidak sesuai')
-                    ->danger()
-                    ->send();
-                return;
-            }
-
-            // Update password baru
+        // Update password if provided (validation already handled by form)
+        if (!empty($data['password'])) {
             $user->update([
                 'password' => Hash::make($data['password']),
             ]);

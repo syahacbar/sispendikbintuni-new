@@ -3,7 +3,9 @@
 namespace App\Filament\Paneladmin\Pages\Auth;
 
 use App\Models\MstSekolah;
-use Filament\Forms\Components\Select;
+use App\Models\SchoolInvitationToken;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Actions\Action as FormAction;
 use Filament\Forms\Form;
 use Filament\Pages\SimplePage;
 use Filament\Actions\Action;
@@ -14,9 +16,13 @@ class SelectSchool extends SimplePage
 {
     protected static string $view = 'filament.pages.auth.select-school';
 
-    protected static ?string $title = 'Pilih Sekolah';
+    protected static ?string $title = 'Verifikasi Token Sekolah';
 
     public ?array $data = [];
+
+    public ?string $verifiedSchoolName = null;
+    public ?string $verifiedNpsn = null;
+    public ?string $tokenStatus = 'default'; // 'default', 'error', 'success'
 
     /**
      * Mount - Check if user already has school
@@ -46,20 +52,122 @@ class SelectSchool extends SimplePage
     {
         return $form
             ->schema([
-                Select::make('sekolah_id')
-                    ->label('Pilih Sekolah Anda')
-                    ->helperText('Pilih sekolah yang Anda kelola. Sekolah yang sudah memiliki admin tidak akan muncul dalam daftar.')
-                    ->options(
-                        MstSekolah::query()
-                            ->whereNull('users_id') // Only schools without admin
-                            ->orderBy('nama')
-                            ->pluck('nama', 'id')
-                    )
-                    ->searchable()
-                    ->preload()
+                TextInput::make('invitation_token')
+                    ->label('Token Undangan Sekolah')
+                    ->placeholder('Masukkan token undangan yang Anda terima')
+                    ->helperText('Token ini dikirimkan oleh admin sekolah melalui email.')
                     ->required()
-                    ->native(false)
-                    ->placeholder('-- Pilih Sekolah --'),
+                    ->maxLength(32)
+                    ->suffixAction(
+                        FormAction::make('verify_token')
+                            ->icon(function () {
+                                return match ($this->tokenStatus) {
+                                    'success' => 'heroicon-o-check-circle',
+                                    'error' => 'heroicon-o-x-circle',
+                                    default => 'heroicon-o-shield-check',
+                                };
+                            })
+                            ->iconButton()
+                            ->color(function () {
+                                return match ($this->tokenStatus) {
+                                    'success' => 'success',
+                                    'error' => 'danger',
+                                    default => 'warning',
+                                };
+                            })
+                            ->action(function ($state, $set) {
+                                if (empty($state)) {
+                                    $this->tokenStatus = 'error';
+
+                                    Notification::make()
+                                        ->title('Token Kosong')
+                                        ->body('Silakan masukkan token terlebih dahulu.')
+                                        ->warning()
+                                        ->send();
+                                    return;
+                                }
+
+                                $tokenString = strtoupper($state);
+                                $token = SchoolInvitationToken::where('token', $tokenString)->first();
+
+                                if (!$token) {
+                                    $this->verifiedSchoolName = null;
+                                    $this->verifiedNpsn = null;
+                                    $this->tokenStatus = 'error';
+
+                                    Notification::make()
+                                        ->title('Token Tidak Valid')
+                                        ->body('Token yang Anda masukkan tidak ditemukan.')
+                                        ->danger()
+                                        ->send();
+                                    return;
+                                }
+
+                                if (!$token->isValid()) {
+                                    $this->verifiedSchoolName = null;
+                                    $this->verifiedNpsn = null;
+                                    $this->tokenStatus = 'error';
+
+                                    $message = $token->used_at
+                                        ? 'Token sudah pernah digunakan.'
+                                        : 'Token sudah kadaluarsa.';
+
+                                    Notification::make()
+                                        ->title('Token Tidak Valid')
+                                        ->body($message)
+                                        ->danger()
+                                        ->send();
+                                    return;
+                                }
+
+                                // Check email match if token is email-specific
+                                $userEmail = Auth::user()->email;
+                                if (!$token->isEmailMatch($userEmail)) {
+                                    $this->verifiedSchoolName = null;
+                                    $this->verifiedNpsn = null;
+                                    $this->tokenStatus = 'error';
+
+                                    Notification::make()
+                                        ->title('Token Tidak Valid')
+                                        ->body('Token ini tidak dapat digunakan dengan email Anda.')
+                                        ->danger()
+                                        ->send();
+                                    return;
+                                }
+
+                                // Check if school still available
+                                $sekolah = $token->sekolah;
+                                if (!$sekolah || $sekolah->users_id !== null) {
+                                    $this->verifiedSchoolName = null;
+                                    $this->verifiedNpsn = null;
+                                    $this->tokenStatus = 'error';
+
+                                    Notification::make()
+                                        ->title('Sekolah Tidak Tersedia')
+                                        ->body('Sekolah ini sudah memiliki admin.')
+                                        ->danger()
+                                        ->send();
+                                    return;
+                                }
+
+                                // Token is valid! Save school info AND ensure token is saved
+                                $this->verifiedSchoolName = $sekolah->nama;
+                                $this->verifiedNpsn = $sekolah->npsn;
+                                $this->tokenStatus = 'success';
+
+                                // Force set the token value to ensure it's in form state
+                                $set('invitation_token', $tokenString);
+
+                                Notification::make()
+                                    ->title('Token Valid! ✅')
+                                    ->body("Anda akan terhubung ke: {$sekolah->nama}")
+                                    ->success()
+                                    ->duration(5000)
+                                    ->send();
+                            })
+                    )
+                    ->readOnly(fn() => $this->verifiedSchoolName !== null)
+                    ->dehydrated(true),
             ])
             ->statePath('data');
     }
@@ -70,23 +178,42 @@ class SelectSchool extends SimplePage
     public function submit(): void
     {
         $data = $this->form->getState();
-        $sekolahId = $data['sekolah_id'];
+
+        // Check if invitation_token exists in form data
+        if (!isset($data['invitation_token']) || empty($data['invitation_token'])) {
+            Notification::make()
+                ->title('Token Diperlukan')
+                ->body('Silakan masukkan dan verifikasi token terlebih dahulu.')
+                ->warning()
+                ->send();
+            return;
+        }
+
+        $tokenString = strtoupper($data['invitation_token']);
         $user = Auth::user();
 
-        // Double-check if school is still available (race condition protection)
-        $sekolah = MstSekolah::where('id', $sekolahId)
-            ->whereNull('users_id')
-            ->first();
+        // Re-validate token
+        $token = SchoolInvitationToken::where('token', $tokenString)->first();
 
-        if (!$sekolah) {
+        if (!$token || !$token->isValid()) {
             Notification::make()
-                ->title('Sekolah Tidak Tersedia')
-                ->body('Maaf, sekolah yang Anda pilih sudah diklaim oleh admin lain. Silakan pilih sekolah lain.')
+                ->title('Token Tidak Valid')
+                ->body('Silakan verifikasi token terlebih dahulu.')
                 ->danger()
                 ->send();
+            return;
+        }
 
-            // Refresh the form to show updated school list
-            $this->form->fill();
+        // Get school
+        $sekolah = $token->sekolah;
+
+        // Double-check if school is still available
+        if (!$sekolah || $sekolah->users_id !== null) {
+            Notification::make()
+                ->title('Sekolah Tidak Tersedia')
+                ->body('Sekolah sudah memiliki admin.')
+                ->danger()
+                ->send();
             return;
         }
 
@@ -94,6 +221,14 @@ class SelectSchool extends SimplePage
         $sekolah->update([
             'users_id' => $user->id,
         ]);
+
+        // Mark token as used
+        $token->markAsUsed($user->id);
+
+        // Assign role if not already assigned
+        if (!$user->hasRole('admin_sekolah')) {
+            $user->assignRole('admin_sekolah');
+        }
 
         Notification::make()
             ->title('Berhasil')
@@ -115,7 +250,8 @@ class SelectSchool extends SimplePage
                 ->label('Lanjutkan ke Dashboard')
                 ->submit('submit')
                 ->color('primary')
-                ->icon('heroicon-o-arrow-right'),
+                ->icon('heroicon-o-arrow-right')
+                ->disabled(fn() => $this->verifiedSchoolName === null),
         ];
     }
 

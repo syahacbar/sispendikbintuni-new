@@ -32,6 +32,7 @@ class SchoolDashboard extends Page
             \App\Filament\Widgets\SchoolDashboardStats::class,
             \App\Filament\Widgets\SchoolStudentPerRombelChart::class,
             \App\Filament\Widgets\SchoolStudentGenderChart::class,
+            \App\Filament\Widgets\SchoolOapChart::class,
             \App\Filament\Widgets\SchoolPtkChart::class,
             \App\Filament\Widgets\SchoolKualifikasiPtkChart::class,
         ];

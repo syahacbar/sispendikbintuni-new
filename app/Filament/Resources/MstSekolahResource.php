@@ -37,6 +37,20 @@ class MstSekolahResource extends Resource
         return 'Data Master';
     }
 
+    // Menentukan label navigasi berdasarkan role user
+    public static function getNavigationLabel(): string
+    {
+        $user = auth()->user();
+
+        // Admin sekolah melihat sebagai 'Profil Sekolah'
+        if ($user?->hasRole('admin_sekolah')) {
+            return 'Profil Sekolah';
+        }
+
+        // Selain admin sekolah melihat sebagai 'Data Sekolah'
+        return 'Data Sekolah';
+    }
+
     protected static ?string $navigationLabel = 'Data Sekolah';
     protected static ?string $pluralLabel = 'Sekolah';
     protected static ?string $slug = 'data-sekolah';
@@ -233,6 +247,28 @@ class MstSekolahResource extends Resource
                     ViewAction::make(),   // Lihat detail
                     EditAction::make(),   // Edit data
                     DeleteAction::make(), // Hapus data
+                    Tables\Actions\Action::make('impersonate')
+                        ->label('Impersonate')
+                        ->icon('heroicon-o-cursor-arrow-rays')
+                        ->action(function ($record) {
+                            if (!$record->user) {
+                                \Filament\Notifications\Notification::make()
+                                    ->title('Sekolah ini tidak memiliki user')
+                                    ->danger()
+                                    ->send();
+                                return;
+                            }
+
+                            session()->put('impersonate.back_to', MstSekolahResource::getUrl());
+
+                            app(\Lab404\Impersonate\Services\ImpersonateManager::class)->take(
+                                auth()->user(),
+                                $record->user
+                            );
+
+                            return redirect(filament()->getPanel('admin')->getUrl());
+                        })
+                        ->visible(fn($record) => auth()->user()->canImpersonate() && $record->user && $record->user->canBeImpersonated()),
                 ]),
             ])
             // Bulk actions untuk multiple selection

@@ -59,25 +59,25 @@ class SchoolDashboardStats extends Widget
         return [
             'cards' => [
                 [
-                    'title' => 'Peserta Didik Saya',
+                    'title' => 'Peserta Didik',
                     'value' => $totalPesertaDidik,
                     'icon' => 'heroicon-o-users',
                     'color' => 'success',
                 ],
                 [
-                    'title' => 'Guru & Tenaga Kependidikan',
+                    'title' => 'GTK',
                     'value' => $totalGtk,
                     'icon' => 'heroicon-o-user-group',
                     'color' => 'primary',
                 ],
                 [
-                    'title' => 'Rombongan Belajar',
+                    'title' => 'Rombel',
                     'value' => $totalRombel,
                     'icon' => 'heroicon-o-collection',
                     'color' => 'warning',
                 ],
                 [
-                    'title' => 'Sarana & Prasarana',
+                    'title' => 'Sarpras',
                     'value' => $totalSarpras,
                     'icon' => 'heroicon-o-office-building',
                     'color' => 'info',

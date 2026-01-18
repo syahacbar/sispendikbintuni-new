@@ -49,3 +49,21 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::get('/paneladmin/auth/select-school', \App\Filament\Paneladmin\Pages\Auth\SelectSchool::class)
         ->name('auth.select-school');
 });
+
+// Fix Filament Impersonate Leave Route
+Route::get('filament-impersonate/leave', function () {
+    if (!app(\Lab404\Impersonate\Services\ImpersonateManager::class)->isImpersonating()) {
+        return redirect('/');
+    }
+
+    app(\Lab404\Impersonate\Services\ImpersonateManager::class)->leave();
+
+    $backTo = session()->pull('impersonate.back_to');
+
+    // Default to Data Sekolah if session missing
+    $fallbackUrl = class_exists(\App\Filament\Resources\MstSekolahResource::class)
+        ? \App\Filament\Resources\MstSekolahResource::getUrl()
+        : filament()->getPanel('paneladmin')->getUrl();
+
+    return redirect($backTo ?? $fallbackUrl);
+})->name('filament-impersonate.leave')->middleware(config('filament-impersonate.leave_middleware', 'web'));

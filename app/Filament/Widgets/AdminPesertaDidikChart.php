@@ -24,24 +24,27 @@ class AdminPesertaDidikChart extends ChartWidget
 
     protected function getData(): array
     {
-        // Join ke ref_wilayah untuk ambil nama kecamatan
-        $data = DB::table('mst_peserta_didik')
-            ->select('ref_wilayah.nama', DB::raw('count(*) as total'))
-            ->join('ref_wilayah', 'mst_peserta_didik.kode_wilayah', '=', 'ref_wilayah.kode')
-            ->whereRaw("LENGTH(REPLACE(mst_peserta_didik.kode_wilayah, '.', '')) = 6") // hanya kecamatan
-            ->groupBy('ref_wilayah.nama')
-            ->orderBy('ref_wilayah.nama')
-            ->get();
+        return \Illuminate\Support\Facades\Cache::remember('admin_peserta_didik_chart', 60 * 60, function () {
+            // Join through rombel to school to group students by school
+            $data = DB::table('mst_peserta_didik')
+                ->select('mst_sekolah.nama', DB::raw('count(distinct mst_peserta_didik.id) as total'))
+                ->join('mst_anggota_rombel', 'mst_peserta_didik.id', '=', 'mst_anggota_rombel.peserta_didik_id')
+                ->join('mst_rombel', 'mst_anggota_rombel.rombel_id', '=', 'mst_rombel.id')
+                ->join('mst_sekolah', 'mst_rombel.sekolah_id', '=', 'mst_sekolah.id')
+                ->groupBy('mst_sekolah.nama')
+                ->orderBy('total', 'desc')
+                ->get();
 
-        return [
-            'datasets' => [
-                [
-                    'label' => 'Jumlah Peserta Didik',
-                    'data' => $data->pluck('total'),
-                    'backgroundColor' => '#3b82f6',
+            return [
+                'datasets' => [
+                    [
+                        'label' => 'Jumlah Peserta Didik per Sekolah',
+                        'data' => $data->pluck('total'),
+                        'backgroundColor' => '#3b82f6',
+                    ],
                 ],
-            ],
-            'labels' => $data->pluck('nama'),
-        ];
+                'labels' => $data->pluck('nama'),
+            ];
+        });
     }
 }
