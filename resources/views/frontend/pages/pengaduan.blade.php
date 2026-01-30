@@ -16,12 +16,6 @@
                 @csrf
                 <div class="row my-3">
                     <div class="col-md-12">
-                        @if (session('success'))
-                            <div class="alert alert-success d-flex flex-column gap-2">
-                                <div><strong>{{ session('success') }}</strong></div>
-                            </div>
-                        @endif
-
                     </div>
                     <div class="col-md-4">
                         <div class="mb-3">
@@ -71,6 +65,14 @@
                             <textarea class="form-control" id="isi" name="isi"></textarea>
                         </div>
                     </div>
+                    @if(isset($recaptcha_pengaduan_enabled) && $recaptcha_pengaduan_enabled)
+                        <div class="col-md-12 mb-3">
+                            <div class="g-recaptcha" data-sitekey="{{ $recaptcha_site_key }}"></div>
+                            @error('g-recaptcha-response')
+                                <div class="text-danger mt-1"><small>{{ $message }}</small></div>
+                            @enderror
+                        </div>
+                    @endif
                     <div class="col-md-12 d-flex gap-2">
                         <button type="submit" class="btn btn-primary" id="submit-btn" disabled>Kirim Pengaduan</button>
                         <button type="reset" class="btn btn-secondary d-none" id="reset-btn">Reset</button>
@@ -83,8 +85,12 @@
     <script src="https://cdn.tiny.cloud/1/2onuugfnc4zd46qg4zym8s946ezny033scq014mxt4usgs1q/tinymce/7/tinymce.min.js"
         referrerpolicy="origin"></script>
 
+    @if(isset($recaptcha_pengaduan_enabled) && $recaptcha_pengaduan_enabled)
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    @endif
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const form = document.querySelector('form');
             const submitBtn = document.getElementById('submit-btn');
             const resetBtn = document.getElementById('reset-btn');
@@ -136,8 +142,8 @@
                 toolbar: 'undo redo | bold italic underline | bullist numlist | preview', // tanpa link & image
                 branding: false,
                 forced_root_block: '', // opsional: untuk cegah <p> otomatis
-                setup: function(editor) {
-                    editor.on('drop', function(e) {
+                setup: function (editor) {
+                    editor.on('drop', function (e) {
                         e.preventDefault(); // cegah drag-drop gambar
                     });
                     editor.on('input', checkForm);

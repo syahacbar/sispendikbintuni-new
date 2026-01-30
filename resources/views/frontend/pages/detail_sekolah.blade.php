@@ -1,50 +1,5 @@
 @extends('frontend.layouts.app')
-<style>
-    table tfoot * {
-        font-weight: bold;
-        font-size: 14px !important;
-    }
-
-    table tbody td,
-    table thead th,
-    table tfoot th {
-        font-weight: normal !important;
-        font-size: 14px;
-    }
-
-    table#dataKecamatan thead th,
-    table#dataKecamatan tfoot th {
-        font-weight: normal !important;
-    }
-
-    div#dataKondisiGuru_filter,
-    .dataTables_filter,
-    .dataTables_length,
-    div#dataKondisiGuru_length {
-        margin-bottom: 15px;
-    }
-
-    .bg-success {
-        background-color: #0093dd !important;
-    }
-
-    div#nav-tab button {
-        color: #0093dd !important;
-    }
-
-    div#nav-tab button.active {
-        color: #000 !important;
-    }
-
-    #nav-tab {
-        -webkit-overflow-scrolling: touch;
-        white-space: nowrap;
-    }
-
-    #nav-tab .nav-link {
-        flex: 0 0 auto;
-    }
-</style>
+<link rel="stylesheet" href="{{ asset('css/frontend/pages/detail_sekolah.css') }}">
 
 @section('content')
     <section class="about-section">
@@ -270,16 +225,16 @@
                                                 </thead>
                                                 <tbody>
                                                     @foreach ($sekolah->ptks as $index => $ptk)
-                                                        <tr>
-                                                            <td>{{ $index + 1 }}</td>
-                                                            <td>{{ $ptk->mata_pelajaran ?? '-' }}</td>
-                                                            <td class="text-center">{{ $ptk->jumlah_rombel ?? '-' }}</td>
-                                                            <td class="text-center">{{ $ptk->jumlah_ideal ?? '-' }}</td>
-                                                            <td class="text-center">{{ $ptk->jumlah_sekarang ?? '-' }}
-                                                            </td>
-                                                            <td class="text-center">{{ $ptk->selisih ?? '-' }}</td>
-                                                            <td class="text-center">{{ $ptk->uraian_item ?? '-' }}</td>
-                                                        </tr>
+                                                    <tr>
+                                                        <td>{{ $index + 1 }}</td>
+                                                        <td>{{ $ptk->mata_pelajaran ?? '-' }}</td>
+                                                        <td class="text-center">{{ $ptk->jumlah_rombel ?? '-' }}</td>
+                                                        <td class="text-center">{{ $ptk->jumlah_ideal ?? '-' }}</td>
+                                                        <td class="text-center">{{ $ptk->jumlah_sekarang ?? '-' }}
+                                                        </td>
+                                                        <td class="text-center">{{ $ptk->selisih ?? '-' }}</td>
+                                                        <td class="text-center">{{ $ptk->uraian_item ?? '-' }}</td>
+                                                    </tr>
                                                     @endforeach
                                                 </tbody>
                                             </table>
@@ -360,12 +315,12 @@
                                                             <td class="text-center">{{ $sarpras->jumlah_saat_ini }}</td>
                                                             {{-- <td class="text-center">
                                                                 @if ($selisih > 0)
-                                                                    <span class="text-success">+{{ $selisih }}</span>
-                                                                @elseif ($selisih < 0)
-                                                                    <span class="text-danger">{{ $selisih }}</span>
-                                                                @else
+                                                                <span class="text-success">+{{ $selisih }}</span>
+                                                                @elseif ($selisih < 0) <span class="text-danger">{{ $selisih
+                                                                    }}</span>
+                                                                    @else
                                                                     <span class="text-muted">0</span>
-                                                                @endif
+                                                                    @endif
                                                             </td> --}}
                                                             <td class="text-center">{{ $baik }}</td>
                                                             <td class="text-center">{{ $rr }}</td>
@@ -387,8 +342,7 @@
                                             <h4 class="bg-success p-2 mb-3 text-light">Direktori Guru</h4>
                                         </div>
                                         <div class="table-responsive">
-                                            <table id="DirektoriPTK" class="display responsive nowrap"
-                                                style="width:100%">
+                                            <table id="DirektoriPTK" class="display responsive nowrap" style="width:100%">
                                                 <thead>
                                                     <tr>
                                                         <th>No</th>

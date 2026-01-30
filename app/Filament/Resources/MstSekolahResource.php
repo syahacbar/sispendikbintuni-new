@@ -162,7 +162,8 @@ class MstSekolahResource extends Resource
                     ->label('NPSN'),
                 Tables\Columns\TextColumn::make('nama')
                     ->searchable()
-                    ->label('Nama Sekolah'),
+                    ->label('Nama Sekolah')
+                    ->extraAttributes(['class' => 'sticky-column']),
                 Tables\Columns\TextColumn::make('kode_wilayah')
                     ->searchable()
                     ->label('Kode Wilayah'),
@@ -248,26 +249,11 @@ class MstSekolahResource extends Resource
                     EditAction::make(),   // Edit data
                     DeleteAction::make(), // Hapus data
                     Tables\Actions\Action::make('impersonate')
-                        ->label('Impersonate')
+                        ->label('Masuk Sebagai')
                         ->icon('heroicon-o-cursor-arrow-rays')
-                        ->action(function ($record) {
-                            if (!$record->user) {
-                                \Filament\Notifications\Notification::make()
-                                    ->title('Sekolah ini tidak memiliki user')
-                                    ->danger()
-                                    ->send();
-                                return;
-                            }
-
-                            session()->put('impersonate.back_to', MstSekolahResource::getUrl());
-
-                            app(\Lab404\Impersonate\Services\ImpersonateManager::class)->take(
-                                auth()->user(),
-                                $record->user
-                            );
-
-                            return redirect(filament()->getPanel('admin')->getUrl());
-                        })
+                        ->color('info')
+                        ->url(fn($record) => route('filament-impersonate.take', ['id' => $record->user->id]))
+                        ->openUrlInNewTab()
                         ->visible(fn($record) => auth()->user()->canImpersonate() && $record->user && $record->user->canBeImpersonated()),
                 ]),
             ])

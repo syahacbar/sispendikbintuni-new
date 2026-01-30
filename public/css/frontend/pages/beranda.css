@@ -1,0 +1,42 @@
+@media (min-width: 991px) {
+    .berandaInformasi .d-flex.align-items-start {
+        display: block !important;
+    }
+
+    .berandaInformasi img {
+        width: 100% !important;
+        height: 150px;
+        object-fit: cover;
+    }
+}
+
+.swiper {
+    width: 100%;
+    height: auto;
+}
+
+.sectionSambutan {
+    padding-top: .5rem;
+}
+
+span.swiper-pagination-bullet {
+    width: 15px;
+    border-radius: 5px;
+}
+
+span.swiper-pagination-bullet.swiper-pagination-bullet-active {
+    width: 30px;
+    border-radius: 5px;
+}
+
+/* Default untuk small device */
+.custom-padding {
+    padding: 4.3rem 0 0 0 !important;
+}
+
+/* Large device (>= 992px, sesuai Bootstrap breakpoint lg) */
+@media (min-width: 992px) {
+    .custom-padding {
+        padding-top: 3.5rem;
+    }
+}

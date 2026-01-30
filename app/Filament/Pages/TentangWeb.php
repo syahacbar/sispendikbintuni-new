@@ -17,7 +17,7 @@ class TentangWeb extends Page implements HasForms
 {
     use InteractsWithForms, HasPageShield;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static ?string $navigationIcon = 'heroicon-o-information-circle';
     protected static ?string $navigationLabel = 'Tentang Web';
     protected static ?string $modelLabel = 'Tentang Web';
     protected static ?string $navigationGroup = 'Manajemen Konten Web';
@@ -40,7 +40,14 @@ class TentangWeb extends Page implements HasForms
                         RichEditor::make('tentang_web')
                             ->label('Tentang Web')
                             ->columnSpanFull()
-                            ->required(),
+                            ->required()
+                            ->disableToolbarButtons([
+                                'blockquote',
+                                'strike',
+                                'link',
+                                'codeBlock',
+                                'attachFiles'
+                            ]),
                     ])->columns(3),
             ])
             ->statePath('data');

@@ -18,7 +18,7 @@ class Sambutan extends Page implements HasForms
 {
     use InteractsWithForms, HasPageShield;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static ?string $navigationIcon = 'heroicon-o-megaphone';
     protected static ?string $navigationLabel = 'Sambutan';
     protected static ?string $modelLabel = 'Sambutan';
     protected static ?string $navigationGroup = 'Manajemen Konten Web';
@@ -47,7 +47,14 @@ class Sambutan extends Page implements HasForms
                         RichEditor::make('isi_sambutan')
                             ->label('Isi Sambutan')
                             ->required()
-                            ->columnSpanFull(),
+                            ->columnSpanFull()
+                            ->disableToolbarButtons([
+                                'blockquote',
+                                'strike',
+                                'link',
+                                'codeBlock',
+                                'attachFiles',
+                            ]),
 
                         FileUpload::make('gambar_kadin')
                             ->label('Foto Kepala Dinas Pendidikan')

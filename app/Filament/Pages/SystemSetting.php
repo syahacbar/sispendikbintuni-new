@@ -21,7 +21,7 @@ class SystemSetting extends Page
 {
     use InteractsWithForms, HasPageShield;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static ?string $navigationIcon = 'heroicon-o-cog';
     protected static string $view = 'filament.pages.web-settings';
     protected static ?string $navigationLabel = 'Pengaturan';
     protected static ?string $modelLabel = 'Pengaturan';
@@ -124,14 +124,21 @@ class SystemSetting extends Page
                                             ->live()
                                             ->columnSpanFull(),
 
+                                        \Filament\Forms\Components\Toggle::make('recaptcha_pengaduan_enabled')
+                                            ->label('Aktifkan Google reCAPTCHA di Halaman Pengaduan')
+                                            ->helperText('Jika diaktifkan, checkbox reCAPTCHA akan muncul di halaman pengaduan')
+                                            ->default(false)
+                                            ->live()
+                                            ->columnSpanFull(),
+
                                         TextInput::make('recaptcha_site_key')
                                             ->label('Google reCAPTCHA Site Key')
-                                            ->visible(fn(callable $get) => $get('recaptcha_enabled'))
-                                            ->required(fn(callable $get) => $get('recaptcha_enabled')),
+                                            ->visible(fn(callable $get) => $get('recaptcha_enabled') || $get('recaptcha_pengaduan_enabled'))
+                                            ->required(fn(callable $get) => $get('recaptcha_enabled') || $get('recaptcha_pengaduan_enabled')),
                                         TextInput::make('recaptcha_secret_key')
                                             ->label('Google reCAPTCHA Secret Key')
-                                            ->visible(fn(callable $get) => $get('recaptcha_enabled'))
-                                            ->required(fn(callable $get) => $get('recaptcha_enabled')),
+                                            ->visible(fn(callable $get) => $get('recaptcha_enabled') || $get('recaptcha_pengaduan_enabled'))
+                                            ->required(fn(callable $get) => $get('recaptcha_enabled') || $get('recaptcha_pengaduan_enabled')),
                                         TextInput::make('google_analytics')
                                             ->label('Google Analytics ID'),
                                         TextInput::make('google_tag_manager')
@@ -223,7 +230,7 @@ class SystemSetting extends Page
                                         Select::make('mail_driver')
                                             ->label('Mail Driver')
                                             ->options([
-                                                'smtp' => 'Generic SMTP / cPanel Hosting',
+                                                'smtp' => 'cPanel Hosting',
                                                 'sendgrid' => 'SendGrid',
                                                 'mailgun' => 'Mailgun',
                                                 'ses' => 'Amazon SES',
@@ -415,17 +422,17 @@ class SystemSetting extends Page
                                     ->collapsible(),
 
                                 // Test Email Section
-                                Section::make('Test Konfigurasi Email')
-                                    ->description('Kirim email test untuk memverifikasi konfigurasi')
-                                    ->schema([
-                                        TextInput::make('test_email_address')
-                                            ->label('Email Tujuan Test')
-                                            ->email()
-                                            ->placeholder('your@email.com')
-                                            ->helperText('Masukkan email untuk menerima test email')
-                                            ->columnSpanFull(),
-                                    ])
-                                    ->collapsible(),
+                                // Section::make('Test Konfigurasi Email')
+                                //     ->description('Kirim email test untuk memverifikasi konfigurasi')
+                                //     ->schema([
+                                //         TextInput::make('test_email_address')
+                                //             ->label('Email Tujuan Test')
+                                //             ->email()
+                                //             ->placeholder('your@email.com')
+                                //             ->helperText('Masukkan email untuk menerima test email')
+                                //             ->columnSpanFull(),
+                                //     ])
+                                //     ->collapsible(),
                             ]),
 
                         Tabs\Tab::make('Footer')

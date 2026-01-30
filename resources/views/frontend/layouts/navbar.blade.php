@@ -83,7 +83,7 @@
                 @else
                     <li class="nav-item">
                         <a class="nav-link btn btn-success btn-sm btnLogin" href="/paneladmin">
-                            <i class="bi bi-speedometer2 me-1"></i>Kembali ke Panel
+                            Panel Admin
                         </a>
                     </li>
                 @endguest

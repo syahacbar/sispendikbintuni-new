@@ -22,11 +22,13 @@ class SchoolInvitationTokenResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-envelope';
 
-    protected static ?string $navigationGroup = 'Manajemen Pengguna';
+    protected static ?string $navigationGroup = 'Manajemen Akses';
 
     protected static ?string $navigationLabel = 'Token Undangan';
 
-    protected static ?string $pluralLabel = 'Token Undangan Sekolah';
+    protected static ?string $modelLabel = 'Token Undangan';
+
+    protected static ?string $pluralLabel = 'Token Undangan';
 
     protected static ?string $slug = 'token-undangan';
 
@@ -240,13 +242,13 @@ class SchoolInvitationTokenResource extends Resource
                     Tables\Actions\EditAction::make()
                         ->visible(fn(SchoolInvitationToken $record) => $record->isValid()),
                     Tables\Actions\DeleteAction::make()
-                        ->label('Batalkan Token'),
+                        ->label('Hapus Token'),
                 ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make()
-                        ->label('Batalkan Token Terpilih'),
+                        ->label('Hapus Token Terpilih'),
                 ]),
             ])
             ->defaultSort('created_at', 'desc');

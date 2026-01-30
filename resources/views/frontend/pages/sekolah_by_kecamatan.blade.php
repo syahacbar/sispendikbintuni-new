@@ -1,32 +1,5 @@
 @extends('frontend.layouts.app')
-<style>
-    table#dataSekolah tfoot * {
-        font-weight: bold;
-        font-size: 14px !important;
-    }
-
-    table#dataSekolah tbody td,
-    table#dataSekolah thead th,
-    table#dataSekolah tfoot th {
-        font-weight: normal !important;
-        font-size: 14px;
-    }
-
-    table#dataSekolah thead th,
-    table#dataSekolah tfoot th {
-        font-weight: normal !important;
-    }
-
-    .text-center {
-        text-align: center;
-    }
-
-    table.dataTable.nowrap th,
-    table.dataTable.nowrap td {
-        white-space: nowrap;
-        font-size: 12px;
-    }
-</style>
+<link rel="stylesheet" href="{{ asset('css/frontend/pages/sekolah_by_kecamatan.css') }}">
 
 @section('content')
     <section class="about-section">
@@ -76,7 +49,8 @@
                                                 </td>
                                                 <td class="text-center">{{ $sekolah->npsn }}</td>
                                                 <td class="text-center">
-                                                    {{ $sekolah->jenjang->kode }}</td>
+                                                    {{ $sekolah->jenjang->kode }}
+                                                </td>
                                                 <td class="text-center">{{ $sekolah->status }}</td>
                                                 <td class="text-center">{{ $sekolah->peserta_count }}</td>
                                                 <td class="text-center">{{ $sekolah->rombongan_belajars_count }}</td>

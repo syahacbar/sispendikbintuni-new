@@ -9,6 +9,10 @@ use Filament\Resources\Pages\ListRecords;
 use Filament\Actions;
 use Filament\Forms;
 use Filament\Notifications\Notification;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\SchoolInvitationImport;
+use App\Mail\SchoolInvitationMail;
+use Illuminate\Support\Facades\Mail;
 
 class ListSchoolInvitationTokens extends ListRecords
 {
@@ -17,6 +21,86 @@ class ListSchoolInvitationTokens extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
+            Actions\Action::make('import_invitations')
+                ->label('Import Undangan (CSV)')
+                ->icon('heroicon-o-arrow-up-tray')
+                ->color('success')
+                ->form([
+                    Forms\Components\FileUpload::make('file')
+                        ->label('File CSV/Excel')
+                        ->helperText('Format kolom: npsn, email')
+                        ->required()
+                        ->acceptedFileTypes(['text/csv', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'])
+                        ->disk('public')
+                        ->directory('invitation-imports'),
+                ])
+                ->action(function (array $data) {
+                    $filePath = storage_path('app/public/' . $data['file']);
+
+                    try {
+                        $rows = Excel::toArray(new SchoolInvitationImport, $filePath)[0]; // First sheet
+                    } catch (\Exception $e) {
+                        Notification::make()
+                            ->title('Gagal membaca file')
+                            ->body($e->getMessage())
+                            ->danger()
+                            ->send();
+                        return;
+                    }
+
+                    $createdCount = 0;
+                    $skippedCount = 0;
+                    $errorCount = 0;
+
+                    foreach ($rows as $row) {
+                        if (empty($row['npsn']) || empty($row['email'])) {
+                            continue;
+                        }
+
+                        $sekolah = MstSekolah::where('npsn', $row['npsn'])->first();
+
+                        // Skip if school not found or already has user
+                        if (!$sekolah || $sekolah->users_id !== null) {
+                            $skippedCount++;
+                            continue;
+                        }
+
+                        // Skip if active token exists
+                        $existingToken = SchoolInvitationToken::where('npsn', $sekolah->npsn)
+                            ->active()
+                            ->first();
+
+                        if ($existingToken) {
+                            $skippedCount++;
+                            continue;
+                        }
+
+                        try {
+                            // Create new token
+                            $token = SchoolInvitationToken::create([
+                                'token' => SchoolInvitationToken::generateUniqueToken(16),
+                                'npsn' => $sekolah->npsn,
+                                'email' => $row['email'],
+                                'expires_at' => now()->addDays(30),
+                                'created_by_user_id' => auth()->id(),
+                            ]);
+
+                            // Send email
+                            Mail::to($token->email)->send(new SchoolInvitationMail($token));
+
+                            $createdCount++;
+                        } catch (\Exception $e) {
+                            $errorCount++;
+                        }
+                    }
+
+                    Notification::make()
+                        ->title('Import Selesai')
+                        ->body("Berhasil: {$createdCount}, Dilewati: {$skippedCount}, Error: {$errorCount}")
+                        ->success()
+                        ->send();
+                }),
+
             Actions\Action::make('generate_bulk_tokens')
                 ->label('Generate Token Massal')
                 ->icon('heroicon-o-sparkles')

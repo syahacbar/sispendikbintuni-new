@@ -2,10 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Frontend\PTKController;
-// use App\Http\Controllers\Api\DirektoriController;
 use App\Http\Controllers\Frontend\BerandaController;
-use App\Http\Controllers\Frontend\SiswaController;
 use App\Http\Controllers\Frontend\SebaranController;
 use App\Http\Controllers\Frontend\SekolahController;
 use App\Http\Controllers\Frontend\TentangController;
@@ -37,6 +34,11 @@ Route::get('/data-pendidikan/kecamatan/{kecamatan}/sekolah', [DataPendidikanCont
 Route::get('/data-pendidikan/sekolah/{npsn}', [DataPendidikanController::class, 'detail'])
     ->name('pendidikan.sekolah.detail');
 
+// Tailwind Demo Route
+Route::get('/tailwind-demo', function () {
+    return view('tailwind_demo');
+});
+
 
 // Google OAuth Routes
 Route::get('/paneladmin/auth/google', [App\Http\Controllers\Auth\GoogleAuthController::class, 'redirectToGoogle'])
@@ -49,6 +51,22 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::get('/paneladmin/auth/select-school', \App\Filament\Paneladmin\Pages\Auth\SelectSchool::class)
         ->name('auth.select-school');
 });
+
+// Route to take impersonation (for opening in new tab)
+Route::get('filament-impersonate/take/{id}', function ($id) {
+    $user = auth()->user();
+    $targetUser = \App\Models\User::findOrFail($id);
+
+    if (!$user || !$user->canImpersonate() || !$targetUser->canBeImpersonated()) {
+        abort(403);
+    }
+
+    session()->put('impersonate.back_to', \App\Filament\Resources\MstSekolahResource::getUrl());
+
+    app(\Lab404\Impersonate\Services\ImpersonateManager::class)->take($user, $targetUser);
+
+    return redirect(filament()->getPanel('admin')->getUrl());
+})->name('filament-impersonate.take')->middleware(['web', 'auth']);
 
 // Fix Filament Impersonate Leave Route
 Route::get('filament-impersonate/leave', function () {

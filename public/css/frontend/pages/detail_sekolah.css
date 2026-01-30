@@ -1,0 +1,44 @@
+table tfoot * {
+    font-weight: bold;
+    font-size: 14px !important;
+}
+
+table tbody td,
+table thead th,
+table tfoot th {
+    font-weight: normal !important;
+    font-size: 14px;
+}
+
+table#dataKecamatan thead th,
+table#dataKecamatan tfoot th {
+    font-weight: normal !important;
+}
+
+div#dataKondisiGuru_filter,
+.dataTables_filter,
+.dataTables_length,
+div#dataKondisiGuru_length {
+    margin-bottom: 15px;
+}
+
+.bg-success {
+    background-color: #0093dd !important;
+}
+
+div#nav-tab button {
+    color: #0093dd !important;
+}
+
+div#nav-tab button.active {
+    color: #000 !important;
+}
+
+#nav-tab {
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+}
+
+#nav-tab .nav-link {
+    flex: 0 0 auto;
+}

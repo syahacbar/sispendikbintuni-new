@@ -20,7 +20,7 @@ class RefWilayahResource extends Resource
 {
     protected static ?string $model = RefWilayah::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-globe-alt';
+    protected static ?string $navigationIcon = 'heroicon-o-map';
     protected static ?string $navigationGroup = 'Data Referensi';
     protected static ?string $navigationLabel = 'Wilayah Bintuni';
     protected static ?string $pluralLabel = 'Wilayah Bintuni';

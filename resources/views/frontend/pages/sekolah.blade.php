@@ -1,25 +1,5 @@
 @extends('frontend.layouts.app')
-<style>
-    table#dataSekolah tfoot * {
-        font-weight: bold;
-        font-size: 14px !important;
-    }
-
-    table#dataSekolah thead th,
-    table#dataSekolah tfoot th {
-        font-weight: normal !important;
-    }
-
-    .text-center {
-        text-align: center;
-    }
-
-    table.dataTable.nowrap th,
-    table.dataTable.nowrap td {
-        white-space: nowrap;
-        font-size: 12px;
-    }
-</style>
+<link rel="stylesheet" href="{{ asset('css/frontend/pages/sekolah.css') }}">
 
 @section('content')
     <section class="about-section">

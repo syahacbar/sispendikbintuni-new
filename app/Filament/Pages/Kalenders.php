@@ -33,6 +33,7 @@ use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\DeleteAction;
 use Filament\Tables\Actions\DeleteBulkAction;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
+use Filament\Tables\Actions\ActionGroup;
 
 class Kalenders extends Page implements HasTable, HasActions, HasForms
 {
@@ -279,7 +280,7 @@ class Kalenders extends Page implements HasTable, HasActions, HasForms
                 }
 
                 $event = ExtKalender::query()->where('id', $id)->first();
-                $if_updated =  $event->update(
+                $if_updated = $event->update(
                     [
                         'tanggal_mulai' => $startDate,
                         'tanggal_akhir' => $endDate,
@@ -320,6 +321,15 @@ class Kalenders extends Page implements HasTable, HasActions, HasForms
                 TextColumn::make('created_at')->dateTime()->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')->dateTime()->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->actions([
+                ActionGroup::make([
+                    ViewAction::make(),   // Lihat detail
+                    EditAction::make(),   // Edit data
+                    DeleteAction::make(), // Hapus data
+                ]),
+            ])
+
+
             ->bulkActions([
                 DeleteBulkAction::make()
                     ->after(function () {

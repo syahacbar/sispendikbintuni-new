@@ -2,54 +2,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<style>
-    @media (min-width: 991px) {
-        .berandaInformasi .d-flex.align-items-start {
-            display: block !important;
-        }
-
-        .berandaInformasi img {
-            width: 100% !important;
-            height: 150px;
-            object-fit: cover;
-        }
-    }
-
-    .swiper {
-        width: 100%;
-        height: auto;
-    }
-
-    /* .sliderSection {
-        padding: 3.5rem 0 0 0 !important;
-    } */
-
-    .sectionSambutan {
-        padding-top: .5rem;
-    }
-
-    span.swiper-pagination-bullet {
-        width: 15px;
-        border-radius: 5px;
-    }
-
-    span.swiper-pagination-bullet.swiper-pagination-bullet-active {
-        width: 30px;
-        border-radius: 5px;
-    }
-
-    /* Default untuk small device */
-    .custom-padding {
-        padding: 4.3rem 0 0 0 !important;
-    }
-
-    /* Large device (>= 992px, sesuai Bootstrap breakpoint lg) */
-    @media (min-width: 992px) {
-        .custom-padding {
-            padding-top: 3.5rem;
-        }
-    }
-</style>
+<link rel="stylesheet" href="{{ asset('css/frontend/pages/beranda.css') }}">
 @section('content')
     <section
         class="w-100 container-fluid d-flex align-items-start justify-content-start text-start sliderSection custom-padding">
@@ -62,8 +15,7 @@
                     </div>
                 @empty
                     <div class="swiper-slide">
-                        <img class="w-100" src="{{ asset('themes/frontend/slider/sliderserasi3.png') }}"
-                            alt="Default Banner">
+                        <img class="w-100" src="{{ asset('themes/frontend/slider/sliderserasi3.png') }}" alt="Default Banner">
                     </div>
                 @endforelse
             </div>
@@ -81,8 +33,8 @@
                         $sambutanFoto = $pengaturan['sambutan_foto'] ?? null;
                         $imagePath =
                             $sambutanFoto && file_exists(public_path('storage/' . $sambutanFoto))
-                                ? asset('storage/' . $sambutanFoto)
-                                : asset('themes/frontend/sambutan/kadisdikbudporabintuni2.png');
+                            ? asset('storage/' . $sambutanFoto)
+                            : asset('themes/frontend/sambutan/kadisdikbudporabintuni2.png');
                     @endphp
 
                     <img src="{{ $imagePath }}" alt="Kepala Dinas Kabupaten Teluk Bintuni" class="img-fluid quote-img"
@@ -312,23 +264,23 @@
                         </a>
                     </div>
                     @foreach ($berita as $item)
-                        <div class="d-flex justify-content-between align-items-center border rounded-3 p-2 mb-4">
-                            <div class="d-flex align-items-start">
-                                <img src="{{ $item->gambar && file_exists(public_path('storage/' . $item->gambar))
-                                    ? asset('storage/' . $item->gambar)
-                                    : asset('themes/frontend/informasi/kegiatan/default.png') }}"
-                                    class="card-img-top w-25" alt="{{ $item->judul }}">
-                                <div class="px-2">
-                                    <div class="fw-semibold">{{ $item->judul }}</div>
-                                    <div class="text-muted small mb-2">
-                                        {{ $item->short_desc }}
+                                <div class="d-flex justify-content-between align-items-center border rounded-3 p-2 mb-4">
+                                    <div class="d-flex align-items-start">
+                                        <img src="{{ $item->gambar && file_exists(public_path('storage/' . $item->gambar))
+                        ? asset('storage/' . $item->gambar)
+                        : asset('themes/frontend/informasi/kegiatan/default.png') }}" class="card-img-top w-25"
+                                            alt="{{ $item->judul }}">
+                                        <div class="px-2">
+                                            <div class="fw-semibold">{{ $item->judul }}</div>
+                                            <div class="text-muted small mb-2">
+                                                {{ $item->short_desc }}
+                                            </div>
+                                            <small class="text-body-secondary me-3"><i class="bi bi-calendar-fill"></i>
+                                                {{ $item->created_at->format('d M Y') }}</small>
+                                        </div>
+                                        <a href="{{ url('informasi/berita/' . $item->slug) }}" class="stretched-link"></a>
                                     </div>
-                                    <small class="text-body-secondary me-3"><i class="bi bi-calendar-fill"></i>
-                                        {{ $item->created_at->format('d M Y') }}</small>
                                 </div>
-                                <a href="{{ url('informasi/berita/' . $item->slug) }}" class="stretched-link"></a>
-                            </div>
-                        </div>
                     @endforeach
                     <a href="{{ url('informasi/berita') }}" class="btn btn-success mt-2 d-none d-lg-inline-block">
                         Lainnya
@@ -343,23 +295,23 @@
                         </a>
                     </div>
                     @foreach ($pengumuman as $item)
-                        <div class="d-flex justify-content-between align-items-center border rounded-3 p-2 mb-4">
-                            <div class="d-flex align-items-start">
-                                <img src="{{ $item->gambar && file_exists(public_path('storage/' . $item->gambar))
-                                    ? asset('storage/' . $item->gambar)
-                                    : asset('themes/frontend/informasi/kegiatan/default.png') }}"
-                                    class="card-img-top w-25" alt="{{ $item->judul }}">
-                                <div class="px-2">
-                                    <div class="fw-semibold">{{ $item->judul }}</div>
-                                    <div class="text-muted small mb-2">
-                                        {{ $item->short_desc }}
+                                <div class="d-flex justify-content-between align-items-center border rounded-3 p-2 mb-4">
+                                    <div class="d-flex align-items-start">
+                                        <img src="{{ $item->gambar && file_exists(public_path('storage/' . $item->gambar))
+                        ? asset('storage/' . $item->gambar)
+                        : asset('themes/frontend/informasi/kegiatan/default.png') }}" class="card-img-top w-25"
+                                            alt="{{ $item->judul }}">
+                                        <div class="px-2">
+                                            <div class="fw-semibold">{{ $item->judul }}</div>
+                                            <div class="text-muted small mb-2">
+                                                {{ $item->short_desc }}
+                                            </div>
+                                            <small class="text-body-secondary me-3"><i class="bi bi-calendar-fill"></i>
+                                                {{ $item->created_at->format('d M Y') }}</small>
+                                        </div>
+                                        <a href="{{ url('informasi/pengumuman/' . $item->slug) }}" class="stretched-link"></a>
                                     </div>
-                                    <small class="text-body-secondary me-3"><i class="bi bi-calendar-fill"></i>
-                                        {{ $item->created_at->format('d M Y') }}</small>
                                 </div>
-                                <a href="{{ url('informasi/pengumuman/' . $item->slug) }}" class="stretched-link"></a>
-                            </div>
-                        </div>
                     @endforeach
                     <a href="{{ url('informasi/pengumuman') }}" class="btn btn-success mt-2 d-none d-lg-inline-block">
                         Lainnya
@@ -373,23 +325,23 @@
                         </a>
                     </div>
                     @foreach ($kegiatan as $item)
-                        <div class="d-flex justify-content-between align-items-center border rounded-3 p-2 mb-4">
-                            <div class="d-flex align-items-start">
-                                <img src="{{ $item->gambar && file_exists(public_path('storage/' . $item->gambar))
-                                    ? asset('storage/' . $item->gambar)
-                                    : asset('themes/frontend/informasi/kegiatan/default.png') }}"
-                                    class="card-img-top w-25" alt="{{ $item->judul }}">
-                                <div class="px-2">
-                                    <div class="fw-semibold">{{ $item->judul }}</div>
-                                    <div class="text-muted small mb-2">
-                                        {{ $item->short_desc }}
+                                <div class="d-flex justify-content-between align-items-center border rounded-3 p-2 mb-4">
+                                    <div class="d-flex align-items-start">
+                                        <img src="{{ $item->gambar && file_exists(public_path('storage/' . $item->gambar))
+                        ? asset('storage/' . $item->gambar)
+                        : asset('themes/frontend/informasi/kegiatan/default.png') }}" class="card-img-top w-25"
+                                            alt="{{ $item->judul }}">
+                                        <div class="px-2">
+                                            <div class="fw-semibold">{{ $item->judul }}</div>
+                                            <div class="text-muted small mb-2">
+                                                {{ $item->short_desc }}
+                                            </div>
+                                            <small class="text-body-secondary me-3"><i class="bi bi-calendar-fill"></i>
+                                                {{ $item->created_at->format('d M Y') }}</small>
+                                        </div>
+                                        <a href="{{ url('informasi/kegiatan/' . $item->slug) }}" class="stretched-link"></a>
                                     </div>
-                                    <small class="text-body-secondary me-3"><i class="bi bi-calendar-fill"></i>
-                                        {{ $item->created_at->format('d M Y') }}</small>
                                 </div>
-                                <a href="{{ url('informasi/kegiatan/' . $item->slug) }}" class="stretched-link"></a>
-                            </div>
-                        </div>
                     @endforeach
                     <a href="{{ url('informasi/kegiatan') }}" class="btn btn-success mt-2 d-none d-lg-inline-block">
                         Lainnya
@@ -423,7 +375,7 @@
                         },
                         tooltip: {
                             callbacks: {
-                                label: function(context) {
+                                label: function (context) {
                                     return `${context.dataset.label} di ${context.label}: ${context.parsed.y}`;
                                 }
                             }
@@ -469,7 +421,7 @@
                         mode: 'nearest',
                         intersect: true,
                         callbacks: {
-                            label: function(context) {
+                            label: function (context) {
                                 return `${context.dataset.label} di ${context.label}: ${context.parsed.y}`;
                             }
                         }
@@ -510,7 +462,7 @@
                     },
                     tooltip: {
                         callbacks: {
-                            label: function(context) {
+                            label: function (context) {
                                 return `${context.dataset.label} di ${context.label}: ${context.parsed.y}`;
                             }
                         }
@@ -671,7 +623,7 @@
     </script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const toggleBtn = document.getElementById('toggle-sambutan');
             if (!toggleBtn) return;
 
@@ -681,7 +633,7 @@
 
             let expanded = false;
 
-            toggleBtn.addEventListener('click', function() {
+            toggleBtn.addEventListener('click', function () {
                 if (expanded) {
                     contentDiv.innerHTML = shortContent;
                     toggleBtn.innerText = 'Baca Selengkapnya';

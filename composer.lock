@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cfa02f4cbdce0371d65bde785fac7e6d",
+    "content-hash": "ed093666b8eba12708a25e2a33706a3b",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -8946,6 +8946,72 @@
                 }
             ],
             "time": "2024-11-21T01:49:47+00:00"
+        },
+        {
+            "name": "watheqalshowaiter/filament-sticky-table-header",
+            "version": "1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/WatheqAlshowaiter/filament-sticky-table-header.git",
+                "reference": "c58283996eb5a2273ebf5c31f59193985b711bba"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/WatheqAlshowaiter/filament-sticky-table-header/zipball/c58283996eb5a2273ebf5c31f59193985b711bba",
+                "reference": "c58283996eb5a2273ebf5c31f59193985b711bba",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^3.0|^4.0|^5.0",
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.0",
+                "nunomaduro/collision": "^8.0||^7.0",
+                "orchestra/testbench": "^8.0|^9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "WatheqAlshowaiter\\FilamentStickyTableHeader\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Watheq Alshowaiter",
+                    "email": "watheq.alshowaiter@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A Filament plugin that makes table headers stick when scrolling down for better UX.",
+            "homepage": "https://github.com/watheqalshowaiter/filament-sticky-table-header",
+            "keywords": [
+                "Watheq Alshowaiter",
+                "WatheqAlshowaiter",
+                "admin-panel",
+                "filament",
+                "filament-plugin",
+                "laravel",
+                "scroll",
+                "sticky-header",
+                "table",
+                "ui"
+            ],
+            "support": {
+                "issues": "https://github.com/watheqalshowaiter/filament-sticky-table-header/issues",
+                "source": "https://github.com/watheqalshowaiter/filament-sticky-table-header"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/WatheqAlshowaiter",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-01-16T19:01:01+00:00"
         },
         {
             "name": "webmozart/assert",

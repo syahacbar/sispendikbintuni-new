@@ -7,6 +7,7 @@ use Filament\Pages\Auth\Login as BaseLogin;
 use Illuminate\Contracts\Support\Htmlable;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\ViewField;
+use Filament\Forms\Components\Hidden;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -42,9 +43,11 @@ class Login extends BaseLogin
                         $this->getEmailFormComponent(),
                         $this->getPasswordFormComponent(),
                         $this->getRememberFormComponent(),
-                        ViewField::make('recaptcha')
+                        ViewField::make('recaptcha_widget')
                             ->view('filament.pages.auth.recaptcha')
-                            ->visible($this->isRecaptchaEnabled())
+                            ->visible($this->isRecaptchaEnabled()),
+                        Hidden::make('recaptcha')
+                            ->required()
                             ->rules([
                                 function () {
                                     return function (string $attribute, $value, Closure $fail) {

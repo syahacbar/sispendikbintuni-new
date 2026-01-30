@@ -12,25 +12,22 @@ class PengaduanController extends Controller
     {
         $title = 'Form Pengaduan';
         $subtitle = 'Saluran Resmi Penyampaian Aspirasi, Saran, Keluhan dan Laporan Terkait Layanan Pendidikan di Kab. Teluk Bintuni';
+        $recaptcha_pengaduan_enabled = \App\Models\SysSetting::getValue('recaptcha_pengaduan_enabled', false);
+        $recaptcha_site_key = \App\Models\SysSetting::getValue('recaptcha_site_key');
 
-        return view('frontend.pages.pengaduan', compact('title', 'subtitle'));
+        return view('frontend.pages.pengaduan', compact('title', 'subtitle', 'recaptcha_pengaduan_enabled', 'recaptcha_site_key'));
     }
 
-    public function store(Request $request)
+    public function store(\App\Http\Requests\Frontend\StorePengaduanRequest $request)
     {
-        $validated = $request->validate([
-            'judul_laporan' => 'required|string|max:255',
-            'nama_pelapor' => 'required|string|max:100',
-            'email' => 'required|email',
-            'no_hp' => 'required|string|max:20',
-            'kategori' => 'required|string',
-            'isi' => 'required|string',
-            'dok_lampiran' => 'nullable|file|mimes:jpg,jpeg,png,pdf,docx|max:2048',
-        ]);
+        $validated = $request->validated();
 
         if ($request->hasFile('dok_lampiran')) {
             $validated['dok_lampiran'] = $request->file('dok_lampiran')->store('pengaduan_lampiran', 'public');
         }
+
+        // Remove g-recaptcha-response from validated data before creating model
+        unset($validated['g-recaptcha-response']);
 
         $pengaduan = ExtPengaduan::create($validated);
 

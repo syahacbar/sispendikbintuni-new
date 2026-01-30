@@ -23,6 +23,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 
 use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use WatheqAlshowaiter\FilamentStickyTableHeader\StickyTableHeaderPlugin;
 
 // Auth Pages
 use App\Filament\Paneladmin\Pages\Auth\Login;
@@ -99,6 +100,7 @@ class PaneladminPanelProvider extends PanelProvider
             ])
             ->plugins([
                 FilamentShieldPlugin::make(),
+                StickyTableHeaderPlugin::make(),
             ])
             ->authMiddleware([
                 Authenticate::class,
@@ -108,7 +110,7 @@ class PaneladminPanelProvider extends PanelProvider
                 'Data Referensi',
                 'Data Master',
                 'Manajemen Konten Web',
-                'Manajemen Pengguna',
+                'Manajemen Akses',
                 'Pengaturan',
             ])
 
